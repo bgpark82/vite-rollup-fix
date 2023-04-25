@@ -12,13 +12,21 @@ plugins {
 
 	// 특정한 어노테이션이 붙은 클래스의 접근 제한자를 open 으로 모두 변경(https://kotlinlang.org/docs/all-open-plugin.html#spring-support)
 	kotlin("plugin.spring")
+
+	// JVM 어플리케이션(https://docs.gradle.org/current/userguide/application_plugin.html)
+	application
 }
 
 group = "com.musinsa"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
-val javaVersion: String by project
+@Suppress("PropertyName") val JAVA_VERSION: String by project
+@Suppress("PropertyName") val MAIN_CLASS = "com.musinsa.stat.StatApplication"
+
+application {
+	mainClass.set(MAIN_CLASS)
+}
 
 repositories {
 	mavenCentral()
@@ -36,7 +44,7 @@ tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		// 어노테이션을 활용해 결함 탐지. Java 표준에 반영되지 않았음. @NonNull, @CheckForNull 등을 정의
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = javaVersion
+		jvmTarget = JAVA_VERSION
 	}
 }
 
