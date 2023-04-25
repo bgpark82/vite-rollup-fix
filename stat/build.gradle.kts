@@ -25,6 +25,7 @@ java.sourceCompatibility = JavaVersion.VERSION_17
 @Suppress("PropertyName") val MAIN_CLASS = "com.musinsa.stat.StatApplication"
 
 application {
+	// mainClass 선언
 	mainClass.set(MAIN_CLASS)
 }
 
