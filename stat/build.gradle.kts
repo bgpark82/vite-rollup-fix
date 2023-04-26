@@ -38,6 +38,9 @@ dependencies {
 
 	// 코틀린 리플렉션
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+	// Web
+	implementation("org.springframework.boot:spring-boot-starter-web")
 }
 
 tasks.withType<KotlinCompile> {

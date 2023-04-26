@@ -1,0 +1,12 @@
+server:
+  servlet:
+    encoding:
+      # Servlet Response UTF-8 config
+      charset: UTF-8
+      force: true
+    # Root Path config
+    context-path: /stat
+spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
