@@ -32,6 +32,7 @@ repositories {
 	mavenCentral()
 }
 
+// TODO 의존성 buildSrc로 이동
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -41,6 +42,9 @@ dependencies {
 
 	// Web
 	implementation("org.springframework.boot:spring-boot-starter-web")
+
+	// Databricks JDBC connect
+	implementation("com.databricks:databricks-jdbc:2.6.25-1")
 }
 
 tasks.withType<KotlinCompile> {
