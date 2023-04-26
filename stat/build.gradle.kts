@@ -44,6 +44,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 
 	// Databricks JDBC connect
+	// TODO 버전관리 중앙화
 	implementation("com.databricks:databricks-jdbc:2.6.25-1")
 }
 
