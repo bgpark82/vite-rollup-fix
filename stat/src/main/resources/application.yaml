@@ -10,6 +10,14 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+  datasource:
+    databricks:
+      driver: com.databricks.client.jdbc.Driver
+      url: jdbc:databricks:Server=musinsa-data-ws.cloud.databricks.com;Port=443;HTTPPath=/sql/1.0/warehouses/c0ee970a9c3ed562;UID=dapiac03c1cb4ac710049a572888106b65e3;ConnCatalog=datamart;ConnSchema=datamart
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
 
 # Databricks JDBC
 # @see https://docs.databricks.com/integrations/jdbc-odbc-bi.html#configure-the-databricks-odbc-and-jdbc-drivers

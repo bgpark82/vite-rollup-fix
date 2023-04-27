@@ -1,10 +1,14 @@
 package com.musinsa.stat.databricks
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
+import org.springframework.context.annotation.Bean
+import org.springframework.jdbc.core.JdbcTemplate
 import java.sql.Connection
 import java.sql.DriverManager
 import java.util.*
+import javax.sql.DataSource
 
 
 /**
@@ -38,5 +42,11 @@ class DatabricksResolver(
                 .append(connSchema)
                 .toString(), properties
         )
+    }
+
+
+    @Bean
+    fun databricksJdbcTemplate(@Qualifier("databricksDataSource") databricksDataSource: DataSource): JdbcTemplate {
+        return JdbcTemplate(databricksDataSource)
     }
 }
