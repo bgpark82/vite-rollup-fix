@@ -9,25 +9,28 @@ import java.util.*
 
 /**
  * Databricks 연결 후 값을 가져온다.
+ * @see https://docs.databricks.com/integrations/jdbc-odbc-bi.html#configure-the-databricks-odbc-and-jdbc-drivers
  */
 @ConstructorBinding
 @ConfigurationProperties(prefix = "databricks")
 class DatabricksResolver(
-    private val hostname: String, private val port:
-    String, private val httpPath: String
+    internal val hostname: String,
+    internal val port: String,
+    internal val httpPath: String,
+    internal val token: String,
+    internal val jdbcConnection: String,
+    internal val connCatalog: String,
+    internal val connSchema: String
 ) {
     fun getSQLWarehouseConnection(): Connection {
-        // TODO 기본 카탈로그, 기본 스키마 지정
-        // 어플리케이션에서 SQL조립 시, UseNativeQuery=1 설정
-        val jdbcURL =
-            StringBuilder("jdbc:databricks://").append(hostname).append(":")
-                .append(port)
-                .append("/default;transportMode=http;ssl=1;AuthMech=3;UID=token;UseNativeQuery=1;httpPath=")
-                .append(httpPath).toString()
-        val p = Properties()
-        p["PWD"] = "dapi1344090d9b6aa8888cd6a05e3534dd15"
+        val properties = Properties()
+        properties["PWD"] = token
 
-
-        return DriverManager.getConnection(jdbcURL, p)
+        return DriverManager.getConnection(
+            StringBuilder(jdbcConnection).append(hostname).append(":")
+                .append(port).append(httpPath).append(connCatalog)
+                .append(connSchema)
+                .toString(), properties
+        )
     }
 }

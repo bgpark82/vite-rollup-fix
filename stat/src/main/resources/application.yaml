@@ -12,7 +12,13 @@ spring:
       fail-on-empty-beans: false
 
 # Databricks JDBC
+# @see https://docs.databricks.com/integrations/jdbc-odbc-bi.html#configure-the-databricks-odbc-and-jdbc-drivers
 databricks:
-    hostname: musinsa-data-ws.cloud.databricks.com
-    port: 443
-    http-path: /sql/1.0/warehouses/c0ee970a9c3ed562
+  hostname: musinsa-data-ws.cloud.databricks.com
+  port: 443
+  http-path: ;httpPath=/sql/1.0/warehouses/c0ee970a9c3ed562
+  # TODO Move AWS Secret Manager
+  token: dapiac03c1cb4ac710049a572888106b65e3
+  jdbc-connection: jdbc:databricks://
+  conn-catalog: ;ConnCatalog=datamart
+  conn-schema: ;ConnSchema=datamart

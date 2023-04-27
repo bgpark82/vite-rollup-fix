@@ -1,42 +1,29 @@
 package com.musinsa.stat.databricks
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
 
+
+@SpringBootTest(webEnvironment = WebEnvironment.NONE)
 internal class DatabricksResolverTest {
-    private val databricksResolver = DatabricksResolver()
-
+    @Autowired
+    private lateinit var databricksResolver: DatabricksResolver
 
     @Test
-    fun `데이터브릭스 연결 성공`() {
-        // given
-//        val ord_state_date = Field("ord_state_date", FieldType.nullable(
-//            ArrowType.Utf8()
-//        ), null)
-
-        // when
-        val conn = databricksResolver.getSQLWarehouseConnection()
-        println(conn.schema)
-        println(conn.catalog)
-        val testQuery = "SELECT ord_state_date FROM datamart.datamart.orders LIMIT 10"
-//        val testQuery = "SELECT 1 FROM dual"
-        val stmt = conn.createStatement()
-        val rs = stmt.executeQuery(testQuery)
-
-//        val allocator = RootAllocator(Long.MAX_VALUE)
-//        val iterator = JdbcToArrow.sqlToArrowVectorIterator(rs, allocator)
-//        while (iterator.hasNext()) {
-//            val root: VectorSchemaRoot = iterator.next()
-//            println(root)
-//        }
-
-        while(rs.next()) {
-            println(rs.toString())
-        }
-
-
-        conn.close()
-        // then
-
+    fun 데이터브릭스_JDBC연결_정보를_가져온다() {
+        assertAll({
+            assertThat(databricksResolver.hostname).isEqualTo("musinsa-data-ws.cloud.databricks.com")
+            assertThat(databricksResolver.port).isEqualTo("443")
+            assertThat(databricksResolver.httpPath).isEqualTo(";httpPath=/sql/1.0/warehouses/c0ee970a9c3ed562")
+//            assertThat(databricksResolver.token).isEqualTo("")
+            assertThat(databricksResolver.jdbcConnection).isEqualTo("jdbc:databricks://")
+            assertThat(databricksResolver.connCatalog).isEqualTo(";ConnCatalog=datamart")
+            assertThat(databricksResolver.connSchema).isEqualTo(";ConnSchema=datamart")
+        })
     }
 
 }
