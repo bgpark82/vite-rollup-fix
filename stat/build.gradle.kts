@@ -46,6 +46,9 @@ dependencies {
 	// Databricks JDBC connect
 	// TODO 버전관리 중앙화
 	implementation("com.databricks:databricks-jdbc:2.6.25-1")
+
+	// SpringBoot Config Annotation 사용을 위해 추가
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {

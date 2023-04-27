@@ -10,3 +10,9 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+# Databricks JDBC
+databricks:
+    hostname: musinsa-data-ws.cloud.databricks.com
+    port: 443
+    http-path: /sql/1.0/warehouses/c0ee970a9c3ed562
