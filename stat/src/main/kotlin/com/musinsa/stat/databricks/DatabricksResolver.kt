@@ -22,10 +22,16 @@ class DatabricksResolver(
     internal val connCatalog: String,
     internal val connSchema: String
 ) {
+    /**
+     * 데이터브릭스 JDBC 커넥션을 생성 후 가져온다.
+     *
+     * @return JDBC 커넥션
+     */
     fun getSQLWarehouseConnection(): Connection {
         val properties = Properties()
         properties["PWD"] = token
 
+        // TODO 커넥션 생성 실패 throw ~ catch Exception 추가
         return DriverManager.getConnection(
             StringBuilder(jdbcConnection).append(hostname).append(":")
                 .append(port).append(httpPath).append(connCatalog)
