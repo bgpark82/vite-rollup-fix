@@ -43,10 +43,4 @@ class DatabricksResolver(
                 .toString(), properties
         )
     }
-
-
-    @Bean
-    fun databricksJdbcTemplate(@Qualifier("databricksDataSource") databricksDataSource: DataSource): JdbcTemplate {
-        return JdbcTemplate(databricksDataSource)
-    }
 }
