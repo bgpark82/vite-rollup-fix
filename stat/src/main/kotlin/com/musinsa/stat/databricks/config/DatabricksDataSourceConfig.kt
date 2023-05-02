@@ -1,4 +1,4 @@
-package com.musinsa.stat.databricks
+package com.musinsa.stat.databricks.config
 
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
@@ -8,8 +8,17 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.core.JdbcTemplate
 import javax.sql.DataSource
 
+/**
+ * Databricks JDBC Template 생성
+ *
+ */
 @Configuration
-class DatabricksDatasource {
+class DatabricksDataSourceConfig {
+
+    /**
+     * databricks connection config Bean 생성
+     */
+    @Bean
     @ConfigurationProperties("spring.datasource.databricks")
     fun databricksDataSourceProperties(): DataSourceProperties {
         return DataSourceProperties()
@@ -22,6 +31,9 @@ class DatabricksDatasource {
             .build()
     }
 
+    /**
+     * JDBC Template 생성
+     */
     @Bean
     fun databricksJdbcTemplate(@Qualifier("databricksDataSource") databricksDataSource: DataSource): JdbcTemplate {
         return JdbcTemplate(databricksDataSource)
