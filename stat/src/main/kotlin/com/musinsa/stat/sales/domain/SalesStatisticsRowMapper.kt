@@ -7,7 +7,7 @@ import java.sql.ResultSet
 /**
  * 매출통계 RowMapper
  */
-class SalesStatisticsRowMapper : RowMapper<SalesStatistics> {
+object SalesStatisticsRowMapper : RowMapper<SalesStatistics> {
     override fun mapRow(rs: ResultSet, rowNum: Int): SalesStatistics {
         return SalesStatistics(
             date = rs.getString("date"),
