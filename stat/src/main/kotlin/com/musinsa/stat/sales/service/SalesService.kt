@@ -27,6 +27,7 @@ class SalesService(
         specialtyCode: String,
         mdId: String
     ): List<SalesStatistics> {
+
         return emptyList()
     }
 }
