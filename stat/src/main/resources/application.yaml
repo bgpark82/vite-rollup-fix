@@ -22,6 +22,5 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
-        # Spring이 Datasource의 서로 다른 SQL 언어를 자동으로 탐지
         dialect: org.hibernate.dialect.SQLServerDialect
         format_sql: true

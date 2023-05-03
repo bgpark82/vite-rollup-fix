@@ -233,5 +233,5 @@ data class SalesStatistics(
     /**
      * 이익율(VAT별도)
      */
-    val profitMarginExcludedVAT: Float,
+    val profitMarginExcludedVAT: Float
 )
