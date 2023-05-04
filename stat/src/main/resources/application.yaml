@@ -15,7 +15,7 @@ spring:
       driver-class-name: com.databricks.client.jdbc.Driver
       # TODO Move AWS Secret Manager
       # @see https://docs.databricks.com/integrations/jdbc-odbc-bi.html#configure-the-databricks-odbc-and-jdbc-drivers
-      url: jdbc:databricks://musinsa-data-ws.cloud.databricks.com;Port=443;TransportMode=HTTP;HTTPPath=/sql/1.0/warehouses/c0ee970a9c3ed562;PWD=dapiac03c1cb4ac710049a572888106b65e3;ConnCatalog=datamart;ConnSchema=datamart;UseNativeQuery=1;EnableArrow=0;
+      url: jdbc:databricks://musinsa-data-ws.cloud.databricks.com;Port=443;TransportMode=HTTP;HTTPPath=/sql/1.0/warehouses/c0ee970a9c3ed562;PWD=dapiac03c1cb4ac710049a572888106b65e3;UseNativeQuery=1;EnableArrow=0;
   jpa:
     show-sql: true
     hibernate:
@@ -24,3 +24,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
         format_sql: true
+
+# Custom Properties
+custom:
+  # Bricklane
+  databricks:
+    http-connection:
+      timeout: 10
+      musinsa-data-ws-domain: https://musinsa-data-ws.cloud.databricks.com
+      retrieve-api-path: /api/2.0/preview/sql/queries
+      # TODO Move AWS Secret Manager
+      authorization-token: dapiac03c1cb4ac710049a572888106b65e3
