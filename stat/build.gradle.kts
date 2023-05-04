@@ -58,6 +58,9 @@ dependencies {
 
     // JPA
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // Kotlin Jackson
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
 }
 
 tasks.withType<KotlinCompile> {

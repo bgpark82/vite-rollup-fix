@@ -1,6 +1,9 @@
 package com.musinsa.stat.databricks.service
 
+import aj.org.objectweb.asm.TypeReference
 import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
+import com.musinsa.stat.databricks.dto.RetrieveQuery
+import com.musinsa.stat.util.ObjectMapperFactory
 import org.springframework.stereotype.Service
 import java.net.URI
 import java.net.http.HttpClient
@@ -41,9 +44,14 @@ class DatabricksClient(private val config: DatabricksHttpConnectionConfig) {
                     .append(queryId)
                     .toString()
             )
-            return response.get().body()
+            val temp = ObjectMapperFactory.readValue(response.get().body(), RetrieveQuery.class)
+            println(temp)
+            println("TEST DONE")
+            return temp.query
         } catch (e: Exception) {
             // TODO Exception throw
+            println("ERROR")
+            println(e.message)
         }
 
         return ""
