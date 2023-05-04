@@ -32,6 +32,7 @@ custom:
     http-connection:
       timeout: 10
       musinsa-data-ws-domain: https://musinsa-data-ws.cloud.databricks.com
+      # @see "https://docs.databricks.com/sql/api/queries-dashboards.html#operation/sql-analytics-get-query"
       retrieve-api-path: /api/2.0/preview/sql/queries
       # TODO Move AWS Secret Manager
       authorization-token: Bearer dapiac03c1cb4ac710049a572888106b65e3
