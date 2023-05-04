@@ -48,7 +48,7 @@ class Query {
             "  ,SUM(om.partner_fee) as `partnerFees`\n" +
             "  ,SUM(om.partner_support_amt) as `partnerSellGrants`\n" +
             "  ,ROUND(IFNULL(SUM(om.partner_profit)/SUM(om.partner_amt) * 100, 0), 2) as `partnerProfitMargin`\n" +
-            "  ,CEIL(SUM(om.not_included_vat_revenue)) as `revenueExcludedVAT`\n" +
+            "  ,CEIL(SUM(om.not_included_vat_revenue)) as `salesExcludedVAT`\n" +
             "  ,CEIL(SUM(om.not_included_vat_wonga)) as `originalPriceExcludedVAT`\n" +
             "  ,CEIL(SUM(om.not_included_vat_profit)) as `profitExcludedVAT`\n" +
             "  ,ROUND(CEIL(SUM((om.not_included_vat_revenue)-(om.head_wonga/11*10)))/CEIL(SUM(om.price*om.qty))*100, 2) as `profitMarginExcludedVAT`\n" +
