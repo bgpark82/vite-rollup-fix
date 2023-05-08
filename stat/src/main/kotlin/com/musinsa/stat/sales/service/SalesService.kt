@@ -1,6 +1,5 @@
 package com.musinsa.stat.sales.service
 
-import com.musinsa.stat.sales.domain.Query
 import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
 import com.musinsa.stat.sales.dto.SalesStatistics
 import org.springframework.beans.factory.annotation.Qualifier
@@ -28,7 +27,8 @@ class SalesService(
 //        specialtyCode: String,
 //        mdId: String
     ): List<SalesStatistics> {
-        val testQuery = Query().daily
+//        val testQuery = Query().daily
+        val testQuery = "TEST"
         val rs = jdbcTemplate.query(testQuery, SalesStatisticsRowMapper)
         println(rs)
         return emptyList()
