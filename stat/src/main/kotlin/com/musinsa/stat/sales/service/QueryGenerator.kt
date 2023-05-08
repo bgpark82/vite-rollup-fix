@@ -10,6 +10,21 @@ object QueryGenerator {
     val END_DATE = "\\{\\{endDate}}".toRegex()
 
     /**
+     * @param startDate 시작날짜
+     * @param endDate 종료날짜
+     * @param tag 태그
+     * @param salesStart 매출시점
+     * @param partnerId 업체
+     * @param category
+     * @param styleNumber 스타일넘버
+     * @param goodsNumber 상품코드
+     * @param brandId 브랜드
+     * @param couponNumber 쿠폰
+     * @param adCode 광고코드
+     * @param specialtyCode 전문관코드
+     * @param mdId 담당MD
+     *
+     * @return 치환된 쿼리
      *
      */
     fun generate(
@@ -27,8 +42,9 @@ object QueryGenerator {
         adCode: String,
         specialtyCode: String,
         mdId: String
-    ) {
+    ): String {
 
+        return ""
     }
 
     /**
