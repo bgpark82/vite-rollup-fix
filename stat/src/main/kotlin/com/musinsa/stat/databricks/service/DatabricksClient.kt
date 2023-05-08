@@ -1,9 +1,8 @@
 package com.musinsa.stat.databricks.service
 
-import aj.org.objectweb.asm.TypeReference
 import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.stat.databricks.dto.RetrieveQuery
-import com.musinsa.stat.util.ObjectMapperFactory
+import com.musinsa.stat.util.ObjectMapperFactory.readValue
 import org.springframework.stereotype.Service
 import java.net.URI
 import java.net.http.HttpClient
@@ -20,7 +19,8 @@ class DatabricksClient(private val config: DatabricksHttpConnectionConfig) {
      * @param uri URI
      */
     private fun getHttpRequest(uri: String): HttpRequest {
-        return HttpRequest.newBuilder(URI(uri)).GET().timeout(Duration.ofSeconds(config.TIMEOUT!!.toLong()))
+        return HttpRequest.newBuilder(URI(uri)).GET()
+            .timeout(Duration.ofSeconds(config.TIMEOUT!!.toLong()))
             .header("Authorization", config.AUTHORIZATION_TOKEN)
             .build()
     }
@@ -40,20 +40,19 @@ class DatabricksClient(private val config: DatabricksHttpConnectionConfig) {
     fun getDatabricksQuery(queryId: String): String {
         try {
             val response = getHttpResponse(
-                StringBuilder().append(config.MUSINSA_DATA_WS_DOMAIN).append(config.RETRIEVE_API_PATH).append("/")
+                StringBuilder().append(config.MUSINSA_DATA_WS_DOMAIN)
+                    .append(config.RETRIEVE_API_PATH).append("/")
                     .append(queryId)
                     .toString()
             )
-            val temp = ObjectMapperFactory.readValue(response.get().body(), RetrieveQuery.class)
-            println(temp)
-            println("TEST DONE")
-            return temp.query
-        } catch (e: Exception) {
-            // TODO Exception throw
-            println("ERROR")
-            println(e.message)
-        }
 
-        return ""
+            return readValue(
+                response.get().body(), RetrieveQuery::class
+                    .java
+            ).query
+        } catch (e: Exception) {
+            // TODO 예외처리 추가
+            throw Exception(e)
+        }
     }
 }
