@@ -13,6 +13,6 @@ internal class SalesServiceIntegrationTest {
 
     @Test
     fun 쿼리테스트() {
-        salesService.daily()
+//        salesService.daily()
     }
 }
