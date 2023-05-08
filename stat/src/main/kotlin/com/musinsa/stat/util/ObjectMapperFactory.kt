@@ -4,8 +4,6 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 /**
  * ObjectMapper
- *
- * @see "https://www.baeldung.com/kotlin/jackson-kotlin"
  */
 object ObjectMapperFactory {
     private val mapper = jacksonObjectMapper()

@@ -61,6 +61,10 @@ dependencies {
 
     // Kotlin Jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
+
+    // Mockito-Kotlin
+    // @see https://github.com/mockito/mockito-kotlin/wiki/Mocking-and-verifying
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
 }
 
 tasks.withType<KotlinCompile> {

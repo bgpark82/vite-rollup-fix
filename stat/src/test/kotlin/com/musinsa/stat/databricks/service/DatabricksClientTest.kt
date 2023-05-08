@@ -1,16 +1,31 @@
 package com.musinsa.stat.databricks.service
 
+import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
+import com.musinsa.stat.util.HttpClient
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
+import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DatabricksClientTest {
-    @Autowired
-    private lateinit var databricksClient: DatabricksClient
+    private val httpClient: HttpClient = mock()
+    private val config = DatabricksHttpConnectionConfig()
 
     @Test
     fun test() {
-        println(databricksClient.getDatabricksQuery("5d7fad6c-1fdd-461e-8102-2e2fa39381a5?o=3626753574208338"))
+        // given
+        val databricksClient = DatabricksClient(config, httpClient)
+        whenever(
+            httpClient.getHttpResponse(
+                anyOrNull(), anyOrNull(),
+                anyOrNull()
+            )
+        ).thenReturn("{\"query_draft\": null, \"query\": \"쿼리 결과값\"}")
+
+        // when, then
+        assertThat(databricksClient.getDatabricksQuery("Test queryId")).isEqualTo(
+            "쿼리 결과값"
+        )
     }
 }

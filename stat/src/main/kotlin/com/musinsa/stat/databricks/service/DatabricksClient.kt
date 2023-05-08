@@ -2,14 +2,16 @@ package com.musinsa.stat.databricks.service
 
 import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.stat.databricks.dto.RetrieveQuery
-import com.musinsa.stat.util.HttpClient.AUTHORIZATION
-import com.musinsa.stat.util.HttpClient.getHttpResponse
+import com.musinsa.stat.util.HttpClient
 import com.musinsa.stat.util.ObjectMapperFactory.readValue
 import org.springframework.stereotype.Service
 import java.time.Duration
 
 @Service
-class DatabricksClient(private val config: DatabricksHttpConnectionConfig) {
+class DatabricksClient(
+    private val config: DatabricksHttpConnectionConfig,
+    private val httpClient: HttpClient
+) {
     /**
      * 데이터브릭스에 저장된 쿼리를 가져온다.
      *
@@ -19,20 +21,25 @@ class DatabricksClient(private val config: DatabricksHttpConnectionConfig) {
      */
     fun getDatabricksQuery(queryId: String): String {
         try {
-            val response = getHttpResponse(
+            val response = httpClient.getHttpResponse(
                 StringBuilder().append(config.MUSINSA_DATA_WS_DOMAIN)
                     .append(config.RETRIEVE_API_PATH).append("/")
                     .append(queryId)
                     .toString(),
-                Duration.ofSeconds(config.TIMEOUT!!.toLong()),
-                arrayOf(AUTHORIZATION, config.AUTHORIZATION_TOKEN!!)
+
+                // TODO 타임아웃 주입 못받으면 에러 throw
+                Duration.ofSeconds(config.TIMEOUT?.toLong() ?: 10),
+
+                // TODO 토큰 주입 못받으면 에러 throw
+                arrayOf(
+                    httpClient.AUTHORIZATION,
+                    config.AUTHORIZATION_TOKEN ?: "test"
+                )
             )
-            return readValue(
-                response.get().body(),
-                RetrieveQuery::class.java
-            ).query
+            return readValue(response, RetrieveQuery::class.java).query
         } catch (e: Exception) {
             // TODO 예외처리 추가
+            e.printStackTrace()
             throw Exception(e)
         }
     }

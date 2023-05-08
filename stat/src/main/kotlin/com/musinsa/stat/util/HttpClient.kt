@@ -1,16 +1,17 @@
 package com.musinsa.stat.util
 
+import org.springframework.stereotype.Component
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.time.Duration
-import java.util.concurrent.CompletableFuture
 
 /**
  * HTTP Client
  */
-object HttpClient {
+@Component
+class HttpClient {
     val AUTHORIZATION = "Authorization"
 
     /**
@@ -40,15 +41,15 @@ object HttpClient {
      * @param timeout 타임아웃. 기본값: 10초
      * @param headers 헤더
      *
-     * @return CompletableFuture<HttpResponse<String>>
+     * @return 결과값 Body
      */
     fun getHttpResponse(
         uri: String,
         timeout: Duration = Duration.ofSeconds(10), headers: Array<String>
-    ): CompletableFuture<HttpResponse<String>> {
+    ): String {
         return HttpClient.newHttpClient().sendAsync(
             getHttpRequest(uri, timeout, headers),
             HttpResponse.BodyHandlers.ofString()
-        )
+        ).get().body()
     }
 }
