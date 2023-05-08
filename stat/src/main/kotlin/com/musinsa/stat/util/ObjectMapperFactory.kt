@@ -13,8 +13,8 @@ object ObjectMapperFactory {
     /**
      * JSON String을 valueType 객체로 생성
      *
-     * @param jsonString: 문자열
-     * @param valueType: 클래스타입
+     * @param jsonString 문자열
+     * @param valueType 클래스타입
      *
      * @return valueType 객체
      */

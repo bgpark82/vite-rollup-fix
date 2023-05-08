@@ -37,6 +37,13 @@ class DatabricksClient(private val config: DatabricksHttpConnectionConfig) {
         )
     }
 
+    /**
+     * 데이터브릭스에 저장된 쿼리를 가져온다.
+     *
+     * @param queryId 데이터브릭스 query uuid
+     *
+     * @return 쿼리
+     */
     fun getDatabricksQuery(queryId: String): String {
         try {
             val response = getHttpResponse(
