@@ -31,7 +31,6 @@ class SalesService(
 //        specialtyCode: String,
 //        mdId: String
     ): List<SalesStatistics> {
-//        val testQuery = Query().daily
         val query = databricksClient.getDatabricksQuery(queryStore.daily)
         println(query)
         val rs = jdbcTemplate.query(query, SalesStatisticsRowMapper)
