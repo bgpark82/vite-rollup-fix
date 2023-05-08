@@ -18,6 +18,8 @@ class SalesService(
 ) {
     // TODO 필수값 체크
     /**
+     * 일별 매출통계를 가져온다.
+     *
      * @param startDate 시작날짜
      * @param endDate 종료날짜
      * @param tag 태그

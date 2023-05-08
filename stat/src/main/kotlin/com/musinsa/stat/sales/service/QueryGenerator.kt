@@ -8,6 +8,7 @@ import com.musinsa.stat.sales.domain.SalesStart
 object QueryGenerator {
     val START_DATE = "\\{\\{startDate}}".toRegex()
     val END_DATE = "\\{\\{endDate}}".toRegex()
+    val TAG = "\\{\\{tag}}".toRegex()
 
     /**
      * @param startDate 시작날짜
@@ -47,13 +48,6 @@ object QueryGenerator {
         return ""
     }
 
-    /**
-     * 시작날짜와 종료날짜를 추가한다.
-     *
-     * @param query 원본 쿼리
-     *
-     * @return 시작날짜와 종료날짜가 추가된 쿼리.
-     */
     fun addStarDateAndEndDate(
         query: String,
         startDate: String,
@@ -61,5 +55,14 @@ object QueryGenerator {
     ): String {
         return query.replace(START_DATE, startDate)
             .replace(END_DATE, endDate)
+    }
+
+    fun addTag(query: String, tag: List<String>): String {
+//        if(tag.isEmpty())
+
+        return query.replace(
+            TAG,
+            tag.joinToString(separator = "', '", prefix = "'", postfix = "'")
+        )
     }
 }
