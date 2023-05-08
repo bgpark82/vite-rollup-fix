@@ -58,11 +58,17 @@ object QueryGenerator {
     }
 
     fun addTag(query: String, tag: List<String>): String {
-//        if(tag.isEmpty())
+        if (tag.isEmpty()) {
+            // TODO tag 주석 처리
+        }
 
         return query.replace(
             TAG,
-            tag.joinToString(separator = "', '", prefix = "'", postfix = "'")
+            tag.joinToString(
+                separator = "', '",
+                prefix = "'",
+                postfix = "'"
+            )
         )
     }
 }

@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
+import com.musinsa.stat.sales.fixture.QueryReplaced.SAMPLE_QUERY_EMPTY_TAG
 import com.musinsa.stat.sales.fixture.QueryReplaced.SAMPLE_QUERY_SET_START_END_DATE
 import com.musinsa.stat.sales.fixture.QueryReplaced.SAMPLE_QUERY_SET_TAG
 import org.assertj.core.api.Assertions.assertThat
@@ -56,7 +57,12 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 태그가_존재하지_않으면_쿼리에서_삭제된다() {
-
+    fun 태그가_존재하지_않으면_쿼리에서_주석처리_된다() {
+        assertThat(
+            queryGenerator.addTag(
+                SAMPLE_QUERY,
+                emptyList()
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_TAG)
     }
 }

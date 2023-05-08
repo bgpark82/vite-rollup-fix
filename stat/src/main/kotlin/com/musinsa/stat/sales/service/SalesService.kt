@@ -22,7 +22,7 @@ class SalesService(
      *
      * @param startDate 시작날짜
      * @param endDate 종료날짜
-     * @param tag 태그
+     * @param tag 태그. 기본값: 빈배열
      * @param salesStart 매출시점
      * @param partnerId 업체
      * @param category
@@ -40,7 +40,7 @@ class SalesService(
     fun daily(
         startDate: String,
         endDate: String,
-        tag: List<String>,
+        tag: List<String> = emptyList(),
         salesStart: SalesStart,
         partnerId: String,
         category: String,
