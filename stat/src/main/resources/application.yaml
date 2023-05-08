@@ -36,3 +36,6 @@ custom:
       retrieve-api-path: /api/2.0/preview/sql/queries
       # TODO Move AWS Secret Manager
       authorization-token: Bearer dapiac03c1cb4ac710049a572888106b65e3
+    # statistics query id
+    stats-query-id:
+      daily: a452ce56-849a-4d38-ad2f-244d6fbd972c?o=3626753574208338

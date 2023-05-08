@@ -1,5 +1,7 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.stat.databricks.service.DatabricksClient
+import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
 import com.musinsa.stat.sales.dto.SalesStatistics
 import org.springframework.beans.factory.annotation.Qualifier
@@ -8,7 +10,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class SalesService(
-    @Qualifier("databricksJdbcTemplate") val jdbcTemplate: JdbcTemplate
+    @Qualifier("databricksJdbcTemplate") val jdbcTemplate: JdbcTemplate,
+    val queryStore: QueryStore,
+    val databricksClient: DatabricksClient
 ) {
     // TODO 필수값 체크
     // TODO Javadoc 추가
@@ -28,8 +32,9 @@ class SalesService(
 //        mdId: String
     ): List<SalesStatistics> {
 //        val testQuery = Query().daily
-        val testQuery = "TEST"
-        val rs = jdbcTemplate.query(testQuery, SalesStatisticsRowMapper)
+        val query = databricksClient.getDatabricksQuery(queryStore.daily)
+        println(query)
+        val rs = jdbcTemplate.query(query, SalesStatisticsRowMapper)
         println(rs)
         return emptyList()
     }
