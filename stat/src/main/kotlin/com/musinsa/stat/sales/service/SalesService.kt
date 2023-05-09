@@ -17,6 +17,8 @@ class SalesService(
     val databricksClient: DatabricksClient
 ) {
     // TODO 필수값 체크
+    // TODO 테스트 코드 추가
+    // TODO 합계/평균 응답값에 추가
     /**
      * 일별 매출통계를 가져온다.
      *
