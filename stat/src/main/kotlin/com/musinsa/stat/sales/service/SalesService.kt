@@ -81,6 +81,8 @@ class SalesService(
             ), SalesStatisticsRowMapper
         )
 
+//        val sum = queryResult.stream().map { day -> day. }
+
         // TODO 합계/평균 응답값에 추가
         return SalesStatisticsResponse(
             sum = queryResult[0],
