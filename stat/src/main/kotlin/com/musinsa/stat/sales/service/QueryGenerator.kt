@@ -189,4 +189,18 @@ object QueryGenerator {
     fun addStyleNumber(query: String, styleNumber: String?): String {
         return replaceQueryOrSetAnnotation(query, STYLE_NUMBER, styleNumber)
     }
+
+    /**
+     * 상품코드 추가
+     */
+    fun addGoodsNumber(query: String, goodsNumber: String?): String {
+        return replaceQueryOrSetAnnotation(query, GOODS_NUMBER, goodsNumber)
+    }
+
+    /**
+     * 브랜드 추가
+     */
+    fun addBrandId(query: String, brandId: String?): String {
+        return replaceQueryOrSetAnnotation(query, BRAND_ID, brandId)
+    }
 }

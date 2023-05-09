@@ -2,11 +2,15 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_BRAND_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_CATEGORY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_GOODS_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_STYLE_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_TAG
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_BRAND_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_CATEGORY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_GOODS_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SALES_START
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_START_END_DATE
@@ -202,22 +206,44 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 상품코드_추가() {
-
+        assertThat(
+            queryGenerator.addGoodsNumber(
+                SAMPLE_QUERY,
+                "1387960"
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_GOODS_NUMBER)
     }
 
-    @Test
-    fun 상품코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun 상품코드가_존재하지_않으면_쿼리에서_주석처리_된다(goodsNumber: String?) {
+        assertThat(
+            queryGenerator.addGoodsNumber(
+                SAMPLE_QUERY,
+                goodsNumber
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_GOODS_NUMBER)
     }
 
     @Test
     fun 브랜드_추가() {
-
+        assertThat(
+            queryGenerator.addBrandId(
+                SAMPLE_QUERY,
+                "musinsastandard"
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_BRAND_ID)
     }
 
-    @Test
-    fun 브랜드가_존재하지_않으면_쿼리에서_주석처리_된다() {
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun 브랜드가_존재하지_않으면_쿼리에서_주석처리_된다(brandId: String?) {
+        assertThat(
+            queryGenerator.addBrandId(
+                SAMPLE_QUERY,
+                brandId
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_BRAND_ID)
     }
 
     @Test
