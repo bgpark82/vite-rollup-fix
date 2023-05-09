@@ -17,7 +17,6 @@ class SalesService(
     val queryStore: QueryStore,
     val databricksClient: DatabricksClient
 ) {
-    // TODO 필수값 체크
     // TODO 테스트 코드 추가
     /**
      * 일별 매출통계를 가져온다.
