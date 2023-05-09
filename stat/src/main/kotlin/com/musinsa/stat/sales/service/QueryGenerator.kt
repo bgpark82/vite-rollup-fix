@@ -103,7 +103,7 @@ object QueryGenerator {
         endDate: String,
         tag: List<String>,
         salesStart: SalesStart,
-        partnerId: String,
+        partnerId: String?,
         category: String,
         styleNumber: String,
         goodsNumber: String,
@@ -154,6 +154,15 @@ object QueryGenerator {
      */
     fun addSalesStart(query: String, salesStart: SalesStart): String {
         return query.replace(SALES_START, salesStart.toString())
+    }
+
+    /**
+     * 업체 추가
+     */
+    fun addPartnerId(query: String, partnerId: String?): String {
+        if (partnerId.isNullOrBlank())
+            return annotateOption(query, PARTNER_ID)
+        return query.replace(PARTNER_ID, partnerId)
     }
 
 }

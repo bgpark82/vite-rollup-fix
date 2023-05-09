@@ -2,12 +2,16 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_TAG
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SALES_START
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_START_END_DATE
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_TAG
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.NullAndEmptySource
 import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -131,12 +135,23 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 업체_추가() {
-
+        assertThat(
+            queryGenerator.addPartnerId(
+                SAMPLE_QUERY,
+                "musinsastandard"
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_PARTNER_ID)
     }
 
-    @Test
-    fun 업체가_존재하지_않으면_쿼리에서_주석처리_된다() {
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun 업체가_존재하지_않으면_쿼리에서_주석처리_된다(partnerId: String?) {
+        assertThat(
+            queryGenerator.addPartnerId(
+                SAMPLE_QUERY,
+                partnerId
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_PARTNER_ID)
     }
 
     @Test
