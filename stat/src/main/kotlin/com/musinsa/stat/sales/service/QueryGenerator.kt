@@ -101,6 +101,9 @@ object QueryGenerator {
         return ""
     }
 
+    /**
+     * 시작 날짜와 종료 날짜 추가
+     */
     fun addStarDateAndEndDate(
         query: String,
         startDate: String,
@@ -110,6 +113,9 @@ object QueryGenerator {
             .replace(END_DATE, endDate)
     }
 
+    /**
+     * 태그 추가
+     */
     fun addTag(query: String, tag: List<String>): String {
         if (tag.isEmpty())
             return annotateOption(query, TAG)
