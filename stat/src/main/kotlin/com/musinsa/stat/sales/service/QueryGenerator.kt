@@ -78,6 +78,9 @@ object QueryGenerator {
      * @param adCode 광고코드
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
+     * @param orderBy 정렬키
+     * @param size 페이징 시 가져올 원소 수
+     * @param number 가져올 페이지
      *
      * @return 치환된 쿼리
      *
@@ -91,12 +94,15 @@ object QueryGenerator {
         partnerId: String,
         category: String,
         styleNumber: String,
-        goodsNumber: Long,
+        goodsNumber: String,
         brandId: String,
         couponNumber: String,
         adCode: String,
         specialtyCode: String,
-        mdId: String
+        mdId: String,
+        orderBy: String,
+        size: Long,
+        number: Long
     ): String {
 
         return ""

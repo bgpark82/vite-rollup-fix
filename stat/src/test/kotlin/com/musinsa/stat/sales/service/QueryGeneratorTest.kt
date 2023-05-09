@@ -71,7 +71,13 @@ internal class QueryGeneratorTest {
             anyOrNull(),
             anyOrNull(),
             anyOrNull(),
-            anyOrNull(), anyOrNull(), anyOrNull(), anyOrNull()
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull(),
+            anyOrNull()
         )
         verify(queryGenerator, times(1)).addStarDateAndEndDate(
             anyOrNull(),
@@ -122,7 +128,17 @@ internal class QueryGeneratorTest {
     }
 
     @Test
+    fun 업체가_존재하지_않으면_쿼리에서_주석처리_된다() {
+
+    }
+
+    @Test
     fun 카테고리_추가() {
+
+    }
+
+    @Test
+    fun 카테고리가_존재하지_않으면_쿼리에서_주석처리_된다() {
 
     }
 
@@ -132,7 +148,17 @@ internal class QueryGeneratorTest {
     }
 
     @Test
+    fun 스타일넘버가_존재하지_않으면_쿼리에서_주석처리_된다() {
+
+    }
+
+    @Test
     fun 상품코드_추가() {
+
+    }
+
+    @Test
+    fun 상품코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
 
     }
 
@@ -142,7 +168,17 @@ internal class QueryGeneratorTest {
     }
 
     @Test
+    fun 브랜드가_존재하지_않으면_쿼리에서_주석처리_된다() {
+
+    }
+
+    @Test
     fun 쿠폰_추가() {
+
+    }
+
+    @Test
+    fun 쿠폰이_존재하지_않으면_쿼리에서_주석처리_된다() {
 
     }
 
@@ -152,12 +188,42 @@ internal class QueryGeneratorTest {
     }
 
     @Test
+    fun 광고코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
+
+    }
+
+    @Test
     fun 전문관코드_추가() {
 
     }
 
     @Test
+    fun 전문관코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
+
+    }
+
+    @Test
     fun 담당MD_추가() {
+
+    }
+
+    @Test
+    fun 담당MD가_존재하지_않으면_쿼리에서_주석처리_된다() {
+
+    }
+
+    @Test
+    fun 정렬키_추가() {
+
+    }
+
+    @Test
+    fun 페이지_원소수_추가() {
+
+    }
+
+    @Test
+    fun 페이지_번호_추가() {
 
     }
 }
