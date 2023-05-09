@@ -61,19 +61,28 @@ object QueryGenerator {
     }
 
     /**
-     * 사용하지 않는 주석 제거
+     * 값이 비어있지 않으면 쿼리에 추가한다.
+     * 값이 빈 경우, 주석처리한다.
      *
      * @param query 쿼리
      * @param target 주석처리할 옵션
+     * @param value 치환할 값
      *
-     * @return 주석처리된 쿼리
+     * @return 처리된 쿼리
      */
-    fun annotateOption(query: String, target: Regex): String {
-        val array = query.lines() as ArrayList<String>
-        return annotateUnusedWhereCondition(
-            array,
-            getStringLineNumber(array, target.toString().replace("\\", ""))
-        )
+    private fun replaceQueryOrSetAnnotation(
+        query: String,
+        target: Regex,
+        value: String?
+    ): String {
+        if (value.isNullOrBlank()) {
+            val array = query.lines() as ArrayList<String>
+            return annotateUnusedWhereCondition(
+                array,
+                getStringLineNumber(array, target.toString().replace("\\", ""))
+            )
+        }
+        return query.replace(target, value)
     }
 
     /**
@@ -137,7 +146,11 @@ object QueryGenerator {
      */
     fun addTag(query: String, tag: List<String>): String {
         if (tag.isEmpty())
-            return annotateOption(query, TAG)
+            return replaceQueryOrSetAnnotation(
+                query,
+                TAG,
+                String()
+            )
 
         return query.replace(
             TAG,
@@ -160,26 +173,20 @@ object QueryGenerator {
      * 업체 추가
      */
     fun addPartnerId(query: String, partnerId: String?): String {
-        if (partnerId.isNullOrBlank())
-            return annotateOption(query, PARTNER_ID)
-        return query.replace(PARTNER_ID, partnerId)
+        return replaceQueryOrSetAnnotation(query, PARTNER_ID, partnerId)
     }
 
     /**
      * 카테고리 추가
      */
     fun addCategory(query: String, category: String?): String {
-        if (category.isNullOrBlank())
-            return annotateOption(query, CATEGORY)
-        return query.replace(CATEGORY, category)
+        return replaceQueryOrSetAnnotation(query, CATEGORY, category)
     }
 
     /**
      * 스타일넘버 추가
      */
     fun addStyleNumber(query: String, styleNumber: String?): String {
-        if (styleNumber.isNullOrBlank())
-            return annotateOption(query, STYLE_NUMBER)
-        return query.replace(STYLE_NUMBER, styleNumber)
+        return replaceQueryOrSetAnnotation(query, STYLE_NUMBER, styleNumber)
     }
 }
