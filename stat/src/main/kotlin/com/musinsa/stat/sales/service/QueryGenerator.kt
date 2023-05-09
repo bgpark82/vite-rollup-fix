@@ -48,6 +48,22 @@ object QueryGenerator {
     }
 
     /**
+     * 사용하지 않는 주석 제거
+     *
+     * @param query 쿼리
+     * @param target 주석처리할 옵션
+     *
+     * @return 주석처리된 쿼리
+     */
+    fun annotateOption(query: String, target: Regex): String {
+        val array = query.lines() as ArrayList<String>
+        return annotateUnusedWhereCondition(
+            array,
+            getStringLineNumber(array, target.toString().replace("\\", ""))
+        )
+    }
+
+    /**
      * @param startDate 시작날짜
      * @param endDate 종료날짜
      * @param tag 태그
@@ -95,9 +111,8 @@ object QueryGenerator {
     }
 
     fun addTag(query: String, tag: List<String>): String {
-        if (tag.isEmpty()) {
-            println(query.lines().stream())
-        }
+        if (tag.isEmpty())
+            return annotateOption(query, TAG)
 
         return query.replace(
             TAG,

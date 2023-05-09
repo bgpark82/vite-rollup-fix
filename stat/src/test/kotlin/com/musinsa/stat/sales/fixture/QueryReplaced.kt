@@ -272,7 +272,7 @@ object QueryReplaced {
           AND om.ord_state_date <= '{{endDate}}'
 
           -- 태그(String List)
-          -- AND gt.tag IN ({{tag}})
+        --  AND gt.tag IN ({{tag}})
 
           -- 매출시점
           AND if('{{salesStart}}'='SHIPPING_REQUEST', om.state_order, om.state_order_done) = True
