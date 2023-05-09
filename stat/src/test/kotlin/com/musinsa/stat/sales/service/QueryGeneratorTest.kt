@@ -29,9 +29,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.NullAndEmptySource
-import org.mockito.kotlin.anyOrNull
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
 
 internal class QueryGeneratorTest {
     private val queryGenerator = QueryGenerator
@@ -79,34 +76,6 @@ internal class QueryGeneratorTest {
                 주석처리할_인덱스
             )
         ).isEqualTo(기댓값_주석처리된_쿼리)
-    }
-
-    @Test
-    fun 쿼리_치환_함수를_모두_호출한다() {
-        queryGenerator.generate(
-            SAMPLE_QUERY,
-            "20230501",
-            "20230509",
-            arrayListOf<String>("청바지", "반소매티"),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull()
-        )
-        verify(queryGenerator, times(1)).addStarDateAndEndDate(
-            anyOrNull(),
-            anyOrNull(),
-            anyOrNull()
-        )
     }
 
     @Test

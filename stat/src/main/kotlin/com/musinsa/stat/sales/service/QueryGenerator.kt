@@ -113,20 +113,48 @@ object QueryGenerator {
         tag: List<String>,
         salesStart: SalesStart,
         partnerId: String?,
-        category: String,
-        styleNumber: String,
-        goodsNumber: String,
-        brandId: String,
-        couponNumber: String,
-        adCode: String,
-        specialtyCode: String,
-        mdId: String,
+        category: String?,
+        styleNumber: String?,
+        goodsNumber: String?,
+        brandId: String?,
+        couponNumber: String?,
+        adCode: String?,
+        specialtyCode: String?,
+        mdId: String?,
         orderBy: String,
         size: Long,
         number: Long
     ): String {
-
-        return ""
+        return addPagingParams(
+            addMdId(
+                addSpecialtyCode(
+                    addAdCode(
+                        addCouponNumber(
+                            addBrandId(
+                                addGoodsNumber(
+                                    addStyleNumber(
+                                        addCategory(
+                                            addPartnerId(
+                                                addSalesStart(
+                                                    addTag(
+                                                        addStarDateAndEndDate(
+                                                            query,
+                                                            startDate,
+                                                            endDate
+                                                        ),
+                                                        tag
+                                                    ), salesStart
+                                                ), partnerId
+                                            ), category
+                                        ), styleNumber
+                                    ), goodsNumber
+                                ), brandId
+                            ), couponNumber
+                        ), adCode
+                    ), specialtyCode
+                ), mdId
+            ), orderBy, size, number
+        )
     }
 
     /**
