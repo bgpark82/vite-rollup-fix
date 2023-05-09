@@ -224,4 +224,11 @@ object QueryGenerator {
     fun addSpecialtyCode(query: String, specialtyCode: String?): String {
         return replaceQueryOrSetAnnotation(query, SPECIALTY_CODE, specialtyCode)
     }
+
+    /**
+     * 담당MD 추가
+     */
+    fun addMdId(query: String, mdId: String?): String {
+        return replaceQueryOrSetAnnotation(query, MD_ID, mdId)
+    }
 }

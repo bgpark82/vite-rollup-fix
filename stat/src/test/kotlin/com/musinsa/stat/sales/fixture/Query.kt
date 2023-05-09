@@ -2185,7 +2185,7 @@ object Query {
         OFFSET {{number}}
     """.trimIndent()
 
-    val SAMPLE_QUERY_SET_ = """
+    val SAMPLE_QUERY_SET_MD_ID = """
         SELECT
           om.ord_state_date AS `date`
           ,SUM(om.sell_qty) AS `sellQuantity`
@@ -2278,7 +2278,7 @@ object Query {
           AND sg.specialty_cd = '{{specialtyCode}}'
 
           -- 담당MD
-          AND om.md_id = '{{mdId}}'
+          AND om.md_id = 'woo.choi'
 
         GROUP BY 1
 
@@ -2289,7 +2289,7 @@ object Query {
         OFFSET {{number}}
     """.trimIndent()
 
-    val SAMPLE_QUERY_EMPTY_ = """
+    val SAMPLE_QUERY_EMPTY_MD_ID = """
         SELECT
           om.ord_state_date AS `date`
           ,SUM(om.sell_qty) AS `sellQuantity`
@@ -2382,7 +2382,7 @@ object Query {
           AND sg.specialty_cd = '{{specialtyCode}}'
 
           -- 담당MD
-          AND om.md_id = '{{mdId}}'
+        --  AND om.md_id = '{{mdId}}'
 
         GROUP BY 1
 
@@ -2392,4 +2392,5 @@ object Query {
 
         OFFSET {{number}}
     """.trimIndent()
+
 }
