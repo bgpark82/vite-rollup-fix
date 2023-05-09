@@ -18,7 +18,7 @@ internal class QueryGeneratorTest {
         // given
         val 임의의_배열 =
             arrayListOf(
-                "  om.ord_state_date >= '{{startDate}}'",
+                "om.ord_state_date >= '{{startDate}}'",
                 "AND om.ord_state_date <= '{{endDate}}'",
                 "-- 태그(String List)",
                 "AND gt.tag IN ({{tag}})"
@@ -29,6 +29,33 @@ internal class QueryGeneratorTest {
         assertThat(queryGenerator.getStringLineNumber(임의의_배열, 찾을_문자)).isEqualTo(
             1
         )
+    }
+
+    @Test
+    fun 사용하지_않는_조건을_주석처리한다() {
+        // given
+        val 임의의_배열 =
+            arrayListOf(
+                "om.ord_state_date >= '{{startDate}}'",
+                "AND om.ord_state_date <= '{{endDate}}'",
+                "-- 태그(String List)",
+                "AND gt.tag IN ({{tag}})"
+            )
+        val 주석처리할_인덱스 = 1
+        val 기댓값_주석처리된_쿼리 = """
+              om.ord_state_date >= '{{startDate}}'
+              --AND om.ord_state_date <= '{{endDate}}'
+              -- 태그(String List)
+              AND gt.tag IN ({{tag}})
+        """.trimIndent()
+
+        // when, then
+        assertThat(
+            queryGenerator.annotateUnusedWhereCondition(
+                임의의_배열,
+                주석처리할_인덱스
+            )
+        ).isEqualTo(기댓값_주석처리된_쿼리)
     }
 
     @Test

@@ -6,6 +6,7 @@ import com.musinsa.stat.sales.domain.SalesStart
  * 파라미터에 따라서 쿼리를 재생성 한다.
  */
 object QueryGenerator {
+    val PREFIX_ANNOTATION = "--"
     val START_DATE = "\\{\\{startDate}}".toRegex()
     val END_DATE = "\\{\\{endDate}}".toRegex()
     val TAG = "\\{\\{tag}}".toRegex()
@@ -26,6 +27,24 @@ object QueryGenerator {
             // TODO 예외처리 통일
             false -> throw Exception("문자열: " + target + " 을 찾을 수 없음")
         }
+    }
+
+    /**
+     * 사용하지 않는 조건을 주석처리한다.
+     *
+     * @param array 배열처리된 쿼리
+     * @param index 주석처리할 SQL 라인
+     *
+     * @return 주석처리된 쿼리
+     */
+    fun annotateUnusedWhereCondition(
+        array: ArrayList<String>,
+        index: Int
+    ): String {
+        array[index] =
+            StringBuilder().append(PREFIX_ANNOTATION).append(array[index])
+                .toString()
+        return array.joinToString(separator = "\n").trimIndent()
     }
 
     /**
