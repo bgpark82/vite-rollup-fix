@@ -217,4 +217,11 @@ object QueryGenerator {
     fun addAdCode(query: String, adCode: String?): String {
         return replaceQueryOrSetAnnotation(query, AD_CODE, adCode)
     }
+
+    /**
+     * 전문관코드 추가
+     */
+    fun addSpecialtyCode(query: String, specialtyCode: String?): String {
+        return replaceQueryOrSetAnnotation(query, SPECIALTY_CODE, specialtyCode)
+    }
 }

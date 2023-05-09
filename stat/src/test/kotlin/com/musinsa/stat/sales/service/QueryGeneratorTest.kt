@@ -8,6 +8,7 @@ import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_CATEGORY
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_COUPON_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_GOODS_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_PARTNER_ID
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_SPECIALTY_CODE
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_STYLE_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_TAG
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_AD_CODE
@@ -17,6 +18,7 @@ import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_COUPON_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_GOODS_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SALES_START
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SPECIALTY_CODE
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_START_END_DATE
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_STYLE_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_TAG
@@ -294,12 +296,23 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 전문관코드_추가() {
-
+        assertThat(
+            queryGenerator.addSpecialtyCode(
+                SAMPLE_QUERY,
+                "golf"
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_SPECIALTY_CODE)
     }
 
-    @Test
-    fun 전문관코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun 전문관코드가_존재하지_않으면_쿼리에서_주석처리_된다(specialtyCode: String?) {
+        assertThat(
+            queryGenerator.addSpecialtyCode(
+                SAMPLE_QUERY,
+                specialtyCode
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_SPECIALTY_CODE)
     }
 
     @Test
