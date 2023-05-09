@@ -5,6 +5,7 @@ import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
 import com.musinsa.stat.sales.dto.Daily
+import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.QueryGenerator.generate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
@@ -18,7 +19,6 @@ class SalesService(
 ) {
     // TODO 필수값 체크
     // TODO 테스트 코드 추가
-    // TODO 합계/평균 응답값에 추가
     /**
      * 일별 매출통계를 가져온다.
      *
@@ -59,8 +59,8 @@ class SalesService(
         orderBy: String,
         size: Long,
         number: Long
-    ): List<Daily> {
-        return jdbcTemplate.query(
+    ): SalesStatisticsResponse<Daily> {
+        val queryResult = jdbcTemplate.query(
             generate(
                 query = databricksClient.getDatabricksQuery(queryStore.daily),
                 startDate,
@@ -80,6 +80,13 @@ class SalesService(
                 size,
                 number
             ), SalesStatisticsRowMapper
+        )
+
+        // TODO 합계/평균 응답값에 추가
+        return SalesStatisticsResponse(
+            sum = queryResult[0],
+            average = queryResult[0],
+            content = queryResult
         )
     }
 
