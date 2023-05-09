@@ -1,9 +1,11 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
-import com.musinsa.stat.sales.fixture.QueryReplaced.SAMPLE_QUERY_EMPTY_TAG
-import com.musinsa.stat.sales.fixture.QueryReplaced.SAMPLE_QUERY_SET_START_END_DATE
-import com.musinsa.stat.sales.fixture.QueryReplaced.SAMPLE_QUERY_SET_TAG
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_TAG
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SALES_START
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_START_END_DATE
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_TAG
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.anyOrNull
@@ -119,7 +121,12 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 매출시점_추가() {
-
+        assertThat(
+            queryGenerator.addSalesStart(
+                SAMPLE_QUERY,
+                SalesStart.PURCHASE_CONFIRM
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_SALES_START)
     }
 
     @Test
