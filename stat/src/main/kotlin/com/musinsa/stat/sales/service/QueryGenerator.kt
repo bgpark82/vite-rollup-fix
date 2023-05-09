@@ -174,4 +174,12 @@ object QueryGenerator {
         return query.replace(CATEGORY, category)
     }
 
+    /**
+     * 스타일넘버 추가
+     */
+    fun addStyleNumber(query: String, styleNumber: String?): String {
+        if (styleNumber.isNullOrBlank())
+            return annotateOption(query, STYLE_NUMBER)
+        return query.replace(STYLE_NUMBER, styleNumber)
+    }
 }
