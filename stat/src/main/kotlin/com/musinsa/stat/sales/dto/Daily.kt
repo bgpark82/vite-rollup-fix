@@ -1,9 +1,9 @@
 package com.musinsa.stat.sales.dto
 
 /**
- * 매출통계
+ * 일별매출통계
  */
-data class SalesStatistics(
+data class Daily(
     /**
      * 8자리 일자
      * ex) 20230502

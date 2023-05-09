@@ -4,7 +4,7 @@ import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
-import com.musinsa.stat.sales.dto.SalesStatistics
+import com.musinsa.stat.sales.dto.Daily
 import com.musinsa.stat.sales.service.QueryGenerator.generate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
@@ -59,7 +59,7 @@ class SalesService(
         orderBy: String,
         size: Long,
         number: Long
-    ): List<SalesStatistics> {
+    ): List<Daily> {
         return jdbcTemplate.query(
             generate(
                 query = databricksClient.getDatabricksQuery(queryStore.daily),

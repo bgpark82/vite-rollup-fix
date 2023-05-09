@@ -1,15 +1,15 @@
 package com.musinsa.stat.sales.domain
 
-import com.musinsa.stat.sales.dto.SalesStatistics
+import com.musinsa.stat.sales.dto.Daily
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 
 /**
  * 매출통계 RowMapper
  */
-object SalesStatisticsRowMapper : RowMapper<SalesStatistics> {
-    override fun mapRow(rs: ResultSet, rowNum: Int): SalesStatistics {
-        return SalesStatistics(
+object SalesStatisticsRowMapper : RowMapper<Daily> {
+    override fun mapRow(rs: ResultSet, rowNum: Int): Daily {
+        return Daily(
             date = rs.getString("date"),
             sellQuantity = rs.getLong("sellQuantity"),
             sellAmount = rs.getLong("sellAmount"),
