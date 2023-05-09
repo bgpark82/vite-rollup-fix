@@ -110,7 +110,7 @@ object QueryGenerator {
         query: String,
         startDate: String,
         endDate: String,
-        tag: List<String>,
+        tag: List<String>?,
         salesStart: SalesStart,
         partnerId: String?,
         category: String?,
@@ -172,8 +172,8 @@ object QueryGenerator {
     /**
      * 태그 추가
      */
-    fun addTag(query: String, tag: List<String>): String {
-        if (tag.isEmpty())
+    fun addTag(query: String, tag: List<String>?): String {
+        if (tag.isNullOrEmpty())
             return replaceQueryOrSetAnnotation(
                 query,
                 TAG,

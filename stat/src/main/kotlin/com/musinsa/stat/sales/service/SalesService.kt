@@ -44,7 +44,7 @@ class SalesService(
     fun daily(
         startDate: String,
         endDate: String,
-        tag: List<String> = emptyList(),
+        tag: List<String>? = emptyList(),
         salesStart: SalesStart,
         partnerId: String? = String(),
         category: String? = String(),
