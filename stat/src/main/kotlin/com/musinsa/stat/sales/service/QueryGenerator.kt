@@ -10,6 +10,7 @@ object QueryGenerator {
     val START_DATE = "\\{\\{startDate}}".toRegex()
     val END_DATE = "\\{\\{endDate}}".toRegex()
     val TAG = "\\{\\{tag}}".toRegex()
+    val SALES_START = "\\{\\{salesStart}}".toRegex()
 
     /**
      * 배열에서 특정 문자열이 속한 index를 찾는다.
@@ -69,7 +70,7 @@ object QueryGenerator {
      * @param tag 태그
      * @param salesStart 매출시점
      * @param partnerId 업체
-     * @param category
+     * @param category 카테고리
      * @param styleNumber 스타일넘버
      * @param goodsNumber 상품코드
      * @param brandId 브랜드
@@ -128,6 +129,13 @@ object QueryGenerator {
                 postfix = "'"
             )
         )
+    }
+
+    /**
+     * 매출시점 추가
+     */
+    fun addSalesStart(query: String, salesStart: SalesStart): String {
+        return query.replace(SALES_START, salesStart.toString())
     }
 
 }

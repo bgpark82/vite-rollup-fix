@@ -110,4 +110,54 @@ internal class QueryGeneratorTest {
             )
         ).isEqualTo(SAMPLE_QUERY_EMPTY_TAG)
     }
+
+    @Test
+    fun 매출시점_추가() {
+
+    }
+
+    @Test
+    fun 업체_추가() {
+
+    }
+
+    @Test
+    fun 카테고리_추가() {
+
+    }
+
+    @Test
+    fun 스타일넘버_추가() {
+
+    }
+
+    @Test
+    fun 상품코드_추가() {
+
+    }
+
+    @Test
+    fun 브랜드_추가() {
+
+    }
+
+    @Test
+    fun 쿠폰_추가() {
+
+    }
+
+    @Test
+    fun 광고코드_추가() {
+
+    }
+
+    @Test
+    fun 전문관코드_추가() {
+
+    }
+
+    @Test
+    fun 담당MD_추가() {
+
+    }
 }
