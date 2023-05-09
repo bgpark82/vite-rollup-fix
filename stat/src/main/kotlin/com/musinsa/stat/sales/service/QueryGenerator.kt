@@ -165,4 +165,13 @@ object QueryGenerator {
         return query.replace(PARTNER_ID, partnerId)
     }
 
+    /**
+     * 카테고리 추가
+     */
+    fun addCategory(query: String, category: String?): String {
+        if (category.isNullOrBlank())
+            return annotateOption(query, CATEGORY)
+        return query.replace(CATEGORY, category)
+    }
+
 }

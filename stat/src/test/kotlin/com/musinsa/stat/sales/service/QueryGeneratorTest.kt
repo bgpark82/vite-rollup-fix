@@ -2,8 +2,10 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_CATEGORY
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_TAG
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_CATEGORY
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SALES_START
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_START_END_DATE
@@ -156,12 +158,23 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 카테고리_추가() {
-
+        assertThat(
+            queryGenerator.addCategory(
+                SAMPLE_QUERY,
+                "청/데님 팬츠"
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_CATEGORY)
     }
 
-    @Test
-    fun 카테고리가_존재하지_않으면_쿼리에서_주석처리_된다() {
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun 카테고리가_존재하지_않으면_쿼리에서_주석처리_된다(category: String?) {
+        assertThat(
+            queryGenerator.addCategory(
+                SAMPLE_QUERY,
+                category
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_CATEGORY)
     }
 
     @Test
