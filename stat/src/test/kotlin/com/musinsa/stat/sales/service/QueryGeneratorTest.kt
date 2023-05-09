@@ -14,6 +14,24 @@ internal class QueryGeneratorTest {
     private val queryGenerator = QueryGenerator
 
     @Test
+    fun 배열에서_특정_문자열이_속한_INDEX를_찾는다() {
+        // given
+        val 임의의_배열 =
+            arrayListOf(
+                "  om.ord_state_date >= '{{startDate}}'",
+                "AND om.ord_state_date <= '{{endDate}}'",
+                "-- 태그(String List)",
+                "AND gt.tag IN ({{tag}})"
+            )
+        val 찾을_문자 = "{{endDate}}"
+
+        // when, then
+        assertThat(queryGenerator.getStringLineNumber(임의의_배열, 찾을_문자)).isEqualTo(
+            1
+        )
+    }
+
+    @Test
     fun 쿼리_치환_함수를_모두_호출한다() {
         queryGenerator.generate(
             SAMPLE_QUERY,

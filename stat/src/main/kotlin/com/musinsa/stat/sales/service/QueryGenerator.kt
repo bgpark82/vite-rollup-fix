@@ -11,6 +11,24 @@ object QueryGenerator {
     val TAG = "\\{\\{tag}}".toRegex()
 
     /**
+     * 배열에서 특정 문자열이 속한 index를 찾는다.
+     *
+     * @param array 배열
+     * @param target 찾을 문자열
+     *
+     * @return target이 속한 배열
+     */
+    fun getStringLineNumber(array: ArrayList<String>, target: String): Int {
+        val index =
+            array.indexOfFirst { str -> str.contains(target) }
+        return when (index >= 0) {
+            true -> index
+            // TODO 예외처리 통일
+            false -> throw Exception("문자열: " + target + " 을 찾을 수 없음")
+        }
+    }
+
+    /**
      * @param startDate 시작날짜
      * @param endDate 종료날짜
      * @param tag 태그
@@ -59,7 +77,7 @@ object QueryGenerator {
 
     fun addTag(query: String, tag: List<String>): String {
         if (tag.isEmpty()) {
-            // TODO tag 주석 처리
+            println(query.lines().stream())
         }
 
         return query.replace(
@@ -71,4 +89,5 @@ object QueryGenerator {
             )
         )
     }
+
 }
