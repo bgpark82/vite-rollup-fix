@@ -92,8 +92,12 @@ class SalesService(
     }
 
     fun <T> calculateSum(list: List<T>, classType: Class<T>): T {
-        println(classType.declaredFields)
+        val declaredFields = classType.declaredFields
 
+        declaredFields.map { field ->
+            println(field.name)
+            println(field.type)
+        }
         return list[0]
     }
 }
