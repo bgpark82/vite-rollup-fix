@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/sales-statistics")
 class SalesController(private val salesService: SalesService) {
-    // TODO 유효성 체크 + 조회 구간 한정
+    // TODO 유효성 체크 + 조회 구간 한정(1년)
     // TODO 테스트코드 추가
     // TODO REST Docs 추가
     @GetMapping("/daily")
