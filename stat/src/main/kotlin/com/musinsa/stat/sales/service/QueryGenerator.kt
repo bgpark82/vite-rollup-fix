@@ -231,4 +231,17 @@ object QueryGenerator {
     fun addMdId(query: String, mdId: String?): String {
         return replaceQueryOrSetAnnotation(query, MD_ID, mdId)
     }
+
+    /**
+     * 정렬키, 페이지 원소수, 페이지 번호 추가
+     */
+    fun addPagingParams(
+        query: String,
+        orderBy: String,
+        size: Long,
+        number: Long
+    ): String {
+        return query.replace(ORDER_BY, orderBy)
+            .replace(SIZE, size.toString()).replace(NUMBER, number.toString())
+    }
 }
