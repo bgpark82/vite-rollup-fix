@@ -1,9 +1,9 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.stat.sales.domain.SalesStart
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-
 
 // TEST 용도
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -13,6 +13,22 @@ internal class SalesServiceIntegrationTest {
 
     @Test
     fun 쿼리테스트() {
-//        salesService.daily()
+        val startDate = "20230401"
+        val endDate = "20230430"
+        val salesStart = SalesStart.SHIPPING_REQUEST
+        val orderBy = "date"
+        val size: Long = 30
+        val number: Long = 0
+
+        val result = salesService.daily(
+            startDate = startDate,
+            endDate = endDate,
+            salesStart = salesStart,
+            orderBy = orderBy,
+            size = size,
+            number = number
+        )
+
+        println(result)
     }
 }

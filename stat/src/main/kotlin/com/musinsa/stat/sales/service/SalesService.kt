@@ -45,20 +45,20 @@ class SalesService(
         endDate: String,
         tag: List<String> = emptyList(),
         salesStart: SalesStart,
-        partnerId: String,
-        category: String,
-        styleNumber: String,
-        goodsNumber: String,
-        brandId: String,
-        couponNumber: String,
-        adCode: String,
-        specialtyCode: String,
-        mdId: String,
+        partnerId: String? = String(),
+        category: String? = String(),
+        styleNumber: String? = String(),
+        goodsNumber: String? = String(),
+        brandId: String? = String(),
+        couponNumber: String? = String(),
+        adCode: String? = String(),
+        specialtyCode: String? = String(),
+        mdId: String? = String(),
         orderBy: String,
         size: Long,
         number: Long
     ): List<SalesStatistics> {
-        val rs = jdbcTemplate.query(
+        return jdbcTemplate.query(
             generate(
                 query = databricksClient.getDatabricksQuery(queryStore.daily),
                 startDate,
@@ -79,8 +79,6 @@ class SalesService(
                 number
             ), SalesStatisticsRowMapper
         )
-        println(rs)
-        return emptyList()
     }
 
 }
