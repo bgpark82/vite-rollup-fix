@@ -2,14 +2,18 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_AD_CODE
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_BRAND_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_CATEGORY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_COUPON_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_GOODS_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_STYLE_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_EMPTY_TAG
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_AD_CODE
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_BRAND_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_CATEGORY
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_COUPON_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_GOODS_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SALES_START
@@ -248,22 +252,44 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 쿠폰_추가() {
-
+        assertThat(
+            queryGenerator.addCouponNumber(
+                SAMPLE_QUERY,
+                "72852"
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_COUPON_NUMBER)
     }
 
-    @Test
-    fun 쿠폰이_존재하지_않으면_쿼리에서_주석처리_된다() {
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun 쿠폰이_존재하지_않으면_쿼리에서_주석처리_된다(couponNumber: String?) {
+        assertThat(
+            queryGenerator.addCouponNumber(
+                SAMPLE_QUERY,
+                couponNumber
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_COUPON_NUMBER)
     }
 
     @Test
     fun 광고코드_추가() {
-
+        assertThat(
+            queryGenerator.addAdCode(
+                SAMPLE_QUERY,
+                "REFCRLC003"
+            )
+        ).isEqualTo(SAMPLE_QUERY_SET_AD_CODE)
     }
 
-    @Test
-    fun 광고코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    fun 광고코드가_존재하지_않으면_쿼리에서_주석처리_된다(adCode: String?) {
+        assertThat(
+            queryGenerator.addAdCode(
+                SAMPLE_QUERY,
+                adCode
+            )
+        ).isEqualTo(SAMPLE_QUERY_EMPTY_AD_CODE)
     }
 
     @Test

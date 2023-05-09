@@ -203,4 +203,18 @@ object QueryGenerator {
     fun addBrandId(query: String, brandId: String?): String {
         return replaceQueryOrSetAnnotation(query, BRAND_ID, brandId)
     }
+
+    /**
+     * 쿠폰 추가
+     */
+    fun addCouponNumber(query: String, couponNumber: String?): String {
+        return replaceQueryOrSetAnnotation(query, COUPON_NUMBER, couponNumber)
+    }
+
+    /**
+     * 광고코드 추가
+     */
+    fun addAdCode(query: String, adCode: String?): String {
+        return replaceQueryOrSetAnnotation(query, AD_CODE, adCode)
+    }
 }
