@@ -2492,9 +2492,9 @@ object Query {
 
         ORDER BY `date` ASC
 
-        LIMIT 20
+        LIMIT {{size}}
 
-        OFFSET 0
+        OFFSET {{number}}
     """.trimIndent()
 
 }

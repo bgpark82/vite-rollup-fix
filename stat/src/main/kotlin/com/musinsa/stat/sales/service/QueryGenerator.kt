@@ -121,9 +121,7 @@ object QueryGenerator {
         adCode: String?,
         specialtyCode: String?,
         mdId: String?,
-        orderBy: String,
-        size: Long,
-        number: Long
+        orderBy: String
     ): String {
         return addPagingParams(
             addMdId(
@@ -153,7 +151,7 @@ object QueryGenerator {
                         ), adCode
                     ), specialtyCode
                 ), mdId
-            ), orderBy, size, number
+            ), orderBy
         )
     }
 
@@ -265,11 +263,8 @@ object QueryGenerator {
      */
     fun addPagingParams(
         query: String,
-        orderBy: String,
-        size: Long,
-        number: Long
+        orderBy: String
     ): String {
         return query.replace(ORDER_BY, orderBy)
-            .replace(SIZE, size.toString()).replace(NUMBER, number.toString())
     }
 }

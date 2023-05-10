@@ -311,7 +311,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 페이징_파라미터_추가() {
         assertThat(
-            queryGenerator.addPagingParams(SAMPLE_QUERY, "date", 20, 0)
+            queryGenerator.addPagingParams(SAMPLE_QUERY, "date")
         ).isEqualTo(SAMPLE_QUERY_SET_PAGING_PARAMS)
     }
 }

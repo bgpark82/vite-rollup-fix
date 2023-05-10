@@ -17,16 +17,12 @@ internal class SalesServiceIntegrationTest {
         val endDate = "20230430"
         val salesStart = SalesStart.SHIPPING_REQUEST
         val orderBy = "date"
-        val size: Long = 30
-        val number: Long = 0
 
         val result = salesService.daily(
             startDate = startDate,
             endDate = endDate,
             salesStart = salesStart,
             orderBy = orderBy,
-            size = size,
-            number = number
         )
 
         println(result)

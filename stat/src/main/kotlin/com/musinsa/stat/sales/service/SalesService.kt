@@ -55,9 +55,7 @@ class SalesService(
         adCode: String? = String(),
         specialtyCode: String? = String(),
         mdId: String? = String(),
-        orderBy: String,
-        size: Long,
-        number: Long
+        orderBy: String
     ): SalesStatisticsResponse<Daily> {
         val queryResult = jdbcTemplate.query(
             generate(
@@ -75,9 +73,7 @@ class SalesService(
                 adCode,
                 specialtyCode,
                 mdId,
-                orderBy,
-                size,
-                number
+                orderBy
             ), SalesStatisticsRowMapper
         )
 

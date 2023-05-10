@@ -30,9 +30,7 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false) adCode: String?,
         @RequestParam(required = false) specialtyCode: String?,
         @RequestParam(required = false) mdId: String?,
-        @RequestParam(defaultValue = "date") orderBy: String,
-        @RequestParam(defaultValue = "20") size: Long,
-        @RequestParam(defaultValue = "0") number: Long,
+        @RequestParam(defaultValue = "date") orderBy: String
     ): SalesStatisticsResponse<Daily> {
         return salesService.daily(
             startDate,
@@ -48,9 +46,7 @@ class SalesController(private val salesService: SalesService) {
             adCode,
             specialtyCode,
             mdId,
-            orderBy,
-            size,
-            number
+            orderBy
         )
     }
 }
