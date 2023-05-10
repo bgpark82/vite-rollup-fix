@@ -88,3 +88,9 @@ tasks.bootJar {
     // jar 파일명 지정
     archiveFileName.set("stat.jar")
 }
+
+// Gradle Bug로 인해 Main Class를 별도로 지정(Gradle에서 MainClass를 kt로 지정 중)
+// @see https://stackoverflow.com/questions/73438308/aws-beanstalk-kotlin-spring-boot-nosuchmethodexception-main
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    mainClass.set(StringBuilder(MAIN_CLASS).append("Kt").toString())
+}
