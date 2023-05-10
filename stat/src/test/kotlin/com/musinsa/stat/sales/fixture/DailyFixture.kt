@@ -1,24 +1,10 @@
-package com.musinsa.stat.sales.service
+package com.musinsa.stat.sales.fixture
 
-import com.musinsa.stat.databricks.service.DatabricksClient
-import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.dto.Daily
-import com.musinsa.stat.util.ObjectMapperFactory.readValue
-import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
-import org.springframework.jdbc.core.JdbcTemplate
+import com.musinsa.stat.util.ObjectMapperFactory
 
-internal class SalesServiceTest {
-    private val jdbcTemplate: JdbcTemplate = mock()
-    private val queryStore = QueryStore("")
-    private val databricksClient: DatabricksClient = mock()
-    private val salesService =
-        SalesService(jdbcTemplate, queryStore, databricksClient)
-
-    @Test
-    fun 임의의_클래스의_내부_합계를_구한다() {
-        // given
-        val test1 = """
+object DailyFixture {
+    val DAILY_20230505_STRING = """
         {
             "date": "20230505",
             "sellQuantity": 194111,
@@ -68,7 +54,8 @@ internal class SalesServiceTest {
             "profitMarginExcludedVAT": 19.28
         }
         """.trimIndent()
-        val test2 = """
+
+    val DAILY_20230506_STRING = """
             {
             "date": "20230506",
             "sellQuantity": 187905,
@@ -118,14 +105,10 @@ internal class SalesServiceTest {
             "profitMarginExcludedVAT": 20.56
         }
         """.trimIndent()
-        val dailyTest = listOf(
-            readValue(test1, Daily::class.java),
-            readValue(test2, Daily::class.java)
-        )
 
-        // when
-        salesService.calculateSum(dailyTest, Daily::class.java)
+    val DAILY_20230505 =
+        ObjectMapperFactory.readValue(DAILY_20230505_STRING, Daily::class.java)
 
-        // then
-    }
+    val DAILY_20230506 =
+        ObjectMapperFactory.readValue(DAILY_20230506_STRING, Daily::class.java)
 }

@@ -81,23 +81,11 @@ class SalesService(
             ), SalesStatisticsRowMapper
         )
 
-        // val sum = queryResult.sumOf { it.sellQuantity }
-
         // TODO 합계/평균 응답값에 추가
         return SalesStatisticsResponse(
             sum = queryResult[0],
             average = queryResult[0],
             content = queryResult
         )
-    }
-
-    fun <T> calculateSum(list: List<T>, classType: Class<T>): T {
-        val declaredFields = classType.declaredFields
-
-        declaredFields.map { field ->
-            println(field.name)
-            println(field.type)
-        }
-        return list[0]
     }
 }

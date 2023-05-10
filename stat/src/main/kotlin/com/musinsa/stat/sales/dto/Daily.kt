@@ -103,7 +103,7 @@ data class Daily(
     /**
      * 할인율
      */
-    val discountRate: Float,
+    val discountRate: Double,
 
     /**
      * 결제수수료
@@ -133,7 +133,7 @@ data class Daily(
     /**
      * 이익률
      */
-    val profitMargin: Float,
+    val profitMargin: Double,
 
     /**
      * 매입상품_거래금액
@@ -168,12 +168,12 @@ data class Daily(
     /**
      * 매입상품_이익율
      */
-    val purchasesProfitMargin: Float,
+    val purchasesProfitMargin: Double,
 
     /**
      * 매입상품_비중
      */
-    val purchasesRatio: Float,
+    val purchasesRatio: Double,
 
     /**
      * 입점상품_거래금액
@@ -213,7 +213,7 @@ data class Daily(
     /**
      * 입점상품_이익률
      */
-    val partnerProfitMargin: Float,
+    val partnerProfitMargin: Double,
 
     /**
      * 매출(VAT별도)
@@ -233,5 +233,5 @@ data class Daily(
     /**
      * 이익율(VAT별도)
      */
-    val profitMarginExcludedVAT: Float
+    val profitMarginExcludedVAT: Double
 )
