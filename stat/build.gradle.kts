@@ -78,3 +78,13 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.jar {
+    // Plain jar 생성 금지
+    enabled = false
+}
+
+tasks.bootJar {
+    // jar 파일명 지정
+    archiveFileName.set("stat.jar")
+}
