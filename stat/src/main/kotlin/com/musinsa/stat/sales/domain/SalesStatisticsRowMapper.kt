@@ -10,7 +10,8 @@ import java.sql.ResultSet
 object SalesStatisticsRowMapper : RowMapper<Daily> {
     override fun mapRow(rs: ResultSet, rowNum: Int): Daily {
         return Daily(
-            date = rs.getString("date"),
+            date = rs.getString("date") ?: "SUM",
+            isGrouping = rs.getBoolean("isGrouping"),
             sellQuantity = rs.getLong("sellQuantity"),
             sellAmount = rs.getLong("sellAmount"),
             refundQuantity = rs.getLong("refundQuantity"),

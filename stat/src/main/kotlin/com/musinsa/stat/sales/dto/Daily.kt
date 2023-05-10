@@ -8,7 +8,13 @@ data class Daily(
      * 8자리 일자
      * ex) 20230502
      */
-    val date: String,
+    val date: String?,
+
+    /**
+     * 합계 필드 구분
+     * True: 합계 필드
+     */
+    val isGrouping: Boolean,
 
     /**
      * 판매수량
