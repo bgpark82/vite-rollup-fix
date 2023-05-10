@@ -6,6 +6,7 @@ import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
 import com.musinsa.stat.sales.dto.Daily
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
+import com.musinsa.stat.sales.dto.getIsGrouping
 import com.musinsa.stat.sales.service.QueryGenerator.generate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
@@ -79,9 +80,9 @@ class SalesService(
 
         // TODO 합계/평균 응답값에 추가
         return SalesStatisticsResponse(
-            sum = queryResult[0],
-            average = queryResult[0],
-            content = queryResult
+            sum = getIsGrouping(queryResult),
+//            average = queryResult[0],
+            content = queryResult.filter { !it.isGrouping }
         )
     }
 }

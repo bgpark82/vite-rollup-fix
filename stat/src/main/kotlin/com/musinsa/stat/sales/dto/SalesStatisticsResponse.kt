@@ -8,7 +8,7 @@ data class SalesStatisticsResponse<T>(
     val sum: T,
 
     // 결과값 평균
-    val average: T,
+//    val average: T,
 
     // 결과값
     val content: List<T>
