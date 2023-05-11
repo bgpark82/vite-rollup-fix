@@ -4,7 +4,6 @@ import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
-import com.musinsa.stat.sales.dto.Daily
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230506
@@ -66,7 +65,7 @@ private class SalesServiceTest {
         )
 
         // then
-        val 기댓값 = SalesStatisticsResponse<Daily>(테스트를_위한_DAILY_LIST)
+        val 기댓값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST)
         assertAll(
             { assertThat(결과값.sum.toString()).isEqualTo(기댓값.sum.toString()) },
             { assertThat(결과값.content.toString()).isEqualTo(기댓값.content.toString()) }

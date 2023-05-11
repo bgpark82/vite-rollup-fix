@@ -1,7 +1,6 @@
 package com.musinsa.stat.sales.controller
 
 import com.musinsa.stat.sales.domain.SalesStart
-import com.musinsa.stat.sales.dto.Daily
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
 import org.springframework.web.bind.annotation.GetMapping
@@ -31,7 +30,7 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false) specialtyCode: String?,
         @RequestParam(required = false) mdId: String?,
         @RequestParam(defaultValue = "date") orderBy: String
-    ): SalesStatisticsResponse<Daily> {
+    ): SalesStatisticsResponse {
         return salesService.daily(
             startDate,
             endDate,

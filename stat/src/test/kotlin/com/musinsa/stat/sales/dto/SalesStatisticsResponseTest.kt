@@ -17,7 +17,7 @@ private class SalesStatisticsResponseTest {
             )
 
         // when
-        val 결과값 = SalesStatisticsResponse<Daily>(테스트를_위한_DAILY_LIST)
+        val 결과값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST)
 
         // then
         assertAll(

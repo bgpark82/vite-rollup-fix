@@ -4,7 +4,6 @@ import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
-import com.musinsa.stat.sales.dto.Daily
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.QueryGenerator.generate
 import org.springframework.beans.factory.annotation.Qualifier
@@ -53,7 +52,7 @@ class SalesService(
         specialtyCode: String? = String(),
         mdId: String? = String(),
         orderBy: String
-    ): SalesStatisticsResponse<Daily> {
+    ): SalesStatisticsResponse {
         val queryResult = jdbcTemplate.query(
             generate(
                 query = databricksClient.getDatabricksQuery(queryStore.daily),
