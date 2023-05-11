@@ -36,6 +36,10 @@ class DatabricksDataSourceConfig {
      */
     @Bean
     fun databricksJdbcTemplate(@Qualifier("databricksDataSource") databricksDataSource: DataSource): JdbcTemplate {
-        return JdbcTemplate(databricksDataSource)
+        val jdbcTemplate = JdbcTemplate(databricksDataSource)
+
+        // 타임아웃 5분 설정
+        jdbcTemplate.queryTimeout = 60 * 5
+        return jdbcTemplate
     }
 }
