@@ -1,17 +1,6 @@
 package com.musinsa.stat.sales.dto
 
 /**
- * 집계 row를 가져온다.
- *
- * @param dailyList 쿼리 결과값
- *
- * @return 집계 row
- */
-fun getIsGrouping(dailyList: MutableList<Daily>): Daily {
-    return dailyList.first { it.isGrouping }
-}
-
-/**
  * 일별매출통계
  */
 data class Daily(

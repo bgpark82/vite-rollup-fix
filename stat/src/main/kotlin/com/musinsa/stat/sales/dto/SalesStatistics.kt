@@ -1,17 +1,5 @@
 package com.musinsa.stat.sales.dto
 
-// TODO 테스트 코드 작성
-/**
- * 집계 row를 가져온다.
- *
- * @param queryResult 쿼리 결과값
- *
- * @return 집계 row
- */
-fun getIsGrouping(queryResult: MutableList<SalesStatistics>): SalesStatistics {
-    return queryResult.first { it.isGrouping }
-}
-
 /**
  * 모든 매출통계에서 공통으로 사용
  */

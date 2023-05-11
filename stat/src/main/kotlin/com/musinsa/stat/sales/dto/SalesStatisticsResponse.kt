@@ -3,13 +3,21 @@ package com.musinsa.stat.sales.dto
 /**
  * 매출통계 API 응답
  */
-data class SalesStatisticsResponse<T>(
-    // 결과값 합계
-    val sum: T,
-
-    // 결과값 평균
-//    val average: T,
+class SalesStatisticsResponse<T : SalesStatistics> {
+    // 합계
+    val sum: SalesStatistics
 
     // 결과값
-    val content: List<T>
-)
+    val content: List<out SalesStatistics>
+
+    /**
+     * 합계와, 결과값 필드를 만든다.
+     *
+     * @param jdbcQueryResult JDBC 쿼리 결과값
+     */
+    constructor(jdbcQueryResult: List<out SalesStatistics>) {
+        sum = jdbcQueryResult.first { it.isGrouping }
+        content = jdbcQueryResult.filter { !it.isGrouping }
+    }
+
+}
