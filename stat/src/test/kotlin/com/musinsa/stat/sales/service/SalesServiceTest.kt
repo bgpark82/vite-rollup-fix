@@ -26,7 +26,7 @@ private class SalesServiceTest {
 
     @BeforeEach
     fun setUp() {
-        queryStore = QueryStore(daily = "daily")
+        queryStore = QueryStore(daily = "필수값이라 의미 없이 추가")
         salesService = SalesService(jdbcTemplate, queryStore, databricksClient)
     }
 
@@ -45,10 +45,10 @@ private class SalesServiceTest {
 
         // when
         val 결과값 = salesService.daily(
-            startDate = "startDate",
-            endDate = "endDate",
+            startDate = "필수값이라 의미 없이 추가",
+            endDate = "필수값이라 의미 없이 추가",
             salesStart = SalesStart.SHIPPING_REQUEST,
-            orderBy = "date"
+            orderBy = "필수값이라 의미 없이 추가"
         )
 
         // then
