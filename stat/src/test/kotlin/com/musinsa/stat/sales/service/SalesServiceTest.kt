@@ -26,7 +26,17 @@ private class SalesServiceTest {
 
     @BeforeEach
     fun setUp() {
-        queryStore = QueryStore(daily = "필수값이라 의미 없이 추가")
+        queryStore = QueryStore(
+            daily = "필수값이라 의미 없이 추가",
+            montly = "필수값이라 의미 없이 추가",
+            partner = "필수값이라 의미 없이 추가",
+            brand = "필수값이라 의미 없이 추가",
+            brandPartner = "필수값이라 의미 없이 추가",
+            goods = "필수값이라 의미 없이 추가",
+            ad = "필수값이라 의미 없이 추가",
+            coupon = "필수값이라 의미 없이 추가",
+            category = "필수값이라 의미 없이 추가"
+        )
         salesService = SalesService(jdbcTemplate, queryStore, databricksClient)
     }
 

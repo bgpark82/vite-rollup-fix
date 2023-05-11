@@ -20,235 +20,97 @@ data class Daily(
      * ex) 20230502
      */
     val date: String?,
-
-    /**
-     * 합계 필드 구분
-     * True: 합계 필드
-     */
-    val isGrouping: Boolean,
-
-    /**
-     * 판매수량
-     */
-    val sellQuantity: Long,
-
-    /**
-     * 판매금액
-     */
-    val sellAmount: Long,
-
-    /**
-     * 환불수량
-     */
-    val refundQuantity: Long,
-
-    /**
-     * 환불금액
-     */
-    val refundAmount: Long,
-
-    /**
-     * 교환수량
-     */
-    val exchangeQuantity: Long,
-
-    /**
-     * 교환금액
-     */
-    val exchangeAmount: Long,
-
-    /**
-     * 거래수량
-     */
-    val tradeQuantity: Long,
-
-    /**
-     * 거래금액
-     */
-    val tradeAmount: Long,
-
-    /**
-     * 회원할인
-     */
-    val memberDiscounts: Long,
-
-    /**
-     * 제휴할인
-     */
-    val affiliateDiscounts: Long,
-
-    /**
-     * 기타할인
-     */
-    val otherDiscounts: Long,
-
-    /**
-     * 쿠폰(무신사)할인
-     */
-    val couponDiscounts: Long,
-
-    /**
-     * 쿠폰(업체)할인
-     */
-    val partnerCouponDiscounts: Long,
-
-    /**
-     * 적립금할인
-     */
-    val pointDiscounts: Long,
-
-    /**
-     * 선적립금할인
-     */
-    val prePointDiscounts: Long,
-
-    /**
-     * 장바구니할인
-     */
-    val cartDiscounts: Long,
-
-    /**
-     * 그룹할인
-     */
-    val groupDiscounts: Long,
-
-    /**
-     * 소계(총 할인액)
-     */
-    val totalDiscounts: Long,
-
-    /**
-     * 할인율
-     */
-    val discountRate: Double,
-
-    /**
-     * 결제수수료
-     */
-    val paymentFees: Long,
-
-    /**
-     * 결제금액
-     */
-    val paymentAmount: Long,
-
-    /**
-     * 매출
-     */
-    val sales: Long,
-
-    /**
-     * 원가
-     */
-    val originalPrice: Long,
-
-    /**
-     * 이익
-     */
-    val profit: Long,
-
-    /**
-     * 이익률
-     */
-    val profitMargin: Double,
-
-    /**
-     * 매입상품_거래금액
-     */
-    val purchasesTradeAmount: Long,
-
-    /**
-     * 매입상품_할인
-     */
-    val purchasesDiscounts: Long,
-
-    /**
-     * 매입상품_결제수수료
-     */
-    val purchasesPaymentFees: Long,
-
-    /**
-     * 매입상품_결제금액
-     */
-    val purchasesPaymentAmount: Long,
-
-    /**
-     * 매입상품_원가
-     */
-    val purchasesOriginalPrice: Long,
-
-    /**
-     * 매입상품_이익
-     */
-    val purchasesProfit: Long,
-
-    /**
-     * 매입상품_이익율
-     */
-    val purchasesProfitMargin: Double,
-
-    /**
-     * 매입상품_비중
-     */
-    val purchasesRatio: Double,
-
-    /**
-     * 입점상품_거래금액
-     */
-    val partnerTradeAmount: Long,
-
-    /**
-     * 입점상품_할인
-     */
-    val partnerDiscounts: Long,
-
-    /**
-     * 입점상품_결제수수료
-     */
-    val partnerPaymentFees: Long,
-
-    /**
-     * 입점상품_결제금액
-     */
-    val partnerPaymentAmount: Long,
-
-    /**
-     * 입점상품_판매수수료
-     */
-    val partnerSellFees: Long,
-
-    /**
-     * 입점상품_수수료
-     */
-    val partnerFees: Long,
-
-    /**
-     * 입점상품_판매지원금
-     */
-    val partnerSellGrants: Long,
-
-    /**
-     * 입점상품_이익률
-     */
-    val partnerProfitMargin: Double,
-
-    /**
-     * 매출(VAT별도)
-     */
-    val salesExcludedVAT: Long,
-
-    /**
-     * 원가(VAT별도)
-     */
-    val originalPriceExcludedVAT: Long,
-
-    /**
-     * 이익(VAT별도)
-     */
-    val profitExcludedVAT: Long,
-
-    /**
-     * 이익율(VAT별도)
-     */
-    val profitMarginExcludedVAT: Double
+    override val isGrouping: Boolean,
+    override val sellQuantity: Long,
+    override val sellAmount: Long,
+    override val refundQuantity: Long,
+    override val refundAmount: Long,
+    override val exchangeQuantity: Long,
+    override val exchangeAmount: Long,
+    override val tradeQuantity: Long,
+    override val tradeAmount: Long,
+    override val memberDiscounts: Long,
+    override val affiliateDiscounts: Long,
+    override val otherDiscounts: Long,
+    override val couponDiscounts: Long,
+    override val partnerCouponDiscounts: Long,
+    override val pointDiscounts: Long,
+    override val prePointDiscounts: Long,
+    override val cartDiscounts: Long,
+    override val groupDiscounts: Long,
+    override val totalDiscounts: Long,
+    override val discountRate: Double,
+    override val paymentFees: Long,
+    override val paymentAmount: Long,
+    override val sales: Long,
+    override val originalPrice: Long,
+    override val profit: Long,
+    override val profitMargin: Double,
+    override val purchasesTradeAmount: Long,
+    override val purchasesDiscounts: Long,
+    override val purchasesPaymentFees: Long,
+    override val purchasesPaymentAmount: Long,
+    override val purchasesOriginalPrice: Long,
+    override val purchasesProfit: Long,
+    override val purchasesProfitMargin: Double,
+    override val purchasesRatio: Double,
+    override val partnerTradeAmount: Long,
+    override val partnerDiscounts: Long,
+    override val partnerPaymentFees: Long,
+    override val partnerPaymentAmount: Long,
+    override val partnerSellFees: Long,
+    override val partnerFees: Long,
+    override val partnerSellGrants: Long,
+    override val partnerProfitMargin: Double,
+    override val salesExcludedVAT: Long,
+    override val originalPriceExcludedVAT: Long,
+    override val profitExcludedVAT: Long,
+    override val profitMarginExcludedVAT: Double
+) : SalesStatistics(
+    isGrouping,
+    sellQuantity,
+    sellAmount,
+    refundQuantity,
+    refundAmount,
+    exchangeQuantity,
+    exchangeAmount,
+    tradeQuantity,
+    tradeAmount,
+    memberDiscounts,
+    affiliateDiscounts,
+    otherDiscounts,
+    couponDiscounts,
+    partnerCouponDiscounts,
+    pointDiscounts,
+    prePointDiscounts,
+    cartDiscounts,
+    groupDiscounts,
+    totalDiscounts,
+    discountRate,
+    paymentFees,
+    paymentAmount,
+    sales,
+    originalPrice,
+    profit,
+    profitMargin,
+    purchasesTradeAmount,
+    purchasesDiscounts,
+    purchasesPaymentFees,
+    purchasesPaymentAmount,
+    purchasesOriginalPrice,
+    purchasesProfit,
+    purchasesProfitMargin,
+    purchasesRatio,
+    partnerTradeAmount,
+    partnerDiscounts,
+    partnerPaymentFees,
+    partnerPaymentAmount,
+    partnerSellFees,
+    partnerFees,
+    partnerSellGrants,
+    partnerProfitMargin,
+    salesExcludedVAT,
+    originalPriceExcludedVAT,
+    profitExcludedVAT,
+    profitMarginExcludedVAT
 )
