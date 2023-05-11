@@ -34,8 +34,6 @@ class SalesService(
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param orderBy 정렬키
-     * @param size 페이징 시 가져올 원소 수
-     * @param number 가져올 페이지
      *
      * @return 매출통계 지표
      *
