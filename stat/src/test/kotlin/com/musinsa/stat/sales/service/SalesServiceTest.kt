@@ -45,12 +45,14 @@ private class SalesServiceTest {
     @Test
     fun 일별_매출통계를_가져온다() {
         // given
+        val 테스트를_위한_DAILY_LIST =
+            listOf(DAILY_SUM, DAILY_20230505, DAILY_20230506)
         whenever(
             jdbcTemplate.query(
                 anyString(),
                 eq(SalesStatisticsRowMapper)
             )
-        ).thenReturn(listOf(DAILY_SUM, DAILY_20230505, DAILY_20230506))
+        ).thenReturn(테스트를_위한_DAILY_LIST)
         whenever(databricksClient.getDatabricksQuery(anyString())).thenReturn(
             SAMPLE_QUERY
         )
@@ -64,13 +66,7 @@ private class SalesServiceTest {
         )
 
         // then
-        val 기댓값 = SalesStatisticsResponse<Daily>(
-            listOf(
-                DAILY_SUM,
-                DAILY_20230505,
-                DAILY_20230506
-            )
-        )
+        val 기댓값 = SalesStatisticsResponse<Daily>(테스트를_위한_DAILY_LIST)
         assertAll(
             { assertThat(결과값.sum.toString()).isEqualTo(기댓값.sum.toString()) },
             { assertThat(결과값.content.toString()).isEqualTo(기댓값.content.toString()) }
