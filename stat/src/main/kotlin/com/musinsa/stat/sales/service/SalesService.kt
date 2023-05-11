@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class SalesService(
-    @Qualifier("databricksJdbcTemplate") val jdbcTemplate: JdbcTemplate,
-    val queryStore: QueryStore,
-    val databricksClient: DatabricksClient
+    @Qualifier("databricksJdbcTemplate") private val jdbcTemplate: JdbcTemplate,
+    private val queryStore: QueryStore,
+    private val databricksClient: DatabricksClient
 ) {
-    // TODO 테스트 코드 추가
     /**
      * 일별 매출통계를 가져온다.
      *

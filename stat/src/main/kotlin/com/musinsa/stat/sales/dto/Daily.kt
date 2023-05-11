@@ -1,7 +1,5 @@
 package com.musinsa.stat.sales.dto
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-
 /**
  * 집계 row를 가져온다.
  *
@@ -27,7 +25,6 @@ data class Daily(
      * 합계 필드 구분
      * True: 합계 필드
      */
-    @JsonIgnore
     val isGrouping: Boolean,
 
     /**
