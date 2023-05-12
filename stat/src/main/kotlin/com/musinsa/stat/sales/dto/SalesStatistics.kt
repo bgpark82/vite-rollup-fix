@@ -3,236 +3,334 @@ package com.musinsa.stat.sales.dto
 /**
  * 모든 매출통계에서 공통으로 사용
  */
-abstract class SalesStatistics(
+open class SalesStatistics {
 
     /**
      * 합계 필드 구분
      * True: 합계 필드
      */
-    open val isGrouping: Boolean,
+    var isGrouping: Boolean = false
 
     /**
      * 판매수량
      */
-    open val sellQuantity: Long,
+    var sellQuantity: Long = 0
 
     /**
      * 판매금액
      */
-    open val sellAmount: Long,
+    var sellAmount: Long = 0
 
     /**
      * 환불수량
      */
-    open val refundQuantity: Long,
+    var refundQuantity: Long = 0
 
     /**
      * 환불금액
      */
-    open val refundAmount: Long,
+    var refundAmount: Long = 0
 
     /**
      * 교환수량
      */
-    open val exchangeQuantity: Long,
+    var exchangeQuantity: Long = 0
 
     /**
      * 교환금액
      */
-    open val exchangeAmount: Long,
+    var exchangeAmount: Long = 0
 
     /**
      * 거래수량
      */
-    open val tradeQuantity: Long,
+    var tradeQuantity: Long = 0
 
     /**
      * 거래금액
      */
-    open val tradeAmount: Long,
+    var tradeAmount: Long = 0
 
     /**
      * 회원할인
      */
-    open val memberDiscounts: Long,
+    var memberDiscounts: Long = 0
 
     /**
      * 제휴할인
      */
-    open val affiliateDiscounts: Long,
+    var affiliateDiscounts: Long = 0
 
     /**
      * 기타할인
      */
-    open val otherDiscounts: Long,
+    var otherDiscounts: Long = 0
 
     /**
      * 쿠폰(무신사)할인
      */
-    open val couponDiscounts: Long,
+    var couponDiscounts: Long = 0
 
     /**
      * 쿠폰(업체)할인
      */
-    open val partnerCouponDiscounts: Long,
+    var partnerCouponDiscounts: Long = 0
 
     /**
      * 적립금할인
      */
-    open val pointDiscounts: Long,
+    var pointDiscounts: Long = 0
 
     /**
      * 선적립금할인
      */
-    open val prePointDiscounts: Long,
+    var prePointDiscounts: Long = 0
 
     /**
      * 장바구니할인
      */
-    open val cartDiscounts: Long,
+    var cartDiscounts: Long = 0
 
     /**
      * 그룹할인
      */
-    open val groupDiscounts: Long,
+    var groupDiscounts: Long = 0
 
     /**
      * 소계(총 할인액)
      */
-    open val totalDiscounts: Long,
+    var totalDiscounts: Long = 0
 
     /**
      * 할인율
      */
-    open val discountRate: Double,
+    var discountRate: Double = 0.0
 
     /**
      * 결제수수료
      */
-    open val paymentFees: Long,
+    var paymentFees: Long = 0
 
     /**
      * 결제금액
      */
-    open val paymentAmount: Long,
+    var paymentAmount: Long = 0
 
     /**
      * 매출
      */
-    open val sales: Long,
+    var sales: Long = 0
 
     /**
      * 원가
      */
-    open val originalPrice: Long,
+    var originalPrice: Long = 0
 
     /**
      * 이익
      */
-    open val profit: Long,
+    var profit: Long = 0
 
     /**
      * 이익률
      */
-    open val profitMargin: Double,
+    var profitMargin: Double = 0.0
 
     /**
      * 매입상품_거래금액
      */
-    open val purchasesTradeAmount: Long,
+    var purchasesTradeAmount: Long = 0
 
     /**
      * 매입상품_할인
      */
-    open val purchasesDiscounts: Long,
+    var purchasesDiscounts: Long = 0
 
     /**
      * 매입상품_결제수수료
      */
-    open val purchasesPaymentFees: Long,
+    var purchasesPaymentFees: Long = 0
 
     /**
      * 매입상품_결제금액
      */
-    open val purchasesPaymentAmount: Long,
+    var purchasesPaymentAmount: Long = 0
 
     /**
      * 매입상품_원가
      */
-    open val purchasesOriginalPrice: Long,
+    var purchasesOriginalPrice: Long = 0
 
     /**
      * 매입상품_이익
      */
-    open val purchasesProfit: Long,
+    var purchasesProfit: Long = 0
 
     /**
      * 매입상품_이익율
      */
-    open val purchasesProfitMargin: Double,
+    var purchasesProfitMargin: Double = 0.0
 
     /**
      * 매입상품_비중
      */
-    open val purchasesRatio: Double,
+    var purchasesRatio: Double = 0.0
 
     /**
      * 입점상품_거래금액
      */
-    open val partnerTradeAmount: Long,
+    var partnerTradeAmount: Long = 0
 
     /**
      * 입점상품_할인
      */
-    open val partnerDiscounts: Long,
+    var partnerDiscounts: Long = 0
 
     /**
      * 입점상품_결제수수료
      */
-    open val partnerPaymentFees: Long,
+    var partnerPaymentFees: Long = 0
 
     /**
      * 입점상품_결제금액
      */
-    open val partnerPaymentAmount: Long,
+    var partnerPaymentAmount: Long = 0
 
     /**
      * 입점상품_판매수수료
      */
-    open val partnerSellFees: Long,
+    var partnerSellFees: Long = 0
 
     /**
      * 입점상품_수수료
      */
-    open val partnerFees: Long,
+    var partnerFees: Long = 0
 
     /**
      * 입점상품_판매지원금
      */
-    open val partnerSellGrants: Long,
+    var partnerSellGrants: Long = 0
 
     /**
      * 입점상품_이익률
      */
-    open val partnerProfitMargin: Double,
+    var partnerProfitMargin: Double = 0.0
 
     /**
      * 매출(VAT별도)
      */
-    open val salesExcludedVAT: Long,
+    var salesExcludedVAT: Long = 0
 
     /**
      * 원가(VAT별도)
      */
-    open val originalPriceExcludedVAT: Long,
+    var originalPriceExcludedVAT: Long = 0
 
     /**
      * 이익(VAT별도)
      */
-    open val profitExcludedVAT: Long,
+    var profitExcludedVAT: Long = 0
 
     /**
      * 이익율(VAT별도)
      */
-    open val profitMarginExcludedVAT: Double
-)
+    var profitMarginExcludedVAT: Double = 0.0
+
+    // JSON 역직렬화를 위해 빈 생성자 필요
+    constructor()
+    constructor(
+        isGrouping: Boolean,
+        sellQuantity: Long,
+        sellAmount: Long,
+        refundQuantity: Long,
+        refundAmount: Long,
+        exchangeQuantity: Long,
+        exchangeAmount: Long,
+        tradeQuantity: Long,
+        tradeAmount: Long,
+        memberDiscounts: Long,
+        affiliateDiscounts: Long,
+        otherDiscounts: Long,
+        couponDiscounts: Long,
+        partnerCouponDiscounts: Long,
+        pointDiscounts: Long,
+        prePointDiscounts: Long,
+        cartDiscounts: Long,
+        groupDiscounts: Long,
+        totalDiscounts: Long,
+        discountRate: Double,
+        paymentFees: Long,
+        paymentAmount: Long,
+        sales: Long,
+        originalPrice: Long,
+        profit: Long,
+        profitMargin: Double,
+        purchasesTradeAmount: Long,
+        purchasesDiscounts: Long,
+        purchasesPaymentFees: Long,
+        purchasesPaymentAmount: Long,
+        purchasesOriginalPrice: Long,
+        purchasesProfit: Long,
+        purchasesProfitMargin: Double,
+        purchasesRatio: Double,
+        partnerTradeAmount: Long,
+        partnerDiscounts: Long,
+        partnerPaymentFees: Long,
+        partnerPaymentAmount: Long,
+        partnerSellFees: Long,
+        partnerFees: Long,
+        partnerSellGrants: Long,
+        partnerProfitMargin: Double,
+        salesExcludedVAT: Long,
+        originalPriceExcludedVAT: Long,
+        profitExcludedVAT: Long,
+        profitMarginExcludedVAT: Double
+    ) {
+        this.isGrouping = isGrouping
+        this.sellQuantity = sellQuantity
+        this.sellAmount = sellAmount
+        this.refundQuantity = refundQuantity
+        this.refundAmount = refundAmount
+        this.exchangeQuantity = exchangeQuantity
+        this.exchangeAmount = exchangeAmount
+        this.tradeQuantity = tradeQuantity
+        this.tradeAmount = tradeAmount
+        this.memberDiscounts = memberDiscounts
+        this.affiliateDiscounts = affiliateDiscounts
+        this.otherDiscounts = otherDiscounts
+        this.couponDiscounts = couponDiscounts
+        this.partnerCouponDiscounts = partnerCouponDiscounts
+        this.pointDiscounts = pointDiscounts
+        this.prePointDiscounts = prePointDiscounts
+        this.cartDiscounts = cartDiscounts
+        this.groupDiscounts = groupDiscounts
+        this.totalDiscounts = totalDiscounts
+        this.discountRate = discountRate
+        this.paymentFees = paymentFees
+        this.paymentAmount = paymentAmount
+        this.sales = sales
+        this.originalPrice = originalPrice
+        this.profit = profit
+        this.profitMargin = profitMargin
+        this.purchasesTradeAmount = purchasesTradeAmount
+        this.purchasesDiscounts = purchasesDiscounts
+        this.purchasesPaymentFees = purchasesPaymentFees
+        this.purchasesPaymentAmount = purchasesPaymentAmount
+        this.purchasesOriginalPrice = purchasesOriginalPrice
+        this.purchasesProfit = purchasesProfit
+        this.purchasesProfitMargin = purchasesProfitMargin
+        this.purchasesRatio = purchasesRatio
+        this.partnerTradeAmount = partnerTradeAmount
+        this.partnerDiscounts = partnerDiscounts
+        this.partnerPaymentFees = partnerPaymentFees
+        this.partnerPaymentAmount = partnerPaymentAmount
+        this.partnerSellFees = partnerSellFees
+        this.partnerFees = partnerFees
+        this.partnerSellGrants = partnerSellGrants
+        this.partnerProfitMargin = partnerProfitMargin
+        this.salesExcludedVAT = salesExcludedVAT
+        this.originalPriceExcludedVAT = originalPriceExcludedVAT
+        this.profitExcludedVAT = profitExcludedVAT
+        this.profitMarginExcludedVAT = profitMarginExcludedVAT
+    }
+}
