@@ -12,9 +12,9 @@ class SalesController(private val salesService: SalesService) {
     // TODO 유효성 체크 + 조회 구간 한정(1년)
     // TODO 테스트코드 추가
     // TODO REST Docs 추가
-    @GetMapping
+    @GetMapping("/{metric}")
     fun salesStatistics(
-        @PathVariable(required = true) metric: Metric,
+        @PathVariable(required = true, value = "metric") metric: Metric,
         @RequestParam startDate: String,
         @RequestParam endDate: String,
         @RequestParam(required = false) tag: List<String>?,
