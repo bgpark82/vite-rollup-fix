@@ -7,7 +7,7 @@ import java.sql.ResultSet
 /**
  * 매출통계 RowMapper
  */
-object SalesStatisticsRowMapper : RowMapper<Daily> {
+object DailyRowMapper : RowMapper<Daily> {
     override fun mapRow(rs: ResultSet, rowNum: Int): Daily {
         return Daily(
             date = rs.getString("date") ?: "SUM",

@@ -2,8 +2,8 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
+import com.musinsa.stat.sales.domain.DailyRowMapper
 import com.musinsa.stat.sales.domain.SalesStart
-import com.musinsa.stat.sales.domain.SalesStatisticsRowMapper
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.QueryGenerator.generate
 import org.springframework.beans.factory.annotation.Qualifier
@@ -70,7 +70,7 @@ class SalesService(
                 specialtyCode,
                 mdId,
                 orderBy
-            ), SalesStatisticsRowMapper
+            ), DailyRowMapper
         )
 
         return SalesStatisticsResponse(queryResult)
