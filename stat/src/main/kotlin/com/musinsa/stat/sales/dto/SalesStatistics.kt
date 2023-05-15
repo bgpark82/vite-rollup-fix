@@ -1,10 +1,12 @@
 package com.musinsa.stat.sales.dto
 
+import com.musinsa.stat.util.NoArgsConstructor
 import java.sql.ResultSet
 
 /**
  * 모든 매출통계에서 공통으로 사용
  */
+@NoArgsConstructor
 open class SalesStatistics {
 
     /**
@@ -238,8 +240,6 @@ open class SalesStatistics {
      */
     var profitMarginExcludedVAT: Double = 0.0
 
-    // JSON 역직렬화를 위해 빈 생성자 필요
-    constructor()
     constructor(
         isGrouping: Boolean,
         sellQuantity: Long,
