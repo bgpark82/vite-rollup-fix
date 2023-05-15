@@ -5,8 +5,8 @@ import java.sql.ResultSet
 /**
  * 일별매출통계
  */
-class Daily(
-    rs: ResultSet,
+data class Daily(
+    val rs: ResultSet,
     /**
      * 8자리 일자
      * ex) 20230502

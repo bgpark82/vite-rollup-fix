@@ -160,7 +160,7 @@ object DailyFixture {
     }
 
     fun DAILY_SUM(): Daily {
-        var rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
+        val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
         rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
         rowSetTemp.moveToInsertRow()
         rowSetTemp.updateString("date", null)
@@ -216,7 +216,7 @@ object DailyFixture {
     }
 
     fun DAILY_20230505(): Daily {
-        var rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
+        val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
         rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
         rowSetTemp.moveToInsertRow()
 
@@ -272,7 +272,7 @@ object DailyFixture {
     }
 
     fun DAILY_20230506(): Daily {
-        var rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
+        val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
         rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
         rowSetTemp.moveToInsertRow()
 
