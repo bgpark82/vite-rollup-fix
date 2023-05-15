@@ -1,19 +1,18 @@
 package com.musinsa.stat.sales.dto
 
+import com.musinsa.stat.util.NoArgsConstructor
 import java.sql.ResultSet
 
 /**
  * 일별매출통계
  */
+@NoArgsConstructor
 class Daily : SalesStatistics {
     /**
      * 8자리 일자
      * ex) 20230502
      */
     var date: String? = String()
-
-    // JSON 역직렬화를 위해 빈 생성자 필요
-    constructor()
 
     constructor(
         date: String?,

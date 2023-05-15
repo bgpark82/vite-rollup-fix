@@ -15,6 +15,9 @@ plugins {
 
     // JVM 어플리케이션(https://docs.gradle.org/current/userguide/application_plugin.html)
     application
+
+    // Kotlin NoArgs Constructor(https://kotlinlang.org/docs/no-arg-plugin.html#jpa-support)
+    id("org.jetbrains.kotlin.plugin.noarg")
 }
 
 group = "com.musinsa"
@@ -29,6 +32,10 @@ val MAIN_CLASS = "com.musinsa.stat.StatApplication"
 
 application {
     mainClass.set(MAIN_CLASS)
+}
+
+noArg {
+    annotation("com.musinsa.stat.util.NoArgsConstructor")
 }
 
 repositories {
