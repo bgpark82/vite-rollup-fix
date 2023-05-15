@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.ArgumentMatchers.eq
+import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.jdbc.core.JdbcTemplate
@@ -45,7 +45,7 @@ private class SalesServiceTest {
     fun 일별_매출통계를_가져온다() {
         // given
         val 테스트를_위한_DAILY_LIST =
-            listOf(DAILY_SUM, DAILY_20230505, DAILY_20230506)
+            listOf(DAILY_SUM(), DAILY_20230505(), DAILY_20230506())
         whenever(
             jdbcTemplate.query(
                 anyString(),

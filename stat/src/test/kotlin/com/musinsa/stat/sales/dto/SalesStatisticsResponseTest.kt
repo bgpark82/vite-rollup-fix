@@ -1,7 +1,9 @@
 package com.musinsa.stat.sales.dto
 
-import com.musinsa.stat.sales.fixture.DailyFixture
-import org.assertj.core.api.Assertions
+import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
+import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230506
+import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_SUM
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
@@ -11,9 +13,9 @@ private class SalesStatisticsResponseTest {
         // given
         val 테스트를_위한_DAILY_LIST =
             listOf(
-                DailyFixture.DAILY_SUM,
-                DailyFixture.DAILY_20230505,
-                DailyFixture.DAILY_20230506
+                DAILY_SUM(),
+                DAILY_20230505(),
+                DAILY_20230506()
             )
 
         // when
@@ -21,9 +23,9 @@ private class SalesStatisticsResponseTest {
 
         // then
         assertAll(
-            { Assertions.assertThat(결과값.sum.isGrouping).isTrue() },
-            { Assertions.assertThat(결과값.content[0].isGrouping).isFalse() },
-            { Assertions.assertThat(결과값.content[1].isGrouping).isFalse() }
+            { assertThat(결과값.sum.isGrouping).isTrue() },
+            { assertThat(결과값.content[0].isGrouping).isFalse() },
+            { assertThat(결과값.content[1].isGrouping).isFalse() }
         )
     }
 }
