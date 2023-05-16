@@ -30,7 +30,7 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false) mdId: String?,
         @RequestParam(defaultValue = "date") orderBy: String
     ): SalesStatisticsResponse {
-        // TODO 팩토리 메소드 패턴으로 변경 (salesService 동반 객체 사용?)
+        // TODO 팩토리 메소드 패턴으로 변경
         return when (metric) {
             Metric.DAILY -> salesService.daily(
                 startDate,

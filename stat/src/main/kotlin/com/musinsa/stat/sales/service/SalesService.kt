@@ -53,26 +53,26 @@ class SalesService(
         mdId: String? = String(),
         orderBy: String
     ): SalesStatisticsResponse {
-        val queryResult = jdbcTemplate.query(
-            generate(
-                query = databricksClient.getDatabricksQuery(queryStore.daily),
-                startDate,
-                endDate,
-                tag,
-                salesStart,
-                partnerId,
-                category,
-                styleNumber,
-                goodsNumber,
-                brandId,
-                couponNumber,
-                adCode,
-                specialtyCode,
-                mdId,
-                orderBy
-            ), DailyRowMapper
+        return SalesStatisticsResponse(
+            jdbcTemplate.query(
+                generate(
+                    databricksClient.getDatabricksQuery(queryStore.daily),
+                    startDate,
+                    endDate,
+                    tag,
+                    salesStart,
+                    partnerId,
+                    category,
+                    styleNumber,
+                    goodsNumber,
+                    brandId,
+                    couponNumber,
+                    adCode,
+                    specialtyCode,
+                    mdId,
+                    orderBy
+                ), DailyRowMapper
+            )
         )
-
-        return SalesStatisticsResponse(queryResult)
     }
 }
