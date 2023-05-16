@@ -12,4 +12,4 @@ data class Daily(
      * ex) 20230502
      */
     val date: String
-) : SalesStatistics(rs)
+) : SalesStatisticsMetric(rs)

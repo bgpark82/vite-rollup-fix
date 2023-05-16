@@ -5,7 +5,7 @@ import java.sql.ResultSet
 /**
  * 모든 매출통계에서 공통으로 사용
  */
-open class SalesStatistics(
+open class SalesStatisticsMetric(
     /**
      * 합계 필드 구분
      * True: 합계 필드
