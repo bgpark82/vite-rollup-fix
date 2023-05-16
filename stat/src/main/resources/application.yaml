@@ -38,7 +38,7 @@ custom:
       authorization-token: Bearer dapiac03c1cb4ac710049a572888106b65e3
     # statistics query id
     stats-query-id:
-      daily: a452ce56-849a-4d38-ad2f-244d6fbd972c?o=3626753574208338
+      daily: a452ce56-849a-4d38-ad2f-244d6fbd972c
       montly: ae97fd63-0b4f-4a10-8b04-5241e83d417d
       partner: 5fda7bef-f0e9-42de-b747-12e06b0cdb92
       brand: 437714c5-01cf-4a4f-9bee-3f3b29d7075a
