@@ -3,12 +3,15 @@ package com.musinsa.stat.sales.dto
 /**
  * 매출통계 API 응답
  */
-data class SalesStatisticsResponse(val jdbcQueryResult: List<SalesStatisticsMetric>) {
+class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
     // 합계
-    val sum: SalesStatisticsMetric = jdbcQueryResult.first { it.isGrouping }
+    val sum: SalesStatisticsMetric
 
     // 결과값
-    val content: List<SalesStatisticsMetric> =
-        jdbcQueryResult.filter { !it.isGrouping }
+    val content: List<SalesStatisticsMetric>
 
+    init {
+        sum = jdbcQueryResult.first { it.isGrouping }
+        content = jdbcQueryResult.filter { !it.isGrouping }
+    }
 }

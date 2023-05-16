@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.sql.ResultSet
 
 /**
@@ -10,6 +11,7 @@ open class SalesStatisticsMetric(
      * 합계 필드 구분
      * True: 합계 필드
      */
+    @JsonIgnore
     val isGrouping: Boolean,
     /**
      * 판매수량
