@@ -6,7 +6,7 @@ import java.sql.ResultSet
 /**
  * 일별매출통계
  */
-data class Daily(
+data class DailyAndMontly(
     @JsonIgnore
     val rs: ResultSet,
     /**

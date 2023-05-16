@@ -2,7 +2,8 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
-import com.musinsa.stat.sales.domain.DailyRowMapper
+import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
+import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.QueryGenerator.generate
@@ -19,6 +20,7 @@ class SalesService(
     /**
      * 일별 매출통계를 가져온다.
      *
+     * @param metric 매출통계 유형
      * @param startDate 시작날짜
      * @param endDate 종료날짜
      * @param tag 태그. 기본값: 빈배열
@@ -37,7 +39,8 @@ class SalesService(
      * @return 매출통계 지표
      *
      */
-    fun daily(
+    fun getSalesStatistics(
+        metric: Metric,
         startDate: String,
         endDate: String,
         tag: List<String>? = emptyList(),
@@ -56,7 +59,11 @@ class SalesService(
         return SalesStatisticsResponse(
             jdbcTemplate.query(
                 generate(
-                    databricksClient.getDatabricksQuery(queryStore.daily),
+                    databricksClient.getDatabricksQuery(
+                        queryStore.getQueryId(
+                            metric
+                        )
+                    ),
                     startDate,
                     endDate,
                     tag,
@@ -71,7 +78,8 @@ class SalesService(
                     specialtyCode,
                     mdId,
                     orderBy
-                ), DailyRowMapper
+                ), DailyAndMontlyRowMapper
+                // TODO RowMapper 팩토리 패턴으로 가져오기
             )
         )
     }

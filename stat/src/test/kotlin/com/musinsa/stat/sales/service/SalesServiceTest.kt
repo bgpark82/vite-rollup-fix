@@ -2,7 +2,8 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
-import com.musinsa.stat.sales.domain.DailyRowMapper
+import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
+import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
@@ -49,7 +50,7 @@ private class SalesServiceTest {
         whenever(
             jdbcTemplate.query(
                 anyString(),
-                eq(DailyRowMapper)
+                eq(DailyAndMontlyRowMapper)
             )
         ).thenReturn(테스트를_위한_DAILY_LIST)
         whenever(databricksClient.getDatabricksQuery(anyString())).thenReturn(
@@ -57,7 +58,8 @@ private class SalesServiceTest {
         )
 
         // when
-        val 결과값 = salesService.daily(
+        val 결과값 = salesService.getSalesStatistics(
+            metric = Metric.DAILY,
             startDate = "필수값이라 의미 없이 추가",
             endDate = "필수값이라 의미 없이 추가",
             salesStart = SalesStart.SHIPPING_REQUEST,

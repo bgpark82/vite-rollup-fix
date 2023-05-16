@@ -30,26 +30,22 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false) mdId: String?,
         @RequestParam(defaultValue = "date") orderBy: String
     ): SalesStatisticsResponse {
-        // TODO 팩토리 메소드 패턴으로 변경
-        return when (metric) {
-            Metric.DAILY -> salesService.daily(
-                startDate,
-                endDate,
-                tag,
-                salesStart,
-                partnerId,
-                category,
-                styleNumber,
-                goodsNumber,
-                brandId,
-                couponNumber,
-                adCode,
-                specialtyCode,
-                mdId,
-                orderBy
-            )
-            // TODO 예외처리
-            else -> throw Exception("해당 API 없음")
-        }
+        return salesService.getSalesStatistics(
+            metric,
+            startDate,
+            endDate,
+            tag,
+            salesStart,
+            partnerId,
+            category,
+            styleNumber,
+            goodsNumber,
+            brandId,
+            couponNumber,
+            adCode,
+            specialtyCode,
+            mdId,
+            orderBy
+        )
     }
 }

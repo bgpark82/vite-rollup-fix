@@ -1,6 +1,6 @@
 package com.musinsa.stat.sales.fixture
 
-import com.musinsa.stat.sales.dto.Daily
+import com.musinsa.stat.sales.dto.DailyAndMontly
 import java.sql.Types
 import javax.sql.rowset.RowSetMetaDataImpl
 import javax.sql.rowset.RowSetProvider
@@ -159,7 +159,7 @@ object DailyFixture {
         return meta
     }
 
-    fun DAILY_SUM(): Daily {
+    fun DAILY_SUM(): DailyAndMontly {
         val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
         rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
         rowSetTemp.moveToInsertRow()
@@ -212,10 +212,10 @@ object DailyFixture {
         rowSetTemp.updateDouble("이익률(VAT별도)", 23.4)
         rowSetTemp.insertRow()
 
-        return Daily(rowSetTemp, "SUM")
+        return DailyAndMontly(rowSetTemp, "SUM")
     }
 
-    fun DAILY_20230505(): Daily {
+    fun DAILY_20230505(): DailyAndMontly {
         val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
         rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
         rowSetTemp.moveToInsertRow()
@@ -268,10 +268,10 @@ object DailyFixture {
         rowSetTemp.updateLong("이익(VAT별도)", 2520058814)
         rowSetTemp.updateDouble("이익률(VAT별도)", 22.73)
 
-        return Daily(rowSetTemp, "20230505")
+        return DailyAndMontly(rowSetTemp, "20230505")
     }
 
-    fun DAILY_20230506(): Daily {
+    fun DAILY_20230506(): DailyAndMontly {
         val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
         rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
         rowSetTemp.moveToInsertRow()
@@ -324,7 +324,7 @@ object DailyFixture {
         rowSetTemp.updateLong("이익(VAT별도)", 2630368615)
         rowSetTemp.updateDouble("이익률(VAT별도)", 24.08)
 
-        return Daily(rowSetTemp, "20230506")
+        return DailyAndMontly(rowSetTemp, "20230506")
 
     }
 

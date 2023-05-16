@@ -12,5 +12,5 @@ enum class Metric(val description: String) {
     GOODS("상품별"),
     AD("광고별"),
     COUPON("쿠폰별"),
-    CATEGORY("카테고리별"),
+    CATEGORY("카테고리별")
 }

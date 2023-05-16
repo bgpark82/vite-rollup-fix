@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.config
 
+import com.musinsa.stat.sales.domain.Metric
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 /**
@@ -16,4 +17,21 @@ data class QueryStore(
     val ad: String,
     val coupon: String,
     val category: String
-)
+) {
+    // TODO 테스트 코드 작성
+    fun getQueryId(metric: Metric): String {
+        return when (metric) {
+            Metric.DAILY -> daily
+            Metric.MONTLY -> montly
+            Metric.PARTNER -> partner
+            Metric.BRAND -> brand
+            Metric.BRAND_PARTNER -> brandPartner
+            Metric.GOODS -> goods
+            Metric.AD -> ad
+            Metric.COUPON -> coupon
+            Metric.CATEGORY -> category
+            // TODO 에러 정의
+            else -> throw Exception("존재하지 않는 metric")
+        }
+    }
+}
