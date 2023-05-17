@@ -2,7 +2,6 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
-import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
@@ -78,8 +77,7 @@ class SalesService(
                     specialtyCode,
                     mdId,
                     orderBy
-                ), DailyAndMontlyRowMapper
-                // TODO RowMapper 팩토리 패턴으로 가져오기
+                ), RowMapperFactory.getRowMapper(metric)
             )
         )
     }
