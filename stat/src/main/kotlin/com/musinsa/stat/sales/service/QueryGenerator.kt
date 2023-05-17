@@ -37,7 +37,7 @@ object QueryGenerator {
             array.indexOfFirst { str -> str.contains(target) }
         return when (index >= 0) {
             true -> index
-            // TODO 예외처리 통일
+            // TODO 예외처리 추가
             false -> throw Exception("문자열: " + target + " 을 찾을 수 없음")
         }
     }

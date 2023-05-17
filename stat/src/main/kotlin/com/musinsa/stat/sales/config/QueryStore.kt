@@ -18,7 +18,6 @@ data class QueryStore(
     val coupon: String,
     val category: String
 ) {
-    // TODO 테스트 코드 작성
     fun getQueryId(metric: Metric): String {
         return when (metric) {
             Metric.DAILY -> daily
