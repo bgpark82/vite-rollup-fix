@@ -43,7 +43,7 @@ private class SalesServiceTest {
     }
 
     @Test
-    fun 일별_매출통계를_가져온다() {
+    fun 매출통계를_가져온다() {
         // given
         val 테스트를_위한_DAILY_LIST =
             listOf(DAILY_SUM(), DAILY_20230505(), DAILY_20230506())
