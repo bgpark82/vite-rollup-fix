@@ -21,8 +21,6 @@ object QueryGenerator {
     val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
     val MD_ID = "\\{\\{mdId}}".toRegex()
     val ORDER_BY = "\\{\\{orderBy}}".toRegex()
-    val SIZE = "\\{\\{size}}".toRegex()
-    val NUMBER = "\\{\\{number}}".toRegex()
 
     /**
      * 배열에서 특정 문자열이 속한 index를 찾는다.
@@ -100,8 +98,6 @@ object QueryGenerator {
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param orderBy 정렬키
-     * @param size 페이징 시 가져올 원소 수
-     * @param number 가져올 페이지
      *
      * @return 치환된 쿼리
      *
