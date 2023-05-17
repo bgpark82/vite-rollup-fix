@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 
 /**
- * 매출통계 RowMapper
+ * 일별/월별매출통계 RowMapper
  */
 object DailyAndMontlyRowMapper : RowMapper<DailyAndMontly> {
     override fun mapRow(rs: ResultSet, rowNum: Int): DailyAndMontly {

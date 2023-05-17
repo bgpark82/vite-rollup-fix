@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import java.sql.ResultSet
 
 /**
- * 일별매출통계
+ * 일별/월별 매출통계
  */
 data class DailyAndMontly(
     @JsonIgnore
