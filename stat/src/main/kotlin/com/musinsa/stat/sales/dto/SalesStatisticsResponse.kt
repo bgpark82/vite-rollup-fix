@@ -218,11 +218,11 @@ class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
     }
 
     /**
-     * 합계는 0으로 표기하며, 평균을 구한다.
+     * 합계는 0으로 표기하며, 평균을 소수점 2자리까지 구한다.
      */
     @JvmName("calculateSumAndAverageDouble")
     private fun calculateSumAndAverage(stream: Stream<Double>): Pair<Double, Double> {
         val list = stream.toList()
-        return Pair(0.0, list.average())
+        return Pair(0.0, String.format("%.2f", list.average()).toDouble())
     }
 }

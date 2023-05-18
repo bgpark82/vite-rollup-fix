@@ -88,21 +88,49 @@ private class SalesStatisticsResponseTest {
             { assertThat(결과값.average.cartDiscounts).isEqualTo((결과값.content[0].cartDiscounts + 결과값.content[1].cartDiscounts) / 2) },
             { assertThat(결과값.average.groupDiscounts).isEqualTo((결과값.content[0].groupDiscounts + 결과값.content[1].groupDiscounts) / 2) },
             { assertThat(결과값.average.totalDiscounts).isEqualTo((결과값.content[0].totalDiscounts + 결과값.content[1].totalDiscounts) / 2) },
-            { assertThat(결과값.average.discountRate).isEqualTo((결과값.content[0].discountRate + 결과값.content[1].discountRate) / 2) },
+            {
+                assertThat(결과값.average.discountRate).isEqualTo(
+                    String.format(
+                        "%.2f",
+                        (결과값.content[0].discountRate + 결과값.content[1].discountRate) / 2
+                    ).toDouble()
+                )
+            },
             { assertThat(결과값.average.paymentFees).isEqualTo((결과값.content[0].paymentFees + 결과값.content[1].paymentFees) / 2) },
             { assertThat(결과값.average.paymentAmount).isEqualTo((결과값.content[0].paymentAmount + 결과값.content[1].paymentAmount) / 2) },
             { assertThat(결과값.average.sales).isEqualTo((결과값.content[0].sales + 결과값.content[1].sales) / 2) },
             { assertThat(결과값.average.originalPrice).isEqualTo((결과값.content[0].originalPrice + 결과값.content[1].originalPrice) / 2) },
             { assertThat(결과값.average.profit).isEqualTo((결과값.content[0].profit + 결과값.content[1].profit) / 2) },
-            { assertThat(결과값.average.profitMargin).isEqualTo((결과값.content[0].profitMargin + 결과값.content[1].profitMargin) / 2) },
+            {
+                assertThat(결과값.average.profitMargin).isEqualTo(
+                    String.format(
+                        "%.2f",
+                        (결과값.content[0].profitMargin + 결과값.content[1].profitMargin) / 2
+                    ).toDouble()
+                )
+            },
             { assertThat(결과값.average.purchasesTradeAmount).isEqualTo((결과값.content[0].purchasesTradeAmount + 결과값.content[1].purchasesTradeAmount) / 2) },
             { assertThat(결과값.average.purchasesDiscounts).isEqualTo((결과값.content[0].purchasesDiscounts + 결과값.content[1].purchasesDiscounts) / 2) },
             { assertThat(결과값.average.purchasesPaymentFees).isEqualTo((결과값.content[0].purchasesPaymentFees + 결과값.content[1].purchasesPaymentFees) / 2) },
             { assertThat(결과값.average.purchasesPaymentAmount).isEqualTo((결과값.content[0].purchasesPaymentAmount + 결과값.content[1].purchasesPaymentAmount) / 2) },
             { assertThat(결과값.average.purchasesOriginalPrice).isEqualTo((결과값.content[0].purchasesOriginalPrice + 결과값.content[1].purchasesOriginalPrice) / 2) },
             { assertThat(결과값.average.purchasesProfit).isEqualTo((결과값.content[0].purchasesProfit + 결과값.content[1].purchasesProfit) / 2) },
-            { assertThat(결과값.average.purchasesProfitMargin).isEqualTo((결과값.content[0].purchasesProfitMargin + 결과값.content[1].purchasesProfitMargin) / 2) },
-            { assertThat(결과값.average.purchasesRatio).isEqualTo((결과값.content[0].purchasesRatio + 결과값.content[1].purchasesRatio) / 2) },
+            {
+                assertThat(결과값.average.purchasesProfitMargin).isEqualTo(
+                    String.format(
+                        "%.2f",
+                        (결과값.content[0].purchasesProfitMargin + 결과값.content[1].purchasesProfitMargin) / 2
+                    ).toDouble()
+                )
+            },
+            {
+                assertThat(결과값.average.purchasesRatio).isEqualTo(
+                    String.format(
+                        "%.2f",
+                        (결과값.content[0].purchasesRatio + 결과값.content[1].purchasesRatio) / 2
+                    ).toDouble()
+                )
+            },
             { assertThat(결과값.average.partnerTradeAmount).isEqualTo((결과값.content[0].partnerTradeAmount + 결과값.content[1].partnerTradeAmount) / 2) },
             { assertThat(결과값.average.partnerDiscounts).isEqualTo((결과값.content[0].partnerDiscounts + 결과값.content[1].partnerDiscounts) / 2) },
             { assertThat(결과값.average.partnerPaymentFees).isEqualTo((결과값.content[0].partnerPaymentFees + 결과값.content[1].partnerPaymentFees) / 2) },
@@ -110,11 +138,25 @@ private class SalesStatisticsResponseTest {
             { assertThat(결과값.average.partnerSellFees).isEqualTo((결과값.content[0].partnerSellFees + 결과값.content[1].partnerSellFees) / 2) },
             { assertThat(결과값.average.partnerFees).isEqualTo((결과값.content[0].partnerFees + 결과값.content[1].partnerFees) / 2) },
             { assertThat(결과값.average.partnerSellGrants).isEqualTo((결과값.content[0].partnerSellGrants + 결과값.content[1].partnerSellGrants) / 2) },
-            { assertThat(결과값.average.partnerProfitMargin).isEqualTo((결과값.content[0].partnerProfitMargin + 결과값.content[1].partnerProfitMargin) / 2) },
+            {
+                assertThat(결과값.average.partnerProfitMargin).isEqualTo(
+                    String.format(
+                        "%.2f",
+                        (결과값.content[0].partnerProfitMargin + 결과값.content[1].partnerProfitMargin) / 2
+                    ).toDouble()
+                )
+            },
             { assertThat(결과값.average.salesExcludedVAT).isEqualTo((결과값.content[0].salesExcludedVAT + 결과값.content[1].salesExcludedVAT) / 2) },
             { assertThat(결과값.average.originalPriceExcludedVAT).isEqualTo((결과값.content[0].originalPriceExcludedVAT + 결과값.content[1].originalPriceExcludedVAT) / 2) },
             { assertThat(결과값.average.profitExcludedVAT).isEqualTo((결과값.content[0].profitExcludedVAT + 결과값.content[1].profitExcludedVAT) / 2) },
-            { assertThat(결과값.average.profitMarginExcludedVAT).isEqualTo((결과값.content[0].profitMarginExcludedVAT + 결과값.content[1].profitMarginExcludedVAT) / 2) }
+            {
+                assertThat(결과값.average.profitMarginExcludedVAT).isEqualTo(
+                    String.format(
+                        "%.2f",
+                        (결과값.content[0].profitMarginExcludedVAT + 결과값.content[1].profitMarginExcludedVAT) / 2
+                    ).toDouble()
+                )
+            }
         )
     }
 }
