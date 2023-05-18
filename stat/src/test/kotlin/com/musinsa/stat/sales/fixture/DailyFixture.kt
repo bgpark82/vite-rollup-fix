@@ -14,205 +14,146 @@ object DailyFixture {
      */
     private fun createDailyRowSetMetaDataImpl(): RowSetMetaDataImpl {
         val meta = RowSetMetaDataImpl()
-        meta.columnCount = 47
+        meta.columnCount = 46
         meta.setColumnName(1, "date")
         meta.setColumnType(1, Types.VARCHAR)
 
-        meta.setColumnName(2, "집계")
+        meta.setColumnName(2, "판매수량")
         meta.setColumnType(2, Types.BIGINT)
 
-        meta.setColumnName(3, "판매수량")
+        meta.setColumnName(3, "판매금액")
         meta.setColumnType(3, Types.BIGINT)
 
-        meta.setColumnName(4, "판매금액")
+        meta.setColumnName(4, "환불수량")
         meta.setColumnType(4, Types.BIGINT)
 
-        meta.setColumnName(5, "환불수량")
+        meta.setColumnName(5, "환불금액")
         meta.setColumnType(5, Types.BIGINT)
 
-        meta.setColumnName(6, "환불금액")
+        meta.setColumnName(6, "교환수량")
         meta.setColumnType(6, Types.BIGINT)
 
-        meta.setColumnName(7, "교환수량")
+        meta.setColumnName(7, "교환금액")
         meta.setColumnType(7, Types.BIGINT)
 
-        meta.setColumnName(8, "교환금액")
+        meta.setColumnName(8, "거래수량")
         meta.setColumnType(8, Types.BIGINT)
 
-        meta.setColumnName(9, "거래수량")
+        meta.setColumnName(9, "거래금액")
         meta.setColumnType(9, Types.BIGINT)
 
-        meta.setColumnName(10, "거래금액")
+        meta.setColumnName(10, "회원할인")
         meta.setColumnType(10, Types.BIGINT)
 
-        meta.setColumnName(11, "회원할인")
+        meta.setColumnName(11, "제휴할인")
         meta.setColumnType(11, Types.BIGINT)
 
-        meta.setColumnName(12, "제휴할인")
+        meta.setColumnName(12, "기타할인")
         meta.setColumnType(12, Types.BIGINT)
 
-        meta.setColumnName(13, "기타할인")
+        meta.setColumnName(13, "쿠폰(무신사)할인")
         meta.setColumnType(13, Types.BIGINT)
 
-        meta.setColumnName(14, "쿠폰(무신사)할인")
+        meta.setColumnName(14, "쿠폰(업체)할인")
         meta.setColumnType(14, Types.BIGINT)
 
-        meta.setColumnName(15, "쿠폰(업체)할인")
+        meta.setColumnName(15, "적립금할인")
         meta.setColumnType(15, Types.BIGINT)
 
-        meta.setColumnName(16, "적립금할인")
+        meta.setColumnName(16, "선적립금할인")
         meta.setColumnType(16, Types.BIGINT)
 
-        meta.setColumnName(17, "선적립금할인")
+        meta.setColumnName(17, "장바구니할인")
         meta.setColumnType(17, Types.BIGINT)
 
-        meta.setColumnName(18, "장바구니할인")
+        meta.setColumnName(18, "그룹할인")
         meta.setColumnType(18, Types.BIGINT)
 
-        meta.setColumnName(19, "그룹할인")
+        meta.setColumnName(19, "소계")
         meta.setColumnType(19, Types.BIGINT)
 
-        meta.setColumnName(20, "소계")
-        meta.setColumnType(20, Types.BIGINT)
+        meta.setColumnName(20, "할인율")
+        meta.setColumnType(20, Types.DOUBLE)
 
-        meta.setColumnName(21, "할인율")
-        meta.setColumnType(21, Types.DOUBLE)
+        meta.setColumnName(21, "결제수수료")
+        meta.setColumnType(21, Types.BIGINT)
 
-        meta.setColumnName(22, "결제수수료")
+        meta.setColumnName(22, "결제금액")
         meta.setColumnType(22, Types.BIGINT)
 
-        meta.setColumnName(23, "결제금액")
+        meta.setColumnName(23, "매출")
         meta.setColumnType(23, Types.BIGINT)
 
-        meta.setColumnName(24, "매출")
+        meta.setColumnName(24, "원가")
         meta.setColumnType(24, Types.BIGINT)
 
-        meta.setColumnName(25, "원가")
+        meta.setColumnName(25, "이익")
         meta.setColumnType(25, Types.BIGINT)
 
-        meta.setColumnName(26, "이익")
-        meta.setColumnType(26, Types.BIGINT)
+        meta.setColumnName(26, "이익률")
+        meta.setColumnType(26, Types.DOUBLE)
 
-        meta.setColumnName(27, "이익률")
-        meta.setColumnType(27, Types.DOUBLE)
+        meta.setColumnName(27, "매입상품_거래금액")
+        meta.setColumnType(27, Types.BIGINT)
 
-        meta.setColumnName(28, "매입상품_거래금액")
+        meta.setColumnName(28, "매입상품_할인")
         meta.setColumnType(28, Types.BIGINT)
 
-        meta.setColumnName(29, "매입상품_할인")
+        meta.setColumnName(29, "매입상품_결제수수료")
         meta.setColumnType(29, Types.BIGINT)
 
-        meta.setColumnName(30, "매입상품_결제수수료")
+        meta.setColumnName(30, "매입상품_결제금액")
         meta.setColumnType(30, Types.BIGINT)
 
-        meta.setColumnName(31, "매입상품_결제금액")
+        meta.setColumnName(31, "매입상품_원가")
         meta.setColumnType(31, Types.BIGINT)
 
-        meta.setColumnName(32, "매입상품_원가")
+        meta.setColumnName(32, "매입상품_이익")
         meta.setColumnType(32, Types.BIGINT)
 
-        meta.setColumnName(33, "매입상품_이익")
-        meta.setColumnType(33, Types.BIGINT)
+        meta.setColumnName(33, "매입상품_이익율")
+        meta.setColumnType(33, Types.DOUBLE)
 
-        meta.setColumnName(34, "매입상품_이익율")
+        meta.setColumnName(34, "매입상품_비중")
         meta.setColumnType(34, Types.DOUBLE)
 
-        meta.setColumnName(35, "매입상품_비중")
-        meta.setColumnType(35, Types.DOUBLE)
+        meta.setColumnName(35, "입점상품_거래금액")
+        meta.setColumnType(35, Types.BIGINT)
 
-        meta.setColumnName(36, "입점상품_거래금액")
+        meta.setColumnName(36, "입점상품_할인")
         meta.setColumnType(36, Types.BIGINT)
 
-        meta.setColumnName(37, "입점상품_할인")
+        meta.setColumnName(37, "입점상품_결제수수료")
         meta.setColumnType(37, Types.BIGINT)
 
-        meta.setColumnName(38, "입점상품_결제수수료")
+        meta.setColumnName(38, "입점상품_결제금액")
         meta.setColumnType(38, Types.BIGINT)
 
-        meta.setColumnName(39, "입점상품_결제금액")
+        meta.setColumnName(39, "입점상품_판매수수료")
         meta.setColumnType(39, Types.BIGINT)
 
-        meta.setColumnName(40, "입점상품_판매수수료")
+        meta.setColumnName(40, "입점상품_수수료")
         meta.setColumnType(40, Types.BIGINT)
 
-        meta.setColumnName(41, "입점상품_수수료")
+        meta.setColumnName(41, "입점상품_판매지원금")
         meta.setColumnType(41, Types.BIGINT)
 
-        meta.setColumnName(42, "입점상품_판매지원금")
-        meta.setColumnType(42, Types.BIGINT)
+        meta.setColumnName(42, "입점상품_이익률")
+        meta.setColumnType(42, Types.DOUBLE)
 
-        meta.setColumnName(43, "입점상품_이익률")
-        meta.setColumnType(43, Types.DOUBLE)
+        meta.setColumnName(43, "매출(VAT별도)")
+        meta.setColumnType(43, Types.BIGINT)
 
-        meta.setColumnName(44, "매출(VAT별도)")
+        meta.setColumnName(44, "원가(VAT별도)")
         meta.setColumnType(44, Types.BIGINT)
 
-        meta.setColumnName(45, "원가(VAT별도)")
+        meta.setColumnName(45, "이익(VAT별도)")
         meta.setColumnType(45, Types.BIGINT)
 
-        meta.setColumnName(46, "이익(VAT별도)")
-        meta.setColumnType(46, Types.BIGINT)
-
-        meta.setColumnName(47, "이익률(VAT별도)")
-        meta.setColumnType(47, Types.DOUBLE)
+        meta.setColumnName(46, "이익률(VAT별도)")
+        meta.setColumnType(46, Types.DOUBLE)
 
         return meta
-    }
-
-    fun DAILY_SUM(): DailyAndMontly {
-        val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
-        rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
-        rowSetTemp.moveToInsertRow()
-        rowSetTemp.updateString("date", null)
-        rowSetTemp.updateLong("집계", 1)
-        rowSetTemp.updateLong("판매수량", 503974)
-        rowSetTemp.updateLong("판매금액", 24714780428)
-        rowSetTemp.updateLong("환불수량", -36120)
-        rowSetTemp.updateLong("환불금액", -2682372924)
-        rowSetTemp.updateLong("교환수량", -466)
-        rowSetTemp.updateLong("교환금액", -21286300)
-        rowSetTemp.updateLong("거래수량", 467388)
-        rowSetTemp.updateLong("거래금액", 22011121204)
-        rowSetTemp.updateLong("회원할인", 342419799)
-        rowSetTemp.updateLong("제휴할인", 0)
-        rowSetTemp.updateLong("기타할인", 0)
-        rowSetTemp.updateLong("쿠폰(무신사)할인", 2630184773)
-        rowSetTemp.updateLong("쿠폰(업체)할인", 80774395)
-        rowSetTemp.updateLong("적립금할인", 449794246)
-        rowSetTemp.updateLong("선적립금할인", 130526881)
-        rowSetTemp.updateLong("장바구니할인", 6938313)
-        rowSetTemp.updateLong("그룹할인", 417900)
-        rowSetTemp.updateLong("소계", 3641056307)
-        rowSetTemp.updateDouble("할인율", 16.54)
-        rowSetTemp.updateLong("결제수수료", 8523106)
-        rowSetTemp.updateLong("결제금액", 18378588003)
-        rowSetTemp.updateLong("매출", 13984504330)
-        rowSetTemp.updateLong("원가", 8319034160)
-        rowSetTemp.updateLong("이익", 5658685497)
-        rowSetTemp.updateDouble("이익률", 25.71)
-        rowSetTemp.updateLong("매입상품_거래금액", 15858703557)
-        rowSetTemp.updateLong("매입상품_할인", 2636847822)
-        rowSetTemp.updateLong("매입상품_결제수수료", 5464155)
-        rowSetTemp.updateLong("매입상품_결제금액", 13227319890)
-        rowSetTemp.updateLong("매입상품_원가", 8319034160)
-        rowSetTemp.updateLong("매입상품_이익", 4908285730)
-        rowSetTemp.updateDouble("매입상품_이익율", 30.95)
-        rowSetTemp.updateDouble("매입상품_비중", 72.04859493535503)
-        rowSetTemp.updateLong("입점상품_거래금액", 6152417647)
-        rowSetTemp.updateLong("입점상품_할인", 1004208485)
-        rowSetTemp.updateLong("입점상품_결제수수료", 3058951)
-        rowSetTemp.updateLong("입점상품_결제금액", 5151268113)
-        rowSetTemp.updateLong("입점상품_판매수수료", 1671724054)
-        rowSetTemp.updateLong("입점상품_수수료", 754125489)
-        rowSetTemp.updateLong("입점상품_판매지원금", 6784673)
-        rowSetTemp.updateDouble("입점상품_이익률", 12.2)
-        rowSetTemp.updateLong("매출(VAT별도)", 12713185755)
-        rowSetTemp.updateLong("원가(VAT별도)", 7562758328)
-        rowSetTemp.updateLong("이익(VAT별도)", 5150427428)
-        rowSetTemp.updateDouble("이익률(VAT별도)", 23.4)
-        rowSetTemp.insertRow()
-
-        return DailyAndMontly(rowSetTemp, "SUM")
     }
 
     fun DAILY_20230505(): DailyAndMontly {
@@ -221,7 +162,6 @@ object DailyFixture {
         rowSetTemp.moveToInsertRow()
 
         rowSetTemp.updateString("date", "20230505")
-        rowSetTemp.updateLong("집계", 0)
         rowSetTemp.updateLong("판매수량", 254948)
         rowSetTemp.updateLong("판매금액", 12487389489)
         rowSetTemp.updateLong("환불수량", -18792)
@@ -277,7 +217,6 @@ object DailyFixture {
         rowSetTemp.moveToInsertRow()
 
         rowSetTemp.updateString("date", "20230506")
-        rowSetTemp.updateLong("집계", 0)
         rowSetTemp.updateLong("판매수량", 249026)
         rowSetTemp.updateLong("판매금액", 12227390939)
         rowSetTemp.updateLong("환불수량", -17328)

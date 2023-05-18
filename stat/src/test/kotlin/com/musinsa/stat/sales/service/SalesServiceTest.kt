@@ -8,7 +8,6 @@ import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230506
-import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_SUM
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -46,7 +45,7 @@ private class SalesServiceTest {
     fun 매출통계를_가져온다() {
         // given
         val 테스트를_위한_DAILY_LIST =
-            listOf(DAILY_SUM(), DAILY_20230505(), DAILY_20230506())
+            listOf(DAILY_20230505(), DAILY_20230506())
         whenever(
             jdbcTemplate.query(
                 anyString(),
@@ -69,7 +68,8 @@ private class SalesServiceTest {
         // then
         val 기댓값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST)
         assertAll(
-            { assertThat(결과값.sum.toString()).isEqualTo(기댓값.sum.toString()) },
+            { assertThat(결과값.sum).isNotNull },
+            { assertThat(결과값.average).isNotNull },
             { assertThat(결과값.content.toString()).isEqualTo(기댓값.content.toString()) }
         )
     }

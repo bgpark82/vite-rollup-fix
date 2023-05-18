@@ -1,18 +1,11 @@
 package com.musinsa.stat.sales.dto
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import java.sql.ResultSet
 
 /**
  * 모든 매출통계에서 공통으로 사용
  */
 open class SalesStatisticsMetric(
-    /**
-     * 합계 필드 구분
-     * True: 합계 필드
-     */
-    @JsonIgnore
-    val isGrouping: Boolean,
     /**
      * 판매수량
      */
@@ -196,7 +189,6 @@ open class SalesStatisticsMetric(
 ) {
 
     constructor(rs: ResultSet) : this(
-        isGrouping = rs.getBoolean("집계"),
         sellQuantity = rs.getLong("판매수량"),
         sellAmount = rs.getLong("판매금액"),
         refundQuantity = rs.getLong("환불수량"),
