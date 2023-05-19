@@ -1,12 +1,14 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.databricks.service.DatabricksClient
+import com.musinsa.stat.error.IntentionalRuntimeException
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
+import com.musinsa.stat.sales.error.SalesError
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230506
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
@@ -14,6 +16,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -75,9 +80,25 @@ private class SalesServiceTest {
         )
     }
 
-    @Test
-    fun LOCALDATE_변수로_변환할수_없는경우_예외처리() {
+    @ParameterizedTest
+    @CsvSource(
+        value = ["2023051:20230510", "20230501:2023051", "202305:20230510", "20230501:202305"],
+        delimiter = ':'
+    )
+    fun LOCALDATE_변수로_변환할수_없는경우_예외처리(startDate: String, endDate: String) {
+        // when
+        val 에러 = assertThrows<IntentionalRuntimeException> {
+            salesService.getSalesStatistics(
+                metric = Metric.DAILY,
+                startDate = startDate,
+                endDate = endDate,
+                salesStart = SalesStart.SHIPPING_REQUEST,
+                orderBy = OrderBy.date
+            )
+        }
 
+        // then
+        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
     }
 
     @Test

@@ -11,7 +11,8 @@ enum class SalesError(
     override val httpStatus: HttpStatus,
     override val message: String
 ) : Error {
-    NON_EXISTENT_METRIC(HttpStatus.BAD_REQUEST, "존재하지 않는 metric");
+    NON_EXISTENT_METRIC(HttpStatus.BAD_REQUEST, "존재하지 않는 metric"),
+    NON_VALID_DATE(HttpStatus.BAD_REQUEST, "유효하지 않은 조회기간.");
 
     override fun <T> throwMe(): T {
         throw IntentionalRuntimeException(this)

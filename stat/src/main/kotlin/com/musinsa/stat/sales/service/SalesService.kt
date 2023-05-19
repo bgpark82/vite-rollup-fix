@@ -6,10 +6,14 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
+import com.musinsa.stat.sales.error.SalesError
 import com.musinsa.stat.sales.service.QueryGenerator.generate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 @Service
 class SalesService(
@@ -56,6 +60,36 @@ class SalesService(
         mdId: String? = String(),
         orderBy: OrderBy
     ): SalesStatisticsResponse {
+        // 날짜 유효성 체크
+        try {
+            val dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
+            val monthFormatter = DateTimeFormatter.ofPattern("yyyyMM")
+            when (startDate.length) {
+                6 -> {
+                    val start =
+                        LocalDateTime.parse(startDate, monthFormatter)
+                    val end =
+                        LocalDateTime.parse(endDate, monthFormatter)
+                }
+
+                8 -> {
+                    val start =
+                        LocalDateTime.parse(startDate, dateFormatter)
+                    val end =
+                        LocalDateTime.parse(endDate, dateFormatter)
+                }
+
+                else -> {
+                    SalesError.NON_VALID_DATE.throwMe()
+                }
+            }
+        } catch (e: DateTimeParseException) {
+            SalesError.NON_VALID_DATE.throwMe()
+        } catch (e: Exception) {
+            SalesError.NON_VALID_DATE.throwMe()
+        }
+
+
         return SalesStatisticsResponse(
             jdbcTemplate.query(
                 generate(
