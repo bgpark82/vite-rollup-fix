@@ -49,7 +49,7 @@ data class ErrorResponse private constructor(
     constructor(exception: IntentionalRuntimeException) : this(
         errorCode = exception.error.toString(),
         exception = exception.javaClass.name,
-        message = exception.error.getMessage()
+        message = exception.error.message
     )
 
     /**

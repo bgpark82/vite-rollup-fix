@@ -26,7 +26,7 @@ class RestControllerAdviceExceptionHandler {
      */
     @ExceptionHandler(IntentionalRuntimeException::class)
     fun handleIntentionalRuntimeException(exception: IntentionalRuntimeException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity.status(exception.error.getHttpStatus())
+        return ResponseEntity.status(exception.error.httpStatus)
             .body(ErrorResponse(exception))
     }
 
