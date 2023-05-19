@@ -7,7 +7,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 /**
  * 에러 노출 형식
  */
-data class ErrorResponse private constructor(
+data class ErrorResponse constructor(
     /**
      * 에러코드
      */
