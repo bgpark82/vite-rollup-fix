@@ -11,9 +11,12 @@ import com.musinsa.stat.sales.service.QueryGenerator.generate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.Period
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
 import java.time.format.DateTimeParseException
+import java.time.temporal.ChronoField
 
 @Service
 class SalesService(
@@ -63,20 +66,28 @@ class SalesService(
         // 날짜 유효성 체크
         try {
             val dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-            val monthFormatter = DateTimeFormatter.ofPattern("yyyyMM")
+            val monthFormatter =
+                DateTimeFormatterBuilder().appendPattern("yyyyMM")
+                    .parseDefaulting(ChronoField.DAY_OF_MONTH, 1).toFormatter()
             when (startDate.length) {
                 6 -> {
                     val start =
-                        LocalDateTime.parse(startDate, monthFormatter)
+                        LocalDate.parse(startDate, monthFormatter)
                     val end =
-                        LocalDateTime.parse(endDate, monthFormatter)
+                        LocalDate.parse(endDate, monthFormatter)
+                    if (Period.between(start, end).years > 0) {
+                        return SalesError.NON_VALID_DATE.throwMe()
+                    }
                 }
 
                 8 -> {
                     val start =
-                        LocalDateTime.parse(startDate, dateFormatter)
+                        LocalDate.parse(startDate, dateFormatter)
                     val end =
-                        LocalDateTime.parse(endDate, dateFormatter)
+                        LocalDate.parse(endDate, dateFormatter)
+                    if (Period.between(start, end).years > 0) {
+                        return SalesError.NON_VALID_DATE.throwMe()
+                    }
                 }
 
                 else -> {

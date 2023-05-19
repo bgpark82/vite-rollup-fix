@@ -65,8 +65,8 @@ private class SalesServiceTest {
         // when
         val 결과값 = salesService.getSalesStatistics(
             metric = Metric.DAILY,
-            startDate = "필수값이라 의미 없이 추가",
-            endDate = "필수값이라 의미 없이 추가",
+            startDate = "20230501",
+            endDate = "20240430",
             salesStart = SalesStart.SHIPPING_REQUEST,
             orderBy = OrderBy.date
         )
@@ -101,9 +101,25 @@ private class SalesServiceTest {
         assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
     }
 
-    @Test
-    fun 조회기간이_1년을_넘을경우_예외처리() {
+    @ParameterizedTest
+    @CsvSource(
+        value = ["20230501:20240501", "20220430:20230430", "202204:202304"],
+        delimiter = ':'
+    )
+    fun 조회기간이_1년을_넘을경우_예외처리(startDate: String, endDate: String) {
+        // when
+        val 에러 = assertThrows<IntentionalRuntimeException> {
+            salesService.getSalesStatistics(
+                metric = Metric.DAILY,
+                startDate = startDate,
+                endDate = endDate,
+                salesStart = SalesStart.SHIPPING_REQUEST,
+                orderBy = OrderBy.date
+            )
+        }
 
+        // then
+        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
     }
 
     @Test
