@@ -9,9 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 data class ErrorResponse private constructor(
     /**
      * 에러코드
-     * default: Empty
      */
-    val errorCode: String = String(),
+    val errorCode: String,
 
     /**
      * 예외종류
@@ -49,6 +48,7 @@ data class ErrorResponse private constructor(
      * 유효하지 않은 요청값(DataSource)
      */
     constructor(exception: ConstraintViolationException) : this(
+        errorCode = "CONSTRAINT_VIOLATED_VALUE",
         exception = exception.javaClass.name,
         invalidField = exception.constraintViolations.toList()[0].propertyPath.toString(),
         invalidValue = exception.constraintViolations.toList()[0].invalidValue.toString(),
