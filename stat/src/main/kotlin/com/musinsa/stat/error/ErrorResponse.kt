@@ -34,6 +34,14 @@ data class ErrorResponse private constructor(
      */
     val message: String
 ) {
+    /**
+     * 모든 유형의 에러
+     */
+    constructor(exception: Exception) : this(
+        errorCode = "UNKNOWN_ERROR",
+        exception = exception.javaClass.name,
+        message = exception.message.toString()
+    )
 
     /**
      * 의도된 에러
