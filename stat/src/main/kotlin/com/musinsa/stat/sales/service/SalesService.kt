@@ -3,6 +3,7 @@ package com.musinsa.stat.sales.service
 import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.QueryGenerator.generate
@@ -53,7 +54,7 @@ class SalesService(
         adCode: String? = String(),
         specialtyCode: String? = String(),
         mdId: String? = String(),
-        orderBy: String
+        orderBy: OrderBy
     ): SalesStatisticsResponse {
         return SalesStatisticsResponse(
             jdbcTemplate.query(
@@ -76,7 +77,7 @@ class SalesService(
                     adCode,
                     specialtyCode,
                     mdId,
-                    orderBy
+                    orderBy.alias
                 ), RowMapperFactory.getRowMapper(metric)
             )
         )

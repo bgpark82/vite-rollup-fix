@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.controller
 
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
@@ -51,7 +52,7 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false) adCode: String?,
         @RequestParam(required = false) specialtyCode: String?,
         @RequestParam(required = false) mdId: String?,
-        @RequestParam(defaultValue = "date") orderBy: String
+        @RequestParam(required = true) orderBy: OrderBy
     ): SalesStatisticsResponse {
         return salesService.getSalesStatistics(
             metric,
