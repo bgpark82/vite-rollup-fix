@@ -45,7 +45,7 @@ data class ErrorResponse private constructor(
     )
 
     /**
-     * 유효하지 않은 요청값(DataSource)
+     * 제약조건 위반
      */
     constructor(exception: ConstraintViolationException) : this(
         errorCode = "CONSTRAINT_VIOLATED_VALUE",

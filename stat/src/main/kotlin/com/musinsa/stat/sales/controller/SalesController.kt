@@ -5,12 +5,14 @@ import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
+import jakarta.validation.constraints.Size
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/sales-statistics")
+@Validated
 class SalesController(private val salesService: SalesService) {
-    // TODO 유효성 체크 + 조회 구간 한정(1년)
     // TODO 테스트코드 추가
     // TODO REST Docs 추가
 
@@ -18,8 +20,8 @@ class SalesController(private val salesService: SalesService) {
      * 일별 매출통계를 가져온다.
      *
      * @param metric 매출통계 유형
-     * @param startDate 시작날짜
-     * @param endDate 종료날짜
+     * @param startDate 시작날짜(6~8자리 숫자)
+     * @param endDate 종료날짜(6~8자리 숫자)
      * @param tag 태그. 기본값: 빈배열
      * @param salesStart 매출시점
      * @param partnerId 업체
@@ -39,8 +41,14 @@ class SalesController(private val salesService: SalesService) {
     @GetMapping("/{metric}")
     fun salesStatistics(
         @PathVariable(required = true, value = "metric") metric: Metric,
-        @RequestParam(required = true) startDate: String,
-        @RequestParam(required = true) endDate: String,
+        @RequestParam(required = true) @Size(
+            min = 6,
+            max = 8
+        ) startDate: String,
+        @RequestParam(required = true) @Size(
+            min = 6,
+            max = 8
+        ) endDate: String,
         @RequestParam(required = false) tag: List<String>?,
         @RequestParam(required = true) salesStart: SalesStart,
         @RequestParam(required = false) partnerId: String?,
