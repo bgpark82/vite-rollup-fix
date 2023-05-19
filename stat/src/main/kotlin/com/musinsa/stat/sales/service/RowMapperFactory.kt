@@ -17,7 +17,7 @@ class RowMapperFactory private constructor() {
                 PARTNER -> PartnerRowMapper
                 BRAND -> BrandRowMapper
                 BRAND_PARTNER -> BrandPartnerRowMapper
-                GOODS -> TODO()
+                GOODS -> GoodsRowMapper
                 AD -> TODO()
                 COUPON -> TODO()
                 CATEGORY -> TODO()
