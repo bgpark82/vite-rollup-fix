@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 
 /**
- * RestController에서 발생한 예외 처리
+ * RestController 발생 예외 처리
  */
 @RestControllerAdvice
 class RestControllerAdviceExceptionHandler {
