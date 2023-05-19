@@ -2,6 +2,7 @@ package com.musinsa.stat.error
 
 import jakarta.validation.ConstraintViolationException
 import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 
 /**
  * 에러 노출 형식
@@ -35,15 +36,6 @@ data class ErrorResponse private constructor(
     val message: String
 ) {
     /**
-     * 모든 유형의 에러
-     */
-    constructor(exception: Exception) : this(
-        errorCode = "UNKNOWN_ERROR",
-        exception = exception.javaClass.name,
-        message = exception.message.toString()
-    )
-
-    /**
      * 의도된 에러
      */
     constructor(exception: IntentionalRuntimeException) : this(
@@ -74,4 +66,23 @@ data class ErrorResponse private constructor(
         message = exception.message
     )
 
+    /**
+     * 유효하지 않은 요청값(Method Call)
+     */
+    constructor(exception: MethodArgumentTypeMismatchException) : this(
+        errorCode = "INVALID_REQUEST_VALUE",
+        exception = exception.javaClass.name,
+        invalidField = exception.parameter.parameterName.toString(),
+        invalidValue = exception.value.toString(),
+        message = exception.message.toString()
+    )
+
+    /**
+     * 모든 유형의 에러
+     */
+    constructor(exception: Exception) : this(
+        errorCode = "UNKNOWN_ERROR",
+        exception = exception.javaClass.name,
+        message = exception.message.toString()
+    )
 }
