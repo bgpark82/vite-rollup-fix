@@ -74,4 +74,19 @@ private class SalesServiceTest {
             { assertThat(결과값.content.toString()).isEqualTo(기댓값.content.toString()) }
         )
     }
+
+    @Test
+    fun LOCALDATE_변수로_변환할수_없는경우_예외처리() {
+
+    }
+
+    @Test
+    fun 조회기간이_1년을_넘을경우_예외처리() {
+
+    }
+
+    @Test
+    fun 조회종료시점이_시작시점보다_클_경우_예외처리() {
+
+    }
 }
