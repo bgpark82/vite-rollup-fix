@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.stat.sales.domain.BrandRowMapper
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.Metric.*
@@ -17,7 +18,7 @@ class RowMapperFactory private constructor() {
                 DAILY -> DailyAndMontlyRowMapper
                 MONTLY -> DailyAndMontlyRowMapper
                 PARTNER -> PartnerRowMapper
-                BRAND -> TODO()
+                BRAND -> BrandRowMapper
                 BRAND_PARTNER -> TODO()
                 GOODS -> TODO()
                 AD -> TODO()
