@@ -1,10 +1,7 @@
 package com.musinsa.stat.sales.service
 
-import com.musinsa.stat.sales.domain.BrandRowMapper
-import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
-import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.*
 import com.musinsa.stat.sales.domain.Metric.*
-import com.musinsa.stat.sales.domain.PartnerRowMapper
 import com.musinsa.stat.sales.dto.SalesStatisticsMetric
 import org.springframework.jdbc.core.RowMapper
 
@@ -19,7 +16,7 @@ class RowMapperFactory private constructor() {
                 MONTLY -> DailyAndMontlyRowMapper
                 PARTNER -> PartnerRowMapper
                 BRAND -> BrandRowMapper
-                BRAND_PARTNER -> TODO()
+                BRAND_PARTNER -> BrandPartnerRowMapper
                 GOODS -> TODO()
                 AD -> TODO()
                 COUPON -> TODO()
