@@ -20,7 +20,7 @@ class RowMapperFactory private constructor() {
                 GOODS -> GoodsRowMapper
                 AD -> AdRowMapper
                 COUPON -> CouponRowMapper
-                CATEGORY -> TODO()
+                CATEGORY -> CategoryRowMapper
                 // TODO 에러 정의
                 else -> throw Exception("존재하지 않는 Metric")
             }
