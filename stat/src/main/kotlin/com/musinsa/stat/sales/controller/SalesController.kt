@@ -39,10 +39,10 @@ class SalesController(private val salesService: SalesService) {
     @GetMapping("/{metric}")
     fun salesStatistics(
         @PathVariable(required = true, value = "metric") metric: Metric,
-        @RequestParam startDate: String,
-        @RequestParam endDate: String,
+        @RequestParam(required = true) startDate: String,
+        @RequestParam(required = true) endDate: String,
         @RequestParam(required = false) tag: List<String>?,
-        @RequestParam salesStart: SalesStart,
+        @RequestParam(required = true) salesStart: SalesStart,
         @RequestParam(required = false) partnerId: String?,
         @RequestParam(required = false) category: String?,
         @RequestParam(required = false) styleNumber: String?,
