@@ -53,7 +53,7 @@ dependencies {
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // Valid Check
+    // 유효성 체크
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // Databricks JDBC connect

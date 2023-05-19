@@ -29,5 +29,5 @@ interface Error {
      *
      * @return
      */
-    fun create(): CodeAwareException
+    fun create(): IntentionalRuntimeException
 }
