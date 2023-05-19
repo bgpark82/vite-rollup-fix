@@ -12,6 +12,29 @@ class SalesController(private val salesService: SalesService) {
     // TODO 유효성 체크 + 조회 구간 한정(1년)
     // TODO 테스트코드 추가
     // TODO REST Docs 추가
+
+    /**
+     * 일별 매출통계를 가져온다.
+     *
+     * @param metric 매출통계 유형
+     * @param startDate 시작날짜
+     * @param endDate 종료날짜
+     * @param tag 태그. 기본값: 빈배열
+     * @param salesStart 매출시점
+     * @param partnerId 업체
+     * @param category
+     * @param styleNumber 스타일넘버
+     * @param goodsNumber 상품코드
+     * @param brandId 브랜드
+     * @param couponNumber 쿠폰
+     * @param adCode 광고코드
+     * @param specialtyCode 전문관코드
+     * @param mdId 담당MD
+     * @param orderBy 정렬키
+     *
+     * @return 매출통계 지표
+     *
+     */
     @GetMapping("/{metric}")
     fun salesStatistics(
         @PathVariable(required = true, value = "metric") metric: Metric,
