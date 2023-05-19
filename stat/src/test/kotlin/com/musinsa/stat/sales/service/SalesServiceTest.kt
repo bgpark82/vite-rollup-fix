@@ -4,6 +4,7 @@ import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
@@ -62,7 +63,7 @@ private class SalesServiceTest {
             startDate = "필수값이라 의미 없이 추가",
             endDate = "필수값이라 의미 없이 추가",
             salesStart = SalesStart.SHIPPING_REQUEST,
-            orderBy = "필수값이라 의미 없이 추가"
+            orderBy = OrderBy.date
         )
 
         // then

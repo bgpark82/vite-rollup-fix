@@ -7,6 +7,7 @@ package com.musinsa.stat.sales.domain
 enum class OrderBy(
     /**
      * 데이터브릭스 쿼리에 저장된 Alias
+     * 주의! 해당 값은 데이터브릭스 쿼리에 적용된 Alias 와 동시에 수정해야 한다.
      */
     val alias: String
 ) {
