@@ -18,7 +18,7 @@ class RowMapperFactory private constructor() {
                 BRAND -> BrandRowMapper
                 BRAND_PARTNER -> BrandPartnerRowMapper
                 GOODS -> GoodsRowMapper
-                AD -> TODO()
+                AD -> AdRowMapper
                 COUPON -> TODO()
                 CATEGORY -> TODO()
                 // TODO 에러 정의
