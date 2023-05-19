@@ -5,29 +5,21 @@ import org.springframework.http.HttpStatus
 interface Error {
     /**
      * Http 상태코드
-     *
-     * @return
      */
-    val httpStatus: HttpStatus
+    open fun getHttpStatus(): HttpStatus
 
     /**
      * 에러 메시지
-     *
-     * @return
      */
-    val message: String
+    open fun getMessage(): String
 
     /**
      * 예외 throw
-     *
-     * @return RuntimeException.class
      */
-    fun <T> throwMe(): T
+    open fun <T> throwMe(): T
 
     /**
      * 예외 생성
-     *
-     * @return
      */
-    fun create(): IntentionalRuntimeException
+    open fun create(): IntentionalRuntimeException
 }
