@@ -63,7 +63,7 @@ class SalesService(
         mdId: String? = String(),
         orderBy: OrderBy
     ): SalesStatisticsResponse {
-        // 날짜 유효성 체크
+        // TODO 날짜 유효성 체크 리팩토링
         try {
             val dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
             val monthFormatter =
@@ -75,9 +75,10 @@ class SalesService(
                         LocalDate.parse(startDate, monthFormatter)
                     val end =
                         LocalDate.parse(endDate, monthFormatter)
-                    if (Period.between(start, end).years > 0) {
+                    if (Period.between(start, end).years > 0)
                         return SalesError.NON_VALID_DATE.throwMe()
-                    }
+                    if (start.isAfter(end))
+                        return SalesError.NON_VALID_DATE.throwMe()
                 }
 
                 8 -> {
@@ -85,9 +86,10 @@ class SalesService(
                         LocalDate.parse(startDate, dateFormatter)
                     val end =
                         LocalDate.parse(endDate, dateFormatter)
-                    if (Period.between(start, end).years > 0) {
+                    if (Period.between(start, end).years > 0)
                         return SalesError.NON_VALID_DATE.throwMe()
-                    }
+                    if (start.isAfter(end))
+                        return SalesError.NON_VALID_DATE.throwMe()
                 }
 
                 else -> {
@@ -99,7 +101,6 @@ class SalesService(
         } catch (e: Exception) {
             SalesError.NON_VALID_DATE.throwMe()
         }
-
 
         return SalesStatisticsResponse(
             jdbcTemplate.query(

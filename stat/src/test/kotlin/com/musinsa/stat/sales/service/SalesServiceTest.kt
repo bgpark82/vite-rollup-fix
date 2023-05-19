@@ -122,8 +122,24 @@ private class SalesServiceTest {
         assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
     }
 
-    @Test
-    fun 조회종료시점이_시작시점보다_클_경우_예외처리() {
+    @ParameterizedTest
+    @CsvSource(
+        value = ["20230502:20230501", "202204:202203"],
+        delimiter = ':'
+    )
+    fun 조회종료시점이_시작시점보다_클_경우_예외처리(startDate: String, endDate: String) {
+        // when
+        val 에러 = assertThrows<IntentionalRuntimeException> {
+            salesService.getSalesStatistics(
+                metric = Metric.DAILY,
+                startDate = startDate,
+                endDate = endDate,
+                salesStart = SalesStart.SHIPPING_REQUEST,
+                orderBy = OrderBy.date
+            )
+        }
 
+        // then
+        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
     }
 }
