@@ -13,7 +13,8 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeParseException
+
+private const val RETRIEVE_LIMIT_YEAR = 1
 
 @Service
 class SalesService(
@@ -60,20 +61,8 @@ class SalesService(
         mdId: String? = String(),
         orderBy: OrderBy
     ): SalesStatisticsResponse {
-        // TODO 날짜 유효성 체크 리팩토링
-        try {
-            if (Period.between(startDate, endDate).years > 0)
-                return SalesError.NON_VALID_DATE.throwMe()
-            if (startDate.isAfter(endDate))
-                return SalesError.NON_VALID_DATE.throwMe()
-        } catch (e: DateTimeParseException) {
-            SalesError.NON_VALID_DATE.throwMe()
-        } catch (e: Exception) {
-            SalesError.NON_VALID_DATE.throwMe()
-        }
-
-        // TODO Metric.MONTH인 경우 date substring 6
-
+        // 조회기간 유효성 체크
+        retrieveDateValidCheck(startDate, endDate)
 
         return SalesStatisticsResponse(
             jdbcTemplate.query(
@@ -83,8 +72,8 @@ class SalesService(
                             metric
                         )
                     ),
-                    startDate.toString(),
-                    endDate.toString(),
+                    convertDate(startDate, metric),
+                    convertDate(endDate, metric),
                     tag,
                     salesStart,
                     partnerId,
@@ -100,5 +89,38 @@ class SalesService(
                 ), RowMapperFactory.getRowMapper(metric)
             )
         )
+    }
+
+    /**
+     * 조회기간이 유효한지 확인한다.
+     *
+     * @param startDate 시작날짜
+     * @param endDate 종료날짜
+     */
+    private fun retrieveDateValidCheck(
+        startDate: LocalDate,
+        endDate: LocalDate
+    ) {
+        // 조회 기간 체크
+        if (Period.between(startDate, endDate).years >= RETRIEVE_LIMIT_YEAR)
+            return SalesError.NON_VALID_DATE.throwMe()
+
+        // 조회시작 < 조회종료 체크
+        if (startDate.isAfter(endDate))
+            return SalesError.NON_VALID_DATE.throwMe()
+    }
+
+    /**
+     * 날짜를 쿼리에 사용하기 위해 String으로 변환한다.
+     *
+     * @param date LocalDate 형식
+     * @param metric 지표 구분
+     */
+    private fun convertDate(date: LocalDate, metric: Metric): String {
+        // 월별 지표의 경우는 6자리를 자른다. ex) 20230522 -> 202305
+        if (metric == Metric.MONTLY)
+            return date.toString().substring(0 until 7).filterNot { it == '-' }
+
+        return date.toString().filterNot { it == '-' }
     }
 }

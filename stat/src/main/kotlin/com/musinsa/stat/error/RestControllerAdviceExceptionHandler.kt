@@ -36,7 +36,6 @@ class RestControllerAdviceExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValidException(exception: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
-        println("handleMethodArgumentNotValidException")
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse(exception))
     }
@@ -46,7 +45,6 @@ class RestControllerAdviceExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
     fun handleMethodArgumentTypeMismatchException(exception: MethodArgumentTypeMismatchException): ResponseEntity<ErrorResponse> {
-        println("handleMethodArgumentNotValidException")
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse(exception))
     }
@@ -56,7 +54,6 @@ class RestControllerAdviceExceptionHandler {
      */
     @ExceptionHandler(Exception::class)
     fun handleAllException(exception: Exception): ResponseEntity<ErrorResponse> {
-        println("handleAllException")
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(ErrorResponse(exception))
     }
