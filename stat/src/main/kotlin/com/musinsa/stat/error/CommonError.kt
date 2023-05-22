@@ -1,17 +1,15 @@
-package com.musinsa.stat.sales.error
+package com.musinsa.stat.error
 
-import com.musinsa.stat.error.Error
-import com.musinsa.stat.error.IntentionalRuntimeException
 import org.springframework.http.HttpStatus
 
 /**
- * 매출통계와 관련된 에러
+ * 모든 프로젝트 공통 에러
  */
-enum class SalesError(
+enum class CommonError(
     override val httpStatus: HttpStatus,
     override val message: String
 ) : Error {
-    NON_VALID_DATE(HttpStatus.BAD_REQUEST, "유효하지 않은 조회기간.");
+    FAIL_STRING_TO_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "문자열 to JSON 변환에 실패");
 
     override fun <T> throwMe(): T {
         throw IntentionalRuntimeException(this)
