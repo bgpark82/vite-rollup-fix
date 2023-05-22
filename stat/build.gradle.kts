@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+// 버전은 major project 의 gradle.properties, settings.gradle.kts 확인
 plugins {
     // 스프링부트
     id("org.springframework.boot")
@@ -18,6 +19,9 @@ plugins {
 
     // Kotlin NoArgs Constructor(https://kotlinlang.org/docs/no-arg-plugin.html#jpa-support)
     id("org.jetbrains.kotlin.plugin.noarg")
+
+    // Spring REST Docs AsciiDoc
+    id("org.asciidoctor.jvm.convert")
 }
 
 group = "com.musinsa"
@@ -29,6 +33,43 @@ val JAVA_VERSION: String by project
 
 @Suppress("PropertyName")
 val MAIN_CLASS = "com.musinsa.stat.StatApplication"
+
+// Ascii Doc Snippet Directory
+val snippetsDir by extra { file("build/generated-snippets") }
+
+// Ascii Doc Create Tasks
+tasks {
+    // Test 결과를 snippet Directory
+    test {
+        outputs.dir(snippetsDir)
+    }
+
+    asciidoctor {
+        // test 가 성공해야만, 아래 Task 실행
+        dependsOn(test)
+
+        // 기존에 존재하는 Docs 삭제
+        doFirst {
+            delete(file("src/main/resources/static/docs"))
+        }
+
+        // Directory 설정
+        inputs.dir(snippetsDir)
+
+        // Ascii Doc 파일 복사
+        doLast {
+            copy {
+                from("build/docs/asciidoc")
+                into("src/main/resources/static/docs")
+            }
+        }
+    }
+
+    build {
+        // Ascii Doc 파일 생성이 성공해야만, Build 진행
+        dependsOn(asciidoctor)
+    }
+}
 
 application {
     mainClass.set(MAIN_CLASS)
@@ -42,7 +83,7 @@ repositories {
     mavenCentral()
 }
 
-// TODO 의존성 buildSrc로 이동
+// TODO 의존성 buildSrc 로 이동
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -57,7 +98,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
     // Databricks JDBC connect
-    // TODO 버전관리 중앙화
     implementation("com.databricks:databricks-jdbc:2.6.25-1")
 
     // SpringBoot Config Annotation 사용을 위해 추가
@@ -72,6 +112,9 @@ dependencies {
     // Mockito-Kotlin
     // @see https://github.com/mockito/mockito-kotlin/wiki/Mocking-and-verifying
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+
+    // MockMvc Test 를 사용하는 Spring REST Docs
+    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 
 tasks.withType<KotlinCompile> {
@@ -96,7 +139,7 @@ tasks.bootJar {
     archiveFileName.set("stat.jar")
 }
 
-// Gradle Bug로 인해 Main Class를 별도로 지정(Gradle에서 MainClass를 kt로 지정 중)
+// Gradle Bug 로 인해 Main Class 를 별도로 지정(Gradle 에서 MainClass 를 kt로 지정 중)
 // @see https://stackoverflow.com/questions/73438308/aws-beanstalk-kotlin-spring-boot-nosuchmethodexception-main
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     mainClass.set(StringBuilder(MAIN_CLASS).append("Kt").toString())
