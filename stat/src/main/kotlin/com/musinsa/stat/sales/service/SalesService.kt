@@ -13,10 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
 import java.time.format.DateTimeParseException
-import java.time.temporal.ChronoField
 
 @Service
 class SalesService(
@@ -48,8 +45,8 @@ class SalesService(
      */
     fun getSalesStatistics(
         metric: Metric,
-        startDate: String,
-        endDate: String,
+        startDate: LocalDate,
+        endDate: LocalDate,
         tag: List<String>? = emptyList(),
         salesStart: SalesStart,
         partnerId: String? = String(),
@@ -65,42 +62,18 @@ class SalesService(
     ): SalesStatisticsResponse {
         // TODO 날짜 유효성 체크 리팩토링
         try {
-            val dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd")
-            val monthFormatter =
-                DateTimeFormatterBuilder().appendPattern("yyyyMM")
-                    .parseDefaulting(ChronoField.DAY_OF_MONTH, 1).toFormatter()
-            when (startDate.length) {
-                6 -> {
-                    val start =
-                        LocalDate.parse(startDate, monthFormatter)
-                    val end =
-                        LocalDate.parse(endDate, monthFormatter)
-                    if (Period.between(start, end).years > 0)
-                        return SalesError.NON_VALID_DATE.throwMe()
-                    if (start.isAfter(end))
-                        return SalesError.NON_VALID_DATE.throwMe()
-                }
-
-                8 -> {
-                    val start =
-                        LocalDate.parse(startDate, dateFormatter)
-                    val end =
-                        LocalDate.parse(endDate, dateFormatter)
-                    if (Period.between(start, end).years > 0)
-                        return SalesError.NON_VALID_DATE.throwMe()
-                    if (start.isAfter(end))
-                        return SalesError.NON_VALID_DATE.throwMe()
-                }
-
-                else -> {
-                    SalesError.NON_VALID_DATE.throwMe()
-                }
-            }
+            if (Period.between(startDate, endDate).years > 0)
+                return SalesError.NON_VALID_DATE.throwMe()
+            if (startDate.isAfter(endDate))
+                return SalesError.NON_VALID_DATE.throwMe()
         } catch (e: DateTimeParseException) {
             SalesError.NON_VALID_DATE.throwMe()
         } catch (e: Exception) {
             SalesError.NON_VALID_DATE.throwMe()
         }
+
+        // TODO Metric.MONTH인 경우 date substring 6
+
 
         return SalesStatisticsResponse(
             jdbcTemplate.query(
@@ -110,8 +83,8 @@ class SalesService(
                             metric
                         )
                     ),
-                    startDate,
-                    endDate,
+                    startDate.toString(),
+                    endDate.toString(),
                     tag,
                     salesStart,
                     partnerId,

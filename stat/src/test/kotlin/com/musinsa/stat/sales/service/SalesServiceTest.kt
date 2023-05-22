@@ -17,13 +17,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 import org.springframework.jdbc.core.JdbcTemplate
+import java.time.LocalDate
 
 private class SalesServiceTest {
     private val jdbcTemplate: JdbcTemplate = mock()
@@ -65,8 +64,8 @@ private class SalesServiceTest {
         // when
         val 결과값 = salesService.getSalesStatistics(
             metric = Metric.DAILY,
-            startDate = "20230501",
-            endDate = "20240430",
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now().plusMonths(1),
             salesStart = SalesStart.SHIPPING_REQUEST,
             orderBy = OrderBy.date
         )
@@ -80,18 +79,18 @@ private class SalesServiceTest {
         )
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        value = ["2023051:20230510", "20230501:2023051", "202305:20230510", "20230501:202305"],
-        delimiter = ':'
-    )
-    fun LOCALDATE_변수로_변환할수_없는경우_예외처리(startDate: String, endDate: String) {
+    @Test
+    fun 조회기간이_1년을_넘을경우_예외처리() {
+        // given
+        val 시작날짜 = LocalDate.now()
+        val 시작날짜_ADD_1_YEAR = 시작날짜.plusYears(1)
+
         // when
         val 에러 = assertThrows<IntentionalRuntimeException> {
             salesService.getSalesStatistics(
                 metric = Metric.DAILY,
-                startDate = startDate,
-                endDate = endDate,
+                startDate = 시작날짜,
+                endDate = 시작날짜_ADD_1_YEAR,
                 salesStart = SalesStart.SHIPPING_REQUEST,
                 orderBy = OrderBy.date
             )
@@ -101,39 +100,18 @@ private class SalesServiceTest {
         assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
     }
 
-    @ParameterizedTest
-    @CsvSource(
-        value = ["20230501:20240501", "20220430:20230430", "202204:202304"],
-        delimiter = ':'
-    )
-    fun 조회기간이_1년을_넘을경우_예외처리(startDate: String, endDate: String) {
+    @Test
+    fun 조회종료시점이_시작시점보다_클_경우_예외처리() {
+        // given
+        val 시작날짜 = LocalDate.now()
+        val 시작날짜_MINUS_1_DAY = 시작날짜.minusDays(1)
+
         // when
         val 에러 = assertThrows<IntentionalRuntimeException> {
             salesService.getSalesStatistics(
                 metric = Metric.DAILY,
-                startDate = startDate,
-                endDate = endDate,
-                salesStart = SalesStart.SHIPPING_REQUEST,
-                orderBy = OrderBy.date
-            )
-        }
-
-        // then
-        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        value = ["20230502:20230501", "202204:202203"],
-        delimiter = ':'
-    )
-    fun 조회종료시점이_시작시점보다_클_경우_예외처리(startDate: String, endDate: String) {
-        // when
-        val 에러 = assertThrows<IntentionalRuntimeException> {
-            salesService.getSalesStatistics(
-                metric = Metric.DAILY,
-                startDate = startDate,
-                endDate = endDate,
+                startDate = 시작날짜,
+                endDate = 시작날짜_MINUS_1_DAY,
                 salesStart = SalesStart.SHIPPING_REQUEST,
                 orderBy = OrderBy.date
             )

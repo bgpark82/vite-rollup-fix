@@ -5,9 +5,10 @@ import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
-import jakarta.validation.constraints.Size
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/sales-statistics")
@@ -41,14 +42,8 @@ class SalesController(private val salesService: SalesService) {
     @GetMapping("/{metric}")
     fun salesStatistics(
         @PathVariable(required = true, value = "metric") metric: Metric,
-        @RequestParam(required = true) @Size(
-            min = 8,
-            max = 8
-        ) startDate: String,
-        @RequestParam(required = true) @Size(
-            min = 8,
-            max = 8
-        ) endDate: String,
+        @RequestParam(required = true) @DateTimeFormat(pattern = "yyyyMMdd") startDate: LocalDate,
+        @RequestParam(required = true) @DateTimeFormat(pattern = "yyyyMMdd") endDate: LocalDate,
         @RequestParam(required = false) tag: List<String>?,
         @RequestParam(required = true) salesStart: SalesStart,
         @RequestParam(required = false) partnerId: String?,
