@@ -14,9 +14,6 @@ import java.time.LocalDate
 @RequestMapping("/sales-statistics")
 @Validated
 class SalesController(private val salesService: SalesService) {
-    // TODO 테스트코드 추가
-    // TODO REST Docs 추가
-
     /**
      * 일별 매출통계를 가져온다.
      *
