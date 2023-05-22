@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.SalesStart
+import com.musinsa.stat.sales.error.SalesError
 
 /**
  * 파라미터에 따라서 쿼리를 재생성 한다.
@@ -35,8 +36,7 @@ object QueryGenerator {
             array.indexOfFirst { str -> str.contains(target) }
         return when (index >= 0) {
             true -> index
-            // TODO 예외처리 추가
-            false -> throw Exception("문자열: " + target + " 을 찾을 수 없음")
+            false -> SalesError.NON_EXIST_TARGET_FIELD.throwMe()
         }
     }
 

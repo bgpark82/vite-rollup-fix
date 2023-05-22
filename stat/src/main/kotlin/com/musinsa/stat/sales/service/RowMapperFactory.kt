@@ -21,8 +21,6 @@ class RowMapperFactory private constructor() {
                 AD -> AdRowMapper
                 COUPON -> CouponRowMapper
                 CATEGORY -> CategoryRowMapper
-                // TODO 에러 정의
-                else -> throw Exception("존재하지 않는 Metric")
             }
         }
     }
