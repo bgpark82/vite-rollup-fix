@@ -35,13 +35,14 @@ val JAVA_VERSION: String by project
 val MAIN_CLASS = "com.musinsa.stat.StatApplication"
 
 // Ascii Doc Snippet Directory
-val snippetsDir by extra { file("build/generated-snippets") }
+@Suppress("PropertyName")
+val SNIPPETS_DIR by extra { file("build/generated-snippets") }
 
 // Ascii Doc Create Tasks
 tasks {
     // Test 결과를 snippet Directory
     test {
-        outputs.dir(snippetsDir)
+        outputs.dir(SNIPPETS_DIR)
     }
 
     asciidoctor {
@@ -54,7 +55,7 @@ tasks {
         }
 
         // Directory 설정
-        inputs.dir(snippetsDir)
+        inputs.dir(SNIPPETS_DIR)
 
         // Ascii Doc 파일 복사
         doLast {
