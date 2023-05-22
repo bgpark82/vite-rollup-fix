@@ -10,9 +10,7 @@ import java.sql.ResultSet
 object DailyAndMontlyRowMapper : RowMapper<DailyAndMontly> {
     override fun mapRow(rs: ResultSet, rowNum: Int): DailyAndMontly {
         return DailyAndMontly(
-            rs,
-            // TODO SUM 기본값 삭제
-            date = rs.getString("date") ?: "SUM"
+            rs, date = rs.getString("date")
         )
     }
 }
