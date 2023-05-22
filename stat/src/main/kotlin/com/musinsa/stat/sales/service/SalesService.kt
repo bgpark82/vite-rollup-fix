@@ -119,7 +119,7 @@ class SalesService(
     private fun convertDate(date: LocalDate, metric: Metric): String {
         // 월별 지표의 경우는 6자리를 자른다. ex) 20230522 -> 202305
         if (metric == Metric.MONTLY)
-            return date.toString().substring(0 until 7).filterNot { it == '-' }
+            return date.toString().filterNot { it == '-' }.substring(0 until 6)
 
         return date.toString().filterNot { it == '-' }
     }
