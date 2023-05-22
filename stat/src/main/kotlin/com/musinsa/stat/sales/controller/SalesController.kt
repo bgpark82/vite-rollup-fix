@@ -20,8 +20,8 @@ class SalesController(private val salesService: SalesService) {
      * 일별 매출통계를 가져온다.
      *
      * @param metric 매출통계 유형
-     * @param startDate 시작날짜(6~8자리 숫자)
-     * @param endDate 종료날짜(6~8자리 숫자)
+     * @param startDate 시작날짜(8자리 yyyyMMdd)
+     * @param endDate 종료날짜(8자리 yyyyMMdd)
      * @param tag 태그. 기본값: 빈배열
      * @param salesStart 매출시점
      * @param partnerId 업체
@@ -42,11 +42,11 @@ class SalesController(private val salesService: SalesService) {
     fun salesStatistics(
         @PathVariable(required = true, value = "metric") metric: Metric,
         @RequestParam(required = true) @Size(
-            min = 6,
+            min = 8,
             max = 8
         ) startDate: String,
         @RequestParam(required = true) @Size(
-            min = 6,
+            min = 8,
             max = 8
         ) endDate: String,
         @RequestParam(required = false) tag: List<String>?,
