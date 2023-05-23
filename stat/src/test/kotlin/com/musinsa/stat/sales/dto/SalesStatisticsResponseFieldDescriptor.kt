@@ -8,6 +8,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation.applyPathPrefix
  */
 fun 매출통계_명세(명세: MutableList<FieldDescriptor>): MutableList<FieldDescriptor> {
     val 명세서: MutableList<FieldDescriptor> = mutableListOf()
+
     명세서.addAll(
         applyPathPrefix("sum.", 매출통계_공통_명세())
     )

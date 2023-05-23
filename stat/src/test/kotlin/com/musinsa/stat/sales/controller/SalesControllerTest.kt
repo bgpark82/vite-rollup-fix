@@ -118,7 +118,19 @@ private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
                 "sales-statistics",
                 listOf(
                     parameterWithName("metric")
-                        .description("지표")
+                        // TODO 깔끔하게 제공
+                        .description(
+                            "지표: \n" +
+                                    "    DAILY(\"일별\"),\n" +
+                                    "    MONTLY(\"월별\"),\n" +
+                                    "    PARTNER(\"업체별\"),\n" +
+                                    "    BRAND(\"브랜드별\"),\n" +
+                                    "    BRAND_PARTNER(\"브랜드업체별\"),\n" +
+                                    "    GOODS(\"상품별\"),\n" +
+                                    "    AD(\"광고별\"),\n" +
+                                    "    COUPON(\"쿠폰별\"),\n" +
+                                    "    CATEGORY(\"카테고리별\")"
+                        )
                 ),
                 매출통계_조회_요청값_명세(),
                 매출통계_명세(일별_월별_명세())

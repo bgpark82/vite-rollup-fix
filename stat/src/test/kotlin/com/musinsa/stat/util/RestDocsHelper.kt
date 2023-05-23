@@ -9,8 +9,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.FieldDescriptor
-import org.springframework.restdocs.payload.PayloadDocumentation
-import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.restdocs.request.RequestDocumentation.queryParameters
@@ -48,8 +47,8 @@ fun buildMockMvc(
     mockMvcRestDocumentationConfigurer.snippets().withDefaults(
         HttpDocumentation.httpRequest(),
         HttpDocumentation.httpResponse(),
-        PayloadDocumentation.requestBody(),
-        PayloadDocumentation.responseBody()
+        requestBody(),
+        responseBody()
     )
 
     // 헤더 삭제, Json 값 시각화 정렬
