@@ -31,7 +31,7 @@ class SalesService(
      * @param tag 태그. 기본값: 빈배열
      * @param salesStart 매출시점
      * @param partnerId 업체
-     * @param category
+     * @param category 카테고리
      * @param styleNumber 스타일넘버
      * @param goodsNumber 상품코드
      * @param brandId 브랜드
@@ -111,7 +111,7 @@ class SalesService(
     }
 
     /**
-     * 날짜를 쿼리에 사용하기 위해 String으로 변환한다.
+     * 날짜를 쿼리에 사용하기 위해 String 으로 변환한다.
      *
      * @param date LocalDate 형식
      * @param metric 지표 구분

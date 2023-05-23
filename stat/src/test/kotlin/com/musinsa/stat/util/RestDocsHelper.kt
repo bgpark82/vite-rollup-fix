@@ -5,6 +5,7 @@ import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.http.HttpDocumentation
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.FieldDescriptor
@@ -15,7 +16,6 @@ import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.restdocs.request.RequestDocumentation.queryParameters
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
@@ -76,6 +76,7 @@ fun buildMockMvc(
  * HTTP GET
  *
  * @param url 호스트
+ * @param pathParam 경로 params
  * @param queryParams Query Params
  *
  * @return ResultActions
@@ -83,10 +84,12 @@ fun buildMockMvc(
  */
 fun MockMvc.GET(
     url: String,
+    pathParam: String,
     queryParams: MultiValueMap<String, String>
 ): ResultActions {
     return this.perform(
-        get(url).contentType(MediaType.APPLICATION_JSON)
+        RestDocumentationRequestBuilders.get(url, pathParam)
+            .contentType(MediaType.APPLICATION_JSON)
             .queryParams(queryParams)
     )
 }

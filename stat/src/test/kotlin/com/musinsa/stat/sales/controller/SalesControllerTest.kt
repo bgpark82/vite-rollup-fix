@@ -4,8 +4,11 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
+import com.musinsa.stat.sales.dto.매출통계_명세
+import com.musinsa.stat.sales.dto.일별_월별_명세
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
+import com.musinsa.stat.util.DOCS_생성
 import com.musinsa.stat.util.GET
 import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
 import com.musinsa.stat.util.buildMockMvc
@@ -19,7 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.context.WebApplicationContext
@@ -54,8 +57,19 @@ private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
         val 지표 = Metric.DAILY
         val 시작날짜 = "20230505"
         val 종료날짜 = "20230506"
+        val 태그 = listOf("청바지", "반바지")
         val 매출시점 = SalesStart.SHIPPING_REQUEST
+        val 업체 = "musinsa"
+        val 카테고리 = "004002"
+        val 스타일넘버 = "DMMT73961-OW"
+        val 상품코드 = "174846"
+        val 브랜드 = "greentoys"
+        val 쿠폰 = "75559"
+        val 광고코드 = "NVSH"
+        val 전문관코드 = "beauty"
+        val 담당MD = "naka.da"
         val 정렬키 = OrderBy.date
+
         whenever(
             salesService.getSalesStatistics(
                 metric = 지표,
@@ -67,33 +81,55 @@ private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
                     종료날짜,
                     DateTimeFormatter.ofPattern("yyyyMMdd")
                 ),
-                tag = null,
+                tag = 태그,
                 salesStart = 매출시점,
-                partnerId = null,
-                category = null,
-                styleNumber = null,
-                goodsNumber = null,
-                brandId = null,
-                couponNumber = null,
-                adCode = null,
-                specialtyCode = null,
-                mdId = null,
+                partnerId = 업체,
+                category = 카테고리,
+                styleNumber = 스타일넘버,
+                goodsNumber = 상품코드,
+                brandId = 브랜드,
+                couponNumber = 쿠폰,
+                adCode = 광고코드,
+                specialtyCode = 전문관코드,
+                mdId = 담당MD,
                 orderBy = 정렬키
             )
         ).thenReturn(응답값)
 
-        var queryParams = LinkedMultiValueMap<String, String>()
+        val queryParams = LinkedMultiValueMap<String, String>()
         queryParams["startDate"] = 시작날짜
         queryParams["endDate"] = 종료날짜
+        queryParams["tag"] = 태그
         queryParams["salesStart"] = 매출시점.name
+        queryParams["partnerId"] = 업체
+        queryParams["category"] = 카테고리
+        queryParams["styleNumber"] = 스타일넘버
+        queryParams["goodsNumber"] = 상품코드
+        queryParams["brandId"] = 브랜드
+        queryParams["couponNumber"] = 쿠폰
+        queryParams["adCode"] = 광고코드
+        queryParams["specialtyCode"] = 전문관코드
+        queryParams["mdId"] = 담당MD
         queryParams["orderBy"] = 정렬키.toString()
 
-        mockMvc.GET("/sales-statistics/".plus(지표), queryParams)
+        mockMvc.GET("/sales-statistics/{metric}", 지표.name, queryParams)
             .성공_검증(writeValueAsString(응답값))
-            .andDo(document("sales-statistics"))
+            .DOCS_생성(
+                "sales-statistics",
+                listOf(
+                    parameterWithName("metric")
+                        .description("지표")
+                ),
+                listOf(
+                    parameterWithName("startDate")
+                        .description("시작날짜")
+                ),
+                매출통계_명세(일별_월별_명세())
+            )
     }
 
     // TODO 에러테스트 추가
+    // 필수값 누락
     fun errorTest() {
 
     }

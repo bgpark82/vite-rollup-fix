@@ -4,12 +4,16 @@ import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.JsonFieldType.STRING
 import org.springframework.restdocs.payload.PayloadDocumentation
 
-fun MutableList<FieldDescriptor>.일별_월별_명세() {
-    this.addAll(
+fun 일별_월별_명세(): MutableList<FieldDescriptor> {
+    val 명세서: MutableList<FieldDescriptor> = ArrayList()
+
+    명세서.addAll(
         listOf(
             PayloadDocumentation.fieldWithPath("date")
                 .type(STRING).description("일자/월")
         ),
     )
-    this.매출통계_공통_명세()
+    명세서.매출통계_공통_명세()
+
+    return 명세서
 }
