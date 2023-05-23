@@ -7,6 +7,7 @@ import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
 import com.musinsa.stat.util.GET
+import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
 import com.musinsa.stat.util.buildMockMvc
 import com.musinsa.stat.util.성공_검증
 import org.junit.jupiter.api.BeforeEach
@@ -88,7 +89,7 @@ private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
         queryParams["orderBy"] = 정렬키.toString()
 
         mockMvc.GET("/sales-statistics/".plus(지표), queryParams)
-            .성공_검증("d")
+            .성공_검증(writeValueAsString(응답값))
             .andDo(document("sales-statistics"))
     }
 

@@ -24,4 +24,19 @@ object ObjectMapperFactory {
             CommonError.FAIL_STRING_TO_JSON.throwMe()
         }
     }
+
+    /**
+     * JSON to String 변환
+     *
+     * @param o 객체
+     *
+     * @return String 변환된 객체
+     */
+    fun writeValueAsString(o: Any): String {
+        return try {
+            mapper.writeValueAsString(o)
+        } catch (e: Exception) {
+            CommonError.FAIL_JSON_TO_STRING.throwMe()
+        }
+    }
 }
