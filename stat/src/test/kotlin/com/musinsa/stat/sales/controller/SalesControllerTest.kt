@@ -8,6 +8,7 @@ import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
 import com.musinsa.stat.util.GET
 import com.musinsa.stat.util.buildMockMvc
+import com.musinsa.stat.util.성공_검증
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -19,7 +20,6 @@ import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.context.WebApplicationContext
 import java.time.LocalDate
@@ -88,7 +88,7 @@ private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
         queryParams["orderBy"] = 정렬키.toString()
 
         mockMvc.GET("/sales-statistics/".plus(지표), queryParams)
-            .andExpect(status().isOk)
+            .성공_검증("d")
             .andDo(document("sales-statistics"))
     }
 

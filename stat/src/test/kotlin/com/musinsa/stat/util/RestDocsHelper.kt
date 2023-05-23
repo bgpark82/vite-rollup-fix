@@ -16,6 +16,8 @@ import org.springframework.restdocs.request.RequestDocumentation.queryParameters
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.util.MultiValueMap
@@ -89,16 +91,21 @@ fun MockMvc.GET(
     )
 }
 
+fun ResultActions.성공_검증(예상_응답: String): ResultActions {
+    return this.andExpect(MockMvcResultMatchers.status().isOk)
+        .andExpect(content().string(예상_응답))
+}
+
 /**
  * PathVariable, QueryParameters, ResponseBody 가 있는 DOCS 생성
  */
 fun ResultActions.DOCS_생성(
-    resultActions: ResultActions, documentUrl: String,
+    documentUrl: String,
     pathParams: List<ParameterDescriptor>,
     queryParams: List<ParameterDescriptor>,
     responseFields: List<FieldDescriptor>
-) {
-    resultActions
+): ResultActions {
+    return this
         .andDo(
             document(
                 documentUrl,
