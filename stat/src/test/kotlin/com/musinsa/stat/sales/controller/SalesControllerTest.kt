@@ -19,7 +19,6 @@ import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.context.WebApplicationContext
@@ -28,7 +27,7 @@ import java.time.format.DateTimeFormatter
 
 @ExtendWith(RestDocumentationExtension::class)
 @WebMvcTest(controllers = [SalesController::class])
-internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
+private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
     @MockBean
     lateinit var salesService: SalesService
 
@@ -44,7 +43,7 @@ internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
     }
 
     @Test
-    fun 일별매출통계_가져오기() {
+    fun 매출통계_가져오기() {
         val 응답값 = SalesStatisticsResponse(
             listOf(
                 DailyFixture.DAILY_20230505(),
@@ -90,7 +89,11 @@ internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
 
         mockMvc.GET("/sales-statistics/".plus(지표), queryParams)
             .andExpect(status().isOk)
-            .andDo(MockMvcResultHandlers.print())
             .andDo(document("sales-statistics"))
+    }
+
+    // TODO 에러테스트 추가
+    fun errorTest() {
+
     }
 }
