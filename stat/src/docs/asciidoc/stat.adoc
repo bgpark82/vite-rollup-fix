@@ -14,6 +14,8 @@ endif::[]
 
 = 매출통계 API
 
+* API RootPath: /stat 을 모든 API의 prefix 에 추가 필요
+
 == 매출통계 가져오기
 
 * 요청

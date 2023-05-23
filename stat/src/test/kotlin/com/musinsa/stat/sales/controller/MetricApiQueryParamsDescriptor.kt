@@ -10,9 +10,13 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
     // TODO Enum 값을 표 방식으로 제공
     명세서.addAll(
         listOf(
-            parameterWithName("startDate").description("시작날짜(8자리 yyyyMMdd). 필수값"),
-            parameterWithName("endDate").description("종료날짜(8자리 yyyyMMdd). 필수값"),
-            parameterWithName("tag").description("태그").optional(),
+            parameterWithName("startDate").description("시작날짜(8자리 yyyyMMdd). 필수값. 월별매출통계도 8자리를 보내면 서버에서 6자리로 자른다."),
+            parameterWithName("endDate").description(
+                "종료날짜(8자리 yyyyMMdd). 필수값. 월별매출통계도 8자리를 보내면 서버에서 6자리로 자른다." +
+                        "최대 조회기간은 1년"
+            ),
+            parameterWithName("tag").description("태그. 리스트 형태(청바지,반바지)로 보내면 된다.")
+                .optional(),
             parameterWithName("salesStart").description(
                 "매출시점. 필수값" +
                         "SHIPPING_REQUEST(\"출고요청\")," +
