@@ -120,10 +120,7 @@ private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
                     parameterWithName("metric")
                         .description("지표")
                 ),
-                listOf(
-                    parameterWithName("startDate")
-                        .description("시작날짜")
-                ),
+                매출통계_조회_요청값_명세(),
                 매출통계_명세(일별_월별_명세())
             )
     }

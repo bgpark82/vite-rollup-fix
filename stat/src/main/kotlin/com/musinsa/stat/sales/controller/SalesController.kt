@@ -20,7 +20,7 @@ class SalesController(private val salesService: SalesService) {
      * @param metric 매출통계 유형
      * @param startDate 시작날짜(8자리 yyyyMMdd)
      * @param endDate 종료날짜(8자리 yyyyMMdd)
-     * @param tag 태그. 기본값: 빈배열
+     * @param tag 태그
      * @param salesStart 매출시점
      * @param partnerId 업체
      * @param category

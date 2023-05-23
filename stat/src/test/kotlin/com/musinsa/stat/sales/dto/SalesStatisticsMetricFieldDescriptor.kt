@@ -7,8 +7,10 @@ import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 /**
  * Spring REST Docs 명세에 사용
  */
-fun MutableList<FieldDescriptor>.매출통계_공통_명세() {
-    this.addAll(
+fun 매출통계_공통_명세(): MutableList<FieldDescriptor> {
+    val 명세서: MutableList<FieldDescriptor> = mutableListOf()
+
+    명세서.addAll(
         listOf(
             fieldWithPath("sellQuantity").type(NUMBER).description("판매수량"),
             fieldWithPath("sellAmount").type(NUMBER).description("판매금액"),
@@ -77,7 +79,8 @@ fun MutableList<FieldDescriptor>.매출통계_공통_명세() {
             fieldWithPath("profitExcludedVAT").type(NUMBER)
                 .description("이익(VAT별도)"),
             fieldWithPath("profitMarginExcludedVAT").type(NUMBER)
-                .description("이익율(VAT별도)"),
+                .description("이익율(VAT별도)")
         )
     )
+    return 명세서
 }
