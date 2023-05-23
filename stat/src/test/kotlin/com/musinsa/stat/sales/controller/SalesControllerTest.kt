@@ -6,6 +6,7 @@ import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
+import com.musinsa.stat.util.buildMockMvc
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -17,13 +18,10 @@ import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -39,13 +37,10 @@ internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
         webApplicationContext: WebApplicationContext,
         restDocumentationContextProvider: RestDocumentationContextProvider
     ) {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-            .apply<DefaultMockMvcBuilder>(
-                documentationConfiguration(
-                    restDocumentationContextProvider
-                )
-            )
-            .build()
+        this.mockMvc = mockMvc.buildMockMvc(
+            webApplicationContext,
+            restDocumentationContextProvider
+        )
     }
 
     @Test
