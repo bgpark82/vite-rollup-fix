@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
@@ -28,20 +29,17 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @ExtendWith(RestDocumentationExtension::class)
-@WebMvcTest(value = [SalesController::class])
-internal class SalesControllerTest {
+@WebMvcTest(controllers = [SalesController::class])
+internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
     @MockBean
-    private lateinit var salesService: SalesService
-
-    @Autowired
-    lateinit var mockMvc: MockMvc
+    lateinit var salesService: SalesService
 
     @BeforeEach
     fun setUp(
         webApplicationContext: WebApplicationContext,
         restDocumentationContextProvider: RestDocumentationContextProvider
     ) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
             .apply<DefaultMockMvcBuilder>(
                 documentationConfiguration(
                     restDocumentationContextProvider
@@ -75,13 +73,23 @@ internal class SalesControllerTest {
                     종료날짜,
                     DateTimeFormatter.ofPattern("yyyyMMdd")
                 ),
+                tag = null,
                 salesStart = 매출시점,
+                partnerId = null,
+                category = null,
+                styleNumber = null,
+                goodsNumber = null,
+                brandId = null,
+                couponNumber = null,
+                adCode = null,
+                specialtyCode = null,
+                mdId = null,
                 orderBy = 정렬키
             )
         ).thenReturn(응답값)
 
         // when, then
-        this.mockMvc.perform(
+        mockMvc.perform(
             get("/sales-statistics/DAILY").contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .queryParam("startDate", 시작날짜)
@@ -91,5 +99,6 @@ internal class SalesControllerTest {
         )
             .andExpect(status().isOk)
             .andDo(MockMvcResultHandlers.print())
+            .andDo(document("sales-statistics"))
     }
 }
