@@ -6,6 +6,7 @@ import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
+import com.musinsa.stat.util.GET
 import com.musinsa.stat.util.buildMockMvc
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,14 +15,13 @@ import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.context.WebApplicationContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -37,7 +37,7 @@ internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
         webApplicationContext: WebApplicationContext,
         restDocumentationContextProvider: RestDocumentationContextProvider
     ) {
-        this.mockMvc = mockMvc.buildMockMvc(
+        this.mockMvc = buildMockMvc(
             webApplicationContext,
             restDocumentationContextProvider
         )
@@ -45,7 +45,6 @@ internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
 
     @Test
     fun 일별매출통계_가져오기() {
-        // given
         val 응답값 = SalesStatisticsResponse(
             listOf(
                 DailyFixture.DAILY_20230505(),
@@ -83,15 +82,13 @@ internal class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
             )
         ).thenReturn(응답값)
 
-        // when, then
-        mockMvc.perform(
-            get("/sales-statistics/DAILY").contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .queryParam("startDate", 시작날짜)
-                .queryParam("endDate", 종료날짜)
-                .queryParam("salesStart", 매출시점.name)
-                .queryParam("orderBy", 정렬키.toString())
-        )
+        var queryParams = LinkedMultiValueMap<String, String>()
+        queryParams["startDate"] = 시작날짜
+        queryParams["endDate"] = 종료날짜
+        queryParams["salesStart"] = 매출시점.name
+        queryParams["orderBy"] = 정렬키.toString()
+
+        mockMvc.GET("/sales-statistics/".plus(지표), queryParams)
             .andExpect(status().isOk)
             .andDo(MockMvcResultHandlers.print())
             .andDo(document("sales-statistics"))
