@@ -2,10 +2,9 @@ package com.musinsa.stat.search.dto
 
 import com.musinsa.stat.util.ObjectMapperFactory.readValues
 
-object BrandFixture {
-    fun 무신사_브랜드_목록(): List<Brand> {
-        return readValues(
-            """
+fun 무신사_브랜드_목록(): List<Brand> {
+    return readValues(
+        """
             [
                 {
                     "brandType": "S",
@@ -25,6 +24,5 @@ object BrandFixture {
                 }
             ]
         """.trimIndent(), Array<Brand>::class.java
-        )
-    }
+    )
 }
