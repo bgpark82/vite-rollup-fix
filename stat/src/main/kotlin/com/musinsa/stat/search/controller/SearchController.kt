@@ -2,6 +2,7 @@ package com.musinsa.stat.search.controller
 
 import com.musinsa.stat.search.dto.Brand
 import com.musinsa.stat.search.dto.Partner
+import com.musinsa.stat.search.dto.Tag
 import com.musinsa.stat.search.service.SearchService
 import jakarta.validation.constraints.NotBlank
 import org.springframework.validation.annotation.Validated
@@ -35,5 +36,17 @@ class SearchController(private val searchService: SearchService) {
     @GetMapping("/partner")
     fun getPartners(@NotBlank searchTerms: String): List<Partner> {
         return searchService.getPartners(searchTerms)
+    }
+
+    /**
+     * 태그 리스트를 가져온다.
+     *
+     * @param searchTerms 검색어
+     *
+     * @return 조회된 태그 리스트
+     */
+    @GetMapping("/tag")
+    fun getTags(@NotBlank searchTerms: String): List<Tag> {
+        return searchService.getTags(searchTerms)
     }
 }

@@ -4,11 +4,12 @@ import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.search.config.SearchQueryStore
 import com.musinsa.stat.search.domain.BrandRowMapper
 import com.musinsa.stat.search.domain.PartnerRowMapper
+import com.musinsa.stat.search.domain.SearchType
 import com.musinsa.stat.search.domain.TagRowMapper
 import com.musinsa.stat.search.dto.Brand
 import com.musinsa.stat.search.dto.Partner
 import com.musinsa.stat.search.dto.Tag
-import com.musinsa.stat.search.service.SearchQueryGenerator.replacePartner
+import com.musinsa.stat.search.service.SearchQueryGenerator.replace
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
@@ -31,7 +32,8 @@ class SearchService(
         return getSearchResults(
             searchTerms,
             searchQueryStore.brand,
-            BrandRowMapper
+            BrandRowMapper,
+            SearchType.BRAND
         )
     }
 
@@ -46,7 +48,8 @@ class SearchService(
         return getSearchResults(
             searchTerms,
             searchQueryStore.partner,
-            PartnerRowMapper
+            PartnerRowMapper,
+            SearchType.PARTNER
         )
     }
 
@@ -61,7 +64,8 @@ class SearchService(
         return getSearchResults(
             searchTerms,
             searchQueryStore.tag,
-            TagRowMapper
+            TagRowMapper,
+            SearchType.TAG
         )
     }
 
@@ -77,13 +81,14 @@ class SearchService(
     private fun <T> getSearchResults(
         searchTerms: String,
         searchQueryUrl: String,
-        rowMapper: RowMapper<T>
+        rowMapper: RowMapper<T>,
+        searchType: SearchType
     ): List<T> {
         return jdbcTemplate.query(
-            replacePartner(
+            replace(
                 databricksClient.getDatabricksQuery(
                     searchQueryUrl
-                ), searchTerms
+                ), searchTerms, searchType
             ), rowMapper
         )
     }

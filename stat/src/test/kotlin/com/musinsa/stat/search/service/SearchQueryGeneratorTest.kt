@@ -1,8 +1,7 @@
 package com.musinsa.stat.search.service
 
-import com.musinsa.stat.search.service.SearchQueryGenerator.replaceBrand
-import com.musinsa.stat.search.service.SearchQueryGenerator.replacePartner
-import com.musinsa.stat.search.service.SearchQueryGenerator.replaceTag
+import com.musinsa.stat.search.domain.SearchType
+import com.musinsa.stat.search.service.SearchQueryGenerator.replace
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -16,7 +15,7 @@ private class SearchQueryGeneratorTest {
         """.trimIndent()
 
         // when
-        val 결과값 = replaceBrand(브랜드_검색_쿼리, "무신")
+        val 결과값 = replace(브랜드_검색_쿼리, "무신", SearchType.BRAND)
 
         // then
         assertThat(결과값).isEqualTo(
@@ -34,7 +33,7 @@ private class SearchQueryGeneratorTest {
         """.trimIndent()
 
         // when
-        val 결과값 = replacePartner(업체_검색_쿼리, "musinsa")
+        val 결과값 = replace(업체_검색_쿼리, "musinsa", SearchType.PARTNER)
 
         // then
         assertThat(결과값).isEqualTo(
@@ -52,7 +51,7 @@ private class SearchQueryGeneratorTest {
         """.trimIndent()
 
         // when
-        val 결과값 = replaceTag(태그_검색_쿼리, "스트라이프")
+        val 결과값 = replace(태그_검색_쿼리, "스트라이프", SearchType.TAG)
 
         // then
         assertThat(결과값).isEqualTo(
