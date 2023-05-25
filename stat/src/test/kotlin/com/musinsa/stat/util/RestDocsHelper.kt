@@ -93,6 +93,26 @@ fun MockMvc.GET(
     )
 }
 
+/**
+ * HTTP GET
+ *
+ * @param url 호스트
+ * @param queryParams Query Params
+ *
+ * @return ResultActions
+ *
+ */
+fun MockMvc.GET(
+    url: String,
+    queryParams: MultiValueMap<String, String>
+): ResultActions {
+    return this.perform(
+        RestDocumentationRequestBuilders.get(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .queryParams(queryParams)
+    )
+}
+
 fun ResultActions.성공_검증(예상_응답: String): ResultActions {
     return this.andExpect(MockMvcResultMatchers.status().isOk)
         .andExpect(content().string(예상_응답))
@@ -112,6 +132,24 @@ fun ResultActions.DOCS_생성(
             document(
                 documentUrl,
                 pathParameters(pathParams),
+                queryParameters(queryParams),
+                responseFields(responseFields)
+            )
+        )
+}
+
+/**
+ * QueryParameters, ResponseBody 가 있는 DOCS 생성
+ */
+fun ResultActions.DOCS_생성(
+    documentUrl: String,
+    queryParams: List<ParameterDescriptor>,
+    responseFields: List<FieldDescriptor>
+): ResultActions {
+    return this
+        .andDo(
+            document(
+                documentUrl,
                 queryParameters(queryParams),
                 responseFields(responseFields)
             )
