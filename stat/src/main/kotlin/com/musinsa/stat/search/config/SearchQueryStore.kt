@@ -4,5 +4,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties(prefix = "custom.databricks.search-query-id")
 data class SearchQueryStore(
-    val brand: String
+    val brand: String,
+    val partner: String
 )
