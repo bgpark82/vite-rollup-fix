@@ -58,3 +58,13 @@ include::{snippets}/search/partner/query-parameters.adoc[]
 include::{snippets}/search/partner/http-response.adoc[]
 * 응답값 상세
 include::{snippets}/search/partner/response-fields.adoc[]
+
+== 태그 검색
+
+* 요청
+include::{snippets}/search/tag/http-request.adoc[]
+* 요청값 상세
+** Query Parameters
+include::{snippets}/search/tag/query-parameters.adoc[]
+* 응답
+include::{snippets}/search/tag/http-response.adoc[]
