@@ -19,6 +19,9 @@ endif::[]
 ##*/stat 을 모든 경로의 root path 에 추가 필요*##
 
 ex) /stat/sales-statistics/+{metric}+
+
+// TODO HTTPS 변경
+HTTP 호출 필요
 ====
 
 == 매출통계 가져오기

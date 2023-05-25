@@ -27,8 +27,9 @@ import org.springframework.web.filter.CharacterEncodingFilter
  * Spring REST Docs 문서 생성에 필요한 기능들
  */
 
-private const val HOST = "stat.data.musinsa.com"
-private const val PORT = 80
+// TODO HOST, PORT 수정
+private const val HOST = "3.35.207.130"
+private const val PORT = 8080
 private const val UTF8 = "UTF-8"
 
 /**
