@@ -34,3 +34,15 @@ include::{snippets}/sales-statistics/query-parameters.adoc[]
 include::{snippets}/sales-statistics/http-response.adoc[]
 * 응답값 상세
 include::{snippets}/sales-statistics/response-fields.adoc[]
+
+== 브랜드 검색
+
+* 요청
+include::{snippets}/search/brand/http-request.adoc[]
+* 요청값 상세
+** Query Parameters
+include::{snippets}/search/brand/query-parameters.adoc[]
+* 응답
+include::{snippets}/search/brand/http-response.adoc[]
+* 응답값 상세
+include::{snippets}/search/brand/response-fields.adoc[]
