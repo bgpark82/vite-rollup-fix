@@ -1,6 +1,6 @@
-package com.musinsa.stat.brand.domain
+package com.musinsa.stat.search.domain
 
-import com.musinsa.stat.brand.dto.Brand
+import com.musinsa.stat.search.dto.Brand
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 

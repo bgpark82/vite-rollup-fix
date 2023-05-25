@@ -1,4 +1,4 @@
-package com.musinsa.stat.brand.dto
+package com.musinsa.stat.search.dto
 
 data class Brand(
     /**
