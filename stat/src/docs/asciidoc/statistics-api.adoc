@@ -21,5 +21,15 @@ endif::[]
 ex) /stat/sales-statistics/+{metric}+
 ====
 
-// 매출통계 가져오기
-include::get-sales-statistics.adoc[]
+== 매출통계 가져오기
+
+* 요청
+include::{snippets}/sales-statistics/http-request.adoc[]
+* 요청값 상세
+** Path Variable
+include::{snippets}/sales-statistics/path-parameters.adoc[]
+** Query Parameters
+include::{snippets}/sales-statistics/query-parameters.adoc[]
+* 응답
+include::{snippets}/sales-statistics/http-response.adoc[]
+* 응답값 상세 include::{snippets}/sales-statistics/response-fields.adoc[]

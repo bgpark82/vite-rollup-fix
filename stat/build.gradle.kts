@@ -25,7 +25,7 @@ plugins {
 }
 
 group = "com.musinsa"
-version = "0.0.1-SNAPSHOT"
+version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 @Suppress("PropertyName")
@@ -109,7 +109,6 @@ tasks {
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     mainClass.set(StringBuilder(MAIN_CLASS).append("Kt").toString())
 }
-
 
 // Ascii Doc Create Tasks
 tasks {
