@@ -8,7 +8,6 @@ import com.musinsa.stat.search.domain.SearchType
 import com.musinsa.stat.search.domain.TagRowMapper
 import com.musinsa.stat.search.dto.Brand
 import com.musinsa.stat.search.dto.Partner
-import com.musinsa.stat.search.dto.Tag
 import com.musinsa.stat.search.service.SearchQueryGenerator.replace
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.jdbc.core.JdbcTemplate
@@ -60,13 +59,13 @@ class SearchService(
      *
      * @return 조회된 업체 리스트
      */
-    fun getTags(searchTerms: String): List<Tag> {
+    fun getTags(searchTerms: String): List<String> {
         return getSearchResults(
             searchTerms,
             searchQueryStore.tag,
             TagRowMapper,
             SearchType.TAG
-        )
+        ).map { it.tag }.toList()
     }
 
     /**

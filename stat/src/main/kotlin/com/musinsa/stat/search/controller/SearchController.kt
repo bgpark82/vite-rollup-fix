@@ -2,7 +2,6 @@ package com.musinsa.stat.search.controller
 
 import com.musinsa.stat.search.dto.Brand
 import com.musinsa.stat.search.dto.Partner
-import com.musinsa.stat.search.dto.Tag
 import com.musinsa.stat.search.service.SearchService
 import jakarta.validation.constraints.NotBlank
 import org.springframework.validation.annotation.Validated
@@ -46,7 +45,7 @@ class SearchController(private val searchService: SearchService) {
      * @return 조회된 태그 리스트
      */
     @GetMapping("/tag")
-    fun getTags(@NotBlank searchTerms: String): List<Tag> {
+    fun getTags(@NotBlank searchTerms: String): List<String> {
         return searchService.getTags(searchTerms)
     }
 }
