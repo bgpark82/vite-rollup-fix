@@ -7,29 +7,29 @@ import com.musinsa.stat.sales.error.SalesError
  * 파라미터에 따라서 쿼리를 재생성 한다.
  */
 object QueryGenerator {
-    val PREFIX_ANNOTATION = "--"
-    val START_DATE = "\\{\\{startDate}}".toRegex()
-    val END_DATE = "\\{\\{endDate}}".toRegex()
-    val TAG = "\\{\\{tag}}".toRegex()
-    val SALES_START = "\\{\\{salesStart}}".toRegex()
-    val PARTNER_ID = "\\{\\{partnerId}}".toRegex()
-    val CATEGORY = "\\{\\{category}}".toRegex()
-    val STYLE_NUMBER = "\\{\\{styleNumber}}".toRegex()
-    val GOODS_NUMBER = "\\{\\{goodsNumber}}".toRegex()
-    val BRAND_ID = "\\{\\{brandId}}".toRegex()
-    val COUPON_NUMBER = "\\{\\{couponNumber}}".toRegex()
-    val AD_CODE = "\\{\\{adCode}}".toRegex()
-    val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
-    val MD_ID = "\\{\\{mdId}}".toRegex()
-    val ORDER_BY = "\\{\\{orderBy}}".toRegex()
+    private const val PREFIX_ANNOTATION = "--"
+    private val START_DATE = "\\{\\{startDate}}".toRegex()
+    private val END_DATE = "\\{\\{endDate}}".toRegex()
+    private val TAG = "\\{\\{tag}}".toRegex()
+    private val SALES_START = "\\{\\{salesStart}}".toRegex()
+    private val PARTNER_ID = "\\{\\{partnerId}}".toRegex()
+    private val CATEGORY = "\\{\\{category}}".toRegex()
+    private val STYLE_NUMBER = "\\{\\{styleNumber}}".toRegex()
+    private val GOODS_NUMBER = "\\{\\{goodsNumber}}".toRegex()
+    private val BRAND_ID = "\\{\\{brandId}}".toRegex()
+    private val COUPON_NUMBER = "\\{\\{couponNumber}}".toRegex()
+    private val AD_CODE = "\\{\\{adCode}}".toRegex()
+    private val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
+    private val MD_ID = "\\{\\{mdId}}".toRegex()
+    private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
 
     /**
-     * 배열에서 특정 문자열이 속한 index를 찾는다.
+     * 배열에서 특정 문자열이 속한 index 를 찾는다.
      *
      * @param array 배열
      * @param target 찾을 문자열
      *
-     * @return target이 속한 배열
+     * @return target 이 속한 배열
      */
     fun getStringLineNumber(array: ArrayList<String>, target: String): Int {
         val index =
