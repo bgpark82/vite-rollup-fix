@@ -21,5 +21,5 @@ interface Error {
     /**
      * 예외 생성
      */
-    fun create(): IntentionalRuntimeException
+    fun create(): CodeAwareException
 }

@@ -1,7 +1,7 @@
 package com.musinsa.stat.sales.error
 
+import com.musinsa.stat.error.CodeAwareException
 import com.musinsa.stat.error.Error
-import com.musinsa.stat.error.IntentionalRuntimeException
 import org.springframework.http.HttpStatus
 
 /**
@@ -18,10 +18,10 @@ enum class SalesError(
     );
 
     override fun <T> throwMe(): T {
-        throw IntentionalRuntimeException(this)
+        throw CodeAwareException(this)
     }
 
-    override fun create(): IntentionalRuntimeException {
-        return IntentionalRuntimeException(this)
+    override fun create(): CodeAwareException {
+        return CodeAwareException(this)
     }
 }

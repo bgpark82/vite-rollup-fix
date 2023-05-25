@@ -38,7 +38,7 @@ data class ErrorResponse constructor(
     /**
      * 의도된 에러
      */
-    constructor(exception: IntentionalRuntimeException) : this(
+    constructor(exception: CodeAwareException) : this(
         errorCode = exception.error.toString(),
         exception = exception.javaClass.name,
         message = exception.error.message

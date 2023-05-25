@@ -1,7 +1,7 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.databricks.service.DatabricksClient
-import com.musinsa.stat.error.IntentionalRuntimeException
+import com.musinsa.stat.error.CodeAwareException
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.Metric
@@ -86,7 +86,7 @@ private class SalesServiceTest {
         val 시작날짜_ADD_1_YEAR = 시작날짜.plusYears(1)
 
         // when
-        val 에러 = assertThrows<IntentionalRuntimeException> {
+        val 에러 = assertThrows<CodeAwareException> {
             salesService.getSalesStatistics(
                 metric = Metric.DAILY,
                 startDate = 시작날짜,
@@ -107,7 +107,7 @@ private class SalesServiceTest {
         val 시작날짜_MINUS_1_DAY = 시작날짜.minusDays(1)
 
         // when
-        val 에러 = assertThrows<IntentionalRuntimeException> {
+        val 에러 = assertThrows<CodeAwareException> {
             salesService.getSalesStatistics(
                 metric = Metric.DAILY,
                 startDate = 시작날짜,

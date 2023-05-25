@@ -14,10 +14,10 @@ enum class CommonError(
     ;
 
     override fun <T> throwMe(): T {
-        throw IntentionalRuntimeException(this)
+        throw CodeAwareException(this)
     }
 
-    override fun create(): IntentionalRuntimeException {
-        return IntentionalRuntimeException(this)
+    override fun create(): CodeAwareException {
+        return CodeAwareException(this)
     }
 }

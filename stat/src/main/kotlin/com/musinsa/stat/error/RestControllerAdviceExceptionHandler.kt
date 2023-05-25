@@ -16,8 +16,8 @@ class RestControllerAdviceExceptionHandler {
     /**
      * 의도적으로 발생된 예외 처리
      */
-    @ExceptionHandler(IntentionalRuntimeException::class)
-    fun handleIntentionalRuntimeException(exception: IntentionalRuntimeException): ResponseEntity<ErrorResponse> {
+    @ExceptionHandler(CodeAwareException::class)
+    fun handleIntentionalRuntimeException(exception: CodeAwareException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(exception.error.httpStatus)
             .body(ErrorResponse(exception))
     }
