@@ -26,6 +26,25 @@ object ObjectMapperFactory {
     }
 
     /**
+     * String to JSON List 변환
+     *
+     * @param jsonString 문자열
+     * @param valueType 클래스타입
+     *
+     * @return valueType 객체
+     */
+    fun <T> readValues(
+        jsonString: String,
+        valueType: Class<Array<T>>
+    ): List<T> {
+        return try {
+            mapper.readValue(jsonString, valueType).toList()
+        } catch (e: Exception) {
+            CommonError.FAIL_STRING_TO_JSON.throwMe()
+        }
+    }
+
+    /**
      * JSON to String 변환
      *
      * @param o 객체
