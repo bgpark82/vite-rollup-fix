@@ -8,6 +8,7 @@ object SearchQueryGenerator {
     private val BRAND_NAME = "\\{\\{brandName}}".toRegex()
     private val PARTNER_ID = "\\{\\{partnerId}}".toRegex()
     private val PARTNER_NAME = "\\{\\{partnerName}}".toRegex()
+    private val TAG = "\\{\\{tag}}".toRegex()
 
     /**
      * 브랜드를 검색 쿼리 예약어에 추가한다.
@@ -23,5 +24,12 @@ object SearchQueryGenerator {
     fun replacePartner(query: String, searchTerms: String): String {
         return query.replace(PARTNER_ID, searchTerms)
             .replace(PARTNER_NAME, searchTerms)
+    }
+
+    /**
+     * 태그를 검색 쿼리 예약어에 추가한다.
+     */
+    fun replaceTag(query: String, searchTerms: String): String {
+        return query.replace(TAG, searchTerms)
     }
 }
