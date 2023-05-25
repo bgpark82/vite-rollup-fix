@@ -155,3 +155,19 @@ fun ResultActions.DOCS_생성(
             )
         )
 }
+
+/**
+ * QueryParameters 가 있는 DOCS 생성
+ */
+fun ResultActions.DOCS_생성(
+    documentUrl: String,
+    queryParams: List<ParameterDescriptor>
+): ResultActions {
+    return this
+        .andDo(
+            document(
+                documentUrl,
+                queryParameters(queryParams)
+            )
+        )
+}
