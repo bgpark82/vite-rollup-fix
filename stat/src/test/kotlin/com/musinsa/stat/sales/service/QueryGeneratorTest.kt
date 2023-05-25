@@ -31,10 +31,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.NullAndEmptySource
 
 internal class QueryGeneratorTest {
-    private val queryGenerator = QueryGenerator
-
     @Test
-    fun 배열에서_특정_문자열이_속한_INDEX를_찾는다() {
+    fun 배열에서_특정_문자열이_속한_INDEX_를_찾는다() {
         // given
         val 임의의_배열 =
             arrayListOf(
@@ -46,7 +44,7 @@ internal class QueryGeneratorTest {
         val 찾을_문자 = "{{endDate}}"
 
         // when, then
-        assertThat(queryGenerator.getStringLineNumber(임의의_배열, 찾을_문자)).isEqualTo(
+        assertThat(QueryGenerator.getStringLineNumber(임의의_배열, 찾을_문자)).isEqualTo(
             1
         )
     }
@@ -71,7 +69,7 @@ internal class QueryGeneratorTest {
 
         // when, then
         assertThat(
-            queryGenerator.annotateUnusedWhereCondition(
+            QueryGenerator.annotateUnusedWhereCondition(
                 임의의_배열,
                 주석처리할_인덱스
             )
@@ -81,7 +79,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 시작날짜와_종료날짜가_설정된다() {
         assertThat(
-            queryGenerator.addStarDateAndEndDate(
+            QueryGenerator.addStarDateAndEndDate(
                 SAMPLE_QUERY,
                 "20230501",
                 "20230509"
@@ -92,9 +90,9 @@ internal class QueryGeneratorTest {
     @Test
     fun 태그가_설정된다() {
         assertThat(
-            queryGenerator.addTag(
+            QueryGenerator.addTag(
                 SAMPLE_QUERY,
-                arrayListOf<String>("청바지", "반소매티")
+                arrayListOf("청바지", "반소매티")
             )
         ).isEqualTo(SAMPLE_QUERY_SET_TAG)
     }
@@ -102,7 +100,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 태그가_존재하지_않으면_쿼리에서_주석처리_된다() {
         assertThat(
-            queryGenerator.addTag(
+            QueryGenerator.addTag(
                 SAMPLE_QUERY,
                 emptyList()
             )
@@ -112,7 +110,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 매출시점_추가() {
         assertThat(
-            queryGenerator.addSalesStart(
+            QueryGenerator.addSalesStart(
                 SAMPLE_QUERY,
                 SalesStart.PURCHASE_CONFIRM
             )
@@ -122,7 +120,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 업체_추가() {
         assertThat(
-            queryGenerator.addPartnerId(
+            QueryGenerator.addPartnerId(
                 SAMPLE_QUERY,
                 "musinsastandard"
             )
@@ -133,7 +131,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 업체가_존재하지_않으면_쿼리에서_주석처리_된다(partnerId: String?) {
         assertThat(
-            queryGenerator.addPartnerId(
+            QueryGenerator.addPartnerId(
                 SAMPLE_QUERY,
                 partnerId
             )
@@ -143,7 +141,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 카테고리_추가() {
         assertThat(
-            queryGenerator.addCategory(
+            QueryGenerator.addCategory(
                 SAMPLE_QUERY,
                 "청/데님 팬츠"
             )
@@ -154,7 +152,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 카테고리가_존재하지_않으면_쿼리에서_주석처리_된다(category: String?) {
         assertThat(
-            queryGenerator.addCategory(
+            QueryGenerator.addCategory(
                 SAMPLE_QUERY,
                 category
             )
@@ -164,7 +162,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 스타일넘버_추가() {
         assertThat(
-            queryGenerator.addStyleNumber(
+            QueryGenerator.addStyleNumber(
                 SAMPLE_QUERY,
                 "DF22SS7022"
             )
@@ -175,7 +173,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 스타일넘버가_존재하지_않으면_쿼리에서_주석처리_된다(styleNumber: String?) {
         assertThat(
-            queryGenerator.addStyleNumber(
+            QueryGenerator.addStyleNumber(
                 SAMPLE_QUERY,
                 styleNumber
             )
@@ -185,7 +183,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 상품코드_추가() {
         assertThat(
-            queryGenerator.addGoodsNumber(
+            QueryGenerator.addGoodsNumber(
                 SAMPLE_QUERY,
                 "1387960"
             )
@@ -196,7 +194,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 상품코드가_존재하지_않으면_쿼리에서_주석처리_된다(goodsNumber: String?) {
         assertThat(
-            queryGenerator.addGoodsNumber(
+            QueryGenerator.addGoodsNumber(
                 SAMPLE_QUERY,
                 goodsNumber
             )
@@ -206,7 +204,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 브랜드_추가() {
         assertThat(
-            queryGenerator.addBrandId(
+            QueryGenerator.addBrandId(
                 SAMPLE_QUERY,
                 "musinsastandard"
             )
@@ -217,7 +215,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 브랜드가_존재하지_않으면_쿼리에서_주석처리_된다(brandId: String?) {
         assertThat(
-            queryGenerator.addBrandId(
+            QueryGenerator.addBrandId(
                 SAMPLE_QUERY,
                 brandId
             )
@@ -227,7 +225,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 쿠폰_추가() {
         assertThat(
-            queryGenerator.addCouponNumber(
+            QueryGenerator.addCouponNumber(
                 SAMPLE_QUERY,
                 "72852"
             )
@@ -238,7 +236,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 쿠폰이_존재하지_않으면_쿼리에서_주석처리_된다(couponNumber: String?) {
         assertThat(
-            queryGenerator.addCouponNumber(
+            QueryGenerator.addCouponNumber(
                 SAMPLE_QUERY,
                 couponNumber
             )
@@ -248,7 +246,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 광고코드_추가() {
         assertThat(
-            queryGenerator.addAdCode(
+            QueryGenerator.addAdCode(
                 SAMPLE_QUERY,
                 "REFCRLC003"
             )
@@ -259,7 +257,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 광고코드가_존재하지_않으면_쿼리에서_주석처리_된다(adCode: String?) {
         assertThat(
-            queryGenerator.addAdCode(
+            QueryGenerator.addAdCode(
                 SAMPLE_QUERY,
                 adCode
             )
@@ -269,7 +267,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 전문관코드_추가() {
         assertThat(
-            queryGenerator.addSpecialtyCode(
+            QueryGenerator.addSpecialtyCode(
                 SAMPLE_QUERY,
                 "golf"
             )
@@ -280,7 +278,7 @@ internal class QueryGeneratorTest {
     @NullAndEmptySource
     fun 전문관코드가_존재하지_않으면_쿼리에서_주석처리_된다(specialtyCode: String?) {
         assertThat(
-            queryGenerator.addSpecialtyCode(
+            QueryGenerator.addSpecialtyCode(
                 SAMPLE_QUERY,
                 specialtyCode
             )
@@ -290,7 +288,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 담당MD_추가() {
         assertThat(
-            queryGenerator.addMdId(
+            QueryGenerator.addMdId(
                 SAMPLE_QUERY,
                 "woo.choi"
             )
@@ -299,9 +297,9 @@ internal class QueryGeneratorTest {
 
     @ParameterizedTest
     @NullAndEmptySource
-    fun 담당MD가_존재하지_않으면_쿼리에서_주석처리_된다(mdId: String?) {
+    fun 담당MD_가_존재하지_않으면_쿼리에서_주석처리_된다(mdId: String?) {
         assertThat(
-            queryGenerator.addMdId(
+            QueryGenerator.addMdId(
                 SAMPLE_QUERY,
                 mdId
             )
@@ -311,7 +309,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 페이징_파라미터_추가() {
         assertThat(
-            queryGenerator.addPagingParams(SAMPLE_QUERY, "date")
+            QueryGenerator.addPagingParams(SAMPLE_QUERY, "date")
         ).isEqualTo(SAMPLE_QUERY_SET_PAGING_PARAMS)
     }
 }
