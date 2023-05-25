@@ -32,4 +32,5 @@ include::{snippets}/sales-statistics/path-parameters.adoc[]
 include::{snippets}/sales-statistics/query-parameters.adoc[]
 * 응답
 include::{snippets}/sales-statistics/http-response.adoc[]
-* 응답값 상세 include::{snippets}/sales-statistics/response-fields.adoc[]
+* 응답값 상세
+include::{snippets}/sales-statistics/response-fields.adoc[]
