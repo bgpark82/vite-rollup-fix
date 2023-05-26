@@ -13,7 +13,7 @@ HEAP_XMX=4096m
 cd ${ACCOUNT_HOME}${SERVICE_DIR}
 
 # 인스턴스 실행
-screen -S ${JAR_NAME} -dm -jar ${JAR_NAME}.jar
+screen -S ${JAR_NAME} -dm java -Xms${HEAP_XMS} -Xmx${HEAP_XMX} -jar ${JAR_NAME}.jar
 
 CONTINUE=1
 while [ ${CONTINUE} -eq 1 ]
