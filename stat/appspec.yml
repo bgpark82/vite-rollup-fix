@@ -1,0 +1,42 @@
+# AWS CodeDeploy 에서 어플리케이션 실행/종료 시 사용할 file
+# @see https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html
+
+# 버전 고정
+version: 0.0
+
+# Amazon Linux or Ubuntu Server
+os: linux
+
+# 수정 버전의 모든 파일을 EC2 인스턴스의 아래 경로로 복사
+# @see https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/reference-appspec-file-structure-files.html
+files:
+  - source: /
+    destination: /home/ec2-user/java/sales-statistics/
+
+# files 에서 파일이 인스턴스에 복사된 후, 권한이 어떻게 적용되어야 하는지를 지정
+# @see https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/reference-appspec-file-structure-permissions.html
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ec2-user
+    group: ec2-user
+
+# 단계마다 Shell 수행
+hooks:
+  # BeforeInstall:
+  AfterInstall:
+    - location: script/code-deploy/after_install.sh
+      timeout: 120
+      runas: root
+  ApplicationStart:
+    - location: script/code-deploy/application_start.sh
+      timeout: 120
+      runas: root
+  ApplicationStop:
+    - location: script/code-deploy/application_stop.sh
+      timeout: 120
+      runas: root
+  BeforeAllowTraffic:
+    - location: script/code-deploy/before_allow_traffic.sh
+      timeout: 120
+      runas: root
