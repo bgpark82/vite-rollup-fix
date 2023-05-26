@@ -96,6 +96,18 @@ tasks {
     jar {
         // Plain jar 생성 금지
         enabled = false
+
+        // CodeDeploy build script 추가
+        copy {
+            from("script/code-deploy")
+            into("build/libs/script/code-deploy")
+        }
+
+        // CodeDeploy build specification 추가
+        copy {
+            from("./appspec.yml")
+            into("build/libs")
+        }
     }
 
     bootJar {
