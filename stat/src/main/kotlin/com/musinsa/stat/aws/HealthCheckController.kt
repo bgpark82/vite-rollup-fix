@@ -15,4 +15,9 @@ class HealthCheckController {
     fun healthCheck(): ServerResponse {
         return ServerResponse.ok().build()
     }
+
+    @GetMapping("/test")
+    fun test(): String {
+        return "TEST"
+    }
 }
