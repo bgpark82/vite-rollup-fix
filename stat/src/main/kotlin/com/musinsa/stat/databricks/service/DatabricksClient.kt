@@ -2,6 +2,7 @@ package com.musinsa.stat.databricks.service
 
 import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.stat.databricks.dto.RetrieveQuery
+import com.musinsa.stat.databricks.error.DatabricksError
 import com.musinsa.stat.util.HttpClient
 import com.musinsa.stat.util.ObjectMapperFactory.readValue
 import org.springframework.stereotype.Service
@@ -20,27 +21,18 @@ class DatabricksClient(
      * @return 쿼리
      */
     fun getDatabricksQuery(queryId: String): String {
-        try {
+        return try {
             val response = httpClient.getHttpResponse(
                 StringBuilder().append(config.MUSINSA_DATA_WS_DOMAIN)
                     .append(config.RETRIEVE_API_PATH).append("/")
                     .append(queryId)
                     .toString(),
-
-                // TODO 타임아웃 주입 못받으면 에러 throw
-                Duration.ofSeconds(config.TIMEOUT?.toLong() ?: 10),
-
-                // TODO 토큰 주입 못받으면 에러 throw
-                arrayOf(
-                    httpClient.AUTHORIZATION,
-                    config.AUTHORIZATION_TOKEN ?: "test"
-                )
+                Duration.ofSeconds(config.TIMEOUT!!.toLong()),
+                arrayOf(httpClient.AUTHORIZATION, config.AUTHORIZATION_TOKEN!!)
             )
-            return readValue(response, RetrieveQuery::class.java).query
+            readValue(response, RetrieveQuery::class.java).query
         } catch (e: Exception) {
-            // TODO 예외처리 추가
-            e.printStackTrace()
-            throw Exception(e)
+            DatabricksError.FAIL_TO_RETRIEVE_DATABRICKS_QUERY.throwMe()
         }
     }
 }
