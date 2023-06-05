@@ -6,19 +6,18 @@ import org.springframework.restdocs.request.RequestDocumentation.parameterWithNa
 fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
     val 명세서: MutableList<ParameterDescriptor> = ArrayList()
 
-    // TODO 필수값 여부를 REST Docs 에 바로 노출
     // TODO Enum 값을 표 방식으로 제공
     명세서.addAll(
         listOf(
-            parameterWithName("startDate").description("시작날짜(8자리 yyyyMMdd). 필수값. 월별매출통계도 8자리를 보내면 서버에서 6자리로 자른다."),
+            parameterWithName("startDate").description("시작날짜(8자리 yyyyMMdd). 월별매출통계도 8자리를 보내면 서버에서 6자리로 자른다."),
             parameterWithName("endDate").description(
-                "종료날짜(8자리 yyyyMMdd). 필수값. 월별매출통계도 8자리를 보내면 서버에서 6자리로 자른다." +
+                "종료날짜(8자리 yyyyMMdd). 월별매출통계도 8자리를 보내면 서버에서 6자리로 자른다." +
                         "최대 조회기간은 1년"
             ),
             parameterWithName("tag").description("태그. 리스트 형태(청바지,반바지)로 보내면 된다.")
                 .optional(),
             parameterWithName("salesStart").description(
-                "매출시점. 필수값" +
+                "매출시점. " +
                         "SHIPPING_REQUEST(\"출고요청\")," +
                         "PURCHASE_CONFIRM(\"구매확정\")"
             ),
@@ -32,7 +31,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             parameterWithName("specialtyCode").description("전문관코드").optional(),
             parameterWithName("mdId").description("담당MD").optional(),
             parameterWithName("orderBy").description(
-                "정렬키. 필수값" +
+                "정렬키. " +
                         "    adCode(\"광고코드\"),\n" +
                         "    adType(\"광고구분\"),\n" +
                         "    adName(\"광고명\"),\n" +
