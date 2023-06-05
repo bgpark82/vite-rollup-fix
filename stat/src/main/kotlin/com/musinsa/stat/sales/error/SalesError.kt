@@ -15,7 +15,12 @@ enum class SalesError(
     NON_EXIST_TARGET_FIELD(
         HttpStatus.INTERNAL_SERVER_ERROR,
         "쿼리에 해당 문자열이 존재하지 않음"
-    );
+    ),
+    UNKNOWN_VALUE(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "알려 지지 않은 쿼리 결과 항목"
+    )
+    ;
 
     override fun <T> throwMe(): T {
         throw CodeAwareException(this)

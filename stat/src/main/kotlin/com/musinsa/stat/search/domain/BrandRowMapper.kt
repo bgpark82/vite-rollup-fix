@@ -1,5 +1,6 @@
 package com.musinsa.stat.search.domain
 
+import com.musinsa.stat.sales.error.SalesError
 import com.musinsa.stat.search.dto.Brand
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
@@ -14,14 +15,12 @@ object BrandRowMapper : RowMapper<Brand> {
             used = when (rs.getString("사용여부")) {
                 "N" -> false
                 "Y" -> true
-                // TODO 에러 정의
-                else -> throw RuntimeException()
+                else -> SalesError.UNKNOWN_VALUE.throwMe()
             },
             isGlobal = when (rs.getInt("글로벌 여부")) {
                 0 -> false
                 1 -> true
-                // TODO 에러 정의
-                else -> throw RuntimeException()
+                else -> SalesError.UNKNOWN_VALUE.throwMe()
             },
         )
     }
