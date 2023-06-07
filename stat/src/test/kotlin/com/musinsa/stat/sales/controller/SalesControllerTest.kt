@@ -112,6 +112,7 @@ private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
         queryParams["mdId"] = 담당MD
         queryParams["orderBy"] = 정렬키.toString()
 
+        // TODO sum, average 중복 삭제
         mockMvc.GET("/sales-statistics/{metric}", 지표.name, queryParams)
             .성공_검증(writeValueAsString(응답값))
             .DOCS_생성(
