@@ -11,9 +11,9 @@ import org.springframework.restdocs.payload.PayloadSubsectionExtractor
  */
 class EnumResponseFieldsSnippet(
     type: String?,
-    descriptors: MutableList<FieldDescriptor>?,
-    attributes: MutableMap<String, Any>?,
-    ignoreUndocumentedFields: Boolean,
+    descriptors: List<FieldDescriptor>?,
+    attributes: Map<String, Any>?,
+    ignoreUndocumentedFields: Boolean = true,
     subsectionExtractor: PayloadSubsectionExtractor<*>?
 ) : AbstractFieldsSnippet(
     type,
