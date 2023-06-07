@@ -1,5 +1,9 @@
 package com.musinsa.stat.sales.controller
 
+import com.musinsa.stat.restdoc.DOCS_생성
+import com.musinsa.stat.restdoc.GET
+import com.musinsa.stat.restdoc.buildMockMvc
+import com.musinsa.stat.restdoc.성공_검증
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
@@ -8,11 +12,7 @@ import com.musinsa.stat.sales.dto.매출통계_명세
 import com.musinsa.stat.sales.dto.일별_월별_명세
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
-import com.musinsa.stat.util.DOCS_생성
-import com.musinsa.stat.util.GET
 import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
-import com.musinsa.stat.util.buildMockMvc
-import com.musinsa.stat.util.성공_검증
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

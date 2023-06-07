@@ -1,4 +1,4 @@
-package com.musinsa.stat.util
+package com.musinsa.stat.restdoc
 
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider

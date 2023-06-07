@@ -1,10 +1,12 @@
 package com.musinsa.stat.search.controller
 
+import com.musinsa.stat.restdoc.DOCS_생성
+import com.musinsa.stat.restdoc.GET
+import com.musinsa.stat.restdoc.buildMockMvc
+import com.musinsa.stat.restdoc.성공_검증
 import com.musinsa.stat.search.dto.*
 import com.musinsa.stat.search.service.SearchService
-import com.musinsa.stat.util.*
 import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
