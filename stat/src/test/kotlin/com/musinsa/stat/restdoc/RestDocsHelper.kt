@@ -115,6 +115,23 @@ fun MockMvc.GET(
     )
 }
 
+/**
+ * HTTP GET
+ *
+ * @param url 호스트
+ *
+ * @return ResultActions
+ *
+ */
+fun MockMvc.GET(
+    url: String
+): ResultActions {
+    return this.perform(
+        RestDocumentationRequestBuilders.get(url)
+            .contentType(MediaType.APPLICATION_JSON)
+    )
+}
+
 fun ResultActions.성공_검증(예상_응답: String): ResultActions {
     return this.andExpect(MockMvcResultMatchers.status().isOk)
         .andExpect(content().string(예상_응답))
