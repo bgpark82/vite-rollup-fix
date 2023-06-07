@@ -10,9 +10,9 @@ import org.springframework.restdocs.payload.PayloadSubsectionExtractor
  * Enum 값을 아스키독에 노출하기 위한 스니펫
  */
 class EnumResponseFieldsSnippet(
-    type: String,
-    descriptors: MutableList<FieldDescriptor>,
-    attributes: MutableMap<String, Any>,
+    type: String?,
+    descriptors: MutableList<FieldDescriptor>?,
+    attributes: MutableMap<String, Any>?,
     ignoreUndocumentedFields: Boolean,
     subsectionExtractor: PayloadSubsectionExtractor<*>?
 ) : AbstractFieldsSnippet(

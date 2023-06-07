@@ -2,41 +2,22 @@ package com.musinsa.stat.search.controller
 
 import com.musinsa.stat.restdoc.DOCS_생성
 import com.musinsa.stat.restdoc.GET
-import com.musinsa.stat.restdoc.buildMockMvc
+import com.musinsa.stat.restdoc.RestDocsControllerHelper
 import com.musinsa.stat.restdoc.성공_검증
 import com.musinsa.stat.search.dto.*
 import com.musinsa.stat.search.service.SearchService
 import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.whenever
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.restdocs.RestDocumentationContextProvider
-import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.util.LinkedMultiValueMap
-import org.springframework.web.context.WebApplicationContext
 
-@ExtendWith(RestDocumentationExtension::class)
 @WebMvcTest(controllers = [SearchController::class])
-class SearchControllerTest(@Autowired var mockMvc: MockMvc) {
+class SearchControllerTest : RestDocsControllerHelper() {
     @MockBean
     lateinit var searchService: SearchService
-
-    @BeforeEach
-    fun setUp(
-        webApplicationContext: WebApplicationContext,
-        restDocumentationContextProvider: RestDocumentationContextProvider
-    ) {
-        this.mockMvc = buildMockMvc(
-            webApplicationContext,
-            restDocumentationContextProvider
-        )
-    }
 
     @Test
     fun 브랜드_목록_가져오기() {

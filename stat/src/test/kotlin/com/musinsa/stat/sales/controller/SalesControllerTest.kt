@@ -2,7 +2,7 @@ package com.musinsa.stat.sales.controller
 
 import com.musinsa.stat.restdoc.DOCS_생성
 import com.musinsa.stat.restdoc.GET
-import com.musinsa.stat.restdoc.buildMockMvc
+import com.musinsa.stat.restdoc.RestDocsControllerHelper
 import com.musinsa.stat.restdoc.성공_검증
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
@@ -13,38 +13,19 @@ import com.musinsa.stat.sales.dto.일별_월별_명세
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
 import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.whenever
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.restdocs.RestDocumentationContextProvider
-import org.springframework.restdocs.RestDocumentationExtension
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.test.web.servlet.MockMvc
 import org.springframework.util.LinkedMultiValueMap
-import org.springframework.web.context.WebApplicationContext
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-@ExtendWith(RestDocumentationExtension::class)
 @WebMvcTest(controllers = [SalesController::class])
-private class SalesControllerTest(@Autowired var mockMvc: MockMvc) {
+private class SalesControllerTest : RestDocsControllerHelper() {
     @MockBean
     lateinit var salesService: SalesService
-
-    @BeforeEach
-    fun setUp(
-        webApplicationContext: WebApplicationContext,
-        restDocumentationContextProvider: RestDocumentationContextProvider
-    ) {
-        this.mockMvc = buildMockMvc(
-            webApplicationContext,
-            restDocumentationContextProvider
-        )
-    }
 
     @Test
     fun 매출통계_가져오기() {
