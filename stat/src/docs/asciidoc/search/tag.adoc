@@ -1,0 +1,14 @@
+// snippet 경로를 못 읽어들이는 버그로 인해 추가
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= 태그 검색
+
+* 요청
+include::{snippets}/search/tag/http-request.adoc[]
+* 요청값 상세
+** Query Parameters
+include::{snippets}/search/tag/query-parameters.adoc[]
+* 응답
+include::{snippets}/search/tag/http-response.adoc[]

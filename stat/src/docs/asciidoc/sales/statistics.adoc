@@ -1,0 +1,18 @@
+// snippet 경로를 못 읽어들이는 버그로 인해 추가
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= 매출통계 조회
+
+* 요청
+include::{snippets}/sales-statistics/http-request.adoc[]
+* 요청값 상세
+** Path Variable
+include::{snippets}/sales-statistics/path-parameters.adoc[]
+** Query Parameters
+include::{snippets}/sales-statistics/query-parameters.adoc[]
+* 응답
+include::{snippets}/sales-statistics/http-response.adoc[]
+* 응답값 상세
+include::{snippets}/sales-statistics/response-fields.adoc[]
