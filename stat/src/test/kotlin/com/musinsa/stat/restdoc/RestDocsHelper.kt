@@ -276,6 +276,6 @@ fun ENUM_LINK_DOCS_BUILDER(
     description: String
 ): ParameterDescriptor {
     return parameterWithName(name).description(
-        "link:../enum/$documentUrl.html[$description,window=blank]"
+        "link:../$documentUrl.html[$description,window=blank]"
     )
 }

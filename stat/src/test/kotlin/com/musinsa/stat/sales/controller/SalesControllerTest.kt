@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.controller
 
 import com.musinsa.stat.restdoc.*
+import com.musinsa.stat.restdoc.enumcontroller.METRIC_DOCUMENT_URL
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
@@ -93,7 +94,13 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             .성공_검증(writeValueAsString(응답값))
             .DOCS_생성(
                 "sales-statistics",
-                listOf(ENUM_LINK_DOCS_BUILDER("metric", "metric", "매출통계유형")),
+                listOf(
+                    ENUM_LINK_DOCS_BUILDER(
+                        "metric",
+                        METRIC_DOCUMENT_URL,
+                        "매출통계유형"
+                    )
+                ),
                 매출통계_조회_요청값_명세(),
                 매출통계_명세(일별_월별_명세())
             )
