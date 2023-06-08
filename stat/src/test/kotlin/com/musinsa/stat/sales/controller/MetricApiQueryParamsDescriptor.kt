@@ -17,9 +17,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             parameterWithName("tag").description("태그. 리스트 형태(청바지,반바지)로 보내면 된다.")
                 .optional(),
             parameterWithName("salesStart").description(
-                "매출시점. " +
-                        "SHIPPING_REQUEST(\"출고요청\")," +
-                        "PURCHASE_CONFIRM(\"구매확정\")"
+                "link:enum/sales-start.html[매출시점,window=_new]"
             ),
             parameterWithName("partnerId").description("업체").optional(),
             parameterWithName("category").description("카테고리").optional(),
@@ -31,7 +29,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             parameterWithName("specialtyCode").description("전문관코드").optional(),
             parameterWithName("mdId").description("담당MD").optional(),
             parameterWithName("orderBy").description(
-                "link:enum/order-by.html[OrderBy 보기,window=_new]"
+                "link:enum/order-by.html[정렬키,window=_new]"
             )
         )
     )

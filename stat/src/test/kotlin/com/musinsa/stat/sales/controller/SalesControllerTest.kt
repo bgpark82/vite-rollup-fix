@@ -101,7 +101,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 listOf(
                     parameterWithName("metric")
                         .description(
-                            "link:enum/metric.html[Metric 보기,window=_new]"
+                            "link:enum/metric.html[매출통계유형,window=_new]"
                         )
                 ),
                 매출통계_조회_요청값_명세(),

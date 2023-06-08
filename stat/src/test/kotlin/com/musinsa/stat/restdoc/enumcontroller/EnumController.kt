@@ -2,6 +2,7 @@ package com.musinsa.stat.restdoc.enumcontroller
 
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
+import com.musinsa.stat.sales.domain.SalesStart
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -14,13 +15,18 @@ import org.springframework.web.bind.annotation.RestController
 internal class EnumController {
 
     @GetMapping("/metric")
-    fun getMetrics(): Map<String, String> {
+    fun getMetricValues(): Map<String, String> {
         return METRIC_VALUES()
     }
 
     @GetMapping("/order-by")
-    fun getOrderBy(): Map<String, String> {
+    fun getOrderByValues(): Map<String, String> {
         return ORDER_BY_VALUES()
+    }
+
+    @GetMapping("/sales-start")
+    fun getSalesStartValues(): Map<String, String> {
+        return SALES_START_VALUES()
     }
 }
 
@@ -30,4 +36,8 @@ fun METRIC_VALUES(): Map<String, String> {
 
 fun ORDER_BY_VALUES(): Map<String, String> {
     return OrderBy.values().associate { Pair(it.name, it.alias) }
+}
+
+fun SALES_START_VALUES(): Map<String, String> {
+    return SalesStart.values().associate { Pair(it.name, it.description) }
 }

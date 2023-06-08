@@ -18,4 +18,10 @@ class EnumControllerTest : RestDocsEnumControllerHelper() {
         mockMvc.GET("/test/order-by")
             .ENUM_DOCS_생성("enum/order-by", ORDER_BY_VALUES())
     }
+
+    @Test
+    fun SALES_START_목록_가져오기() {
+        mockMvc.GET("/test/sales-start")
+            .ENUM_DOCS_생성("enum/sales-start", SALES_START_VALUES())
+    }
 }
