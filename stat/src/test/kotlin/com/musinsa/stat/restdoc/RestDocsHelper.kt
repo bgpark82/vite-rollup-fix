@@ -12,8 +12,7 @@ import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.PayloadDocumentation.*
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor
 import org.springframework.restdocs.request.ParameterDescriptor
-import org.springframework.restdocs.request.RequestDocumentation.pathParameters
-import org.springframework.restdocs.request.RequestDocumentation.queryParameters
+import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.restdocs.snippet.Attributes
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
@@ -261,5 +260,22 @@ private fun enumResponseFields(
         descriptors = descriptors,
         attributes = attributes,
         subsectionExtractor = subsectionExtractor
+    )
+}
+
+/**
+ * Enum 값을 링크 형태로 노출시킬때의 공통 로직
+ *
+ * @param name 변수명
+ * @param documentUrl Enum Docs 생성 위치
+ * @param description 변수명 설명
+ */
+fun ENUM_LINK_DOCS_BUILDER(
+    name: String,
+    documentUrl: String,
+    description: String
+): ParameterDescriptor {
+    return parameterWithName(name).description(
+        "link:../enum/$documentUrl.html[$description,window=blank]"
     )
 }

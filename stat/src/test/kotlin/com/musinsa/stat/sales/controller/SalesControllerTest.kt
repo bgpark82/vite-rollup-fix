@@ -1,9 +1,6 @@
 package com.musinsa.stat.sales.controller
 
-import com.musinsa.stat.restdoc.DOCS_생성
-import com.musinsa.stat.restdoc.GET
-import com.musinsa.stat.restdoc.RestDocsControllerHelper
-import com.musinsa.stat.restdoc.성공_검증
+import com.musinsa.stat.restdoc.*
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.SalesStart
@@ -17,7 +14,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.whenever
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
 import org.springframework.util.LinkedMultiValueMap
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -92,17 +88,12 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["specialtyCode"] = 전문관코드
         queryParams["mdId"] = 담당MD
         queryParams["orderBy"] = 정렬키.toString()
-        
+
         mockMvc.GET("/sales-statistics/{metric}", 지표.name, queryParams)
             .성공_검증(writeValueAsString(응답값))
             .DOCS_생성(
                 "sales-statistics",
-                listOf(
-                    parameterWithName("metric")
-                        .description(
-                            "link:../enum/metric.html[매출통계유형,window=blank]"
-                        )
-                ),
+                listOf(ENUM_LINK_DOCS_BUILDER("metric", "metric", "매출통계유형")),
                 매출통계_조회_요청값_명세(),
                 매출통계_명세(일별_월별_명세())
             )

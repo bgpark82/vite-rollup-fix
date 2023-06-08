@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.controller
 
+import com.musinsa.stat.restdoc.ENUM_LINK_DOCS_BUILDER
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
 
@@ -15,9 +16,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             ),
             parameterWithName("tag").description("태그. 리스트 형태(청바지,반바지)")
                 .optional(),
-            parameterWithName("salesStart").description(
-                "link:../enum/sales-start.html[매출시점,window=blank]"
-            ),
+            ENUM_LINK_DOCS_BUILDER("salesStart", "sales-start", "매출시점"),
             parameterWithName("partnerId").description("업체").optional(),
             parameterWithName("category").description("카테고리").optional(),
             parameterWithName("styleNumber").description("스타일넘버").optional(),
@@ -27,9 +26,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             parameterWithName("adCode").description("광고코드").optional(),
             parameterWithName("specialtyCode").description("전문관코드").optional(),
             parameterWithName("mdId").description("담당MD").optional(),
-            parameterWithName("orderBy").description(
-                "link:../enum/order-by.html[정렬키,window=blank]"
-            )
+            ENUM_LINK_DOCS_BUILDER("orderBy", "order-by", "정렬키")
         )
     )
 
