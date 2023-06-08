@@ -100,18 +100,8 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 "sales-statistics",
                 listOf(
                     parameterWithName("metric")
-                        // TODO 깔끔하게 제공
                         .description(
-                            "지표: \n" +
-                                    "    DAILY(\"일별\"),\n" +
-                                    "    MONTLY(\"월별\"),\n" +
-                                    "    PARTNER(\"업체별\"),\n" +
-                                    "    BRAND(\"브랜드별\"),\n" +
-                                    "    BRAND_PARTNER(\"브랜드업체별\"),\n" +
-                                    "    GOODS(\"상품별\"),\n" +
-                                    "    AD(\"광고별\"),\n" +
-                                    "    COUPON(\"쿠폰별\"),\n" +
-                                    "    CATEGORY(\"카테고리별\")"
+                            "link:enum/metric.html[Metric 보기,window=_new]"
                         )
                 ),
                 매출통계_조회_요청값_명세(),

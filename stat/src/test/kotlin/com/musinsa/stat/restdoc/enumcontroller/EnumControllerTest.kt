@@ -10,6 +10,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 class EnumControllerTest : RestDocsEnumControllerHelper() {
     @Test
     fun METRIC_목록_가져오기() {
-        mockMvc.GET("/test/metric").ENUM_DOCS_생성("test/metric", METRIC_결과())
+        mockMvc.GET("/test/metric").ENUM_DOCS_생성("enum/metric", METRIC_결과())
     }
 }
