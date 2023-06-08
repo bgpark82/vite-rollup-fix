@@ -243,10 +243,10 @@ fun ResultActions.ENUM_DOCS_생성(
 /**
  * Enum Snippet 을 읽고, Docs 로 생성한다.
  *
- * @param type snippet 이름
+ * @param type snippet template 이름(ENUM_SNIPPET)
  * @param descriptors Docs 변환할 값(API 응답값)
  * @param attributes Docs 로 생성될 속성값
- * @param subsectionExtractor descriptors 가 포함된 경로
+ * @param subsectionExtractor descriptors 가 포함된 경로(응답값 json 경로)
  */
 private fun enumResponseFields(
     type: String,
