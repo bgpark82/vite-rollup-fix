@@ -10,9 +10,11 @@ import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHea
 import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.payload.PayloadSubsectionExtractor
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.restdocs.request.RequestDocumentation.queryParameters
+import org.springframework.restdocs.snippet.Attributes
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
@@ -31,6 +33,8 @@ private const val SCHEME = "https"
 private const val HOST = "stat.data.musinsa.com"
 private const val PORT = 443
 private const val UTF8 = "UTF-8"
+private const val ENUM_SNIPPET =
+    "enum-response"    // 해당 값이 enum-response-fields.snippet을 읽는다.
 
 /**
  * MockMvc 생성
@@ -69,6 +73,25 @@ fun buildMockMvc(
 
     return MockMvcBuilders.webAppContextSetup(webApplicationContext)
         .addFilter<DefaultMockMvcBuilder>(CharacterEncodingFilter(UTF8, true))
+        .apply<DefaultMockMvcBuilder>(mockMvcRestDocumentationConfigurer)
+        .build()
+}
+
+/**
+ * Enum 노출용 MockMvc 생성
+ * Spring REST Docs 에 필요한 설정들을 선언한다.
+ */
+fun buildEnumMockMvc(
+    webApplicationContext: WebApplicationContext,
+    restDocumentation: RestDocumentationContextProvider
+): MockMvc {
+    val mockMvcRestDocumentationConfigurer = documentationConfiguration(
+        restDocumentation
+    )
+    // 스니펫 설정 없음
+    mockMvcRestDocumentationConfigurer.snippets().withDefaults()
+
+    return MockMvcBuilders.webAppContextSetup(webApplicationContext)
         .apply<DefaultMockMvcBuilder>(mockMvcRestDocumentationConfigurer)
         .build()
 }
@@ -189,4 +212,54 @@ fun ResultActions.DOCS_생성(
                 queryParameters(queryParams)
             )
         )
+}
+
+/**
+ * ENUM DOCS 생성
+ *
+ * @param documentUrl 생성 경로
+ * @param enumValues Map 형태의 Enum
+ */
+fun ResultActions.ENUM_DOCS_생성(
+    documentUrl: String,
+    enumValues: Map<String, String>
+): ResultActions {
+    return this
+        .andDo(
+            document(
+                documentUrl,
+                enumResponseFields(
+                    ENUM_SNIPPET,
+                    enumValues.map { enum ->
+                        fieldWithPath(enum.key).description(
+                            enum.value
+                        )
+                    }.toList()
+                )
+            )
+        )
+}
+
+/**
+ * Enum Snippet 을 읽고, Docs 로 생성한다.
+ *
+ * @param type snippet 이름
+ * @param descriptors Docs 변환할 값(API 응답값)
+ * @param attributes Docs 로 생성될 속성값
+ * @param subsectionExtractor descriptors 가 포함된 경로
+ */
+private fun enumResponseFields(
+    type: String,
+    descriptors: List<FieldDescriptor>,
+    attributes: Map<String, Any> = Attributes.attributes(
+        Attributes.key("name").value("description")
+    ),
+    subsectionExtractor: PayloadSubsectionExtractor<*>? = null
+): EnumResponseFieldsSnippet {
+    return EnumResponseFieldsSnippet(
+        type = type,
+        descriptors = descriptors,
+        attributes = attributes,
+        subsectionExtractor = subsectionExtractor
+    )
 }

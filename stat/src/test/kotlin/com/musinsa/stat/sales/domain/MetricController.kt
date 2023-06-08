@@ -13,6 +13,10 @@ internal class MetricController {
 
     @GetMapping
     fun getMetrics(): Map<String, String> {
-        return Metric.values().associate { Pair(it.name, it.description) }
+        return METRIC_결과()
     }
+}
+
+fun METRIC_결과(): Map<String, String> {
+    return Metric.values().associate { Pair(it.name, it.description) }
 }
