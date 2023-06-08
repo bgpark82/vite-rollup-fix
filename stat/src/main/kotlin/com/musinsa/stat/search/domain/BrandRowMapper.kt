@@ -15,12 +15,12 @@ object BrandRowMapper : RowMapper<Brand> {
             used = when (rs.getString("사용여부")) {
                 "N" -> false
                 "Y" -> true
-                else -> SalesError.UNKNOWN_VALUE.throwMe()
+                else -> SalesError.UNKNOWN_QUERY_RESULT_VALUE.throwMe()
             },
             isGlobal = when (rs.getInt("글로벌 여부")) {
                 0 -> false
                 1 -> true
-                else -> SalesError.UNKNOWN_VALUE.throwMe()
+                else -> SalesError.UNKNOWN_QUERY_RESULT_VALUE.throwMe()
             },
         )
     }

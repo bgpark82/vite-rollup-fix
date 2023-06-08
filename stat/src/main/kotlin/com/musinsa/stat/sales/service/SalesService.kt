@@ -103,11 +103,11 @@ class SalesService(
     ) {
         // 조회 기간 체크
         if (Period.between(startDate, endDate).years >= RETRIEVE_LIMIT_YEAR)
-            return SalesError.NON_VALID_DATE.throwMe()
+            return SalesError.NON_VALID_DATE_PERIOD.throwMe()
 
         // 조회시작 < 조회종료 체크
         if (startDate.isAfter(endDate))
-            return SalesError.NON_VALID_DATE.throwMe()
+            return SalesError.NON_VALID_DATE_PERIOD.throwMe()
     }
 
     /**

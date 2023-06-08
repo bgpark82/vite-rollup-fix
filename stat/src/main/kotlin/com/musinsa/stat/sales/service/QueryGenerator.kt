@@ -36,7 +36,7 @@ object QueryGenerator {
             array.indexOfFirst { str -> str.contains(target) }
         return when (index >= 0) {
             true -> index
-            false -> SalesError.NON_EXIST_TARGET_FIELD.throwMe()
+            false -> SalesError.UNKNOWN_SEARCH_PARAM.throwMe()
         }
     }
 

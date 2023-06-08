@@ -9,8 +9,14 @@ enum class CommonError(
     override val httpStatus: HttpStatus,
     override val message: String
 ) : Error {
-    FAIL_STRING_TO_JSON(HttpStatus.INTERNAL_SERVER_ERROR, "문자열 to JSON 변환에 실패"),
-    FAIL_JSON_TO_STRING(HttpStatus.INTERNAL_SERVER_ERROR, "JSON to 문자열 변환에 실패")
+    FAIL_CONVERT_STRING_TO_JSON(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "문자열 to JSON 변환에 실패"
+    ),
+    FAIL_CONVERT_JSON_TO_STRING(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "JSON to 문자열 변환에 실패"
+    )
     ;
 
     override fun <T> throwMe(): T {

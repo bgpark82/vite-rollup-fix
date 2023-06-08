@@ -51,6 +51,6 @@ class DatabricksClientTest {
         }
 
         // then
-        assertThat(에러.error).isEqualTo(DatabricksError.FAIL_TO_RETRIEVE_DATABRICKS_QUERY)
+        assertThat(에러.error).isEqualTo(DatabricksError.FAIL_RETRIEVE_DATABRICKS_QUERY_RESULT)
     }
 }

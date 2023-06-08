@@ -97,7 +97,7 @@ private class SalesServiceTest {
         }
 
         // then
-        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
+        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE_PERIOD)
     }
 
     @Test
@@ -118,6 +118,6 @@ private class SalesServiceTest {
         }
 
         // then
-        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE)
+        assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE_PERIOD)
     }
 }

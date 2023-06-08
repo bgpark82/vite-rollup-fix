@@ -8,9 +8,9 @@ enum class DatabricksError(
     override val httpStatus: HttpStatus,
     override val message: String
 ) : Error {
-    FAIL_TO_RETRIEVE_DATABRICKS_QUERY(
+    FAIL_RETRIEVE_DATABRICKS_QUERY_RESULT(
         HttpStatus.BAD_REQUEST,
-        "데이터브릭스 쿼리 가져오기 실패. 설정값 확인 필요"
+        "데이터브릭스 쿼리 실행 실패. 검색 파라미터 확인 필요. 혹은 데이터브릭스 설정값 누락"
     );
 
     override fun <T> throwMe(): T {

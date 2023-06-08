@@ -17,12 +17,14 @@ endif::[]
 
 [IMPORTANT]
 ====
-##*/stat 을 모든 경로의 root path 에 추가 필요*##
+##*모든 경로의 root path 에 /stat 을 추가해주세요*##
 
 ex) /stat/sales-statistics/+{metric}+
-
-HTTPS 호출
 ====
+
+* Error Code
+
+include::{snippets}/error/enum-response-fields.adoc[]
 
 == 조회
 

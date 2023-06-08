@@ -92,8 +92,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["specialtyCode"] = 전문관코드
         queryParams["mdId"] = 담당MD
         queryParams["orderBy"] = 정렬키.toString()
-
-        // TODO sum, average 중복 삭제
+        
         mockMvc.GET("/sales-statistics/{metric}", 지표.name, queryParams)
             .성공_검증(writeValueAsString(응답값))
             .DOCS_생성(
@@ -107,11 +106,5 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 매출통계_조회_요청값_명세(),
                 매출통계_명세(일별_월별_명세())
             )
-    }
-
-    // TODO 에러테스트 추가
-    // 필수값 누락
-    fun errorTest() {
-
     }
 }

@@ -21,7 +21,7 @@ object ObjectMapperFactory {
         return try {
             mapper.readValue(jsonString, valueType)
         } catch (e: Exception) {
-            CommonError.FAIL_STRING_TO_JSON.throwMe()
+            CommonError.FAIL_CONVERT_STRING_TO_JSON.throwMe()
         }
     }
 
@@ -40,7 +40,7 @@ object ObjectMapperFactory {
         return try {
             mapper.readValue(jsonString, valueType).toList()
         } catch (e: Exception) {
-            CommonError.FAIL_STRING_TO_JSON.throwMe()
+            CommonError.FAIL_CONVERT_STRING_TO_JSON.throwMe()
         }
     }
 
@@ -55,7 +55,7 @@ object ObjectMapperFactory {
         return try {
             mapper.writeValueAsString(o)
         } catch (e: Exception) {
-            CommonError.FAIL_JSON_TO_STRING.throwMe()
+            CommonError.FAIL_CONVERT_JSON_TO_STRING.throwMe()
         }
     }
 }

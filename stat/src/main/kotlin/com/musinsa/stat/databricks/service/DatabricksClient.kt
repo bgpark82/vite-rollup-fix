@@ -32,7 +32,7 @@ class DatabricksClient(
             )
             readValue(response, RetrieveQuery::class.java).query
         } catch (e: Exception) {
-            DatabricksError.FAIL_TO_RETRIEVE_DATABRICKS_QUERY.throwMe()
+            DatabricksError.FAIL_RETRIEVE_DATABRICKS_QUERY_RESULT.throwMe()
         }
     }
 }
