@@ -4,6 +4,8 @@ ifndef::snippets[]
 endif::[]
 
 = 매출통계 조회
+* sum: 합계
+* average: 평균(% 수치의 경우는 0.0 노출)
 
 * 요청
 include::{snippets}/sales-statistics/http-request.adoc[]
