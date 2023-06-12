@@ -1,8 +1,7 @@
 apiVersion: backstage.io/v1alpha1
-kind: Location
+kind: Component
 metadata:
-  name: ds-sales-statistics-api
-  namespace: default
+  name: sales-statistics-api
   description: 무신사 매출통계 제공
   annotations:
     musinsa.backstage.io/template: "backstage-component-bitbucket:v0.0.1"
@@ -13,7 +12,6 @@ metadata:
     project: sales-statistics
     service: sales-statistics
     module: api
-  
   links:
     - title: Wiki(프로젝트 기술 문서)
       url: https://wiki.musinsa.com/pages/viewpage.action?pageId=142842087
