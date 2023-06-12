@@ -24,3 +24,6 @@ spec:
   type: api
   lifecycle: production
   owner: group:group:default/데이터플랫폼팀 (플랫폼서비스본부)
+  # 제공중인 API
+  providesApis:
+    - sales-statistics-api # kind:API 리소스에 대한 이름
