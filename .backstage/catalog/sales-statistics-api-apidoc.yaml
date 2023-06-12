@@ -2,15 +2,13 @@ apiVersion: backstage.io/v1alpha1
 kind: API
 metadata:
   name: sales-statistics-api
-  description: |
-    무신사 매출통계 제공
+  description: 무신사 매출통계 제공
   annotations:
     backstage.musinsa.io/endpoint: https://stat.data.musinsa.com
 spec:
   type: openapi
   lifecycle: production
-  owner: group:group:default/데이터플랫폼팀 (플랫폼서비스본부) 
+  owner: group:group:default/데이터플랫폼팀 (플랫폼서비스본부)
   
-  definition:  
+  definition:
     $text: https://stat.data.musinsa.com/stat/docs/statistics-api.html 
-      
