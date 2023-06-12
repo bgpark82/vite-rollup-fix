@@ -1,0 +1,35 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: sales-statistics-api 
+  description: 무신사 매출통계 제공
+  annotations:
+  # 컴포넌트 타입이 컨슈머라면 아래의 주석을 제거하고, 컨슈머 그룹을 입력해주세요. 클러스터 이름은 아래 링크를 참고 해주세요
+  # https://backstage.musinsa.io/docs/default/component/backstage-guide/catalog/component/#kafka
+  # kafka.apache.org/consumer-groups:  <클러스터 이름>/<컨슈머 그룹 이름> or <클러스터 이름>/<컨슈머 그룹 이름1>,<클러스터 이름>/<컨슈머 그룹 이름2>
+    musinsa.backstage.io/template: "backstage-component-bitbucket:v0.0.1"
+  
+  
+    backstage.musinsa.io/endpoint: https://stat.data.musinsa.com/
+      
+  labels:
+    env: prd 
+    project: sales-statistics 
+    service: sales-statistics 
+    module: api 
+  
+  links: 
+    
+     
+    - title: Wiki(프로젝트 기술 문서)
+      url: https://wiki.musinsa.com/pages/viewpage.action?pageId=142842087
+     
+    - title: Source Code
+      url: https://git.musinsa.com/projects/DS/repos/dataplatform-api/browse/stat
+
+
+spec:
+  type: api
+  lifecycle: production
+  owner: group:group:default/데이터플랫폼팀 (플랫폼서비스본부) 
+
