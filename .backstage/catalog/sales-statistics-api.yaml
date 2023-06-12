@@ -17,6 +17,8 @@ metadata:
       url: https://wiki.musinsa.com/pages/viewpage.action?pageId=142842087
     - title: Source Code
       url: https://git.musinsa.com/projects/DS/repos/dataplatform-api/browse/stat
+    - title: API Docs
+      url: https://stat.data.musinsa.com/stat/docs/statistics-api.html
 
 spec:
   type: api
