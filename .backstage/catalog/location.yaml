@@ -1,7 +1,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
-  name: DS-sales-statistics-api
+  name: ds-sales-statistics-api
   namespace: default
   description: 무신사 매출통계 제공
   annotations:
