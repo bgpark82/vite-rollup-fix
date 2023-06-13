@@ -2,26 +2,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 // 버전은 major project 의 gradle.properties, settings.gradle.kts 확인
 plugins {
-    // 스프링부트
-    id("org.springframework.boot")
-
-    // 스프링부트 버전에 맞는 의존성을 가져오도록 도와주는 플러그인
-    id("io.spring.dependency-management")
-
-    // Kotlin JVM plugin
-    kotlin("jvm")
-
-    // 특정한 어노테이션이 붙은 클래스의 접근 제한자를 open 으로 모두 변경(https://kotlinlang.org/docs/all-open-plugin.html#spring-support)
-    kotlin("plugin.spring")
-
     // JVM 어플리케이션(https://docs.gradle.org/current/userguide/application_plugin.html)
     application
 
-    // Kotlin NoArgs Constructor(https://kotlinlang.org/docs/no-arg-plugin.html#jpa-support)
-    id("org.jetbrains.kotlin.plugin.noarg")
+    id(Plugin.Spring.SPRINGBOOT.first) version Plugin.Spring.SPRINGBOOT.second
+    id(Plugin.Spring.SPRING_DEPENDENCY_MANAGEMENT.first) version Plugin.Spring.SPRING_DEPENDENCY_MANAGEMENT.second
+    kotlin(Plugin.KOTLIN.JVM.first) version Plugin.KOTLIN.JVM.second
+    kotlin(Plugin.KOTLIN.SPRING.first) version Plugin.KOTLIN.SPRING.second
+    id(Plugin.Spring.ASCII_DOCTOR.first) version Plugin.Spring.ASCII_DOCTOR.second
 
-    // Spring REST Docs AsciiDoc
-    id("org.asciidoctor.jvm.convert")
+    // TODO util NoArgsConstructor 옮긴 뒤 의존성 삭제
+    id(Plugin.Spring.NO_ARGUMENTS.first) version Plugin.Spring.NO_ARGUMENTS.second
 }
 
 group = "com.musinsa"
@@ -29,7 +20,7 @@ version = "1.0.0"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 @Suppress("PropertyName")
-val JAVA_VERSION: String by project
+val JAVA_VERSION = "17"
 
 @Suppress("PropertyName")
 val MAIN_CLASS = "com.musinsa.stat.StatApplication"
