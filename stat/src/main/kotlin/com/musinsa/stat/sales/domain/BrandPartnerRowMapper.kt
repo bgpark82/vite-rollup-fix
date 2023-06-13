@@ -10,7 +10,7 @@ object BrandPartnerRowMapper : RowMapper<BrandPartner> {
             rs,
             brandId = rs.getString("브랜드"),
             brandName = rs.getString("브랜드명"),
-            partnerName = rs.getString("업체명"),
+            partnerId = rs.getString("업체코드"),
             mdId = rs.getString("담당MD")
         )
     }

@@ -18,12 +18,12 @@ data class BrandPartner(
     val brandName: String,
 
     /**
-     * 업체명
+     * 업체코드
      */
-    val partnerName: String,
+    val partnerId: String,
 
     /**
-     * 담당MD
+     * 담당 MD
      */
     val mdId: String,
 
