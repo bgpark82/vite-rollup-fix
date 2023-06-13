@@ -3,6 +3,7 @@ package com.musinsa.stat.sales.service
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 
+// TODO FROM 들어가면 데이터가 없거나 중복이 발생하는 듯 하여 쿼리 재확인 필요
 /**
  * 파라미터에 따라서 쿼리를 재생성 한다.
  */
@@ -22,6 +23,8 @@ object QueryGenerator {
     private val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
     private val MD_ID = "\\{\\{mdId}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
+    private val FROM_TAG_1 = "JOIN datamart.datamart.goods_tags as gt"
+    private val FROM_TAG_2 = "ON om.goods_no = gt.goods_no"
 
     /**
      * 배열에서 특정 문자열이 속한 index 를 찾는다.
@@ -167,13 +170,26 @@ object QueryGenerator {
      * 태그 추가
      */
     fun addTag(query: String, tag: List<String>?): String {
-        if (tag.isNullOrEmpty())
+        if (tag.isNullOrEmpty()) {
+            // 태그의 경우 태그:상품번호 = N:1 이어서, FROM 절에 태그가 존재하면 값이 중복되어 나온다.
+            // 태그를 사용하지 않을 시, FROM 대상에서도 주석 처리한다.
+            val array = query.lines() as ArrayList<String>
+            val index1 = getStringLineNumber(array, FROM_TAG_1)
+            array[index1] =
+                StringBuilder().append(PREFIX_ANNOTATION)
+                    .append(array[index1])
+                    .toString()
+            val index2 = getStringLineNumber(array, FROM_TAG_2)
+            array[index2] =
+                StringBuilder().append(PREFIX_ANNOTATION)
+                    .append(array[index2])
+                    .toString()
             return replaceQueryOrSetAnnotation(
-                query,
+                array.joinToString(separator = "\n").trimIndent(),
                 TAG,
                 String()
             )
-
+        }
         return query.replace(
             TAG,
             tag.joinToString(
