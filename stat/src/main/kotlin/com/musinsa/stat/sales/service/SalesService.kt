@@ -72,8 +72,8 @@ class SalesService(
                             metric
                         )
                     ),
-                    convertDate(startDate, metric),
-                    convertDate(endDate, metric),
+                    convertDate(startDate),
+                    convertDate(endDate),
                     tag,
                     salesStart,
                     partnerId,
@@ -114,13 +114,8 @@ class SalesService(
      * 날짜를 쿼리에 사용하기 위해 String 으로 변환한다.
      *
      * @param date LocalDate 형식
-     * @param metric 지표 구분
      */
-    private fun convertDate(date: LocalDate, metric: Metric): String {
-        // 월별 지표의 경우는 6자리를 자른다. ex) 20230522 -> 202305
-        if (metric == Metric.MONTLY)
-            return date.toString().filterNot { it == '-' }.substring(0 until 6)
-
+    private fun convertDate(date: LocalDate): String {
         return date.toString().filterNot { it == '-' }
     }
 }
