@@ -119,7 +119,7 @@ object QueryGenerator {
         mdId: String?,
         orderBy: String
     ): String {
-        return addPagingParams(
+        return addOrderKey(
             addMdId(
                 addSpecialtyCode(
                     addAdCode(
@@ -255,9 +255,9 @@ object QueryGenerator {
     }
 
     /**
-     * 정렬키, 페이지 원소수, 페이지 번호 추가
+     * 정렬키 추가
      */
-    fun addPagingParams(
+    fun addOrderKey(
         query: String,
         orderBy: String
     ): String {

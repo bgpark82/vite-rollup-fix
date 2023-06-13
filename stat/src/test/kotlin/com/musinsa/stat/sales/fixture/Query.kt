@@ -99,10 +99,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_START_END_DATE = """
@@ -203,10 +199,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_TAG = """
@@ -307,10 +299,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_TAG = """
@@ -411,10 +399,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_SALES_START = """
@@ -515,10 +499,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_PARTNER_ID = """
@@ -619,10 +599,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_PARTNER_ID = """
@@ -723,10 +699,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_CATEGORY = """
@@ -827,10 +799,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_CATEGORY = """
@@ -931,10 +899,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_STYLE_NUMBER = """
@@ -1035,10 +999,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_STYLE_NUMBER = """
@@ -1139,10 +1099,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_GOODS_NUMBER = """
@@ -1243,10 +1199,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_GOODS_NUMBER = """
@@ -1347,10 +1299,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_BRAND_ID = """
@@ -1451,10 +1399,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_BRAND_ID = """
@@ -1555,10 +1499,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_COUPON_NUMBER = """
@@ -1659,10 +1599,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_COUPON_NUMBER = """
@@ -1763,10 +1699,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_AD_CODE = """
@@ -1867,10 +1799,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_AD_CODE = """
@@ -1971,10 +1899,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_SPECIALTY_CODE = """
@@ -2075,10 +1999,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_SPECIALTY_CODE = """
@@ -2179,10 +2099,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_SET_MD_ID = """
@@ -2283,10 +2199,6 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
     val SAMPLE_QUERY_EMPTY_MD_ID = """
@@ -2387,13 +2299,9 @@ object Query {
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
 
-    val SAMPLE_QUERY_SET_PAGING_PARAMS = """
+    val SAMPLE_QUERY_SET_ORDER_KEY = """
         SELECT
           om.ord_state_date AS `date`
           ,SUM(om.sell_qty) AS `sellQuantity`
@@ -2491,10 +2399,5 @@ object Query {
         GROUP BY 1
 
         ORDER BY `date` ASC
-
-        LIMIT {{size}}
-
-        OFFSET {{number}}
     """.trimIndent()
-
 }

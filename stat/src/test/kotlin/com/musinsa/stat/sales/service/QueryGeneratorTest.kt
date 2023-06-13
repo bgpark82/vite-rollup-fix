@@ -18,7 +18,7 @@ import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_CATEGORY
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_COUPON_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_GOODS_NUMBER
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_MD_ID
-import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_PAGING_PARAMS
+import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_ORDER_KEY
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_PARTNER_ID
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SALES_START
 import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY_SET_SPECIALTY_CODE
@@ -309,7 +309,7 @@ internal class QueryGeneratorTest {
     @Test
     fun 페이징_파라미터_추가() {
         assertThat(
-            QueryGenerator.addPagingParams(SAMPLE_QUERY, "date")
-        ).isEqualTo(SAMPLE_QUERY_SET_PAGING_PARAMS)
+            QueryGenerator.addOrderKey(SAMPLE_QUERY, "date")
+        ).isEqualTo(SAMPLE_QUERY_SET_ORDER_KEY)
     }
 }
