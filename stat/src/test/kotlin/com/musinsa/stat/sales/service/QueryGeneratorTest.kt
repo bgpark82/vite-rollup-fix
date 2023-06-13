@@ -98,7 +98,7 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 태그가_존재하지_않으면_쿼리에서_주석처리_된다() {
+    fun 태그가_존재하지_않으면_WHERE_쿼리에서_주석처리_되고_FROM_대상에서도_주석처리_된다() {
         assertThat(
             QueryGenerator.addTag(
                 SAMPLE_QUERY,
@@ -307,7 +307,7 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 페이징_파라미터_추가() {
+    fun 정렬키_추가() {
         assertThat(
             QueryGenerator.addOrderKey(SAMPLE_QUERY, "date")
         ).isEqualTo(SAMPLE_QUERY_SET_ORDER_KEY)
