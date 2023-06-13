@@ -4,5 +4,5 @@ plugins {
 }
 
 repositories {
-    mavenCentral()
+    gradlePluginPortal()
 }

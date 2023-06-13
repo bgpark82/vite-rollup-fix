@@ -1,10 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// 버전은 major project 의 gradle.properties, settings.gradle.kts 확인
 plugins {
-    // JVM 어플리케이션(https://docs.gradle.org/current/userguide/application_plugin.html)
-    application
-
     id(Plugin.Spring.SPRINGBOOT.first) version Plugin.Spring.SPRINGBOOT.second
     id(Plugin.Spring.SPRING_DEPENDENCY_MANAGEMENT.first) version Plugin.Spring.SPRING_DEPENDENCY_MANAGEMENT.second
     kotlin(Plugin.KOTLIN.JVM.first) version Plugin.KOTLIN.JVM.second
@@ -13,6 +9,8 @@ plugins {
 
     // TODO util NoArgsConstructor 옮긴 뒤 의존성 삭제
     id(Plugin.Spring.NO_ARGUMENTS.first) version Plugin.Spring.NO_ARGUMENTS.second
+
+    id("spring.server")
 }
 
 group = "com.musinsa"
@@ -35,10 +33,6 @@ application {
 
 noArg {
     annotation("com.musinsa.stat.util.NoArgsConstructor")
-}
-
-repositories {
-    mavenCentral()
 }
 
 // TODO 의존성 buildSrc 로 이동

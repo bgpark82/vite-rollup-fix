@@ -21,4 +21,6 @@ object Plugin {
         // 특정한 어노테이션이 붙은 클래스의 접근 제한자를 open 으로 모두 변경(https://kotlinlang.org/docs/all-open-plugin.html#spring-support)
         val SPRING = Pair("plugin.spring", "1.7.10")
     }
+
+    // TODO Plugin 선언 함수화
 }
