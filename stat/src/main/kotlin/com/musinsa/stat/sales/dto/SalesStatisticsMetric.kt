@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.sql.ResultSet
 
 /**
@@ -185,7 +186,13 @@ open class SalesStatisticsMetric(
     /**
      * 이익율(VAT별도)
      */
-    val profitMarginExcludedVAT: Double
+    val profitMarginExcludedVAT: Double,
+
+    /**
+     * 총 Row 수
+     */
+    @JsonIgnore
+    val total: Long
 ) {
 
     constructor(rs: ResultSet) : this(
@@ -233,6 +240,7 @@ open class SalesStatisticsMetric(
         salesExcludedVAT = rs.getLong("매출(VAT별도)"),
         originalPriceExcludedVAT = rs.getLong("원가(VAT별도)"),
         profitExcludedVAT = rs.getLong("이익(VAT별도)"),
-        profitMarginExcludedVAT = rs.getDouble("이익률(VAT별도)")
+        profitMarginExcludedVAT = rs.getDouble("이익률(VAT별도)"),
+        total = rs.getLong("total")
     )
 }

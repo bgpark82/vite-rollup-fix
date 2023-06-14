@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.SalesStart
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -419,12 +420,32 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 정렬키_추가() {
-        val 쿼리 = "ORDER BY `{{orderBy}}` ASC"
+    fun 페이징_파라미터_추가() {
+        val 쿼리 = """
+            ORDER BY `{{orderBy}}` {{orderDirection}}
+            
+            LIMIT {{pageSize}}
+            
+            OFFSET {{page}}
+        """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyOrderKey(쿼리, "date")
+        val 변경된_쿼리 = QueryGenerator.applyPagingParams(
+            쿼리,
+            "date",
+            OrderDirection.DESC.name,
+            "100",
+            "1"
+        )
 
-        assertThat(변경된_쿼리).isEqualTo("ORDER BY `date` ASC")
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            ORDER BY `date` DESC
+            
+            LIMIT 100
+            
+            OFFSET 1
+        """.trimIndent()
+        )
     }
 
     @Test

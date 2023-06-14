@@ -2,6 +2,7 @@ package com.musinsa.stat.sales.controller
 
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
+import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
@@ -32,6 +33,9 @@ class SalesController(private val salesService: SalesService) {
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param orderBy 정렬키
+     * @param orderDirection 정렬 방향
+     * @param pageSize 페이지 사이즈
+     * @param page 페이지
      *
      * @return 매출통계 지표
      *
@@ -52,7 +56,13 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false) adCode: String?,
         @RequestParam(required = false) specialtyCode: String?,
         @RequestParam(required = false) mdId: String?,
-        @RequestParam(required = true) orderBy: OrderBy
+        @RequestParam(required = true) orderBy: OrderBy,
+        @RequestParam(
+            required = false,
+            defaultValue = "ASC"
+        ) orderDirection: OrderDirection,
+        @RequestParam(required = false, defaultValue = "500") pageSize: String,
+        @RequestParam(required = false, defaultValue = "0") page: String,
     ): SalesStatisticsResponse {
         return salesService.getSalesStatistics(
             metric,
@@ -69,7 +79,10 @@ class SalesController(private val salesService: SalesService) {
             adCode,
             specialtyCode,
             mdId,
-            orderBy
+            orderBy,
+            orderDirection,
+            pageSize,
+            page
         )
     }
 }

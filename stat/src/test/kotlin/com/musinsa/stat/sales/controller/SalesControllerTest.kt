@@ -4,6 +4,7 @@ import com.musinsa.stat.restdoc.*
 import com.musinsa.stat.restdoc.enumcontroller.METRIC_DOCUMENT_URL
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
+import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.dto.매출통계_명세
@@ -47,6 +48,9 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         val 전문관코드 = "beauty"
         val 담당MD = "naka.da"
         val 정렬키 = OrderBy.date
+        val 정렬방향 = OrderDirection.ASC
+        val 페이지_사이즈 = "500"
+        val 페이지 = "0"
 
         whenever(
             salesService.getSalesStatistics(
@@ -70,7 +74,10 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 adCode = 광고코드,
                 specialtyCode = 전문관코드,
                 mdId = 담당MD,
-                orderBy = 정렬키
+                orderBy = 정렬키,
+                orderDirection = 정렬방향,
+                pageSize = 페이지_사이즈,
+                page = 페이지
             )
         ).thenReturn(응답값)
 

@@ -3,15 +3,12 @@ package com.musinsa.stat.sales.service
 import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.error.CodeAwareException
 import com.musinsa.stat.sales.config.QueryStore
-import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
-import com.musinsa.stat.sales.domain.Metric
-import com.musinsa.stat.sales.domain.OrderBy
-import com.musinsa.stat.sales.domain.SalesStart
+import com.musinsa.stat.sales.domain.*
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.error.SalesError
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230506
-import com.musinsa.stat.sales.fixture.Query.SAMPLE_QUERY
+import com.musinsa.stat.sales.fixture.QueryFixture.SAMPLE_QUERY
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -67,7 +64,10 @@ private class SalesServiceTest {
             startDate = LocalDate.now(),
             endDate = LocalDate.now().plusMonths(1),
             salesStart = SalesStart.SHIPPING_REQUEST,
-            orderBy = OrderBy.date
+            orderBy = OrderBy.date,
+            orderDirection = OrderDirection.ASC,
+            pageSize = "100",
+            page = "1"
         )
 
         // then
@@ -92,7 +92,10 @@ private class SalesServiceTest {
                 startDate = 시작날짜,
                 endDate = 시작날짜_ADD_1_YEAR,
                 salesStart = SalesStart.SHIPPING_REQUEST,
-                orderBy = OrderBy.date
+                orderBy = OrderBy.date,
+                orderDirection = OrderDirection.ASC,
+                pageSize = "100",
+                page = "1"
             )
         }
 
@@ -113,7 +116,10 @@ private class SalesServiceTest {
                 startDate = 시작날짜,
                 endDate = 시작날짜_MINUS_1_DAY,
                 salesStart = SalesStart.SHIPPING_REQUEST,
-                orderBy = OrderBy.date
+                orderBy = OrderBy.date,
+                orderDirection = OrderDirection.ASC,
+                pageSize = "100",
+                page = "1"
             )
         }
 

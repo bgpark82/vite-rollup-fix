@@ -23,6 +23,9 @@ object QueryGenerator {
     private val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
     private val MD_ID = "\\{\\{mdId}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
+    private val ORDER_DIRECTION = "\\{\\{orderDirection}}".toRegex()
+    private val PAGE_SIZE = "\\{\\{pageSize}}".toRegex()
+    private val PAGE = "\\{\\{page}}".toRegex()
     private const val JOIN_GOODS_TAGS = "{{joinGoodsTags}}"
     private const val JOIN_COUPON = "{{joinCoupon}}"
     private const val JOIN_SPECIALTY_GOODS = "{{joinSpecialtyGoods}}"
@@ -118,6 +121,9 @@ object QueryGenerator {
      * @param mdId 담당MD
      * @param orderBy 정렬키
      * @param metric 매출통계 유형
+     * @param orderDirection 정렬 방향
+     * @param pageSize 페이지 사이즈
+     * @param page 페이지
      *
      * @return 치환된 쿼리
      *
@@ -138,9 +144,12 @@ object QueryGenerator {
         specialtyCode: String?,
         mdId: String?,
         orderBy: String,
-        metric: Metric
+        metric: Metric,
+        orderDirection: String,
+        pageSize: String,
+        page: String
     ): String {
-        return applyOrderKey(
+        return applyPagingParams(
             applyMdIdOrAnnotate(
                 applySpecialtyCodeOrAnnotate(
                     applyAdCodeOrAnnotate(
@@ -168,7 +177,7 @@ object QueryGenerator {
                         ), adCode
                     ), specialtyCode
                 ), mdId
-            ), orderBy
+            ), orderBy, orderDirection, pageSize, page
         )
     }
 
@@ -323,12 +332,18 @@ object QueryGenerator {
     }
 
     /**
-     * 정렬키 추가
+     * 페이징 파라미터 추가
      */
-    fun applyOrderKey(
+    fun applyPagingParams(
         query: String,
-        orderBy: String
+        orderBy: String,
+        orderDirection: String,
+        pageSize: String,
+        page: String
     ): String {
         return query.replace(ORDER_BY, orderBy)
+            .replace(ORDER_DIRECTION, orderDirection).replace(
+                PAGE_SIZE, pageSize
+            ).replace(PAGE, page)
     }
 }

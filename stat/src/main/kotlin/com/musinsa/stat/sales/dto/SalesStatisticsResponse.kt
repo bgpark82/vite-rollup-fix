@@ -12,11 +12,24 @@ class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
     // 평균
     val average: SalesStatisticsMetric
 
+    // 모든 페이지 갯수
+    val totalPages: Long
+
+    // 현재 페이지
+    val page: Long
+
+    // 페이지 사이즈
+    val pageSize: Long
+
     // 결과값
     val content: List<SalesStatisticsMetric>
 
     init {
         content = jdbcQueryResult
+
+        totalPages = 0
+        page = 0
+        pageSize = 0
 
         val sellQuantity = calculateSumAndAverage(
             jdbcQueryResult.stream().map { it.sellQuantity })
@@ -155,7 +168,8 @@ class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
             salesExcludedVAT.first,
             originalPriceExcludedVAT.first,
             profitExcludedVAT.first,
-            profitMarginExcludedVAT.first
+            profitMarginExcludedVAT.first,
+            0
         )
 
         // 평균
@@ -204,7 +218,8 @@ class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
             salesExcludedVAT.second,
             originalPriceExcludedVAT.second,
             profitExcludedVAT.second,
-            profitMarginExcludedVAT.second
+            profitMarginExcludedVAT.second,
+            0
         )
     }
 

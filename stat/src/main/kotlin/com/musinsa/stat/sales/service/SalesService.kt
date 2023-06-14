@@ -4,6 +4,7 @@ import com.musinsa.stat.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
+import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.error.SalesError
@@ -40,6 +41,9 @@ class SalesService(
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param orderBy 정렬키
+     * @param orderDirection 정렬 방향
+     * @param pageSize 페이지 사이즈
+     * @param page 페이지
      *
      * @return 매출통계 지표
      *
@@ -59,7 +63,10 @@ class SalesService(
         adCode: String? = String(),
         specialtyCode: String? = String(),
         mdId: String? = String(),
-        orderBy: OrderBy
+        orderBy: OrderBy,
+        orderDirection: OrderDirection,
+        pageSize: String,
+        page: String
     ): SalesStatisticsResponse {
         // 조회기간 유효성 체크
         retrieveDateValidCheck(startDate, endDate)
@@ -85,7 +92,7 @@ class SalesService(
                     adCode,
                     specialtyCode,
                     mdId,
-                    orderBy.alias, metric
+                    orderBy.alias, metric, orderDirection.name, pageSize, page
                 ), RowMapperFactory.getRowMapper(metric)
             )
         )
