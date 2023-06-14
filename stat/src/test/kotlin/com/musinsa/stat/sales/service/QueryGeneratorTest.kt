@@ -433,8 +433,8 @@ internal class QueryGeneratorTest {
             쿼리,
             "date",
             OrderDirection.DESC.name,
-            "100",
-            "1"
+            100,
+            1
         )
 
         assertThat(변경된_쿼리).isEqualTo(

@@ -66,12 +66,12 @@ private class SalesServiceTest {
             salesStart = SalesStart.SHIPPING_REQUEST,
             orderBy = OrderBy.date,
             orderDirection = OrderDirection.ASC,
-            pageSize = "100",
-            page = "1"
+            pageSize = 100,
+            page = 1
         )
 
         // then
-        val 기댓값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST)
+        val 기댓값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST, 100, 1)
         assertAll(
             { assertThat(결과값.sum).isNotNull },
             { assertThat(결과값.average).isNotNull },
@@ -94,8 +94,8 @@ private class SalesServiceTest {
                 salesStart = SalesStart.SHIPPING_REQUEST,
                 orderBy = OrderBy.date,
                 orderDirection = OrderDirection.ASC,
-                pageSize = "100",
-                page = "1"
+                pageSize = 100,
+                page = 1
             )
         }
 
@@ -118,8 +118,8 @@ private class SalesServiceTest {
                 salesStart = SalesStart.SHIPPING_REQUEST,
                 orderBy = OrderBy.date,
                 orderDirection = OrderDirection.ASC,
-                pageSize = "100",
-                page = "1"
+                pageSize = 100,
+                page = 1
             )
         }
 

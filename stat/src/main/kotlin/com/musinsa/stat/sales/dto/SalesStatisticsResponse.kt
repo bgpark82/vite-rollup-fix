@@ -5,7 +5,11 @@ import java.util.stream.Stream
 /**
  * 매출통계 API 응답
  */
-class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
+class SalesStatisticsResponse(
+    jdbcQueryResult: List<SalesStatisticsMetric>,
+    val pageSize: Long,
+    val page: Long
+) {
     // 합계
     val sum: SalesStatisticsMetric
 
@@ -15,22 +19,15 @@ class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
     // 모든 페이지 갯수
     val totalPages: Long
 
-    // 현재 페이지
-    val page: Long
-
-    // 페이지 사이즈
-    val pageSize: Long
-
     // 결과값
     val content: List<SalesStatisticsMetric>
 
     init {
         content = jdbcQueryResult
-
-        // TODO 페이지 계산
-        totalPages = 0
-        page = 0
-        pageSize = 0
+        totalPages = when {
+            jdbcQueryResult[0].total % pageSize > 0 -> jdbcQueryResult[0].total / pageSize + 1
+            else -> jdbcQueryResult[0].total / pageSize
+        }
 
         val sellQuantity = calculateSumAndAverage(
             jdbcQueryResult.stream().map { it.sellQuantity })

@@ -61,8 +61,8 @@ class SalesController(private val salesService: SalesService) {
             required = false,
             defaultValue = "ASC"
         ) orderDirection: OrderDirection,
-        @RequestParam(required = false, defaultValue = "500") pageSize: String,
-        @RequestParam(required = false, defaultValue = "0") page: String,
+        @RequestParam(required = false, defaultValue = "500") pageSize: Long,
+        @RequestParam(required = false, defaultValue = "0") page: Long,
     ): SalesStatisticsResponse {
         return salesService.getSalesStatistics(
             metric,

@@ -65,8 +65,8 @@ class SalesService(
         mdId: String? = String(),
         orderBy: OrderBy,
         orderDirection: OrderDirection,
-        pageSize: String,
-        page: String
+        pageSize: Long,
+        page: Long
     ): SalesStatisticsResponse {
         // 조회기간 유효성 체크
         retrieveDateValidCheck(startDate, endDate)
@@ -94,7 +94,7 @@ class SalesService(
                     mdId,
                     orderBy.alias, metric, orderDirection.name, pageSize, page
                 ), RowMapperFactory.getRowMapper(metric)
-            )
+            ), pageSize, page
         )
     }
 

@@ -146,8 +146,8 @@ object QueryGenerator {
         orderBy: String,
         metric: Metric,
         orderDirection: String,
-        pageSize: String,
-        page: String
+        pageSize: Long,
+        page: Long
     ): String {
         return applyPagingParams(
             applyMdIdOrAnnotate(
@@ -338,12 +338,12 @@ object QueryGenerator {
         query: String,
         orderBy: String,
         orderDirection: String,
-        pageSize: String,
-        page: String
+        pageSize: Long,
+        page: Long
     ): String {
         return query.replace(ORDER_BY, orderBy)
             .replace(ORDER_DIRECTION, orderDirection).replace(
-                PAGE_SIZE, pageSize
-            ).replace(PAGE, page)
+                PAGE_SIZE, pageSize.toString()
+            ).replace(PAGE, page.toString())
     }
 }

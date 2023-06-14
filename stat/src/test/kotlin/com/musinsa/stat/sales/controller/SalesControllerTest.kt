@@ -27,11 +27,14 @@ private class SalesControllerTest : RestDocsControllerHelper() {
 
     @Test
     fun 매출통계_가져오기() {
+        val 페이지_사이즈: Long = 500
+        val 페이지: Long = 0
         val 응답값 = SalesStatisticsResponse(
             listOf(
                 DailyFixture.DAILY_20230505(),
                 DailyFixture.DAILY_20230506()
-            )
+            ),
+            페이지_사이즈, 페이지
         )
         val 지표 = Metric.DAILY
         val 시작날짜 = "20230505"
@@ -49,8 +52,6 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         val 담당MD = "naka.da"
         val 정렬키 = OrderBy.date
         val 정렬방향 = OrderDirection.ASC
-        val 페이지_사이즈 = "500"
-        val 페이지 = "0"
 
         whenever(
             salesService.getSalesStatistics(
@@ -97,8 +98,8 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["mdId"] = 담당MD
         queryParams["orderBy"] = 정렬키.toString()
         queryParams["orderDirection"] = 정렬방향.toString()
-        queryParams["pageSize"] = 페이지_사이즈
-        queryParams["page"] = 페이지
+        queryParams["pageSize"] = 페이지_사이즈.toString()
+        queryParams["page"] = 페이지.toString()
 
         mockMvc.GET("/sales-statistics/{metric}", 지표.name, queryParams)
             .성공_검증(writeValueAsString(응답값))

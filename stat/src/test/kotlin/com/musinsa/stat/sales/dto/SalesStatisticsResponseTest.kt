@@ -15,9 +15,16 @@ private class SalesStatisticsResponseTest {
                 DAILY_20230505(),
                 DAILY_20230506()
             )
+        val 페이지_사이즈: Long = 1
+        val 페이지: Long = 1
 
         // when
-        val 결과값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST)
+        val 결과값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST, 페이지_사이즈, 페이지)
+
+        // then(페이지)
+        assertThat(결과값.pageSize).isEqualTo(페이지_사이즈)
+        assertThat(결과값.page).isEqualTo(페이지)
+        assertThat(결과값.totalPages).isEqualTo(2)
 
         // then(합계)
         assertAll(
