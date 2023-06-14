@@ -10,20 +10,20 @@ data class Category(
     /**
      * 대분류
      */
-    val largeCategoryCode: String,
+    val largeCategoryCode: String?,
 
     /**
      * 중분류
      */
-    val mediumCategoryCode: String,
+    val mediumCategoryCode: String?,
 
     /**
      * 소분류
      */
-    val smallCategoryCode: String,
+    val smallCategoryCode: String?,
 
     /**
      * 카테고리명
      */
-    val category: String
+    val category: String?
 ) : SalesStatisticsMetric(rs)
