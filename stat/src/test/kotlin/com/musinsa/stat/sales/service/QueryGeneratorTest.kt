@@ -322,12 +322,20 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 전문관코드_추가() {
-        val 쿼리 = "AND sg.specialty_cd = '{{specialtyCode}}'"
+    fun 전문관코드_추가_그리고_JOIN_주석_제거() {
+        val 쿼리 = """
+                --{{joinSpecialtyGoods}}JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
+                AND sg.specialty_cd = '{{specialtyCode}}'
+            """.trimIndent()
 
         val 변경된_쿼리 = QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, "golf")
 
-        assertThat(변경된_쿼리).isEqualTo("AND sg.specialty_cd = 'golf'")
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
+            AND sg.specialty_cd = 'golf'
+        """.trimIndent()
+        )
     }
 
     @ParameterizedTest

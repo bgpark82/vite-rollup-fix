@@ -288,7 +288,18 @@ object QueryGenerator {
         query: String,
         specialtyCode: String?
     ): String {
-        return replaceQueryOrSetAnnotation(query, SPECIALTY_CODE, specialtyCode)
+        return if (specialtyCode.isNullOrBlank()) replaceQueryOrSetAnnotation(
+            query,
+            SPECIALTY_CODE,
+            specialtyCode
+        )
+        else removeAnnotationFromPhrase(
+            replaceQueryOrSetAnnotation(
+                query,
+                SPECIALTY_CODE,
+                specialtyCode
+            ), JOIN_SPECIALTY_GOODS
+        )
     }
 
     /**
