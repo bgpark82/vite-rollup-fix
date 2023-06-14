@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 
@@ -116,6 +117,7 @@ object QueryGenerator {
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param orderBy 정렬키
+     * @param metric 매출통계 유형
      *
      * @return 치환된 쿼리
      *
@@ -135,7 +137,8 @@ object QueryGenerator {
         adCode: String?,
         specialtyCode: String?,
         mdId: String?,
-        orderBy: String
+        orderBy: String,
+        metric: Metric
     ): String {
         return applyOrderKey(
             applyMdIdOrAnnotate(
@@ -161,7 +164,7 @@ object QueryGenerator {
                                         ), styleNumber
                                     ), goodsNumber
                                 ), brandId
-                            ), couponNumber
+                            ), couponNumber, metric
                         ), adCode
                     ), specialtyCode
                 ), mdId
@@ -256,8 +259,18 @@ object QueryGenerator {
      */
     fun applyCouponNumberOrAnnotate(
         query: String,
-        couponNumber: String?
+        couponNumber: String?,
+        metric: Metric
     ): String {
+        // 쿠폰별 매출통계는 이미 JOIN 이 적용 되어 있으므로, WHERE 절 주석 여부만 확인
+        if (metric == Metric.COUPON) {
+            return replaceQueryOrSetAnnotation(
+                query,
+                COUPON_NUMBER,
+                couponNumber
+            )
+        }
+
         return if (couponNumber.isNullOrBlank())
             replaceQueryOrSetAnnotation(
                 query,

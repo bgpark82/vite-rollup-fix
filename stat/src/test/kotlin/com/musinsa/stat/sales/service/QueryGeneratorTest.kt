@@ -1,9 +1,11 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.SalesStart
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.EnumSource
 import org.junit.jupiter.params.provider.NullAndEmptySource
 
 internal class QueryGeneratorTest {
@@ -258,14 +260,42 @@ internal class QueryGeneratorTest {
         )
     }
 
-    @Test
-    fun 쿠폰_추가_그리고_JOIN_주석_제거() {
+    @ParameterizedTest
+    @EnumSource(
+        value = Metric::class,
+        mode = EnumSource.Mode.EXCLUDE,
+        names = ["COUPON"]
+    )
+    fun 쿠폰별_매출통계가_아닌경우_쿠폰_추가_그리고_JOIN_주석_제거(metric: Metric) {
         val 쿼리 = """
             --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
             AND c.coupon_no = '{{couponNumber}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyCouponNumberOrAnnotate(쿼리, "72852")
+        val 변경된_쿼리 =
+            QueryGenerator.applyCouponNumberOrAnnotate(쿼리, "72852", metric)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
+            AND c.coupon_no = '72852'
+        """.trimIndent()
+        )
+    }
+
+    @Test
+    fun 쿠폰별_매출통계는_JOIN_주석이_해제되어_있다() {
+        val 쿼리 = """
+            JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
+            AND c.coupon_no = '{{couponNumber}}'
+        """.trimIndent()
+
+        val 변경된_쿼리 =
+            QueryGenerator.applyCouponNumberOrAnnotate(
+                쿼리,
+                "72852",
+                Metric.COUPON
+            )
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -284,7 +314,11 @@ internal class QueryGeneratorTest {
         """.trimIndent()
 
         val 변경된_쿼리 =
-            QueryGenerator.applyCouponNumberOrAnnotate(쿼리, couponNumber)
+            QueryGenerator.applyCouponNumberOrAnnotate(
+                쿼리,
+                couponNumber,
+                Metric.DAILY
+            )
 
         assertThat(변경된_쿼리).isEqualTo(
             """

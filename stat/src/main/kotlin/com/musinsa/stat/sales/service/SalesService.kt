@@ -85,7 +85,7 @@ class SalesService(
                     adCode,
                     specialtyCode,
                     mdId,
-                    orderBy.alias
+                    orderBy.alias, metric
                 ), RowMapperFactory.getRowMapper(metric)
             )
         )
