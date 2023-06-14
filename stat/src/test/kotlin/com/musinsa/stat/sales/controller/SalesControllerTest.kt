@@ -96,6 +96,9 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["specialtyCode"] = 전문관코드
         queryParams["mdId"] = 담당MD
         queryParams["orderBy"] = 정렬키.toString()
+        queryParams["orderDirection"] = 정렬방향.toString()
+        queryParams["pageSize"] = 페이지_사이즈
+        queryParams["page"] = 페이지
 
         mockMvc.GET("/sales-statistics/{metric}", 지표.name, queryParams)
             .성공_검증(writeValueAsString(응답값))

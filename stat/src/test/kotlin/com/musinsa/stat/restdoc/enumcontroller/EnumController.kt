@@ -4,6 +4,7 @@ import com.musinsa.stat.databricks.error.DatabricksError
 import com.musinsa.stat.error.CommonError
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
+import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/test")
 internal class EnumController {
+    @GetMapping("/error")
+    fun getErrorValues(): Map<String, String> {
+        return ERROR_VALUES()
+    }
 
     @GetMapping("/metric")
     fun getMetricValues(): Map<String, String> {
@@ -32,10 +37,22 @@ internal class EnumController {
         return SALES_START_VALUES()
     }
 
-    @GetMapping("/error")
-    fun getErrorValues(): Map<String, String> {
-        return ERROR_VALUES()
+    @GetMapping("/order-direction")
+    fun getOrderDirectionValues(): Map<String, String> {
+        return ORDER_DIRECTION_VALUES()
     }
+}
+
+// 도메인에서 사용중인 모든 에러를 가져온다.
+fun ERROR_VALUES(): Map<String, String> {
+    val errors = mutableMapOf<String, String>()
+    errors.putAll(
+        CommonError.values().associate { Pair(it.name, it.message) })
+    errors.putAll(
+        DatabricksError.values().associate { Pair(it.name, it.message) })
+    errors.putAll(
+        SalesError.values().associate { Pair(it.name, it.message) })
+    return errors
 }
 
 fun METRIC_VALUES(): Map<String, String> {
@@ -50,14 +67,6 @@ fun SALES_START_VALUES(): Map<String, String> {
     return SalesStart.values().associate { Pair(it.name, it.description) }
 }
 
-// 도메인에서 사용중인 모든 에러를 가져온다.
-fun ERROR_VALUES(): Map<String, String> {
-    val errors = mutableMapOf<String, String>()
-    errors.putAll(
-        CommonError.values().associate { Pair(it.name, it.message) })
-    errors.putAll(
-        DatabricksError.values().associate { Pair(it.name, it.message) })
-    errors.putAll(
-        SalesError.values().associate { Pair(it.name, it.message) })
-    return errors
+fun ORDER_DIRECTION_VALUES(): Map<String, String> {
+    return OrderDirection.values().associate { Pair(it.name, it.description) }
 }

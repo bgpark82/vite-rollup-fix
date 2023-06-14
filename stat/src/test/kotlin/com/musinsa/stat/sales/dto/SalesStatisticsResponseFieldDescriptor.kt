@@ -1,7 +1,9 @@
 package com.musinsa.stat.sales.dto
 
 import org.springframework.restdocs.payload.FieldDescriptor
+import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.applyPathPrefix
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 
 /**
  * 최종 응답값 명세
@@ -16,6 +18,16 @@ fun 매출통계_명세(명세: MutableList<FieldDescriptor>): MutableList<Field
     )
     명세서.addAll(
         applyPathPrefix("content.[].", 명세)
+    )
+    명세서.addAll(
+        listOf(
+            fieldWithPath("totalPages").type(JsonFieldType.NUMBER)
+                .description("모든 페이지 갯수"),
+            fieldWithPath("page").type(JsonFieldType.NUMBER)
+                .description("현재 페이지"),
+            fieldWithPath("pageSize").type(JsonFieldType.NUMBER)
+                .description("페이지 사이즈")
+        )
     )
     return 명세서
 }

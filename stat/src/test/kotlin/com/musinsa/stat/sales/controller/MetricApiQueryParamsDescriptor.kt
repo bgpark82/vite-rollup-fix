@@ -2,6 +2,7 @@ package com.musinsa.stat.sales.controller
 
 import com.musinsa.stat.restdoc.ENUM_LINK_DOCS_BUILDER
 import com.musinsa.stat.restdoc.enumcontroller.ORDER_BY_DOCUMENT_URL
+import com.musinsa.stat.restdoc.enumcontroller.ORDER_DIRECTION_DOCUMENT_URL
 import com.musinsa.stat.restdoc.enumcontroller.SALES_START_DOCUMENT_URL
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
@@ -32,7 +33,15 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             parameterWithName("adCode").description("광고코드").optional(),
             parameterWithName("specialtyCode").description("전문관코드").optional(),
             parameterWithName("mdId").description("담당MD").optional(),
-            ENUM_LINK_DOCS_BUILDER("orderBy", ORDER_BY_DOCUMENT_URL, "정렬키")
+            ENUM_LINK_DOCS_BUILDER("orderBy", ORDER_BY_DOCUMENT_URL, "정렬키"),
+            ENUM_LINK_DOCS_BUILDER(
+                "orderDirection",
+                ORDER_DIRECTION_DOCUMENT_URL,
+                "정렬방향. 기본값: ASC"
+            ).optional(),
+            parameterWithName("pageSize").description("페이지 사이즈. 기본값: 500")
+                .optional(),
+            parameterWithName("page").description("페이지. 기본값: 0").optional(),
         )
     )
 

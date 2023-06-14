@@ -1,0 +1,10 @@
+// snippet 경로를 못 읽어들이는 버그로 인해 추가
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:doctype: article
+:icons: font
+
+[[metric]]
+include::{snippets}/enum/order-direction/enum-response-fields.adoc[]

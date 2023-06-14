@@ -14,7 +14,7 @@ object DailyFixture {
      */
     private fun createDailyRowSetMetaDataImpl(): RowSetMetaDataImpl {
         val meta = RowSetMetaDataImpl()
-        meta.columnCount = 46
+        meta.columnCount = 47
         meta.setColumnName(1, "date")
         meta.setColumnType(1, Types.VARCHAR)
 
@@ -153,6 +153,9 @@ object DailyFixture {
         meta.setColumnName(46, "이익률(VAT별도)")
         meta.setColumnType(46, Types.DOUBLE)
 
+        meta.setColumnName(47, "total")
+        meta.setColumnType(47, Types.BIGINT)
+
         return meta
     }
 
@@ -207,6 +210,7 @@ object DailyFixture {
         rowSetTemp.updateLong("원가(VAT별도)", 3800148580)
         rowSetTemp.updateLong("이익(VAT별도)", 2520058814)
         rowSetTemp.updateDouble("이익률(VAT별도)", 22.73)
+        rowSetTemp.updateLong("total", 2)
 
         return DailyAndMontly(rowSetTemp, "20230505")
     }
@@ -262,9 +266,9 @@ object DailyFixture {
         rowSetTemp.updateLong("원가(VAT별도)", 3762609748)
         rowSetTemp.updateLong("이익(VAT별도)", 2630368615)
         rowSetTemp.updateDouble("이익률(VAT별도)", 24.08)
+        rowSetTemp.updateLong("total", 2)
 
         return DailyAndMontly(rowSetTemp, "20230506")
-
     }
 
 }

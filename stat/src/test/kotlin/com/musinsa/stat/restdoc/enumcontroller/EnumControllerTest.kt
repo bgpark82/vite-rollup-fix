@@ -10,6 +10,7 @@ const val ERROR_DOCUMENT_URL = "error"
 const val METRIC_DOCUMENT_URL = "enum/metric"
 const val ORDER_BY_DOCUMENT_URL = "enum/order-by"
 const val SALES_START_DOCUMENT_URL = "enum/sales-start"
+const val ORDER_DIRECTION_DOCUMENT_URL = "enum/order-direction"
 
 @WebMvcTest(controllers = [EnumController::class])
 class EnumControllerTest : RestDocsEnumControllerHelper() {
@@ -35,5 +36,14 @@ class EnumControllerTest : RestDocsEnumControllerHelper() {
     fun SALES_START_목록_가져오기() {
         mockMvc.GET("/test/sales-start")
             .ENUM_DOCS_생성(SALES_START_DOCUMENT_URL, SALES_START_VALUES())
+    }
+
+    @Test
+    fun ORDER_DIRECTION_목록_가져오기() {
+        mockMvc.GET("/test/order-direction")
+            .ENUM_DOCS_생성(
+                ORDER_DIRECTION_DOCUMENT_URL,
+                ORDER_DIRECTION_VALUES()
+            )
     }
 }

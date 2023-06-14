@@ -27,6 +27,7 @@ class SalesStatisticsResponse(jdbcQueryResult: List<SalesStatisticsMetric>) {
     init {
         content = jdbcQueryResult
 
+        // TODO 페이지 계산
         totalPages = 0
         page = 0
         pageSize = 0
