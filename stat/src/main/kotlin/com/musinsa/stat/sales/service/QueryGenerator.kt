@@ -3,7 +3,6 @@ package com.musinsa.stat.sales.service
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 
-// TODO FROM 들어가면 데이터가 없거나 중복이 발생하는 듯 하여 쿼리 재확인 필요
 /**
  * 파라미터에 따라서 쿼리를 재생성 한다.
  */
@@ -23,6 +22,9 @@ object QueryGenerator {
     private val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
     private val MD_ID = "\\{\\{mdId}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
+    private val JOIN_GOODS_TAGS = "\\{\\{joinGoodsTags}}".toRegex()
+    private val JOIN_COUPON = "\\{\\{joinCoupon}}".toRegex()
+    private val JOIN_SPECIALTY_GOODS = "\\{\\{joinSpecialtyGoods}}".toRegex()
     private val FROM_TAG_1 = "JOIN datamart.datamart.goods_tags as gt"
     private val FROM_TAG_2 = "ON om.goods_no = gt.goods_no"
 
@@ -62,11 +64,26 @@ object QueryGenerator {
     }
 
     /**
+     * JOIN 필요한 경우, 주석 처리 된 것을 지운다.
+     *
+     * @param query 쿼리
+     * @param target 주석을 제거할 문자열
+     *
+     * @return FROM 에서 JOIN 구문을 되살린 쿼리
+     */
+    fun removeAnnotationFromPhrase(query: String, target: String): String {
+        val array = query.lines() as ArrayList<String>
+        val index = getStringLineNumber(array, target)
+        array[index] = array[index].replace(PREFIX_ANNOTATION.plus(target), "")
+        return array.joinToString(separator = "\n").trimIndent()
+    }
+
+    /**
      * 값이 비어있지 않으면 쿼리에 추가한다.
      * 값이 빈 경우, 주석처리한다.
      *
      * @param query 쿼리
-     * @param target 주석처리할 옵션
+     * @param target 주석처리할 정규표현식
      * @param value 치환할 값
      *
      * @return 처리된 쿼리
@@ -171,8 +188,6 @@ object QueryGenerator {
      */
     fun applyTagOrAnnotate(query: String, tag: List<String>?): String {
         if (tag.isNullOrEmpty()) {
-            // 태그의 경우 태그:상품번호 = N:1 이어서, FROM 절에 태그가 존재하면 값이 중복되어 나온다.
-            // 태그를 사용하지 않을 시, FROM 대상에서도 주석 처리한다.
             val array = query.lines() as ArrayList<String>
             val index1 = getStringLineNumber(array, FROM_TAG_1)
             array[index1] =

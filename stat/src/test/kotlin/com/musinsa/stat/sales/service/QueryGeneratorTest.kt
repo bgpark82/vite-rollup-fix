@@ -397,4 +397,22 @@ internal class QueryGeneratorTest {
 
         assertThat(변경된_쿼리).isEqualTo("ORDER BY `date` ASC")
     }
+
+    @Test
+    fun 상품_태그_테이블_JOIN_주석_제거() {
+        val 쿼리 = """
+            FROM datamart.datamart.orders_merged om
+            --{{joinGoodsTags}}JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
+        """.trimIndent()
+
+        val 변경된_쿼리 =
+            QueryGenerator.removeAnnotationFromPhrase(쿼리, "{{joinGoodsTags}}")
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            FROM datamart.datamart.orders_merged om
+            JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
+        """.trimIndent()
+        )
+    }
 }
