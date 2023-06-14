@@ -23,8 +23,8 @@ object QueryGenerator {
     private val MD_ID = "\\{\\{mdId}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
     private const val JOIN_GOODS_TAGS = "{{joinGoodsTags}}"
-    private val JOIN_COUPON = "{{joinCoupon}}"
-    private val JOIN_SPECIALTY_GOODS = "{{joinSpecialtyGoods}}"
+    private const val JOIN_COUPON = "{{joinCoupon}}"
+    private const val JOIN_SPECIALTY_GOODS = "{{joinSpecialtyGoods}}"
 
     /**
      * 배열에서 특정 문자열이 속한 index 를 찾는다.
@@ -258,7 +258,20 @@ object QueryGenerator {
         query: String,
         couponNumber: String?
     ): String {
-        return replaceQueryOrSetAnnotation(query, COUPON_NUMBER, couponNumber)
+        return if (couponNumber.isNullOrBlank())
+            replaceQueryOrSetAnnotation(
+                query,
+                COUPON_NUMBER,
+                couponNumber
+            )
+        else
+            removeAnnotationFromPhrase(
+                replaceQueryOrSetAnnotation(
+                    query,
+                    COUPON_NUMBER,
+                    couponNumber
+                ), JOIN_COUPON
+            )
     }
 
     /**

@@ -74,7 +74,7 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 태그가_설정된다_그리고_JOIN_적용한다() {
+    fun 태그가_설정된다_그리고_JOIN_주석_제거() {
         val 쿼리 = """
             --{{joinGoodsTags}}JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
             AND gt.tag IN ({{tag}})
@@ -259,12 +259,20 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 쿠폰_추가() {
-        val 쿼리 = "AND c.coupon_no = '{{couponNumber}}'"
+    fun 쿠폰_추가_그리고_JOIN_주석_제거() {
+        val 쿼리 = """
+            --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
+            AND c.coupon_no = '{{couponNumber}}'
+        """.trimIndent()
 
         val 변경된_쿼리 = QueryGenerator.applyCouponNumberOrAnnotate(쿼리, "72852")
 
-        assertThat(변경된_쿼리).isEqualTo("AND c.coupon_no = '72852'")
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
+            AND c.coupon_no = '72852'
+        """.trimIndent()
+        )
     }
 
     @ParameterizedTest
