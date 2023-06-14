@@ -22,11 +22,9 @@ object QueryGenerator {
     private val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
     private val MD_ID = "\\{\\{mdId}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
-    private val JOIN_GOODS_TAGS = "\\{\\{joinGoodsTags}}".toRegex()
-    private val JOIN_COUPON = "\\{\\{joinCoupon}}".toRegex()
-    private val JOIN_SPECIALTY_GOODS = "\\{\\{joinSpecialtyGoods}}".toRegex()
-    private val FROM_TAG_1 = "JOIN datamart.datamart.goods_tags as gt"
-    private val FROM_TAG_2 = "ON om.goods_no = gt.goods_no"
+    private const val JOIN_GOODS_TAGS = "{{joinGoodsTags}}"
+    private val JOIN_COUPON = "{{joinCoupon}}"
+    private val JOIN_SPECIALTY_GOODS = "{{joinSpecialtyGoods}}"
 
     /**
      * 배열에서 특정 문자열이 속한 index 를 찾는다.
@@ -187,31 +185,21 @@ object QueryGenerator {
      * 태그 추가
      */
     fun applyTagOrAnnotate(query: String, tag: List<String>?): String {
-        if (tag.isNullOrEmpty()) {
-            val array = query.lines() as ArrayList<String>
-            val index1 = getStringLineNumber(array, FROM_TAG_1)
-            array[index1] =
-                StringBuilder().append(PREFIX_ANNOTATION)
-                    .append(array[index1])
-                    .toString()
-            val index2 = getStringLineNumber(array, FROM_TAG_2)
-            array[index2] =
-                StringBuilder().append(PREFIX_ANNOTATION)
-                    .append(array[index2])
-                    .toString()
-            return replaceQueryOrSetAnnotation(
-                array.joinToString(separator = "\n").trimIndent(),
-                TAG,
-                String()
-            )
-        }
-        return query.replace(
+        if (tag.isNullOrEmpty()) return replaceQueryOrSetAnnotation(
+            query,
             TAG,
-            tag.joinToString(
-                separator = "', '",
-                prefix = "'",
-                postfix = "'"
-            )
+            String()
+        )
+
+        return removeAnnotationFromPhrase(
+            query.replace(
+                TAG,
+                tag.joinToString(
+                    separator = "', '",
+                    prefix = "'",
+                    postfix = "'"
+                )
+            ), JOIN_GOODS_TAGS
         )
     }
 

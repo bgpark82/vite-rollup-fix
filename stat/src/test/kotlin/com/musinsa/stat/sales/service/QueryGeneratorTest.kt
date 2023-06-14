@@ -74,57 +74,36 @@ internal class QueryGeneratorTest {
     }
 
     @Test
-    fun 태그가_설정된다() {
-        val 쿼리 = "AND gt.tag IN ({{tag}})"
+    fun 태그가_설정된다_그리고_JOIN_적용한다() {
+        val 쿼리 = """
+            --{{joinGoodsTags}}JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
+            AND gt.tag IN ({{tag}})
+        """.trimIndent()
 
         val 변경된_쿼리 =
             QueryGenerator.applyTagOrAnnotate(쿼리, arrayListOf("청바지", "반소매티"))
 
-        assertThat(변경된_쿼리).isEqualTo("AND gt.tag IN ('청바지', '반소매티')")
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
+            AND gt.tag IN ('청바지', '반소매티')
+        """.trimIndent()
+        )
     }
 
     @Test
-    fun 태그가_존재하지_않으면_WHERE_쿼리에서_주석처리_되고_FROM_대상에서도_주석처리_된다() {
+    fun 태그가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
-        FROM datamart.datamart.orders_merged om
-          JOIN datamart.datamart.goods_tags as gt
-            ON om.goods_no = gt.goods_no
-          JOIN datamart.datamart.coupon as c
-            ON om.coupon_no = c.coupon_no
-          JOIN datamart.datamart.specialty_goods as sg
-            ON om.goods_no = sg.goods_no
-
-        WHERE 
-          -- 일자
-          om.ord_state_date >= '{{startDate}}'
-          AND om.ord_state_date <= '{{endDate}}'
-
           -- 태그(String List)
           AND gt.tag IN ({{tag}})
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyTagOrAnnotate(
-            쿼리,
-            emptyList()
-        )
+        val 변경된_쿼리 = QueryGenerator.applyTagOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
-            FROM datamart.datamart.orders_merged om
-            --  JOIN datamart.datamart.goods_tags as gt
-            --    ON om.goods_no = gt.goods_no
-              JOIN datamart.datamart.coupon as c
-                ON om.coupon_no = c.coupon_no
-              JOIN datamart.datamart.specialty_goods as sg
-                ON om.goods_no = sg.goods_no
-
-            WHERE 
-              -- 일자
-              om.ord_state_date >= '{{startDate}}'
-              AND om.ord_state_date <= '{{endDate}}'
-
-              -- 태그(String List)
-            --  AND gt.tag IN ({{tag}})
+            -- 태그(String List)
+            --AND gt.tag IN ({{tag}})
         """.trimIndent()
         )
     }
