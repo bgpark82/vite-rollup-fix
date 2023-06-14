@@ -59,7 +59,7 @@ internal class QueryGeneratorTest {
           AND om.ord_state_date <= '{{endDate}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addStarDateAndEndDate(
+        val 변경된_쿼리 = QueryGenerator.applyStarDateAndEndDate(
             쿼리,
             "20230501",
             "20230509"
@@ -77,7 +77,8 @@ internal class QueryGeneratorTest {
     fun 태그가_설정된다() {
         val 쿼리 = "AND gt.tag IN ({{tag}})"
 
-        val 변경된_쿼리 = QueryGenerator.addTag(쿼리, arrayListOf("청바지", "반소매티"))
+        val 변경된_쿼리 =
+            QueryGenerator.applyTagOrAnnotate(쿼리, arrayListOf("청바지", "반소매티"))
 
         assertThat(변경된_쿼리).isEqualTo("AND gt.tag IN ('청바지', '반소매티')")
     }
@@ -102,7 +103,7 @@ internal class QueryGeneratorTest {
           AND gt.tag IN ({{tag}})
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addTag(
+        val 변경된_쿼리 = QueryGenerator.applyTagOrAnnotate(
             쿼리,
             emptyList()
         )
@@ -134,7 +135,7 @@ internal class QueryGeneratorTest {
             "AND if('{{salesStart}}'='SHIPPING_REQUEST', om.state_order, om.state_order_done) = True"
 
         val 변경된_쿼리 =
-            QueryGenerator.addSalesStart(쿼리, SalesStart.PURCHASE_CONFIRM)
+            QueryGenerator.applySalesStart(쿼리, SalesStart.PURCHASE_CONFIRM)
 
         assertThat(변경된_쿼리).isEqualTo("AND if('PURCHASE_CONFIRM'='SHIPPING_REQUEST', om.state_order, om.state_order_done) = True")
     }
@@ -143,7 +144,8 @@ internal class QueryGeneratorTest {
     fun 업체_추가() {
         val 쿼리 = "AND om.com_id = '{{partnerId}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addPartnerId(쿼리, "musinsastandard")
+        val 변경된_쿼리 =
+            QueryGenerator.applyPartnerIdOrAnnotate(쿼리, "musinsastandard")
 
         assertThat(변경된_쿼리).isEqualTo("AND om.com_id = 'musinsastandard'")
     }
@@ -156,7 +158,7 @@ internal class QueryGeneratorTest {
           AND om.com_id = '{{partnerId}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addPartnerId(쿼리, partnerId)
+        val 변경된_쿼리 = QueryGenerator.applyPartnerIdOrAnnotate(쿼리, partnerId)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -170,7 +172,7 @@ internal class QueryGeneratorTest {
     fun 카테고리_추가() {
         val 쿼리 = "AND om.small_nm = '{{category}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addCategory(쿼리, "청/데님 팬츠")
+        val 변경된_쿼리 = QueryGenerator.applyCategoryOrAnnotate(쿼리, "청/데님 팬츠")
 
         assertThat(변경된_쿼리).isEqualTo("AND om.small_nm = '청/데님 팬츠'")
     }
@@ -183,7 +185,7 @@ internal class QueryGeneratorTest {
           AND om.small_nm = '{{category}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addCategory(쿼리, category)
+        val 변경된_쿼리 = QueryGenerator.applyCategoryOrAnnotate(쿼리, category)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -197,7 +199,7 @@ internal class QueryGeneratorTest {
     fun 스타일넘버_추가() {
         val 쿼리 = "AND om.style_no = '{{styleNumber}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addStyleNumber(
+        val 변경된_쿼리 = QueryGenerator.applyStyleNumberOrAnnotate(
             쿼리, "DF22SS7022"
         )
 
@@ -212,7 +214,7 @@ internal class QueryGeneratorTest {
           AND om.style_no = '{{styleNumber}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addStyleNumber(쿼리, styleNumber)
+        val 변경된_쿼리 = QueryGenerator.applyStyleNumberOrAnnotate(쿼리, styleNumber)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -226,7 +228,7 @@ internal class QueryGeneratorTest {
     fun 상품코드_추가() {
         val 쿼리 = "AND om.goods_no = '{{goodsNumber}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addGoodsNumber(쿼리, "1387960")
+        val 변경된_쿼리 = QueryGenerator.applyGoodsNumberOrAnnotate(쿼리, "1387960")
 
         assertThat(변경된_쿼리).isEqualTo("AND om.goods_no = '1387960'")
     }
@@ -239,7 +241,7 @@ internal class QueryGeneratorTest {
           AND om.goods_no = '{{goodsNumber}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addGoodsNumber(쿼리, goodsNumber)
+        val 변경된_쿼리 = QueryGenerator.applyGoodsNumberOrAnnotate(쿼리, goodsNumber)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -253,7 +255,8 @@ internal class QueryGeneratorTest {
     fun 브랜드_추가() {
         val 쿼리 = "AND om.brand = '{{brandId}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addBrandId(쿼리, "musinsastandard")
+        val 변경된_쿼리 =
+            QueryGenerator.applyBrandIdOrAnnotate(쿼리, "musinsastandard")
 
         assertThat(변경된_쿼리).isEqualTo("AND om.brand = 'musinsastandard'")
     }
@@ -266,7 +269,7 @@ internal class QueryGeneratorTest {
             AND om.brand = '{{brandId}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addBrandId(쿼리, brandId)
+        val 변경된_쿼리 = QueryGenerator.applyBrandIdOrAnnotate(쿼리, brandId)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -280,7 +283,7 @@ internal class QueryGeneratorTest {
     fun 쿠폰_추가() {
         val 쿼리 = "AND c.coupon_no = '{{couponNumber}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addCouponNumber(쿼리, "72852")
+        val 변경된_쿼리 = QueryGenerator.applyCouponNumberOrAnnotate(쿼리, "72852")
 
         assertThat(변경된_쿼리).isEqualTo("AND c.coupon_no = '72852'")
     }
@@ -293,7 +296,8 @@ internal class QueryGeneratorTest {
           AND c.coupon_no = '{{couponNumber}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addCouponNumber(쿼리, couponNumber)
+        val 변경된_쿼리 =
+            QueryGenerator.applyCouponNumberOrAnnotate(쿼리, couponNumber)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -307,7 +311,7 @@ internal class QueryGeneratorTest {
     fun 광고코드_추가() {
         val 쿼리 = "AND om.ad_cd = '{{adCode}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addAdCode(쿼리, "REFCRLC003")
+        val 변경된_쿼리 = QueryGenerator.applyAdCodeOrAnnotate(쿼리, "REFCRLC003")
 
         assertThat(변경된_쿼리).isEqualTo("AND om.ad_cd = 'REFCRLC003'")
     }
@@ -320,7 +324,7 @@ internal class QueryGeneratorTest {
             AND om.ad_cd = '{{adCode}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addAdCode(쿼리, adCode)
+        val 변경된_쿼리 = QueryGenerator.applyAdCodeOrAnnotate(쿼리, adCode)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -334,7 +338,7 @@ internal class QueryGeneratorTest {
     fun 전문관코드_추가() {
         val 쿼리 = "AND sg.specialty_cd = '{{specialtyCode}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addSpecialtyCode(쿼리, "golf")
+        val 변경된_쿼리 = QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, "golf")
 
         assertThat(변경된_쿼리).isEqualTo("AND sg.specialty_cd = 'golf'")
     }
@@ -347,7 +351,8 @@ internal class QueryGeneratorTest {
             AND sg.specialty_cd = '{{specialtyCode}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addSpecialtyCode(쿼리, specialtyCode)
+        val 변경된_쿼리 =
+            QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, specialtyCode)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -361,7 +366,7 @@ internal class QueryGeneratorTest {
     fun 담당MD_추가() {
         val 쿼리 = "AND om.md_id = '{{mdId}}'"
 
-        val 변경된_쿼리 = QueryGenerator.addMdId(쿼리, "woo.choi")
+        val 변경된_쿼리 = QueryGenerator.applyMdIdOrAnnotate(쿼리, "woo.choi")
 
         assertThat(변경된_쿼리).isEqualTo("AND om.md_id = 'woo.choi'")
     }
@@ -374,7 +379,7 @@ internal class QueryGeneratorTest {
             AND om.md_id = '{{mdId}}'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.addMdId(쿼리, mdId)
+        val 변경된_쿼리 = QueryGenerator.applyMdIdOrAnnotate(쿼리, mdId)
 
         assertThat(변경된_쿼리).isEqualTo(
             """
@@ -388,7 +393,7 @@ internal class QueryGeneratorTest {
     fun 정렬키_추가() {
         val 쿼리 = "ORDER BY `{{orderBy}}` ASC"
 
-        val 변경된_쿼리 = QueryGenerator.addOrderKey(쿼리, "date")
+        val 변경된_쿼리 = QueryGenerator.applyOrderKey(쿼리, "date")
 
         assertThat(변경된_쿼리).isEqualTo("ORDER BY `date` ASC")
     }

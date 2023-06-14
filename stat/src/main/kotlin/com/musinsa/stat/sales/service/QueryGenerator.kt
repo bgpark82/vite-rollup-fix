@@ -122,19 +122,19 @@ object QueryGenerator {
         mdId: String?,
         orderBy: String
     ): String {
-        return addOrderKey(
-            addMdId(
-                addSpecialtyCode(
-                    addAdCode(
-                        addCouponNumber(
-                            addBrandId(
-                                addGoodsNumber(
-                                    addStyleNumber(
-                                        addCategory(
-                                            addPartnerId(
-                                                addSalesStart(
-                                                    addTag(
-                                                        addStarDateAndEndDate(
+        return applyOrderKey(
+            applyMdIdOrAnnotate(
+                applySpecialtyCodeOrAnnotate(
+                    applyAdCodeOrAnnotate(
+                        applyCouponNumberOrAnnotate(
+                            applyBrandIdOrAnnotate(
+                                applyGoodsNumberOrAnnotate(
+                                    applyStyleNumberOrAnnotate(
+                                        applyCategoryOrAnnotate(
+                                            applyPartnerIdOrAnnotate(
+                                                applySalesStart(
+                                                    applyTagOrAnnotate(
+                                                        applyStarDateAndEndDate(
                                                             query,
                                                             startDate,
                                                             endDate
@@ -157,7 +157,7 @@ object QueryGenerator {
     /**
      * 시작 날짜와 종료 날짜 추가
      */
-    fun addStarDateAndEndDate(
+    fun applyStarDateAndEndDate(
         query: String,
         startDate: String,
         endDate: String
@@ -169,7 +169,7 @@ object QueryGenerator {
     /**
      * 태그 추가
      */
-    fun addTag(query: String, tag: List<String>?): String {
+    fun applyTagOrAnnotate(query: String, tag: List<String>?): String {
         if (tag.isNullOrEmpty()) {
             // 태그의 경우 태그:상품번호 = N:1 이어서, FROM 절에 태그가 존재하면 값이 중복되어 나온다.
             // 태그를 사용하지 않을 시, FROM 대상에서도 주석 처리한다.
@@ -203,77 +203,89 @@ object QueryGenerator {
     /**
      * 매출시점 추가
      */
-    fun addSalesStart(query: String, salesStart: SalesStart): String {
+    fun applySalesStart(query: String, salesStart: SalesStart): String {
         return query.replace(SALES_START, salesStart.toString())
     }
 
     /**
      * 업체 추가
      */
-    fun addPartnerId(query: String, partnerId: String?): String {
+    fun applyPartnerIdOrAnnotate(query: String, partnerId: String?): String {
         return replaceQueryOrSetAnnotation(query, PARTNER_ID, partnerId)
     }
 
     /**
      * 카테고리 추가
      */
-    fun addCategory(query: String, category: String?): String {
+    fun applyCategoryOrAnnotate(query: String, category: String?): String {
         return replaceQueryOrSetAnnotation(query, CATEGORY, category)
     }
 
     /**
      * 스타일넘버 추가
      */
-    fun addStyleNumber(query: String, styleNumber: String?): String {
+    fun applyStyleNumberOrAnnotate(
+        query: String,
+        styleNumber: String?
+    ): String {
         return replaceQueryOrSetAnnotation(query, STYLE_NUMBER, styleNumber)
     }
 
     /**
      * 상품코드 추가
      */
-    fun addGoodsNumber(query: String, goodsNumber: String?): String {
+    fun applyGoodsNumberOrAnnotate(
+        query: String,
+        goodsNumber: String?
+    ): String {
         return replaceQueryOrSetAnnotation(query, GOODS_NUMBER, goodsNumber)
     }
 
     /**
      * 브랜드 추가
      */
-    fun addBrandId(query: String, brandId: String?): String {
+    fun applyBrandIdOrAnnotate(query: String, brandId: String?): String {
         return replaceQueryOrSetAnnotation(query, BRAND_ID, brandId)
     }
 
     /**
      * 쿠폰 추가
      */
-    fun addCouponNumber(query: String, couponNumber: String?): String {
+    fun applyCouponNumberOrAnnotate(
+        query: String,
+        couponNumber: String?
+    ): String {
         return replaceQueryOrSetAnnotation(query, COUPON_NUMBER, couponNumber)
     }
 
     /**
      * 광고코드 추가
      */
-    fun addAdCode(query: String, adCode: String?): String {
+    fun applyAdCodeOrAnnotate(query: String, adCode: String?): String {
         return replaceQueryOrSetAnnotation(query, AD_CODE, adCode)
     }
 
     /**
      * 전문관코드 추가
      */
-    fun addSpecialtyCode(query: String, specialtyCode: String?): String {
+    fun applySpecialtyCodeOrAnnotate(
+        query: String,
+        specialtyCode: String?
+    ): String {
         return replaceQueryOrSetAnnotation(query, SPECIALTY_CODE, specialtyCode)
     }
 
     /**
      * 담당MD 추가
      */
-    fun addMdId(query: String, mdId: String?): String {
+    fun applyMdIdOrAnnotate(query: String, mdId: String?): String {
         return replaceQueryOrSetAnnotation(query, MD_ID, mdId)
     }
 
     /**
      * 정렬키 추가
      */
-    fun addOrderKey(
+    fun applyOrderKey(
         query: String,
         orderBy: String
     ): String {

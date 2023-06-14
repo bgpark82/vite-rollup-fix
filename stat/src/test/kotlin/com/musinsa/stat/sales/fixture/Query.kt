@@ -51,12 +51,9 @@ object Query {
           ,ROUND(CEIL(SUM((om.not_included_vat_revenue)-(om.head_wonga/11*10)))/CEIL(SUM(om.price*om.qty))*100, 2) as `profitMarginExcludedVAT`
 
         FROM datamart.datamart.orders_merged om
-          JOIN datamart.datamart.goods_tags as gt
-            ON om.goods_no = gt.goods_no
-          JOIN datamart.datamart.coupon as c
-            ON om.coupon_no = c.coupon_no
-          JOIN datamart.datamart.specialty_goods as sg
-            ON om.goods_no = sg.goods_no
+          --{{joinGoodsTags}}JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
+          --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
+          --{{joinSpecialtyGoods}}JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
 
         WHERE 
           -- 일자
