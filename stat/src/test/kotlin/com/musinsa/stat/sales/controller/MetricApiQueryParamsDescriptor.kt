@@ -39,7 +39,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
                 ORDER_DIRECTION_DOCUMENT_URL,
                 "정렬방향. 기본값: ASC"
             ).optional(),
-            parameterWithName("pageSize").description("페이지 사이즈. 기본값: 500")
+            parameterWithName("pageSize").description("페이지 사이즈. 기본값: 100000")
                 .optional(),
             parameterWithName("page").description("페이지. 기본값: 0").optional(),
         )
