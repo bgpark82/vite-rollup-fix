@@ -126,4 +126,9 @@ private class SalesServiceTest {
         // then
         assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE_PERIOD)
     }
+
+    @Test
+    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_값이_필요하다() {
+
+    }
 }
