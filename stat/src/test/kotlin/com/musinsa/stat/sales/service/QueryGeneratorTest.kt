@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
-import org.junit.jupiter.params.provider.NullAndEmptySource
 
 internal class QueryGeneratorTest {
     @Test
@@ -124,139 +123,144 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 업체_추가() {
-        val 쿼리 = "AND om.com_id = '{{partnerId}}'"
+        val 쿼리 = "AND om.com_id IN ({{partnerId}})"
 
         val 변경된_쿼리 =
-            QueryGenerator.applyPartnerIdOrAnnotate(쿼리, "musinsastandard")
+            QueryGenerator.applyPartnerIdOrAnnotate(
+                쿼리,
+                listOf("musinsastandard", "adidas")
+            )
 
-        assertThat(변경된_쿼리).isEqualTo("AND om.com_id = 'musinsastandard'")
+        assertThat(변경된_쿼리).isEqualTo("AND om.com_id IN ('musinsastandard', 'adidas')")
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 업체가_존재하지_않으면_쿼리에서_주석처리_된다(partnerId: String?) {
+    @Test
+    fun 업체가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
           -- 업체
-          AND om.com_id = '{{partnerId}}'
+          AND om.com_id IN ({{partnerId}})'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyPartnerIdOrAnnotate(쿼리, partnerId)
+        val 변경된_쿼리 = QueryGenerator.applyPartnerIdOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
           -- 업체
-          --AND om.com_id = '{{partnerId}}'
+          --AND om.com_id IN ({{partnerId}})'
         """.trimIndent()
         )
     }
 
     @Test
     fun 카테고리_추가() {
-        val 쿼리 = "AND om.small_nm = '{{category}}'"
+        val 쿼리 = "AND om.small_nm IN ({{category}})"
 
-        val 변경된_쿼리 = QueryGenerator.applyCategoryOrAnnotate(쿼리, "청/데님 팬츠")
+        val 변경된_쿼리 =
+            QueryGenerator.applyCategoryOrAnnotate(쿼리, listOf("청/데님 팬츠", "핸드백"))
 
-        assertThat(변경된_쿼리).isEqualTo("AND om.small_nm = '청/데님 팬츠'")
+        assertThat(변경된_쿼리).isEqualTo("AND om.small_nm IN ('청/데님 팬츠', '핸드백')")
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 카테고리가_존재하지_않으면_쿼리에서_주석처리_된다(category: String?) {
+    @Test
+    fun 카테고리가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
           -- 카테고리
-          AND om.small_nm = '{{category}}'
+          AND om.small_nm IN ({{category}})
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyCategoryOrAnnotate(쿼리, category)
+        val 변경된_쿼리 = QueryGenerator.applyCategoryOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             -- 카테고리
-            --AND om.small_nm = '{{category}}'
+            --AND om.small_nm IN ({{category}})
         """.trimIndent()
         )
     }
 
     @Test
     fun 스타일넘버_추가() {
-        val 쿼리 = "AND om.style_no = '{{styleNumber}}'"
+        val 쿼리 = "AND om.style_no IN ({{styleNumber}})"
 
         val 변경된_쿼리 = QueryGenerator.applyStyleNumberOrAnnotate(
-            쿼리, "DF22SS7022"
+            쿼리, listOf("DF22SS7022", "ABCDE")
         )
 
-        assertThat(변경된_쿼리).isEqualTo("AND om.style_no = 'DF22SS7022'")
+        assertThat(변경된_쿼리).isEqualTo("AND om.style_no IN ('DF22SS7022', 'ABCDE')")
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 스타일넘버가_존재하지_않으면_쿼리에서_주석처리_된다(styleNumber: String?) {
+    @Test
+    fun 스타일넘버가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
           -- 스타일넘버
-          AND om.style_no = '{{styleNumber}}'
+          AND om.style_no IN ({{styleNumber}})'
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyStyleNumberOrAnnotate(쿼리, styleNumber)
+        val 변경된_쿼리 = QueryGenerator.applyStyleNumberOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             -- 스타일넘버
-            --AND om.style_no = '{{styleNumber}}'
+            --AND om.style_no IN ({{styleNumber}})'
         """.trimIndent()
         )
     }
 
     @Test
     fun 상품코드_추가() {
-        val 쿼리 = "AND om.goods_no = '{{goodsNumber}}'"
+        val 쿼리 = "AND om.goods_no IN ({{goodsNumber}})"
 
-        val 변경된_쿼리 = QueryGenerator.applyGoodsNumberOrAnnotate(쿼리, "1387960")
+        val 변경된_쿼리 = QueryGenerator.applyGoodsNumberOrAnnotate(
+            쿼리,
+            listOf("1387960", "224135")
+        )
 
-        assertThat(변경된_쿼리).isEqualTo("AND om.goods_no = '1387960'")
+        assertThat(변경된_쿼리).isEqualTo("AND om.goods_no IN ('1387960', '224135')")
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 상품코드가_존재하지_않으면_쿼리에서_주석처리_된다(goodsNumber: String?) {
+    @Test
+    fun 상품코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
           -- 상품코드
-          AND om.goods_no = '{{goodsNumber}}'
+          AND om.goods_no IN ({{goodsNumber}})
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyGoodsNumberOrAnnotate(쿼리, goodsNumber)
+        val 변경된_쿼리 = QueryGenerator.applyGoodsNumberOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             -- 상품코드
-            --AND om.goods_no = '{{goodsNumber}}'
+            --AND om.goods_no IN ({{goodsNumber}})
         """.trimIndent()
         )
     }
 
     @Test
     fun 브랜드_추가() {
-        val 쿼리 = "AND om.brand = '{{brandId}}'"
+        val 쿼리 = "AND om.brand IN ({{brandId}})"
 
         val 변경된_쿼리 =
-            QueryGenerator.applyBrandIdOrAnnotate(쿼리, "musinsastandard")
+            QueryGenerator.applyBrandIdOrAnnotate(
+                쿼리,
+                listOf("musinsastandard", "adidas")
+            )
 
-        assertThat(변경된_쿼리).isEqualTo("AND om.brand = 'musinsastandard'")
+        assertThat(변경된_쿼리).isEqualTo("AND om.brand IN ('musinsastandard', 'adidas')")
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 브랜드가_존재하지_않으면_쿼리에서_주석처리_된다(brandId: String?) {
+    @Test
+    fun 브랜드가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
             -- 브랜드
-            AND om.brand = '{{brandId}}'
+            AND om.brand IN ({{brandId}})
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyBrandIdOrAnnotate(쿼리, brandId)
+        val 변경된_쿼리 = QueryGenerator.applyBrandIdOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             -- 브랜드
-            --AND om.brand = '{{brandId}}'
+            --AND om.brand IN ({{brandId}})
         """.trimIndent()
         )
     }
@@ -336,27 +340,29 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 광고코드_추가() {
-        val 쿼리 = "AND om.ad_cd = '{{adCode}}'"
+        val 쿼리 = "AND om.ad_cd IN ({{adCode}})"
 
-        val 변경된_쿼리 = QueryGenerator.applyAdCodeOrAnnotate(쿼리, "REFCRLC003")
+        val 변경된_쿼리 = QueryGenerator.applyAdCodeOrAnnotate(
+            쿼리,
+            listOf("REFCRLC003", "GOLF0123")
+        )
 
-        assertThat(변경된_쿼리).isEqualTo("AND om.ad_cd = 'REFCRLC003'")
+        assertThat(변경된_쿼리).isEqualTo("AND om.ad_cd IN ('REFCRLC003', 'GOLF0123')")
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 광고코드가_존재하지_않으면_쿼리에서_주석처리_된다(adCode: String?) {
+    @Test
+    fun 광고코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
             -- 광고코드
-            AND om.ad_cd = '{{adCode}}'
+            AND om.ad_cd IN ({{adCode}})
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyAdCodeOrAnnotate(쿼리, adCode)
+        val 변경된_쿼리 = QueryGenerator.applyAdCodeOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             -- 광고코드
-            --AND om.ad_cd = '{{adCode}}'
+            --AND om.ad_cd IN ({{adCode}})
         """.trimIndent()
         )
     }
@@ -399,27 +405,29 @@ internal class QueryGeneratorTest {
 
     @Test
     fun 담당MD_추가() {
-        val 쿼리 = "AND om.md_id = '{{mdId}}'"
+        val 쿼리 = "AND om.md_id IN ({{mdId}})"
 
-        val 변경된_쿼리 = QueryGenerator.applyMdIdOrAnnotate(쿼리, "woo.choi")
+        val 변경된_쿼리 = QueryGenerator.applyMdIdOrAnnotate(
+            쿼리,
+            listOf("woo.choi", "woo1.choi")
+        )
 
-        assertThat(변경된_쿼리).isEqualTo("AND om.md_id = 'woo.choi'")
+        assertThat(변경된_쿼리).isEqualTo("AND om.md_id IN ('woo.choi', 'woo1.choi')")
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 담당MD_가_존재하지_않으면_쿼리에서_주석처리_된다(mdId: String?) {
+    @Test
+    fun 담당MD_가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
             -- 담당MD
-            AND om.md_id = '{{mdId}}'
+            AND om.md_id IN ({{mdId}})
         """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applyMdIdOrAnnotate(쿼리, mdId)
+        val 변경된_쿼리 = QueryGenerator.applyMdIdOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             -- 담당MD
-            --AND om.md_id = '{{mdId}}'
+            --AND om.md_id IN ({{mdId}})
         """.trimIndent()
         )
     }

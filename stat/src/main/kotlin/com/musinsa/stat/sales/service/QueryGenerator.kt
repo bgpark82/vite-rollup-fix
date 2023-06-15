@@ -38,7 +38,10 @@ object QueryGenerator {
      *
      * @return target 이 속한 배열
      */
-    fun getStringLineNumber(array: ArrayList<String>, target: String): Int {
+    fun getStringLineNumber(
+        array: ArrayList<String>,
+        target: String
+    ): Int {
         val index =
             array.indexOfFirst { str -> str.contains(target) }
         return when (index >= 0) {
@@ -77,7 +80,7 @@ object QueryGenerator {
      *
      * @return 계산된 쿼리
      */
-    fun removeAnnotationSQLFromPhraseOrKeepAnnotation(
+    private fun removeAnnotationSQLFromPhraseOrKeepAnnotation(
         query: String,
         joinTarget: String,
         params: List<String>?,
@@ -104,31 +107,6 @@ object QueryGenerator {
         array[index] =
             array[index].replace(PREFIX_ANNOTATION.plus(joinTarget), "")
         return array.joinToString(separator = "\n").trimIndent()
-    }
-
-    /**
-     * 값이 비어있지 않으면 쿼리에 추가한다.
-     * 값이 빈 경우, 주석처리한다.
-     *
-     * @param query 쿼리
-     * @param target 주석처리할 정규표현식
-     * @param value 치환할 값
-     *
-     * @return 처리된 쿼리
-     */
-    private fun replaceQueryOrSetAnnotation(
-        query: String,
-        target: Regex,
-        value: String?
-    ): String {
-        if (value.isNullOrBlank()) {
-            val array = query.lines() as ArrayList<String>
-            return annotateUnusedWhereCondition(
-                array,
-                getStringLineNumber(array, target.toString().replace("\\", ""))
-            )
-        }
-        return query.replace(target, value)
     }
 
     /**
@@ -209,15 +187,15 @@ object QueryGenerator {
         endDate: String,
         tag: List<String>?,
         salesStart: SalesStart,
-        partnerId: String?,
-        category: String?,
-        styleNumber: String?,
-        goodsNumber: String?,
-        brandId: String?,
+        partnerId: List<String>?,
+        category: List<String>?,
+        styleNumber: List<String>?,
+        goodsNumber: List<String>?,
+        brandId: List<String>?,
         couponNumber: List<String>?,
-        adCode: String?,
+        adCode: List<String>?,
         specialtyCode: List<String>?,
-        mdId: String?,
+        mdId: List<String>?,
         orderBy: String,
         metric: Metric,
         orderDirection: String,
@@ -290,15 +268,21 @@ object QueryGenerator {
     /**
      * 업체 추가
      */
-    fun applyPartnerIdOrAnnotate(query: String, partnerId: String?): String {
-        return replaceQueryOrSetAnnotation(query, PARTNER_ID, partnerId)
+    fun applyPartnerIdOrAnnotate(
+        query: String,
+        partnerId: List<String>?
+    ): String {
+        return replaceParamListOrAnnotate(query, PARTNER_ID, partnerId)
     }
 
     /**
      * 카테고리 추가
      */
-    fun applyCategoryOrAnnotate(query: String, category: String?): String {
-        return replaceQueryOrSetAnnotation(query, CATEGORY, category)
+    fun applyCategoryOrAnnotate(
+        query: String,
+        category: List<String>?
+    ): String {
+        return replaceParamListOrAnnotate(query, CATEGORY, category)
     }
 
     /**
@@ -306,9 +290,9 @@ object QueryGenerator {
      */
     fun applyStyleNumberOrAnnotate(
         query: String,
-        styleNumber: String?
+        styleNumber: List<String>?
     ): String {
-        return replaceQueryOrSetAnnotation(query, STYLE_NUMBER, styleNumber)
+        return replaceParamListOrAnnotate(query, STYLE_NUMBER, styleNumber)
     }
 
     /**
@@ -316,16 +300,16 @@ object QueryGenerator {
      */
     fun applyGoodsNumberOrAnnotate(
         query: String,
-        goodsNumber: String?
+        goodsNumber: List<String>?
     ): String {
-        return replaceQueryOrSetAnnotation(query, GOODS_NUMBER, goodsNumber)
+        return replaceParamListOrAnnotate(query, GOODS_NUMBER, goodsNumber)
     }
 
     /**
      * 브랜드 추가
      */
-    fun applyBrandIdOrAnnotate(query: String, brandId: String?): String {
-        return replaceQueryOrSetAnnotation(query, BRAND_ID, brandId)
+    fun applyBrandIdOrAnnotate(query: String, brandId: List<String>?): String {
+        return replaceParamListOrAnnotate(query, BRAND_ID, brandId)
     }
 
     /**
@@ -353,8 +337,8 @@ object QueryGenerator {
     /**
      * 광고코드 추가
      */
-    fun applyAdCodeOrAnnotate(query: String, adCode: String?): String {
-        return replaceQueryOrSetAnnotation(query, AD_CODE, adCode)
+    fun applyAdCodeOrAnnotate(query: String, adCode: List<String>?): String {
+        return replaceParamListOrAnnotate(query, AD_CODE, adCode)
     }
 
     /**
@@ -375,8 +359,8 @@ object QueryGenerator {
     /**
      * 담당MD 추가
      */
-    fun applyMdIdOrAnnotate(query: String, mdId: String?): String {
-        return replaceQueryOrSetAnnotation(query, MD_ID, mdId)
+    fun applyMdIdOrAnnotate(query: String, mdId: List<String>?): String {
+        return replaceParamListOrAnnotate(query, MD_ID, mdId)
     }
 
     /**

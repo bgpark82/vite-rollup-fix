@@ -41,15 +41,15 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         val 종료날짜 = "20230506"
         val 태그 = listOf("청바지", "반바지")
         val 매출시점 = SalesStart.SHIPPING_REQUEST
-        val 업체 = "musinsa"
-        val 카테고리 = "004002"
-        val 스타일넘버 = "DMMT73961-OW"
-        val 상품코드 = "174846"
-        val 브랜드 = "greentoys"
+        val 업체 = listOf("musinsa")
+        val 카테고리 = listOf("004002")
+        val 스타일넘버 = listOf("DMMT73961-OW")
+        val 상품코드 = listOf("174846")
+        val 브랜드 = listOf("greentoys")
         val 쿠폰 = listOf("75559", "12345")
-        val 광고코드 = "NVSH"
+        val 광고코드 = listOf("NVSH")
         val 전문관코드 = listOf("beauty", "golf")
-        val 담당MD = "naka.da"
+        val 담당MD = listOf("naka.da")
         val 정렬키 = OrderBy.date
         val 정렬방향 = OrderDirection.ASC
 
