@@ -26,6 +26,14 @@ ex) /stat/sales-statistics/+{metric}+
 
 include::{snippets}/error/enum-response-fields.adoc[]
 
+* Error 응답
+
+include::{snippets}/error-body/http-response.adoc[]
+
+* Error 응답 상세
+
+include::{snippets}/error-body/response-fields.adoc[]
+
 == 조회
 
 * link:sales/statistics.html[매출통계 조회,window=blank]

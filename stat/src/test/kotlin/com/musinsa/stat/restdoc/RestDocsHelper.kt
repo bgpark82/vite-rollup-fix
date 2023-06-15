@@ -200,6 +200,7 @@ fun ResultActions.DOCS_생성(
 /**
  * QueryParameters 가 있는 DOCS 생성
  */
+@JvmName("DOCS_생성_QUERY_PARAMETERS")
 fun ResultActions.DOCS_생성(
     documentUrl: String,
     queryParams: List<ParameterDescriptor>
@@ -209,6 +210,23 @@ fun ResultActions.DOCS_생성(
             document(
                 documentUrl,
                 queryParameters(queryParams)
+            )
+        )
+}
+
+/**
+ * ResponseBody 가 있는 DOCS 생성
+ */
+@JvmName("DOCS_생성_RESPONSE_BODY")
+fun ResultActions.DOCS_생성(
+    documentUrl: String,
+    responseFields: List<FieldDescriptor>
+): ResultActions {
+    return this
+        .andDo(
+            document(
+                documentUrl,
+                responseFields(responseFields)
             )
         )
 }
