@@ -11,6 +11,11 @@ import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 
+const val DATE_FORMAT = "yyyyMMdd"
+const val ORDER_DIRECTION_DEFAULT_VALUE = "ASC"
+const val PAGE_SIZE_DEFAULT_VALUE = "100000"
+const val PAGE_DEFAULT_VALUE = "0"
+
 @RestController
 @RequestMapping("/sales-statistics")
 @Validated
@@ -43,8 +48,8 @@ class SalesController(private val salesService: SalesService) {
     @GetMapping("/{metric}")
     fun salesStatistics(
         @PathVariable(required = true, value = "metric") metric: Metric,
-        @RequestParam(required = true) @DateTimeFormat(pattern = "yyyyMMdd") startDate: LocalDate,
-        @RequestParam(required = true) @DateTimeFormat(pattern = "yyyyMMdd") endDate: LocalDate,
+        @RequestParam(required = true) @DateTimeFormat(pattern = DATE_FORMAT) startDate: LocalDate,
+        @RequestParam(required = true) @DateTimeFormat(pattern = DATE_FORMAT) endDate: LocalDate,
         @RequestParam(required = false) tag: List<String>?,
         @RequestParam(required = true) salesStart: SalesStart,
         @RequestParam(required = false) partnerId: String?,
@@ -59,10 +64,16 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = true) orderBy: OrderBy,
         @RequestParam(
             required = false,
-            defaultValue = "ASC"
+            defaultValue = ORDER_DIRECTION_DEFAULT_VALUE
         ) orderDirection: OrderDirection,
-        @RequestParam(required = false, defaultValue = "100000") pageSize: Long,
-        @RequestParam(required = false, defaultValue = "0") page: Long,
+        @RequestParam(
+            required = false,
+            defaultValue = PAGE_SIZE_DEFAULT_VALUE
+        ) pageSize: Long,
+        @RequestParam(
+            required = false,
+            defaultValue = PAGE_DEFAULT_VALUE
+        ) page: Long,
     ): SalesStatisticsResponse {
         return salesService.getSalesStatistics(
             metric,

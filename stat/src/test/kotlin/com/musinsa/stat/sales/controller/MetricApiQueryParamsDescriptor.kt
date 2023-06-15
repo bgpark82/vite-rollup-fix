@@ -4,6 +4,7 @@ import com.musinsa.stat.restdoc.ENUM_LINK_DOCS_BUILDER
 import com.musinsa.stat.restdoc.enumcontroller.ORDER_BY_DOCUMENT_URL
 import com.musinsa.stat.restdoc.enumcontroller.ORDER_DIRECTION_DOCUMENT_URL
 import com.musinsa.stat.restdoc.enumcontroller.SALES_START_DOCUMENT_URL
+import com.musinsa.stat.sales.service.RETRIEVE_LIMIT_YEAR
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
 
@@ -12,10 +13,12 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
 
     명세서.addAll(
         listOf(
-            parameterWithName("startDate").description("시작날짜(yyyyMMdd). 월별매출통계의 경우만 서버에서 6자리로 trim"),
+            parameterWithName("startDate").description(
+                "시작날짜(".plus(DATE_FORMAT).plus(")")
+            ),
             parameterWithName("endDate").description(
-                "종료날짜(yyyyMMdd). 월별매출통계의 경우만 서버에서 6자리로 trim" +
-                        "최대 조회기간: 1년"
+                "종료날짜(".plus(DATE_FORMAT).plus("). ")
+                    .plus("최대 조회기간: ".plus(RETRIEVE_LIMIT_YEAR).plus("년"))
             ),
             parameterWithName("tag").description("태그. 리스트 형태(청바지,반바지)")
                 .optional(),
@@ -37,11 +40,19 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             ENUM_LINK_DOCS_BUILDER(
                 "orderDirection",
                 ORDER_DIRECTION_DOCUMENT_URL,
-                "정렬방향. 기본값: ASC"
+                "정렬방향. 기본값: ".plus(ORDER_DIRECTION_DEFAULT_VALUE)
             ).optional(),
-            parameterWithName("pageSize").description("페이지 사이즈. 기본값: 100000")
+            parameterWithName("pageSize").description(
+                "페이지 사이즈. 기본값: ".plus(
+                    PAGE_SIZE_DEFAULT_VALUE
+                )
+            )
                 .optional(),
-            parameterWithName("page").description("페이지. 기본값: 0").optional(),
+            parameterWithName("page").description(
+                "페이지. 기본값: ".plus(
+                    PAGE_DEFAULT_VALUE
+                )
+            ).optional(),
         )
     )
 

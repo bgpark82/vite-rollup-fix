@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
 
-private const val RETRIEVE_LIMIT_YEAR = 1
+const val RETRIEVE_LIMIT_YEAR = 1
 
 @Service
 class SalesService(
