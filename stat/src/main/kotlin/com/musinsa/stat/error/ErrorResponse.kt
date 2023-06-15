@@ -48,7 +48,7 @@ data class ErrorResponse constructor(
      * 제약조건 위반
      */
     constructor(exception: ConstraintViolationException) : this(
-        errorCode = "CONSTRAINT_VIOLATED_VALUE",
+        errorCode = CommonError.CONSTRAINT_VIOLATED_VALUE.name,
         exception = exception.javaClass.name,
         invalidField = exception.constraintViolations.toList()[0].propertyPath.toString(),
         invalidValue = exception.constraintViolations.toList()[0].invalidValue.toString(),
@@ -59,7 +59,7 @@ data class ErrorResponse constructor(
      * 유효하지 않은 요청값(Method Call)
      */
     constructor(exception: MethodArgumentNotValidException) : this(
-        errorCode = "INVALID_REQUEST_VALUE",
+        errorCode = CommonError.INVALID_REQUEST_VALUE.name,
         exception = exception.javaClass.name,
         invalidField = exception.bindingResult.fieldError!!.field,
         invalidValue = exception.bindingResult.fieldError!!.rejectedValue.toString(),
@@ -70,7 +70,7 @@ data class ErrorResponse constructor(
      * 유효하지 않은 요청값(Method Call)
      */
     constructor(exception: MethodArgumentTypeMismatchException) : this(
-        errorCode = "INVALID_REQUEST_VALUE",
+        errorCode = CommonError.INVALID_REQUEST_VALUE.name,
         exception = exception.javaClass.name,
         invalidField = exception.parameter.parameterName.toString(),
         invalidValue = exception.value.toString(),
@@ -81,7 +81,7 @@ data class ErrorResponse constructor(
      * 모든 유형의 에러
      */
     constructor(exception: Exception) : this(
-        errorCode = "UNKNOWN_ERROR",
+        errorCode = CommonError.UNKNOWN_ERROR.name,
         exception = exception.javaClass.name,
         message = exception.message.toString()
     )
