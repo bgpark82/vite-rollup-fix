@@ -66,17 +66,43 @@ object QueryGenerator {
     }
 
     /**
-     * JOIN 필요한 경우, 주석 처리 된 것을 지운다.
+     * SQL FROM 절에서 JOIN 을 통해 테이블을 가져와야 할 필요가 있는 파라미터에서 사용
+     * params 값이 존재하면, JOIN 주석을 해제하고 WHERE 파라미터로 입력한다.
+     * 그렇지 않은 경우, JOIN 주석을 유지하고, WHERE 파라미터를 주석 처리한다.
      *
      * @param query 쿼리
-     * @param target 주석을 제거할 문자열
+     * @param joinTarget 주석을 제거할 FROM 절 Line
+     * @param params WHERE 조건
+     * @param whereTarget WHERE 주석 타겟
      *
-     * @return FROM 에서 JOIN 구문을 되살린 쿼리
+     * @return 계산된 쿼리
      */
-    fun removeAnnotationFromPhrase(query: String, target: String): String {
-        val array = query.lines() as ArrayList<String>
-        val index = getStringLineNumber(array, target)
-        array[index] = array[index].replace(PREFIX_ANNOTATION.plus(target), "")
+    fun removeAnnotationSQLFromPhraseOrKeepAnnotation(
+        query: String,
+        joinTarget: String,
+        params: List<String>?,
+        whereTarget: Regex
+    ): String {
+        // 값이 없는 경우
+        if (params.isNullOrEmpty()) {
+            val array = query.lines() as ArrayList<String>
+            return annotateUnusedWhereCondition(
+                array,
+                getStringLineNumber(
+                    array,
+                    whereTarget.toString().replace("\\", "")
+                )
+            )
+        }
+
+        val array = replaceParamListToSQLInParam(
+            query,
+            whereTarget,
+            params
+        ).lines() as ArrayList<String>
+        val index = getStringLineNumber(array, joinTarget)
+        array[index] =
+            array[index].replace(PREFIX_ANNOTATION.plus(joinTarget), "")
         return array.joinToString(separator = "\n").trimIndent()
     }
 
@@ -103,6 +129,55 @@ object QueryGenerator {
             )
         }
         return query.replace(target, value)
+    }
+
+    /**
+     * 리스트 형태의 파라미터가 비었다면 WHERE IN 절 주석처리를 하고, 그렇지 않으면 값을 설정한다.
+     *
+     * @param query 원본 쿼리
+     * @param target 변환할 정규표현식
+     * @param params 리스트 형태의 파라미터
+     *
+     * @return 주석처리 혹은 WHERE IN 형태를 적용한 쿼리
+     */
+    private fun replaceParamListOrAnnotate(
+        query: String,
+        target: Regex,
+        params: List<String>?
+    ): String {
+        if (params.isNullOrEmpty()) {
+            val array = query.lines() as ArrayList<String>
+            return annotateUnusedWhereCondition(
+                array,
+                getStringLineNumber(array, target.toString().replace("\\", ""))
+            )
+        }
+        return replaceParamListToSQLInParam(query, target, params)
+    }
+
+    /**
+     * 리스트형태의 파라미터를 WHERE IN 절에 맞도록 변환시킨다.
+     *
+     * @param query 원본 쿼리
+     * @param target 변환할 정규표현식
+     * @param params 리스트 형태의 파라미터
+     *
+     * @return WHERE IN 형태를 적용한 쿼리
+     *
+     */
+    private fun replaceParamListToSQLInParam(
+        query: String,
+        target: Regex,
+        params: List<String>
+    ): String {
+        return query.replace(
+            target,
+            params.joinToString(
+                separator = "', '",
+                prefix = "'",
+                postfix = "'"
+            )
+        )
     }
 
     /**
@@ -139,9 +214,9 @@ object QueryGenerator {
         styleNumber: String?,
         goodsNumber: String?,
         brandId: String?,
-        couponNumber: String?,
+        couponNumber: List<String>?,
         adCode: String?,
-        specialtyCode: String?,
+        specialtyCode: List<String>?,
         mdId: String?,
         orderBy: String,
         metric: Metric,
@@ -197,21 +272,11 @@ object QueryGenerator {
      * 태그 추가
      */
     fun applyTagOrAnnotate(query: String, tag: List<String>?): String {
-        if (tag.isNullOrEmpty()) return replaceQueryOrSetAnnotation(
+        return removeAnnotationSQLFromPhraseOrKeepAnnotation(
             query,
-            TAG,
-            String()
-        )
-
-        return removeAnnotationFromPhrase(
-            query.replace(
-                TAG,
-                tag.joinToString(
-                    separator = "', '",
-                    prefix = "'",
-                    postfix = "'"
-                )
-            ), JOIN_GOODS_TAGS
+            JOIN_GOODS_TAGS,
+            tag,
+            TAG
         )
     }
 
@@ -268,32 +333,21 @@ object QueryGenerator {
      */
     fun applyCouponNumberOrAnnotate(
         query: String,
-        couponNumber: String?,
+        couponNumber: List<String>?,
         metric: Metric
     ): String {
         // 쿠폰별 매출통계는 이미 JOIN 이 적용 되어 있으므로, WHERE 절 주석 여부만 확인
         if (metric == Metric.COUPON) {
-            return replaceQueryOrSetAnnotation(
+            return replaceParamListOrAnnotate(
                 query,
                 COUPON_NUMBER,
                 couponNumber
             )
         }
 
-        return if (couponNumber.isNullOrBlank())
-            replaceQueryOrSetAnnotation(
-                query,
-                COUPON_NUMBER,
-                couponNumber
-            )
-        else
-            removeAnnotationFromPhrase(
-                replaceQueryOrSetAnnotation(
-                    query,
-                    COUPON_NUMBER,
-                    couponNumber
-                ), JOIN_COUPON
-            )
+        return removeAnnotationSQLFromPhraseOrKeepAnnotation(
+            query, JOIN_COUPON, couponNumber, COUPON_NUMBER
+        )
     }
 
     /**
@@ -308,19 +362,13 @@ object QueryGenerator {
      */
     fun applySpecialtyCodeOrAnnotate(
         query: String,
-        specialtyCode: String?
+        specialtyCode: List<String>?
     ): String {
-        return if (specialtyCode.isNullOrBlank()) replaceQueryOrSetAnnotation(
+        return removeAnnotationSQLFromPhraseOrKeepAnnotation(
             query,
-            SPECIALTY_CODE,
-            specialtyCode
-        )
-        else removeAnnotationFromPhrase(
-            replaceQueryOrSetAnnotation(
-                query,
-                SPECIALTY_CODE,
-                specialtyCode
-            ), JOIN_SPECIALTY_GOODS
+            JOIN_SPECIALTY_GOODS,
+            specialtyCode,
+            SPECIALTY_CODE
         )
     }
 

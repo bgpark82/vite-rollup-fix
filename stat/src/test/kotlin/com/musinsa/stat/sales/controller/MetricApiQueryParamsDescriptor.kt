@@ -9,7 +9,7 @@ import com.musinsa.stat.sales.service.RETRIEVE_LIMIT_YEAR
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
 
-private const val 리스트_설명 = ". 콤마(,)로 구분되는 리스트 형태."
+private const val 리스트_설명 = "(List)"
 
 fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
     val 명세서: MutableList<ParameterDescriptor> = ArrayList()

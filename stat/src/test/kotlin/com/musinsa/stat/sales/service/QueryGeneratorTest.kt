@@ -270,16 +270,20 @@ internal class QueryGeneratorTest {
     fun 쿠폰별_매출통계가_아닌경우_쿠폰_추가_그리고_JOIN_주석_제거(metric: Metric) {
         val 쿼리 = """
             --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
-            AND c.coupon_no = '{{couponNumber}}'
+            AND c.coupon_no IN ({{couponNumber}})
         """.trimIndent()
 
         val 변경된_쿼리 =
-            QueryGenerator.applyCouponNumberOrAnnotate(쿼리, "72852", metric)
+            QueryGenerator.applyCouponNumberOrAnnotate(
+                쿼리,
+                arrayListOf("72852", "12345"),
+                metric
+            )
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
-            AND c.coupon_no = '72852'
+            AND c.coupon_no IN ('72852', '12345')
         """.trimIndent()
         )
     }
@@ -288,43 +292,44 @@ internal class QueryGeneratorTest {
     fun 쿠폰별_매출통계는_JOIN_주석이_해제되어_있다() {
         val 쿼리 = """
             JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
-            AND c.coupon_no = '{{couponNumber}}'
+            AND c.coupon_no IN ({{couponNumber}})
         """.trimIndent()
 
         val 변경된_쿼리 =
             QueryGenerator.applyCouponNumberOrAnnotate(
                 쿼리,
-                "72852",
+                arrayListOf("72852", "12345"),
                 Metric.COUPON
             )
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
-            AND c.coupon_no = '72852'
+            AND c.coupon_no IN ('72852', '12345')
         """.trimIndent()
         )
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 쿠폰이_존재하지_않으면_쿼리에서_주석처리_된다(couponNumber: String?) {
+    @Test
+    fun 쿠폰이_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
+          --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
           -- 쿠폰
-          AND c.coupon_no = '{{couponNumber}}'
+          AND c.coupon_no IN ({{couponNumber}})
         """.trimIndent()
 
         val 변경된_쿼리 =
             QueryGenerator.applyCouponNumberOrAnnotate(
                 쿼리,
-                couponNumber,
+                emptyList(),
                 Metric.DAILY
             )
 
         assertThat(변경된_쿼리).isEqualTo(
             """
+            --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
             -- 쿠폰
-            --AND c.coupon_no = '{{couponNumber}}'
+            --AND c.coupon_no IN ({{couponNumber}})
         """.trimIndent()
         )
     }
@@ -360,34 +365,34 @@ internal class QueryGeneratorTest {
     fun 전문관코드_추가_그리고_JOIN_주석_제거() {
         val 쿼리 = """
                 --{{joinSpecialtyGoods}}JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
-                AND sg.specialty_cd = '{{specialtyCode}}'
+                AND sg.specialty_cd IN ({{specialtyCode}})
             """.trimIndent()
 
-        val 변경된_쿼리 = QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, "golf")
+        val 변경된_쿼리 =
+            QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, arrayListOf("golf"))
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
-            AND sg.specialty_cd = 'golf'
+            AND sg.specialty_cd IN ('golf')
         """.trimIndent()
         )
     }
 
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun 전문관코드가_존재하지_않으면_쿼리에서_주석처리_된다(specialtyCode: String?) {
+    @Test
+    fun 전문관코드가_존재하지_않으면_쿼리에서_주석처리_된다() {
         val 쿼리 = """
             -- 전문관코드
-            AND sg.specialty_cd = '{{specialtyCode}}'
+            AND sg.specialty_cd IN ({{specialtyCode}})
         """.trimIndent()
 
         val 변경된_쿼리 =
-            QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, specialtyCode)
+            QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, emptyList())
 
         assertThat(변경된_쿼리).isEqualTo(
             """
             -- 전문관코드
-            --AND sg.specialty_cd = '{{specialtyCode}}'
+            --AND sg.specialty_cd IN ({{specialtyCode}})
         """.trimIndent()
         )
     }
@@ -444,24 +449,6 @@ internal class QueryGeneratorTest {
             LIMIT 100
             
             OFFSET 1
-        """.trimIndent()
-        )
-    }
-
-    @Test
-    fun 상품_태그_테이블_JOIN_주석_제거() {
-        val 쿼리 = """
-            FROM datamart.datamart.orders_merged om
-            --{{joinGoodsTags}}JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
-        """.trimIndent()
-
-        val 변경된_쿼리 =
-            QueryGenerator.removeAnnotationFromPhrase(쿼리, "{{joinGoodsTags}}")
-
-        assertThat(변경된_쿼리).isEqualTo(
-            """
-            FROM datamart.datamart.orders_merged om
-            JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
         """.trimIndent()
         )
     }

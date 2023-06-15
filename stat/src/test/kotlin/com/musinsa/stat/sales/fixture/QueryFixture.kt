@@ -68,31 +68,31 @@ object QueryFixture {
           AND if('{{salesStart}}'='SHIPPING_REQUEST', om.state_order, om.state_order_done) = True
 
           -- 업체
-          AND om.com_id = '{{partnerId}}'
+          AND om.com_id IN ({{partnerId}})
 
           -- 카테고리
-          AND om.small_nm = '{{category}}'
+          AND om.small_nm IN ({{category}})
 
           -- 스타일넘버
-          AND om.style_no = '{{styleNumber}}'
+          AND om.style_no IN ({{styleNumber}})
 
           -- 상품코드
-          AND om.goods_no = '{{goodsNumber}}'
+          AND om.goods_no IN ({{goodsNumber}})
 
           -- 브랜드
-          AND om.brand = '{{brandId}}'
+          AND om.brand IN ({{brandId}})
 
           -- 쿠폰
-          AND c.coupon_no = '{{couponNumber}}'
+          AND c.coupon_no IN ({{couponNumber}})
 
           -- 광고코드
-          AND om.ad_cd = '{{adCode}}'
+          AND om.ad_cd IN ({{adCode}})
 
           -- 전문관코드
-          AND sg.specialty_cd = '{{specialtyCode}}'
+          AND sg.specialty_cd IN ({{specialtyCode}})
 
           -- 담당MD
-          AND om.md_id = '{{mdId}}'
+          AND om.md_id IN ({{mdId}})
 
         GROUP BY 1
 

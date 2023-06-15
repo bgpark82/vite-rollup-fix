@@ -57,9 +57,9 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false) styleNumber: String?,
         @RequestParam(required = false) goodsNumber: String?,
         @RequestParam(required = false) brandId: String?,
-        @RequestParam(required = false) couponNumber: String?,
+        @RequestParam(required = false) couponNumber: List<String>?,
         @RequestParam(required = false) adCode: String?,
-        @RequestParam(required = false) specialtyCode: String?,
+        @RequestParam(required = false) specialtyCode: List<String>?,
         @RequestParam(required = false) mdId: String?,
         @RequestParam(required = true) orderBy: OrderBy,
         @RequestParam(

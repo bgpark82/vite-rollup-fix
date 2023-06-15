@@ -46,9 +46,9 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         val 스타일넘버 = "DMMT73961-OW"
         val 상품코드 = "174846"
         val 브랜드 = "greentoys"
-        val 쿠폰 = "75559"
+        val 쿠폰 = listOf("75559", "12345")
         val 광고코드 = "NVSH"
-        val 전문관코드 = "beauty"
+        val 전문관코드 = listOf("beauty", "golf")
         val 담당MD = "naka.da"
         val 정렬키 = OrderBy.date
         val 정렬방향 = OrderDirection.ASC
