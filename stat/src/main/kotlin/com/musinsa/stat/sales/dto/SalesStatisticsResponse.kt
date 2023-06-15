@@ -22,11 +22,15 @@ class SalesStatisticsResponse(
     // 결과값
     val content: List<SalesStatisticsMetric>
 
+    // 모든 아이템 갯수
+    val totalItems: Long
+
     init {
         content = jdbcQueryResult
+        totalItems = jdbcQueryResult[0].total
         totalPages = when {
-            jdbcQueryResult[0].total % pageSize > 0 -> jdbcQueryResult[0].total / pageSize + 1
-            else -> jdbcQueryResult[0].total / pageSize
+            totalItems % pageSize > 0 -> totalItems / pageSize + 1
+            else -> totalItems / pageSize
         }
 
         val sellQuantity = calculateSumAndAverage(

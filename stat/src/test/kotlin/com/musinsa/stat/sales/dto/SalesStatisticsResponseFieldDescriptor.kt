@@ -26,7 +26,9 @@ fun 매출통계_명세(명세: MutableList<FieldDescriptor>): MutableList<Field
             fieldWithPath("page").type(JsonFieldType.NUMBER)
                 .description("현재 페이지"),
             fieldWithPath("pageSize").type(JsonFieldType.NUMBER)
-                .description("페이지 사이즈")
+                .description("페이지 사이즈"),
+            fieldWithPath("totalItems").type(JsonFieldType.NUMBER)
+                .description("모든 아이템 갯수"),
         )
     )
     return 명세서
