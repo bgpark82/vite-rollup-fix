@@ -27,6 +27,7 @@ ex) /stat/sales-statistics/+{metric}+
 include::{snippets}/error/enum-response-fields.adoc[]
 
 * Error 응답
+** 에러가 발생하면 반드시 HttpStatusCode 는 != 200 이다.
 
 include::{snippets}/error-body/http-response.adoc[]
 
