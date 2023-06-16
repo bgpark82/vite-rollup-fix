@@ -71,6 +71,14 @@ class SalesService(
         // 조회기간 유효성 체크
         retrieveDateValidCheck(startDate, endDate)
 
+        // 요청 파라미터 유효성 체크
+        checkGoodsStatisticsRequestParamsValid(
+            metric = metric,
+            partnerId = partnerId,
+            goodsNumber = goodsNumber,
+            brandId = brandId
+        )
+
         return SalesStatisticsResponse(
             jdbcTemplate.query(
                 generate(
@@ -103,6 +111,8 @@ class SalesService(
      *
      * @param startDate 시작날짜
      * @param endDate 종료날짜
+     *
+     * @throws SalesError.NON_VALID_DATE_PERIOD
      */
     private fun retrieveDateValidCheck(
         startDate: LocalDate,
@@ -124,5 +134,26 @@ class SalesService(
      */
     private fun convertDate(date: LocalDate): String {
         return date.toString().filterNot { it == '-' }
+    }
+
+    /**
+     * 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID 값이 있어야 한다.
+     *
+     * @param partnerId 업체 ID
+     * @param goodsNumber 상품번호
+     * @param brandId 브랜드 ID
+     *
+     * @throws SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS
+     */
+    private fun checkGoodsStatisticsRequestParamsValid(
+        metric: Metric,
+        partnerId: List<String>?,
+        goodsNumber: List<String>?,
+        brandId: List<String>?,
+    ) {
+        if (metric == Metric.GOODS) {
+            if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty())
+                return SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS.throwMe()
+        }
     }
 }

@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.EnumSource
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -81,8 +81,9 @@ private class SalesServiceTest {
         )
     }
 
-    @Test
-    fun 조회기간이_1년을_넘을경우_예외처리() {
+    @ParameterizedTest
+    @EnumSource(mode = EnumSource.Mode.MATCH_ALL)
+    fun 조회기간이_1년을_넘을경우_예외처리(metric: Metric) {
         // given
         val 시작날짜 = LocalDate.now()
         val 시작날짜_ADD_1_YEAR = 시작날짜.plusYears(1)
@@ -90,7 +91,7 @@ private class SalesServiceTest {
         // when
         val 에러 = assertThrows<CodeAwareException> {
             salesService.getSalesStatistics(
-                metric = Metric.DAILY,
+                metric = metric,
                 startDate = 시작날짜,
                 endDate = 시작날짜_ADD_1_YEAR,
                 salesStart = SalesStart.SHIPPING_REQUEST,
@@ -105,8 +106,9 @@ private class SalesServiceTest {
         assertThat(에러.error).isEqualTo(SalesError.NON_VALID_DATE_PERIOD)
     }
 
-    @Test
-    fun 조회종료시점이_시작시점보다_클_경우_예외처리() {
+    @ParameterizedTest
+    @EnumSource(mode = EnumSource.Mode.MATCH_ALL)
+    fun 조회종료시점이_시작시점보다_클_경우_예외처리(metric: Metric) {
         // given
         val 시작날짜 = LocalDate.now()
         val 시작날짜_MINUS_1_DAY = 시작날짜.minusDays(1)
@@ -114,7 +116,7 @@ private class SalesServiceTest {
         // when
         val 에러 = assertThrows<CodeAwareException> {
             salesService.getSalesStatistics(
-                metric = Metric.DAILY,
+                metric = metric,
                 startDate = 시작날짜,
                 endDate = 시작날짜_MINUS_1_DAY,
                 salesStart = SalesStart.SHIPPING_REQUEST,
@@ -148,30 +150,5 @@ private class SalesServiceTest {
         }
 
         assertThat(에러.error).isEqualTo(SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS)
-    }
-
-    @ParameterizedTest
-    @CsvSource(
-        value = ["brandId::", ":partnerId:", "::goodsNumber"],
-        delimiter = ':'
-    )
-    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_값이_필요하다(
-        brandId: List<String>?,
-        partnerId: List<String>?,
-        goodsNumber: List<String>?
-    ) {
-        val 결과값 = salesService.getSalesStatistics(
-            metric = Metric.GOODS,
-            startDate = LocalDate.now(),
-            endDate = LocalDate.now().plusMonths(1),
-            salesStart = SalesStart.SHIPPING_REQUEST,
-            orderBy = OrderBy.date,
-            orderDirection = OrderDirection.ASC,
-            pageSize = 100,
-            page = 1,
-            brandId = brandId,
-            partnerId = partnerId,
-            goodsNumber = goodsNumber
-        )
     }
 }
