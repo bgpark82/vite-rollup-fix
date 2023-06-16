@@ -16,7 +16,6 @@ import java.time.LocalDate
 import java.time.Period
 
 const val RETRIEVE_LIMIT_YEAR = 1
-const val GOODS_NUMBER_RETRIEVE_LIMIT = 200
 
 @Service
 class SalesService(
