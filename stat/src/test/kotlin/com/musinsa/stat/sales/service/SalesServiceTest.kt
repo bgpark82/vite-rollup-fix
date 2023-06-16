@@ -14,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
@@ -128,7 +130,48 @@ private class SalesServiceTest {
     }
 
     @Test
-    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_값이_필요하다() {
+    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_값이_없으면_예외_발생() {
+        val 에러 = assertThrows<CodeAwareException> {
+            salesService.getSalesStatistics(
+                metric = Metric.GOODS,
+                startDate = LocalDate.now(),
+                endDate = LocalDate.now().plusMonths(1),
+                salesStart = SalesStart.SHIPPING_REQUEST,
+                orderBy = OrderBy.date,
+                orderDirection = OrderDirection.ASC,
+                pageSize = 100,
+                page = 1,
+                brandId = emptyList(),
+                partnerId = emptyList(),
+                goodsNumber = emptyList()
+            )
+        }
 
+        assertThat(에러.error).isEqualTo(SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS)
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        value = ["brandId::", ":partnerId:", "::goodsNumber"],
+        delimiter = ':'
+    )
+    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_값이_필요하다(
+        brandId: List<String>?,
+        partnerId: List<String>?,
+        goodsNumber: List<String>?
+    ) {
+        val 결과값 = salesService.getSalesStatistics(
+            metric = Metric.GOODS,
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now().plusMonths(1),
+            salesStart = SalesStart.SHIPPING_REQUEST,
+            orderBy = OrderBy.date,
+            orderDirection = OrderDirection.ASC,
+            pageSize = 100,
+            page = 1,
+            brandId = brandId,
+            partnerId = partnerId,
+            goodsNumber = goodsNumber
+        )
     }
 }
