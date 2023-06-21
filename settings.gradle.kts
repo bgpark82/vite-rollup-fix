@@ -1,5 +1,8 @@
 rootProject.name = "dataplatform"
 
+// 공통
+include("common")
+
 // 매출통계
 include("stat")
 

@@ -26,7 +26,10 @@ application {
 }
 
 dependencies {
-    // @see buildSrc/src/main/kotlin/web.server.gradle.kts
+    // full dependency @see buildSrc/src/main/kotlin/web.server.gradle.kts
+
+    // common
+    implementation(project(":common"))
 }
 
 tasks {
