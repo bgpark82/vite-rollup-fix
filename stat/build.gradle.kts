@@ -13,6 +13,9 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/web.server.gradle.kts
     id("web.server")
+
+    // @see buildSrc/src/main/kotlin/databricks.gradle.kts
+    id("databricks")
 }
 
 group = "com.musinsa"

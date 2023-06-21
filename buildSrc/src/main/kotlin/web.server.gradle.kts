@@ -1,7 +1,6 @@
 /**
  * 웹서버에서 자주 사용되는 의존성 선언
  */
-
 plugins {
     // Java 플러그인 필수
     id("java")
@@ -33,14 +32,8 @@ dependencies {
     // 유효성 체크
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
-    // Databricks JDBC connect
-    implementation("com.databricks:databricks-jdbc:2.6.25-1")
-
     // SpringBoot Config Annotation 사용을 위해 추가
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
-    // JPA
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // Kotlin Jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
