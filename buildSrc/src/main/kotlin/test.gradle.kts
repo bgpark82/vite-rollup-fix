@@ -1,5 +1,4 @@
 import gradle.kotlin.dsl.accessors._372cb98cdeef2700378e7f0f3752e174.testImplementation
-import org.gradle.kotlin.dsl.dependencies
 
 /**
  * 테스트 의존성 선언
@@ -9,6 +8,9 @@ plugins {
     id("java")
 }
 
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
