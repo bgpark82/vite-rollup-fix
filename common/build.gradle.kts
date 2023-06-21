@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    id("test")
 }
 
 group = "com.musinsa"

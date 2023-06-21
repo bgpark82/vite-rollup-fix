@@ -1,9 +1,11 @@
 package com.musinsa.common
 
-//class CommonApplicationTests {
-//
-//    @Test
-//    fun contextLoads() {
-//    }
-//
-//}
+import org.junit.jupiter.api.Test
+
+class CommonApplicationTests {
+
+    @Test
+    fun contextLoads() {
+    }
+
+}

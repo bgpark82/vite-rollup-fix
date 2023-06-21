@@ -7,6 +7,9 @@ plugins {
 
     // JVM 어플리케이션(https://docs.gradle.org/current/userguide/application_plugin.html)
     application
+
+    // 테스트 플러그인
+    id("test")
 }
 
 repositories {
@@ -24,7 +27,6 @@ val SNIPPETS_DIR by extra { file("build/generated-snippets") }
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     // 코틀린 리플렉션
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -40,13 +42,6 @@ dependencies {
 
     // Kotlin Jackson
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
-
-    // Mockito-Kotlin
-    // @see https://github.com/mockito/mockito-kotlin/wiki/Mocking-and-verifying
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-
-    // MockMvc Test 를 사용하는 Spring REST Docs
-    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 
 tasks {
