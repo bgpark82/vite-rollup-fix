@@ -7,7 +7,6 @@ pluginManagement {
     val SPRING_BOOT_VERSION: String by settings
     val SPRING_BOOT_DEPENDENCY_MANAGEMENT_VERSION: String by settings
     val KOTLIN_VERSION: String by settings
-    val NO_ARGUMENTS: String by settings
     val ASCII_DOCTOR: String by settings
 
     plugins {
@@ -25,8 +24,5 @@ pluginManagement {
 
         // Spring REST Docs AsciiDoc
         id("org.asciidoctor.jvm.convert") version ASCII_DOCTOR
-
-        // Kotlin NoArgs Constructor(https://kotlinlang.org/docs/no-arg-plugin.html#jpa-support)
-        id("org.jetbrains.kotlin.plugin.noarg") version NO_ARGUMENTS
     }
 }

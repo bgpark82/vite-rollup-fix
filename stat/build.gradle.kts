@@ -4,15 +4,12 @@ plugins {
     // JVM 어플리케이션(https://docs.gradle.org/current/userguide/application_plugin.html)
     application
 
-    // @see root/settings.gradle.kts
+    // @see version in root/settings.gradle.kts
     id("org.springframework.boot")
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
     id("org.asciidoctor.jvm.convert")
-
-    // TODO util NoArgsConstructor 옮긴 뒤 의존성 삭제
-    id("org.jetbrains.kotlin.plugin.noarg")
 
     // @see buildSrc/src/main/kotlin/web.server.gradle.kts
     id("web.server")
@@ -28,8 +25,8 @@ application {
     mainClass.set(MAIN_CLASS)
 }
 
-noArg {
-    annotation("com.musinsa.stat.util.NoArgsConstructor")
+dependencies {
+    // @see buildSrc/src/main/kotlin/web.server.gradle.kts
 }
 
 tasks {
