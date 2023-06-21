@@ -1,9 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    // JVM 어플리케이션(https://docs.gradle.org/current/userguide/application_plugin.html)
-    application
-
     // @see version in root/settings.gradle.kts
     id("org.springframework.boot")
     id("io.spring.dependency-management")
