@@ -1,4 +1,4 @@
-package com.musinsa.stat.databricks.error
+package com.musinsa.common.databricks.error
 
 import com.musinsa.common.error.CodeAwareException
 import com.musinsa.common.error.Error

@@ -1,6 +1,6 @@
 package com.musinsa.stat.search.service
 
-import com.musinsa.stat.databricks.service.DatabricksClient
+import com.musinsa.common.databricks.service.DatabricksClient
 import com.musinsa.stat.search.config.SearchQueryStore
 import com.musinsa.stat.search.domain.BrandRowMapper
 import com.musinsa.stat.search.domain.PartnerRowMapper

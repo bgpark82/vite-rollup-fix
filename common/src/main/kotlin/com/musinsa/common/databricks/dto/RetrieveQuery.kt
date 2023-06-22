@@ -1,4 +1,4 @@
-package com.musinsa.stat.databricks.dto
+package com.musinsa.common.databricks.dto
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

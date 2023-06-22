@@ -1,6 +1,6 @@
 package com.musinsa.stat.sales.service
 
-import com.musinsa.stat.databricks.service.DatabricksClient
+import com.musinsa.common.databricks.service.DatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy

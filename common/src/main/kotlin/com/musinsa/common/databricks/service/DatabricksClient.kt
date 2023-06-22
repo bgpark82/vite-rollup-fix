@@ -1,18 +1,19 @@
-package com.musinsa.stat.databricks.service
+package com.musinsa.common.databricks.service
 
+import com.musinsa.common.databricks.config.DatabricksHttpConnectionConfig
+import com.musinsa.common.databricks.dto.RetrieveQuery
+import com.musinsa.common.databricks.error.DatabricksError
 import com.musinsa.common.util.HttpClient
 import com.musinsa.common.util.ObjectMapperFactory.readValue
-import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
-import com.musinsa.stat.databricks.dto.RetrieveQuery
-import com.musinsa.stat.databricks.error.DatabricksError
 import org.springframework.stereotype.Service
 import java.time.Duration
 
 @Service
 class DatabricksClient(
-    private val config: DatabricksHttpConnectionConfig,
     private val httpClient: HttpClient
 ) {
+    private val config = DatabricksHttpConnectionConfig()
+
     /**
      * 데이터브릭스에 저장된 쿼리를 가져온다.
      *
@@ -27,8 +28,8 @@ class DatabricksClient(
                     .append(config.RETRIEVE_API_PATH).append("/")
                     .append(queryId)
                     .toString(),
-                Duration.ofSeconds(config.TIMEOUT!!.toLong()),
-                arrayOf(httpClient.AUTHORIZATION, config.AUTHORIZATION_TOKEN!!)
+                Duration.ofSeconds(config.TIMEOUT.toLong()),
+                arrayOf(httpClient.AUTHORIZATION, config.AUTHORIZATION_TOKEN)
             )
             readValue(response, RetrieveQuery::class.java).query
         } catch (e: Exception) {

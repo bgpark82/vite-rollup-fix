@@ -1,4 +1,4 @@
-package com.musinsa.stat.databricks.config
+package com.musinsa.common.databricks.config
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

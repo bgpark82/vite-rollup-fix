@@ -1,7 +1,7 @@
 package com.musinsa.stat.restdoc.enumcontroller
 
+import com.musinsa.common.databricks.error.DatabricksError
 import com.musinsa.common.error.CommonError
-import com.musinsa.stat.databricks.error.DatabricksError
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection

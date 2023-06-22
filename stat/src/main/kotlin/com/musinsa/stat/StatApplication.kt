@@ -2,9 +2,10 @@ package com.musinsa.stat
 
 import com.musinsa.common.aws.HealthCheckController
 import com.musinsa.common.config.CorsConfig
+import com.musinsa.common.databricks.config.DatabricksDataSourceConfig
+import com.musinsa.common.databricks.service.DatabricksClient
 import com.musinsa.common.error.RestControllerAdviceExceptionHandler
 import com.musinsa.common.util.HttpClient
-import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.search.config.SearchQueryStore
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -15,10 +16,11 @@ import org.springframework.context.annotation.Import
 @SpringBootApplication
 
 // @ConstructorBinding 사용시 필수
-@EnableConfigurationProperties(value = [DatabricksHttpConnectionConfig::class, QueryStore::class, SearchQueryStore::class])
+@EnableConfigurationProperties(value = [QueryStore::class, SearchQueryStore::class])
 
 @Import(
-    value = [CorsConfig::class, HealthCheckController::class, HttpClient::class, RestControllerAdviceExceptionHandler::class]
+    value = [CorsConfig::class, HealthCheckController::class, HttpClient::class, RestControllerAdviceExceptionHandler::class,
+        DatabricksDataSourceConfig::class, DatabricksClient::class]
 )
 class StatApplication
 
