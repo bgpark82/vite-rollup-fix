@@ -1,4 +1,4 @@
-package com.musinsa.stat.error
+package com.musinsa.common.error
 
 import org.springframework.http.HttpStatus
 

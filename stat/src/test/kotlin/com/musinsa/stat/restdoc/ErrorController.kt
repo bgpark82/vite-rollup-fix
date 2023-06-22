@@ -1,6 +1,6 @@
 package com.musinsa.stat.restdoc
 
-import com.musinsa.stat.error.ErrorResponse
+import com.musinsa.common.error.ErrorResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

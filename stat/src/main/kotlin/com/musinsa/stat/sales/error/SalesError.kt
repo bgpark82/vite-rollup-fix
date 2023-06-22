@@ -1,7 +1,7 @@
 package com.musinsa.stat.sales.error
 
-import com.musinsa.stat.error.CodeAwareException
-import com.musinsa.stat.error.Error
+import com.musinsa.common.error.CodeAwareException
+import com.musinsa.common.error.Error
 import org.springframework.http.HttpStatus
 
 /**

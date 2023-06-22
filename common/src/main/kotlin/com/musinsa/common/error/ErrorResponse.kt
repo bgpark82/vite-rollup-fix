@@ -1,4 +1,4 @@
-package com.musinsa.stat.error
+package com.musinsa.common.error
 
 import jakarta.validation.ConstraintViolationException
 import org.springframework.web.bind.MethodArgumentNotValidException

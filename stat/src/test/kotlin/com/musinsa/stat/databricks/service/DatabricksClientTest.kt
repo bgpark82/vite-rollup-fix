@@ -1,9 +1,9 @@
 package com.musinsa.stat.databricks.service
 
+import com.musinsa.common.error.CodeAwareException
 import com.musinsa.common.util.HttpClient
 import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.stat.databricks.error.DatabricksError
-import com.musinsa.stat.error.CodeAwareException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

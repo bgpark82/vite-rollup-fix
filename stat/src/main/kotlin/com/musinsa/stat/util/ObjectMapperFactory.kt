@@ -1,7 +1,7 @@
 package com.musinsa.stat.util
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.musinsa.stat.error.CommonError
+import com.musinsa.common.error.CommonError
 
 /**
  * ObjectMapper

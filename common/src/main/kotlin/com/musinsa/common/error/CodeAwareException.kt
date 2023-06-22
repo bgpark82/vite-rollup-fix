@@ -1,4 +1,4 @@
-package com.musinsa.stat.error
+package com.musinsa.common.error
 
 /**
  * 의도한 예외처리

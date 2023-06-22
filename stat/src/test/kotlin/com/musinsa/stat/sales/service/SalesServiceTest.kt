@@ -1,7 +1,7 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.common.error.CodeAwareException
 import com.musinsa.stat.databricks.service.DatabricksClient
-import com.musinsa.stat.error.CodeAwareException
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.*
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
