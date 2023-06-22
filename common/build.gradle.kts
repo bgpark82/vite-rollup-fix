@@ -6,6 +6,7 @@ plugins {
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
+    id("org.asciidoctor.jvm.convert")
 
     // @see buildSrc/src/main/kotlin/web.server.gradle.kts
     id("web.server")
@@ -15,7 +16,7 @@ group = "com.musinsa"
 version = "1.0.0"
 
 @Suppress("PropertyName")
-val MAIN_CLASS = "com.musinsa.common.CommonApplication.kt"
+val MAIN_CLASS = "com.musinsa.common.CommonApplication"
 
 application {
     mainClass.set(MAIN_CLASS)
