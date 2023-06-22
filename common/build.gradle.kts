@@ -10,7 +10,7 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/web.server.gradle.kts
     id("web.server")
-    
+
     // @see buildSrc/src/main/kotlin/databricks.gradle.kts
     id("databricks")
 }
@@ -39,4 +39,10 @@ tasks {
 // @see https://stackoverflow.com/questions/73438308/aws-beanstalk-kotlin-spring-boot-nosuchmethodexception-main
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     mainClass.set(StringBuilder(MAIN_CLASS).append("Kt").toString())
+}
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
 }

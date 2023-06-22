@@ -2,17 +2,13 @@ package com.musinsa.common.databricks.config
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-internal class DatabricksHttpConnectionConfigTest {
-    @Autowired
-    private lateinit var config: DatabricksHttpConnectionConfig
+private class DatabricksHttpConnectionConfigTest {
+    private val config = DatabricksHttpConnectionConfig()
 
     @Test
     fun 타임아웃은_10초_이다() {
-        assertThat(config.TIMEOUT).isEqualTo("10")
+        assertThat(config.TIMEOUT).isEqualTo(10)
     }
 
     @Test
@@ -26,7 +22,7 @@ internal class DatabricksHttpConnectionConfigTest {
     }
 
     @Test
-    fun 인증토큰은_Null값이_아니다() {
+    fun 인증토큰은_NULL_값이_아니다() {
         // 인증토큰의 경우 보안을 위해 실제값 테스트를 하지 않는다.
         assertThat(config.AUTHORIZATION_TOKEN).isNotBlank
     }
