@@ -1,9 +1,9 @@
 package com.musinsa.stat.databricks.service
 
+import com.musinsa.common.util.HttpClient
 import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.stat.databricks.dto.RetrieveQuery
 import com.musinsa.stat.databricks.error.DatabricksError
-import com.musinsa.stat.util.HttpClient
 import com.musinsa.stat.util.ObjectMapperFactory.readValue
 import org.springframework.stereotype.Service
 import java.time.Duration

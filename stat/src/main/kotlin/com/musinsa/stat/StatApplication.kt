@@ -2,6 +2,7 @@ package com.musinsa.stat
 
 import com.musinsa.common.aws.HealthCheckController
 import com.musinsa.common.config.CorsConfig
+import com.musinsa.common.util.HttpClient
 import com.musinsa.stat.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.search.config.SearchQueryStore
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.Import
 // @ConstructorBinding 사용시 필수
 @EnableConfigurationProperties(value = [DatabricksHttpConnectionConfig::class, QueryStore::class, SearchQueryStore::class])
 
-@Import(value = [CorsConfig::class, HealthCheckController::class])
+@Import(value = [CorsConfig::class, HealthCheckController::class, HttpClient::class])
 class StatApplication
 
 fun main(args: Array<String>) {

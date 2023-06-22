@@ -1,4 +1,4 @@
-package com.musinsa.stat.util
+package com.musinsa.common.util
 
 import org.springframework.stereotype.Component
 import java.net.URI
@@ -12,6 +12,7 @@ import java.time.Duration
  */
 @Component
 class HttpClient {
+    @Suppress("PropertyName")
     val AUTHORIZATION = "Authorization"
 
     /**
