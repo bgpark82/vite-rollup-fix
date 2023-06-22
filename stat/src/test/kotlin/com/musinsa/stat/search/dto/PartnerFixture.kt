@@ -1,6 +1,6 @@
 package com.musinsa.stat.search.dto
 
-import com.musinsa.stat.util.ObjectMapperFactory.readValues
+import com.musinsa.common.util.ObjectMapperFactory.readValues
 
 fun 아디다스_업체_목록(): List<Partner> {
     return readValues(

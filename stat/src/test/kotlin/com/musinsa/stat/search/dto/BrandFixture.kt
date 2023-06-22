@@ -1,6 +1,6 @@
 package com.musinsa.stat.search.dto
 
-import com.musinsa.stat.util.ObjectMapperFactory.readValues
+import com.musinsa.common.util.ObjectMapperFactory.readValues
 
 fun 무신사_브랜드_목록(): List<Brand> {
     return readValues(

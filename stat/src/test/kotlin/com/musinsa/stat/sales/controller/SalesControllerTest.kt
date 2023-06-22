@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.controller
 
+import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
 import com.musinsa.stat.restdoc.*
 import com.musinsa.stat.restdoc.enumcontroller.METRIC_DOCUMENT_URL
 import com.musinsa.stat.sales.domain.Metric
@@ -11,7 +12,6 @@ import com.musinsa.stat.sales.dto.매출통계_명세
 import com.musinsa.stat.sales.dto.일별_월별_명세
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
-import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.whenever
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest

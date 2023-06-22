@@ -1,6 +1,6 @@
 package com.musinsa.stat.search.dto
 
-import com.musinsa.stat.util.ObjectMapperFactory.readValues
+import com.musinsa.common.util.ObjectMapperFactory.readValues
 
 fun 태그_목록(): List<Tag> {
     return readValues(

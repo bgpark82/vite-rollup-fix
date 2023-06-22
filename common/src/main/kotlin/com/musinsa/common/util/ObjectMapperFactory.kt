@@ -1,4 +1,4 @@
-package com.musinsa.stat.util
+package com.musinsa.common.util
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.musinsa.common.error.CommonError

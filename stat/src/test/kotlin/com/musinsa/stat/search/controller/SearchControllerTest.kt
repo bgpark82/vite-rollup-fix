@@ -1,12 +1,12 @@
 package com.musinsa.stat.search.controller
 
+import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
 import com.musinsa.stat.restdoc.DOCS_생성
 import com.musinsa.stat.restdoc.GET
 import com.musinsa.stat.restdoc.RestDocsControllerHelper
 import com.musinsa.stat.restdoc.성공_검증
 import com.musinsa.stat.search.dto.*
 import com.musinsa.stat.search.service.SearchService
-import com.musinsa.stat.util.ObjectMapperFactory.writeValueAsString
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.whenever
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
