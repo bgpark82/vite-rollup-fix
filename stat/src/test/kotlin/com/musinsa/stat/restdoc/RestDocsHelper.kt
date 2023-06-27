@@ -1,5 +1,6 @@
 package com.musinsa.stat.restdoc
 
+import com.musinsa.common.restdoc.EnumResponseFieldsSnippet
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.http.HttpDocumentation

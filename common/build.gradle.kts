@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.spring")
     id("org.asciidoctor.jvm.convert")
 
-    // @see buildSrc/src/main/kotlin/web.server.gradle.kts
+    // @see buildSrc/src/main/kotlin/spring.gradle.kts
     id("web.server")
 
     // @see buildSrc/src/main/kotlin/databricks.gradle.kts
@@ -27,6 +27,12 @@ val MAIN_CLASS = "com.musinsa.common.CommonApplication"
 application {
     mainClass.set(MAIN_CLASS)
 }
+
+dependencies {
+    // testFixtures 에서 의존성 사용
+    testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+}
+
 tasks {
     withType<KotlinCompile> {
         kotlinOptions {
