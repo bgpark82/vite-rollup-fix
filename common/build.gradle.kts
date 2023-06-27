@@ -13,6 +13,15 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/databricks.gradle.kts
     id("databricks")
+
+    // Using test fixtures(@see https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures)
+    // A Java Library
+    `java-library`
+    // which produces test fixtures
+    `java-test-fixtures`
+    // and is published
+    `maven-publish`
+    // test fixtures plugin end
 }
 
 group = "com.musinsa"
@@ -23,6 +32,14 @@ val MAIN_CLASS = "com.musinsa.common.CommonApplication"
 
 application {
     mainClass.set(MAIN_CLASS)
+}
+
+dependencies {
+    // API dependencies are visible to consumers when building
+    testFixturesApi("org.apache.commons:commons-lang3:3.9")
+
+    // Implementation dependencies are not leaked to consumers when building
+    testFixturesImplementation("org.apache.commons:commons-text:1.10.0")
 }
 
 tasks {

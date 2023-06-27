@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+// TODO plugin 깔끔하게 통합하기
 plugins {
     // @see version in root/settings.gradle.kts
     id("org.springframework.boot")
@@ -28,6 +29,9 @@ application {
 dependencies {
     // common 의존성
     implementation(project(":common"))
+
+    // common testFixture 의존성
+    testImplementation(testFixtures(project(":common")))
 }
 
 tasks {
