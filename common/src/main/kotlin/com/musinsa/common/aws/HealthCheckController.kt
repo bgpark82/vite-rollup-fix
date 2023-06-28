@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.function.ServerResponse
 
+/**
+ * AWS TargetGroup 헬스체크를 위한 컨트롤러
+ * Import 하여 사용한다.
+ */
 @RestController
 @RequestMapping("/aws")
 class HealthCheckController {
