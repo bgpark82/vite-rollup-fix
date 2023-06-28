@@ -1,5 +1,7 @@
 package com.musinsa.stat.restdoc
 
+import com.musinsa.common.restdoc.DOCS_생성
+import com.musinsa.common.restdoc.GET
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.restdocs.payload.JsonFieldType

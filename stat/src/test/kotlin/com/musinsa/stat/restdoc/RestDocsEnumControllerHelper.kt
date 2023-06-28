@@ -1,5 +1,6 @@
 package com.musinsa.stat.restdoc
 
+import com.musinsa.common.restdoc.buildEnumMockMvc
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired

@@ -28,9 +28,10 @@ application {
     mainClass.set(MAIN_CLASS)
 }
 
+// testFixtures 에서 사용하는 의존성 선언
 dependencies {
-    // testFixtures 에서 의존성 사용
     testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-web")
 }
 
 tasks {
