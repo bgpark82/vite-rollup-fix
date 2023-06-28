@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import
 class ErrorControllerTest : RestDocsControllerHelper() {
     @Test
     fun 에러_BODY_가져오기() {
-        mockMvc.GET("/test/common/error-body")
+        mockMvc.GET(ERROR_BODY_URL)
             .DOCS_생성(
                 "error-body", 에러_명세_가져오기()
             )

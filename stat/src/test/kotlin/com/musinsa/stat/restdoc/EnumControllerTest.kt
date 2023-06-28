@@ -1,4 +1,4 @@
-package com.musinsa.stat.restdoc.enumcontroller
+package com.musinsa.stat.restdoc
 
 import com.musinsa.common.restdoc.ENUM_DOCS_생성
 import com.musinsa.common.restdoc.GET

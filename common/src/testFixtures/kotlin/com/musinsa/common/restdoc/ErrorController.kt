@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+const val ERROR_BODY_URL = "/test/common/error-body"
+
 /**
  * Error Body 아스키독 노출을 위한 테스트 전용 컨트롤러
+ * 하위 클래스에서는 @see com.musinsa.stat.restdoc.ErrorControllerTest 와 유사하게 생성해서 사용할 것
  */
 @RestController
-@RequestMapping("/test/common/error-body")
+@RequestMapping(ERROR_BODY_URL)
 class ErrorController {
     @GetMapping
     fun errorBody(): ErrorResponse {

@@ -1,4 +1,4 @@
-package com.musinsa.stat.restdoc.enumcontroller
+package com.musinsa.stat.restdoc
 
 import com.musinsa.common.databricks.error.DatabricksError
 import com.musinsa.common.error.CommonError
