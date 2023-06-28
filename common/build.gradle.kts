@@ -50,9 +50,3 @@ tasks {
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     mainClass.set(StringBuilder(MAIN_CLASS).append("Kt").toString())
 }
-
-tasks {
-    test {
-        useJUnitPlatform()
-    }
-}

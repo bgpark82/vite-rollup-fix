@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// TODO plugin 깔끔하게 통합하기
 plugins {
     // @see version in root/settings.gradle.kts
     id("org.springframework.boot")
@@ -35,7 +34,6 @@ dependencies {
 }
 
 tasks {
-    // TODO common으로 옮길 방법 찾기
     withType<KotlinCompile> {
         kotlinOptions {
             // 어노테이션을 활용해 결함 탐지. Java 표준에 반영되지 않았음. @NonNull, @CheckForNull 등을 정의
@@ -73,7 +71,6 @@ tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar
     mainClass.set(StringBuilder(MAIN_CLASS).append("Kt").toString())
 }
 
-// TODO common으로 옮길 방법 찾기
 // Ascii Doc Create Tasks
 tasks {
     // Test 결과를 snippet Directory
