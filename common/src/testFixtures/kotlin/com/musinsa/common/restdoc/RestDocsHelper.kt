@@ -33,7 +33,7 @@ private const val HOST = "stat.data.musinsa.com"
 private const val PORT = 443
 private const val UTF8 = "UTF-8"
 private const val ENUM_SNIPPET =
-    "enum-response"    // 해당 값이 enum-response-fields.snippet을 읽는다.
+    "enum-response"    // 해당 값이 testFixtures/resources/org/springframework/restdocs/templates/asciidoctor/enum-response-fields.snippet 을 읽는다.
 
 /**
  * MockMvc 생성
