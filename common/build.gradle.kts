@@ -8,8 +8,8 @@ plugins {
     kotlin("plugin.spring")
     id("org.asciidoctor.jvm.convert")
 
-    // @see buildSrc/src/main/kotlin/spring.gradle.kts
-    id("web.server")
+    // @see buildSrc/src/main/kotlin/default.gradle.kts
+    id("default")
 
     // @see buildSrc/src/main/kotlin/databricks.gradle.kts
     id("databricks")
