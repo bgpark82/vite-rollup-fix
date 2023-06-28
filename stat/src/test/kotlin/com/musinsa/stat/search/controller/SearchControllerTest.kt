@@ -2,9 +2,9 @@ package com.musinsa.stat.search.controller
 
 import com.musinsa.common.restdoc.DOCS_생성
 import com.musinsa.common.restdoc.GET
+import com.musinsa.common.restdoc.RestDocsControllerHelper
 import com.musinsa.common.restdoc.성공_검증
 import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
-import com.musinsa.stat.restdoc.RestDocsControllerHelper
 import com.musinsa.stat.search.dto.*
 import com.musinsa.stat.search.service.SearchService
 import org.junit.jupiter.api.Test

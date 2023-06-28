@@ -32,6 +32,7 @@ application {
 dependencies {
     testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-web")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks {

@@ -1,35 +1,18 @@
 package com.musinsa.stat.restdoc
 
-import com.musinsa.common.restdoc.DOCS_생성
-import com.musinsa.common.restdoc.GET
+import com.musinsa.common.restdoc.*
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.restdocs.payload.JsonFieldType
-import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.context.annotation.Import
 
+@Import(ErrorController::class)
 @WebMvcTest(controllers = [ErrorController::class])
 class ErrorControllerTest : RestDocsControllerHelper() {
     @Test
     fun 에러_BODY_가져오기() {
-        mockMvc.GET("/test/error-body")
+        mockMvc.GET("/test/common/error-body")
             .DOCS_생성(
-                "error-body", listOf(
-                    fieldWithPath("errorCode")
-                        .type(JsonFieldType.STRING)
-                        .description("에러코드"),
-                    fieldWithPath("exception")
-                        .type(JsonFieldType.STRING)
-                        .description("예외종류"),
-                    fieldWithPath("invalidField")
-                        .type(JsonFieldType.STRING)
-                        .description("입력오류 필드. default: Empty"),
-                    fieldWithPath("invalidValue")
-                        .type(JsonFieldType.STRING)
-                        .description("입력오류 값. default: Empty"),
-                    fieldWithPath("message")
-                        .type(JsonFieldType.STRING)
-                        .description("예외 메시지"),
-                )
+                "error-body", 에러_명세_가져오기()
             )
     }
 }

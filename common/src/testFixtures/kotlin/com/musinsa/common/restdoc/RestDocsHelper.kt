@@ -24,10 +24,10 @@ import org.springframework.util.MultiValueMap
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.filter.CharacterEncodingFilter
 
+// TODO 아래 값들 커스터마이징 하게 변경
 /**
  * Spring REST Docs 문서 생성에 필요한 기능들
  */
-
 private const val SCHEME = "https"
 private const val HOST = "stat.data.musinsa.com"
 private const val PORT = 443
