@@ -2,7 +2,7 @@ package com.musinsa.common.databricks.service
 
 import com.musinsa.common.databricks.config.DatabricksHttpConnectionConfig
 import com.musinsa.common.databricks.dto.RetrieveQuery
-import com.musinsa.common.databricks.error.DatabricksError
+import com.musinsa.common.error.CommonError
 import com.musinsa.common.util.HttpClient
 import com.musinsa.common.util.ObjectMapperFactory.readValue
 import org.springframework.stereotype.Service
@@ -33,7 +33,7 @@ class DatabricksClient(
             )
             readValue(response, RetrieveQuery::class.java).query
         } catch (e: Exception) {
-            DatabricksError.FAIL_RETRIEVE_DATABRICKS_QUERY_RESULT.throwMe()
+            CommonError.FAIL_RETRIEVE_DATABRICKS_QUERY_RESULT.throwMe()
         }
     }
 }
