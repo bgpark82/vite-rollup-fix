@@ -2,7 +2,7 @@ package com.musinsa.stat.sales.controller
 
 import com.musinsa.common.restdoc.*
 import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
-import com.musinsa.stat.restdoc.enumcontroller.METRIC_DOCUMENT_URL
+import com.musinsa.stat.restdoc.METRIC_DOCUMENT_URL
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection

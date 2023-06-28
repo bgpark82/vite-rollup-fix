@@ -28,8 +28,11 @@ enum class CommonError(
     INVALID_REQUEST_VALUE(
         HttpStatus.BAD_REQUEST,
         "유효하지 않은 요청값"
-    )
-    ;
+    ),
+    FAIL_RETRIEVE_DATABRICKS_QUERY_RESULT(
+        HttpStatus.BAD_REQUEST,
+        "데이터브릭스 쿼리 실행 실패. 검색 파라미터 확인 필요. 혹은 데이터브릭스 설정값 누락"
+    );
 
     override fun <T> throwMe(): T {
         throw CodeAwareException(this)

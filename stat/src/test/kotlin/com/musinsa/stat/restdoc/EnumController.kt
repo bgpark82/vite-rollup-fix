@@ -1,7 +1,6 @@
 package com.musinsa.stat.restdoc
 
-import com.musinsa.common.databricks.error.DatabricksError
-import com.musinsa.common.error.CommonError
+import com.musinsa.common.restdoc.COMMON_ERROR_VALUES
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
@@ -43,13 +42,9 @@ internal class EnumController {
     }
 }
 
-// 도메인에서 사용중인 모든 에러를 가져온다.
 fun ERROR_VALUES(): Map<String, String> {
-    val errors = mutableMapOf<String, String>()
-    errors.putAll(
-        CommonError.values().associate { Pair(it.name, it.message) })
-    errors.putAll(
-        DatabricksError.values().associate { Pair(it.name, it.message) })
+    val errors = COMMON_ERROR_VALUES()
+    // 도메인에서 사용중인 에러 추가
     errors.putAll(
         SalesError.values().associate { Pair(it.name, it.message) })
     return errors

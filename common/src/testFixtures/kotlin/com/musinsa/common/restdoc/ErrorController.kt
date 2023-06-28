@@ -1,5 +1,6 @@
 package com.musinsa.common.restdoc
 
+import com.musinsa.common.error.CommonError
 import com.musinsa.common.error.ErrorResponse
 import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.JsonFieldType
@@ -47,4 +48,14 @@ fun 에러_명세_가져오기(): List<FieldDescriptor> {
             .type(JsonFieldType.STRING)
             .description("예외 메시지")
     )
+}
+
+/**
+ * 모든 공통 에러를 Map 에 담는다.
+ */
+fun COMMON_ERROR_VALUES(): MutableMap<String, String> {
+    val errors = mutableMapOf<String, String>()
+    errors.putAll(
+        CommonError.values().associate { Pair(it.name, it.message) })
+    return errors
 }

@@ -1,9 +1,9 @@
 package com.musinsa.stat.sales.controller
 
 import com.musinsa.common.restdoc.ENUM_LINK_DOCS_BUILDER
-import com.musinsa.stat.restdoc.enumcontroller.ORDER_BY_DOCUMENT_URL
-import com.musinsa.stat.restdoc.enumcontroller.ORDER_DIRECTION_DOCUMENT_URL
-import com.musinsa.stat.restdoc.enumcontroller.SALES_START_DOCUMENT_URL
+import com.musinsa.stat.restdoc.ORDER_BY_DOCUMENT_URL
+import com.musinsa.stat.restdoc.ORDER_DIRECTION_DOCUMENT_URL
+import com.musinsa.stat.restdoc.SALES_START_DOCUMENT_URL
 import com.musinsa.stat.sales.service.RETRIEVE_LIMIT_YEAR
 import org.springframework.restdocs.request.ParameterDescriptor
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
