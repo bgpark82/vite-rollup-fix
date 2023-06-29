@@ -71,7 +71,7 @@ class SalesService(
         // 조회기간 유효성 체크
         retrieveDateValidCheck(startDate, endDate)
 
-        // 요청 파라미터 유효성 체크
+        // 상품별 매출통계 요청 파라미터 유효성 체크
         checkGoodsStatisticsRequestParamsValid(
             metric = metric,
             partnerId = partnerId,
@@ -86,7 +86,7 @@ class SalesService(
                     metric
                 )
             ),
-            convertDate(startDate),
+            convertDate(shiftDate(startDate, metric)),
             convertDate(endDate),
             tag,
             salesStart,
@@ -133,7 +133,9 @@ class SalesService(
     /**
      * 날짜를 쿼리에 사용하기 위해 String 으로 변환한다.
      *
-     * @param date LocalDate 형식
+     * @param date LocalDate 형식. ex) 2023-06-01
+     *
+     * @return "20230601"
      */
     private fun convertDate(date: LocalDate): String {
         return date.toString().filterNot { it == '-' }
@@ -158,5 +160,19 @@ class SalesService(
             if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty())
                 return SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS.throwMe()
         }
+    }
+
+    /**
+     * 월별 매출통계의 경우만 조회 시작 날짜를 1일로 지정한다.
+     *
+     * @param date 조회시작날짜
+     * @param metric: 지표
+     *
+     * @return 조회시작날짜
+     */
+    private fun shiftDate(date: LocalDate, metric: Metric): LocalDate {
+        if (metric == Metric.MONTLY)
+            return date.withDayOfMonth(1)
+        return date
     }
 }

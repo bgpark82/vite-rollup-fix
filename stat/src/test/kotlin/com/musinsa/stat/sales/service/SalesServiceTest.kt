@@ -151,4 +151,40 @@ private class SalesServiceTest {
 
         assertThat(에러.error).isEqualTo(SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS)
     }
+
+    @Test
+    fun 월별_매출통계는_조회_시작날짜를_1일자로_지정한다() {
+        // given
+        val 해당월의_첫날이_아닌_조회_시작날짜 = LocalDate.of(2023, 6, 23)
+        val 조회_종료날짜 = 해당월의_첫날이_아닌_조회_시작날짜.plusMonths(1)
+        val 해당월의_첫날 =
+            LocalDate.of(2023, 6, 1).toString().filterNot { it == '-' }
+        // 아래 given 값들은 전혀 의미가 없으며 해당월의_첫날이_아닌_조회_시작날짜 의 SQL 리턴값만을 확인하기 위해 설정한다.
+        val 테스트를_위한_DAILY_LIST =
+            listOf(DAILY_20230505(), DAILY_20230506())
+        whenever(
+            jdbcTemplate.query(
+                anyString(),
+                eq(DailyAndMontlyRowMapper)
+            )
+        ).thenReturn(테스트를_위한_DAILY_LIST)
+        whenever(databricksClient.getDatabricksQuery(anyString())).thenReturn(
+            SAMPLE_QUERY
+        )
+
+        // when
+        val 결과값 = salesService.getSalesStatistics(
+            metric = Metric.MONTLY,
+            startDate = 해당월의_첫날이_아닌_조회_시작날짜,
+            endDate = 조회_종료날짜,
+            salesStart = SalesStart.SHIPPING_REQUEST,
+            orderBy = OrderBy.date,
+            orderDirection = OrderDirection.ASC,
+            pageSize = 100,
+            page = 1
+        ).sql
+
+        // then
+        assertThat(결과값.contains("om.ord_state_date >= '$해당월의_첫날'")).isTrue
+    }
 }
