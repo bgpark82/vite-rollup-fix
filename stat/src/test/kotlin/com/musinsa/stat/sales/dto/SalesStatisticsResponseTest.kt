@@ -19,7 +19,8 @@ private class SalesStatisticsResponseTest {
         val 페이지: Long = 1
 
         // when
-        val 결과값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST, 페이지_사이즈, 페이지)
+        val 결과값 =
+            SalesStatisticsResponse(테스트를_위한_DAILY_LIST, 페이지_사이즈, 페이지, "실행된 SQL")
 
         // then(페이지)
         assertThat(결과값.pageSize).isEqualTo(페이지_사이즈)

@@ -73,7 +73,7 @@ private class SalesServiceTest {
         )
 
         // then
-        val 기댓값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST, 100, 1)
+        val 기댓값 = SalesStatisticsResponse(테스트를_위한_DAILY_LIST, 100, 1, "SQL")
         assertAll(
             { assertThat(결과값.sum).isNotNull },
             { assertThat(결과값.average).isNotNull },

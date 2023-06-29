@@ -79,30 +79,33 @@ class SalesService(
             brandId = brandId
         )
 
+        // SQL 조립
+        val sql = generate(
+            databricksClient.getDatabricksQuery(
+                queryStore.getQueryId(
+                    metric
+                )
+            ),
+            convertDate(startDate),
+            convertDate(endDate),
+            tag,
+            salesStart,
+            partnerId,
+            category,
+            styleNumber,
+            goodsNumber,
+            brandId,
+            couponNumber,
+            adCode,
+            specialtyCode,
+            mdId,
+            orderBy.alias, metric, orderDirection.name, pageSize, page
+        )
+
         return SalesStatisticsResponse(
             jdbcTemplate.query(
-                generate(
-                    databricksClient.getDatabricksQuery(
-                        queryStore.getQueryId(
-                            metric
-                        )
-                    ),
-                    convertDate(startDate),
-                    convertDate(endDate),
-                    tag,
-                    salesStart,
-                    partnerId,
-                    category,
-                    styleNumber,
-                    goodsNumber,
-                    brandId,
-                    couponNumber,
-                    adCode,
-                    specialtyCode,
-                    mdId,
-                    orderBy.alias, metric, orderDirection.name, pageSize, page
-                ), RowMapperFactory.getRowMapper(metric)
-            ), pageSize, page
+                sql, RowMapperFactory.getRowMapper(metric)
+            ), pageSize, page, sql
         )
     }
 

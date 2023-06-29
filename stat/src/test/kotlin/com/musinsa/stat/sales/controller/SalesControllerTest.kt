@@ -34,7 +34,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 DailyFixture.DAILY_20230505(),
                 DailyFixture.DAILY_20230506()
             ),
-            페이지_사이즈, 페이지
+            페이지_사이즈, 페이지, "실행된 SQL"
         )
         val 지표 = Metric.DAILY
         val 시작날짜 = "20230505"

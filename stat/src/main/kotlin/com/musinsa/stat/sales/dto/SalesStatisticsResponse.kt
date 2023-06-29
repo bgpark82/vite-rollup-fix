@@ -8,7 +8,8 @@ import java.util.stream.Stream
 class SalesStatisticsResponse(
     jdbcQueryResult: List<SalesStatisticsMetric>,
     val pageSize: Long,
-    val page: Long
+    val page: Long,
+    val sql: String   // 실행된 SQL
 ) {
     // 합계
     val sum: SalesStatisticsMetric

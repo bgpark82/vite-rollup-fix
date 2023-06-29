@@ -29,6 +29,8 @@ fun 매출통계_명세(명세: MutableList<FieldDescriptor>): MutableList<Field
                 .description("페이지 사이즈"),
             fieldWithPath("totalItems").type(JsonFieldType.NUMBER)
                 .description("모든 아이템 갯수"),
+            fieldWithPath("sql").type(JsonFieldType.STRING)
+                .description("브릭레인에 실제로 실행된 SQL"),
         )
     )
     return 명세서
