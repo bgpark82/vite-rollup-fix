@@ -9,8 +9,8 @@ import org.junit.jupiter.api.assertAll
 private class SalesStatisticsResponseTest {
 
     @Test
-    fun SQL_을_가독성이_높게_바꾼다() {
-        val 주석과_빈줄이_포함된_쿼리 = """
+    fun API_응답값에_노출되는_SQL_을_가독성이_높게_바꾼다() {
+        val 주석과_개행문자가_포함된_쿼리 = """
             SELECT *
             FROM table
             WHERE
@@ -18,6 +18,7 @@ private class SalesStatisticsResponseTest {
                 --b = "b"
                 
                 --c = "c"
+                
                 d = "d"
         """.trimIndent()
 
@@ -25,18 +26,10 @@ private class SalesStatisticsResponseTest {
             listOf(DAILY_20230505()),
             1,
             1,
-            주석과_빈줄이_포함된_쿼리
+            주석과_개행문자가_포함된_쿼리
         )
 
-        assertThat(sut.sql).isEqualTo(
-            """
-            SELECT *
-            FROM table
-            WHERE
-                a = "a"
-                d = "d"
-            """.trimIndent()
-        )
+        assertThat(sut.sql).isEqualTo("SELECT * FROM table WHERE     a = \"a\"               d = \"d\"")
     }
 
     @Test

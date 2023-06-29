@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.dto
 
+import com.musinsa.stat.sales.service.PREFIX_ANNOTATION
 import java.util.stream.Stream
 
 /**
@@ -229,9 +230,14 @@ class SalesStatisticsResponse(
         )
     }
 
-    // 사용자 가독성을 위해 SQL 에서 주석과 빈 줄을 제거한다.
+    /**
+     * SQL 에서 주석을 포함한 라인을 제거한다.
+     * 개행문자는 공백으로 치환한다.
+     */
     init {
-        sql = originSql
+        sql = originSql.lines().filterNot { it.contains(PREFIX_ANNOTATION) }
+            .toList()
+            .joinToString(separator = "\n").trimIndent().replace("\n", " ")
     }
 
     /**

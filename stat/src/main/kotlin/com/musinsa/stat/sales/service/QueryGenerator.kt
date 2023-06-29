@@ -4,11 +4,12 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 
+const val PREFIX_ANNOTATION = "--"
+
 /**
  * 파라미터에 따라서 쿼리를 재생성 한다.
  */
 object QueryGenerator {
-    private const val PREFIX_ANNOTATION = "--"
     private val START_DATE = "\\{\\{startDate}}".toRegex()
     private val END_DATE = "\\{\\{endDate}}".toRegex()
     private val TAG = "\\{\\{tag}}".toRegex()
