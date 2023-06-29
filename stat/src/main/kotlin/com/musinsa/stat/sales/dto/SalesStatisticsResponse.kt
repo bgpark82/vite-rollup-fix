@@ -9,7 +9,7 @@ class SalesStatisticsResponse(
     jdbcQueryResult: List<SalesStatisticsMetric>,
     val pageSize: Long,
     val page: Long,
-    val sql: String   // 실행된 SQL
+    originSql: String
 ) {
     // 합계
     val sum: SalesStatisticsMetric
@@ -25,6 +25,9 @@ class SalesStatisticsResponse(
 
     // 모든 아이템 갯수
     val totalItems: Long
+
+    // SQL
+    val sql: String
 
     init {
         content = jdbcQueryResult
@@ -224,6 +227,11 @@ class SalesStatisticsResponse(
             profitMarginExcludedVAT.second,
             0
         )
+    }
+
+    // 사용자 가독성을 위해 SQL 에서 주석과 빈 줄을 제거한다.
+    init {
+        sql = originSql
     }
 
     /**

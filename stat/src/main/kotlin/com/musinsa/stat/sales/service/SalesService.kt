@@ -80,7 +80,7 @@ class SalesService(
         )
 
         // SQL 조립
-        val sql = generate(
+        val originSql = generate(
             databricksClient.getDatabricksQuery(
                 queryStore.getQueryId(
                     metric
@@ -104,8 +104,8 @@ class SalesService(
 
         return SalesStatisticsResponse(
             jdbcTemplate.query(
-                sql, RowMapperFactory.getRowMapper(metric)
-            ), pageSize, page, sql
+                originSql, RowMapperFactory.getRowMapper(metric)
+            ), pageSize, page, originSql
         )
     }
 

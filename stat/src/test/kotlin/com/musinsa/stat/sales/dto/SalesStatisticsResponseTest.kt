@@ -7,6 +7,38 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 private class SalesStatisticsResponseTest {
+
+    @Test
+    fun SQL_을_가독성이_높게_바꾼다() {
+        val 주석과_빈줄이_포함된_쿼리 = """
+            SELECT *
+            FROM table
+            WHERE
+                a = "a"
+                --b = "b"
+                
+                --c = "c"
+                d = "d"
+        """.trimIndent()
+
+        val sut = SalesStatisticsResponse(
+            listOf(DAILY_20230505()),
+            1,
+            1,
+            주석과_빈줄이_포함된_쿼리
+        )
+
+        assertThat(sut.sql).isEqualTo(
+            """
+            SELECT *
+            FROM table
+            WHERE
+                a = "a"
+                d = "d"
+            """.trimIndent()
+        )
+    }
+
     @Test
     fun 응답값을_조립한다() {
         // given
