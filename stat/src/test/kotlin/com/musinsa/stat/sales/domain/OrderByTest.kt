@@ -15,7 +15,7 @@ private class OrderByTest {
     @EnumSource(mode = EnumSource.Mode.MATCH_ALL)
     fun 존재하는_정렬키유형_확인(orderBy: OrderBy) {
         assertThat(orderBy).isIn(
-            OrderBy.adCode,
+            OrderBy.AdCode,
             OrderBy.adType,
             OrderBy.adName,
             OrderBy.brandId,

@@ -1,6 +1,5 @@
 package com.musinsa.stat.sales.domain
 
-// TODO enum name 을 Kotlin 공식 컨벤션에 맞춘다.
 /**
  * 정렬값 관리
  */
@@ -12,7 +11,7 @@ enum class OrderBy(
      */
     val alias: String
 ) {
-    adCode("광고코드"),
+    AdCode("광고코드"),
     adType("광고구분"),
     adName("광고명"),
     brandId("브랜드"),
