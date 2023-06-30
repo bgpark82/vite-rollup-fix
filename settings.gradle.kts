@@ -11,6 +11,7 @@ pluginManagement {
     val SPRING_BOOT_DEPENDENCY_MANAGEMENT_VERSION: String by settings
     val KOTLIN_VERSION: String by settings
     val ASCII_DOCTOR: String by settings
+    val KTLINT: String by settings
 
     plugins {
         // 스프링부트
@@ -27,5 +28,11 @@ pluginManagement {
 
         // Spring REST Docs AsciiDoc
         id("org.asciidoctor.jvm.convert") version ASCII_DOCTOR
+
+        // kotlin lint @see https://github.com/jlleitschuh/ktlint-gradle or https://pinterest.github.io/ktlint/
+        id("org.jlleitschuh.gradle.ktlint") version KTLINT
+
+        // kotlin lint @see https://github.com/jlleitschuh/ktlint-gradle or https://pinterest.github.io/ktlint/
+        id("org.jlleitschuh.gradle.ktlint-idea") version KTLINT
     }
 }

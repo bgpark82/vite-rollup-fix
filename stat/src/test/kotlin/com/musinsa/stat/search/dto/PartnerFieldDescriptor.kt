@@ -28,7 +28,7 @@ fun 업체_명세(): MutableList<FieldDescriptor> {
                     .description("사업등록번호"),
                 PayloadDocumentation.fieldWithPath("mdName")
                     .type(JsonFieldType.STRING)
-                    .description("담당MD 이름"),
+                    .description("담당MD 이름")
             )
         )
     )

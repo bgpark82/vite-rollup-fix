@@ -23,6 +23,7 @@ fun 무신사_브랜드_목록(): List<Brand> {
                     "isGlobal": false
                 }
             ]
-        """.trimIndent(), Array<Brand>::class.java
+        """.trimIndent(),
+        Array<Brand>::class.java
     )
 }

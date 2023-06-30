@@ -95,7 +95,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
                 "페이지. 기본값: ".plus(
                     PAGE_DEFAULT_VALUE
                 )
-            ).optional(),
+            ).optional()
         )
     )
 

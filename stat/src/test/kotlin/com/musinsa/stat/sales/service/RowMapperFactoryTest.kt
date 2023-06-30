@@ -1,6 +1,14 @@
 package com.musinsa.stat.sales.service
 
-import com.musinsa.stat.sales.domain.*
+import com.musinsa.stat.sales.domain.AdRowMapper
+import com.musinsa.stat.sales.domain.BrandPartnerRowMapper
+import com.musinsa.stat.sales.domain.BrandRowMapper
+import com.musinsa.stat.sales.domain.CategoryRowMapper
+import com.musinsa.stat.sales.domain.CouponRowMapper
+import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
+import com.musinsa.stat.sales.domain.GoodsRowMapper
+import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.PartnerRowMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -68,5 +76,4 @@ private class RowMapperFactoryTest {
             CategoryRowMapper::class.java
         )
     }
-
 }

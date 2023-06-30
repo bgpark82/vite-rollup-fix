@@ -19,7 +19,8 @@ private class SalesStartTest {
             SalesStart.SHIPPING_REQUEST
         )
         assertThat(salesStart.description).isIn(
-            "출고요청", "구매확정"
+            "출고요청",
+            "구매확정"
         )
     }
 }

@@ -14,13 +14,12 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication
-
-// @ConstructorBinding 사용시 필수
-@EnableConfigurationProperties(value = [QueryStore::class, SearchQueryStore::class])
-
+@EnableConfigurationProperties(value = [QueryStore::class, SearchQueryStore::class]) // @ConstructorBinding 사용시 필수
 @Import(
-    value = [CorsConfig::class, HealthCheckController::class, HttpClient::class, RestControllerAdviceExceptionHandler::class,
-        DatabricksDataSourceConfig::class, DatabricksClient::class]
+    value = [
+        CorsConfig::class, HealthCheckController::class, HttpClient::class, RestControllerAdviceExceptionHandler::class,
+        DatabricksDataSourceConfig::class, DatabricksClient::class
+    ]
 )
 class StatApplication
 

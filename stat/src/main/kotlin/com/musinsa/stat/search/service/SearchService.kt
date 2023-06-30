@@ -87,8 +87,11 @@ class SearchService(
             replace(
                 databricksClient.getDatabricksQuery(
                     searchQueryUrl
-                ), searchTerms, searchType
-            ), rowMapper
+                ),
+                searchTerms,
+                searchType
+            ),
+            rowMapper
         )
     }
 }

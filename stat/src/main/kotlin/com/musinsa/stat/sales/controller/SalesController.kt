@@ -9,7 +9,11 @@ import com.musinsa.stat.sales.service.SalesService
 import jakarta.validation.constraints.Size
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
 const val DATE_FORMAT = "yyyyMMdd"
@@ -26,7 +30,6 @@ const val COUPON_NUMBER_SIZE_MAX = 200
 const val AD_CODE_SIZE_MAX = 200
 const val SPECIALTY_CODE_SIZE_MAX = 100
 const val MD_ID_SIZE_MAX = 100
-
 
 @RestController
 @RequestMapping("/sales-statistics")
@@ -60,19 +63,43 @@ class SalesController(private val salesService: SalesService) {
     @GetMapping("/{metric}")
     fun salesStatistics(
         @PathVariable(required = true, value = "metric") metric: Metric,
-        @RequestParam(required = true) @DateTimeFormat(pattern = DATE_FORMAT) startDate: LocalDate,
-        @RequestParam(required = true) @DateTimeFormat(pattern = DATE_FORMAT) endDate: LocalDate,
-        @Size(max = TAG_SIZE_MAX) @RequestParam(required = false) tag: List<String>?,
+        @RequestParam(required = true)
+        @DateTimeFormat(pattern = DATE_FORMAT)
+        startDate: LocalDate,
+        @RequestParam(required = true)
+        @DateTimeFormat(pattern = DATE_FORMAT)
+        endDate: LocalDate,
+        @Size(max = TAG_SIZE_MAX)
+        @RequestParam(required = false)
+        tag: List<String>?,
         @RequestParam(required = true) salesStart: SalesStart,
-        @Size(max = PARTNER_ID_SIZE_MAX) @RequestParam(required = false) partnerId: List<String>?,
-        @Size(max = CATEGORY_SIZE_MAX) @RequestParam(required = false) category: List<String>?,
-        @Size(max = STYLE_NUMBER_SIZE_MAX) @RequestParam(required = false) styleNumber: List<String>?,
-        @Size(max = GOODS_NUMBER_SIZE_MAX) @RequestParam(required = false) goodsNumber: List<String>?,
-        @Size(max = BRAND_ID_SIZE_MAX) @RequestParam(required = false) brandId: List<String>?,
-        @Size(max = COUPON_NUMBER_SIZE_MAX) @RequestParam(required = false) couponNumber: List<String>?,
-        @Size(max = AD_CODE_SIZE_MAX) @RequestParam(required = false) adCode: List<String>?,
-        @Size(max = SPECIALTY_CODE_SIZE_MAX) @RequestParam(required = false) specialtyCode: List<String>?,
-        @Size(max = MD_ID_SIZE_MAX) @RequestParam(required = false) mdId: List<String>?,
+        @Size(max = PARTNER_ID_SIZE_MAX)
+        @RequestParam(required = false)
+        partnerId: List<String>?,
+        @Size(max = CATEGORY_SIZE_MAX)
+        @RequestParam(required = false)
+        category: List<String>?,
+        @Size(max = STYLE_NUMBER_SIZE_MAX)
+        @RequestParam(required = false)
+        styleNumber: List<String>?,
+        @Size(max = GOODS_NUMBER_SIZE_MAX)
+        @RequestParam(required = false)
+        goodsNumber: List<String>?,
+        @Size(max = BRAND_ID_SIZE_MAX)
+        @RequestParam(required = false)
+        brandId: List<String>?,
+        @Size(max = COUPON_NUMBER_SIZE_MAX)
+        @RequestParam(required = false)
+        couponNumber: List<String>?,
+        @Size(max = AD_CODE_SIZE_MAX)
+        @RequestParam(required = false)
+        adCode: List<String>?,
+        @Size(max = SPECIALTY_CODE_SIZE_MAX)
+        @RequestParam(required = false)
+        specialtyCode: List<String>?,
+        @Size(max = MD_ID_SIZE_MAX)
+        @RequestParam(required = false)
+        mdId: List<String>?,
         @RequestParam(required = true) orderBy: OrderBy,
         @RequestParam(
             required = false,
@@ -85,7 +112,7 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(
             required = false,
             defaultValue = PAGE_DEFAULT_VALUE
-        ) page: Long,
+        ) page: Long
     ): SalesStatisticsResponse {
         return salesService.getSalesStatistics(
             metric,

@@ -71,7 +71,7 @@ internal class QueryGeneratorTest {
             """
           om.ord_state_date >= '20230501'
           AND om.ord_state_date <= '20230509'
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -89,7 +89,7 @@ internal class QueryGeneratorTest {
             """
             JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
             AND gt.tag IN ('청바지', '반소매티')
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -106,7 +106,7 @@ internal class QueryGeneratorTest {
             """
             -- 태그(String List)
             --AND gt.tag IN ({{tag}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -147,7 +147,7 @@ internal class QueryGeneratorTest {
             """
           -- 업체
           --AND om.com_id IN ({{partnerId}})'
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -174,7 +174,7 @@ internal class QueryGeneratorTest {
             """
             -- 카테고리
             --AND om.small_nm IN ({{category}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -183,7 +183,8 @@ internal class QueryGeneratorTest {
         val 쿼리 = "AND om.style_no IN ({{styleNumber}})"
 
         val 변경된_쿼리 = QueryGenerator.applyStyleNumberOrAnnotate(
-            쿼리, listOf("DF22SS7022", "ABCDE")
+            쿼리,
+            listOf("DF22SS7022", "ABCDE")
         )
 
         assertThat(변경된_쿼리).isEqualTo("AND om.style_no IN ('DF22SS7022', 'ABCDE')")
@@ -202,7 +203,7 @@ internal class QueryGeneratorTest {
             """
             -- 스타일넘버
             --AND om.style_no IN ({{styleNumber}})'
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -231,7 +232,7 @@ internal class QueryGeneratorTest {
             """
             -- 상품코드
             --AND om.goods_no IN ({{goodsNumber}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -261,7 +262,7 @@ internal class QueryGeneratorTest {
             """
             -- 브랜드
             --AND om.brand IN ({{brandId}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -288,7 +289,7 @@ internal class QueryGeneratorTest {
             """
             JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
             AND c.coupon_no IN ('72852', '12345')
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -310,7 +311,7 @@ internal class QueryGeneratorTest {
             """
             JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
             AND c.coupon_no IN ('72852', '12345')
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -334,7 +335,7 @@ internal class QueryGeneratorTest {
             --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
             -- 쿠폰
             --AND c.coupon_no IN ({{couponNumber}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -363,7 +364,7 @@ internal class QueryGeneratorTest {
             """
             -- 광고코드
             --AND om.ad_cd IN ({{adCode}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -372,7 +373,7 @@ internal class QueryGeneratorTest {
         val 쿼리 = """
                 --{{joinSpecialtyGoods}}JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
                 AND sg.specialty_cd IN ({{specialtyCode}})
-            """.trimIndent()
+        """.trimIndent()
 
         val 변경된_쿼리 =
             QueryGenerator.applySpecialtyCodeOrAnnotate(쿼리, arrayListOf("golf"))
@@ -381,7 +382,7 @@ internal class QueryGeneratorTest {
             """
             JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
             AND sg.specialty_cd IN ('golf')
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -399,7 +400,7 @@ internal class QueryGeneratorTest {
             """
             -- 전문관코드
             --AND sg.specialty_cd IN ({{specialtyCode}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -428,7 +429,7 @@ internal class QueryGeneratorTest {
             """
             -- 담당MD
             --AND om.md_id IN ({{mdId}})
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -457,7 +458,7 @@ internal class QueryGeneratorTest {
             LIMIT 100
             
             OFFSET 1
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 }

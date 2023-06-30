@@ -104,8 +104,12 @@ class SalesService(
 
         return SalesStatisticsResponse(
             jdbcTemplate.query(
-                originSql, RowMapperFactory.getRowMapper(metric)
-            ), pageSize, page, originSql
+                originSql,
+                RowMapperFactory.getRowMapper(metric)
+            ),
+            pageSize,
+            page,
+            originSql
         )
     }
 
@@ -122,12 +126,14 @@ class SalesService(
         endDate: LocalDate
     ) {
         // 조회 기간 체크
-        if (Period.between(startDate, endDate).years >= RETRIEVE_LIMIT_YEAR)
+        if (Period.between(startDate, endDate).years >= RETRIEVE_LIMIT_YEAR) {
             return SalesError.NON_VALID_DATE_PERIOD.throwMe()
+        }
 
         // 조회시작 < 조회종료 체크
-        if (startDate.isAfter(endDate))
+        if (startDate.isAfter(endDate)) {
             return SalesError.NON_VALID_DATE_PERIOD.throwMe()
+        }
     }
 
     /**
@@ -154,11 +160,12 @@ class SalesService(
         metric: Metric,
         partnerId: List<String>?,
         goodsNumber: List<String>?,
-        brandId: List<String>?,
+        brandId: List<String>?
     ) {
         if (metric == Metric.GOODS) {
-            if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty())
+            if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty()) {
                 return SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS.throwMe()
+            }
         }
     }
 
@@ -171,8 +178,9 @@ class SalesService(
      * @return 조회시작날짜
      */
     private fun shiftDate(date: LocalDate, metric: Metric): LocalDate {
-        if (metric == Metric.MONTLY)
+        if (metric == Metric.MONTLY) {
             return date.withDayOfMonth(1)
+        }
         return date
     }
 }

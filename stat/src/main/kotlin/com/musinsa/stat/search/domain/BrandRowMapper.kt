@@ -21,8 +21,7 @@ object BrandRowMapper : RowMapper<Brand> {
                 0 -> false
                 1 -> true
                 else -> SalesError.UNKNOWN_QUERY_RESULT_VALUE.throwMe()
-            },
+            }
         )
     }
-
 }

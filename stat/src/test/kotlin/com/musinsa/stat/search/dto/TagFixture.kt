@@ -16,6 +16,7 @@ fun 태그_목록(): List<Tag> {
                     "tag": "스트라이프럭비티"
                 }
             ]
-        """.trimIndent(), Array<Tag>::class.java
+        """.trimIndent(),
+        Array<Tag>::class.java
     )
 }

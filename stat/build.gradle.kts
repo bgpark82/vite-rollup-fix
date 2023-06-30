@@ -7,6 +7,8 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
     id("org.asciidoctor.jvm.convert")
+    id("org.jlleitschuh.gradle.ktlint")
+    id("org.jlleitschuh.gradle.ktlint-idea")
 
     // @see buildSrc/src/main/kotlin/default.gradle.kts
     id("default")
@@ -73,8 +75,14 @@ tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar
 
 // Ascii Doc Create Tasks
 tasks {
+    // Ktlint 체크
+    ktlintFormat
+
     // Test 결과를 snippet Directory
     test {
+        // Kt Lint Format 재정렬 후, Test 진행
+        dependsOn(ktlintFormat)
+
         outputs.dir(project.property("SNIPPETS_DIR")!!)
         useJUnitPlatform()
     }

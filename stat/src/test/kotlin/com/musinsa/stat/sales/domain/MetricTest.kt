@@ -23,7 +23,7 @@ private class MetricTest {
             Metric.GOODS,
             Metric.AD,
             Metric.COUPON,
-            Metric.CATEGORY,
+            Metric.CATEGORY
         )
         assertThat(metric.description).isIn(
             "일별",

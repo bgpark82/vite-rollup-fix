@@ -270,5 +270,4 @@ object DailyFixture {
 
         return DailyAndMontly(rowSetTemp, "20230506")
     }
-
 }

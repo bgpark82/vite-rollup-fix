@@ -221,17 +221,32 @@ object QueryGenerator {
                                                             endDate
                                                         ),
                                                         tag
-                                                    ), salesStart
-                                                ), partnerId
-                                            ), category
-                                        ), styleNumber
-                                    ), goodsNumber
-                                ), brandId
-                            ), couponNumber, metric
-                        ), adCode
-                    ), specialtyCode
-                ), mdId
-            ), orderBy, orderDirection, pageSize, page
+                                                    ),
+                                                    salesStart
+                                                ),
+                                                partnerId
+                                            ),
+                                            category
+                                        ),
+                                        styleNumber
+                                    ),
+                                    goodsNumber
+                                ),
+                                brandId
+                            ),
+                            couponNumber,
+                            metric
+                        ),
+                        adCode
+                    ),
+                    specialtyCode
+                ),
+                mdId
+            ),
+            orderBy,
+            orderDirection,
+            pageSize,
+            page
         )
     }
 
@@ -331,7 +346,10 @@ object QueryGenerator {
         }
 
         return removeAnnotationSQLFromPhraseOrKeepAnnotation(
-            query, JOIN_COUPON, couponNumber, COUPON_NUMBER
+            query,
+            JOIN_COUPON,
+            couponNumber,
+            COUPON_NUMBER
         )
     }
 
@@ -376,7 +394,8 @@ object QueryGenerator {
     ): String {
         return query.replace(ORDER_BY, orderBy)
             .replace(ORDER_DIRECTION, orderDirection).replace(
-                PAGE_SIZE, pageSize.toString()
+                PAGE_SIZE,
+                pageSize.toString()
             ).replace(PAGE, page.toString())
     }
 }

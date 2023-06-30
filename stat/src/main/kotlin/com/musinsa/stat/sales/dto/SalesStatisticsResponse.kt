@@ -39,95 +39,140 @@ class SalesStatisticsResponse(
         }
 
         val sellQuantity = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.sellQuantity })
+            jdbcQueryResult.stream().map { it.sellQuantity }
+        )
         val sellAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.sellAmount })
+            jdbcQueryResult.stream().map { it.sellAmount }
+        )
         val refundQuantity = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.refundQuantity })
+            jdbcQueryResult.stream().map { it.refundQuantity }
+        )
         val refundAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.refundAmount })
+            jdbcQueryResult.stream().map { it.refundAmount }
+        )
         val exchangeQuantity = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.exchangeQuantity })
+            jdbcQueryResult.stream().map { it.exchangeQuantity }
+        )
         val exchangeAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.exchangeAmount })
+            jdbcQueryResult.stream().map { it.exchangeAmount }
+        )
         val tradeQuantity = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.tradeQuantity })
+            jdbcQueryResult.stream().map { it.tradeQuantity }
+        )
         val tradeAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.tradeAmount })
+            jdbcQueryResult.stream().map { it.tradeAmount }
+        )
         val memberDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.memberDiscounts })
+            jdbcQueryResult.stream().map { it.memberDiscounts }
+        )
         val affiliateDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.affiliateDiscounts })
+            jdbcQueryResult.stream().map { it.affiliateDiscounts }
+        )
         val otherDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.otherDiscounts })
+            jdbcQueryResult.stream().map { it.otherDiscounts }
+        )
         val couponDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.couponDiscounts })
+            jdbcQueryResult.stream().map { it.couponDiscounts }
+        )
         val partnerCouponDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerCouponDiscounts })
+            jdbcQueryResult.stream().map { it.partnerCouponDiscounts }
+        )
         val pointDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.pointDiscounts })
+            jdbcQueryResult.stream().map { it.pointDiscounts }
+        )
         val prePointDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.prePointDiscounts })
+            jdbcQueryResult.stream().map { it.prePointDiscounts }
+        )
         val cartDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.cartDiscounts })
+            jdbcQueryResult.stream().map { it.cartDiscounts }
+        )
         val groupDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.groupDiscounts })
+            jdbcQueryResult.stream().map { it.groupDiscounts }
+        )
         val totalDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.totalDiscounts })
+            jdbcQueryResult.stream().map { it.totalDiscounts }
+        )
         val discountRate = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.discountRate })
+            jdbcQueryResult.stream().map { it.discountRate }
+        )
         val paymentFees = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.paymentFees })
+            jdbcQueryResult.stream().map { it.paymentFees }
+        )
         val paymentAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.paymentAmount })
+            jdbcQueryResult.stream().map { it.paymentAmount }
+        )
         val sales = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.sales })
+            jdbcQueryResult.stream().map { it.sales }
+        )
         val originalPrice = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.originalPrice })
+            jdbcQueryResult.stream().map { it.originalPrice }
+        )
         val profit = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.profit })
+            jdbcQueryResult.stream().map { it.profit }
+        )
         val profitMargin = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.profitMargin })
+            jdbcQueryResult.stream().map { it.profitMargin }
+        )
         val purchasesTradeAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesTradeAmount })
+            jdbcQueryResult.stream().map { it.purchasesTradeAmount }
+        )
         val purchasesDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesDiscounts })
+            jdbcQueryResult.stream().map { it.purchasesDiscounts }
+        )
         val purchasesPaymentFees = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesPaymentFees })
+            jdbcQueryResult.stream().map { it.purchasesPaymentFees }
+        )
         val purchasesPaymentAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesPaymentAmount })
+            jdbcQueryResult.stream().map { it.purchasesPaymentAmount }
+        )
         val purchasesOriginalPrice = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesOriginalPrice })
+            jdbcQueryResult.stream().map { it.purchasesOriginalPrice }
+        )
         val purchasesProfit = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesProfit })
+            jdbcQueryResult.stream().map { it.purchasesProfit }
+        )
         val purchasesProfitMargin = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesProfitMargin })
+            jdbcQueryResult.stream().map { it.purchasesProfitMargin }
+        )
         val purchasesRatio = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.purchasesRatio })
+            jdbcQueryResult.stream().map { it.purchasesRatio }
+        )
         val partnerTradeAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerTradeAmount })
+            jdbcQueryResult.stream().map { it.partnerTradeAmount }
+        )
         val partnerDiscounts = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerDiscounts })
+            jdbcQueryResult.stream().map { it.partnerDiscounts }
+        )
         val partnerPaymentFees = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerPaymentFees })
+            jdbcQueryResult.stream().map { it.partnerPaymentFees }
+        )
         val partnerPaymentAmount = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerPaymentAmount })
+            jdbcQueryResult.stream().map { it.partnerPaymentAmount }
+        )
         val partnerSellFees = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerSellFees })
+            jdbcQueryResult.stream().map { it.partnerSellFees }
+        )
         val partnerFees = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerFees })
+            jdbcQueryResult.stream().map { it.partnerFees }
+        )
         val partnerSellGrants = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerSellGrants })
+            jdbcQueryResult.stream().map { it.partnerSellGrants }
+        )
         val partnerProfitMargin = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.partnerProfitMargin })
+            jdbcQueryResult.stream().map { it.partnerProfitMargin }
+        )
         val salesExcludedVAT = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.salesExcludedVAT })
+            jdbcQueryResult.stream().map { it.salesExcludedVAT }
+        )
         val originalPriceExcludedVAT = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.originalPriceExcludedVAT })
+            jdbcQueryResult.stream().map { it.originalPriceExcludedVAT }
+        )
         val profitExcludedVAT = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.profitExcludedVAT })
+            jdbcQueryResult.stream().map { it.profitExcludedVAT }
+        )
         val profitMarginExcludedVAT = calculateSumAndAverage(
-            jdbcQueryResult.stream().map { it.profitMarginExcludedVAT })
+            jdbcQueryResult.stream().map { it.profitMarginExcludedVAT }
+        )
 
         // 합계
         sum = SalesStatisticsMetric(

@@ -47,6 +47,7 @@ fun 아디다스_업체_목록(): List<Partner> {
                     "mdName": "박유진"
                 }
             ]
-        """.trimIndent(), Array<Partner>::class.java
+        """.trimIndent(),
+        Array<Partner>::class.java
     )
 }

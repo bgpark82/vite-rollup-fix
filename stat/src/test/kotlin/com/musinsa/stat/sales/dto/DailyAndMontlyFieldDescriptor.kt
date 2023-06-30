@@ -10,8 +10,8 @@ fun 일별_월별_명세(): MutableList<FieldDescriptor> {
     명세서.addAll(
         listOf(
             PayloadDocumentation.fieldWithPath("date")
-                .type(STRING).description("일자/월. 매출통계 유형에 따라 해당 부분이 변경된다."),
-        ),
+                .type(STRING).description("일자/월. 매출통계 유형에 따라 해당 부분이 변경된다.")
+        )
     )
 
     명세서.addAll(매출통계_공통_명세())

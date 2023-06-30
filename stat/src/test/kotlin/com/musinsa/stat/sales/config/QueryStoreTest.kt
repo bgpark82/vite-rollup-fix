@@ -21,9 +21,10 @@ private class QueryStoreTest {
     @ParameterizedTest
     @EnumSource(mode = EnumSource.Mode.MATCH_ALL)
     fun METRIC에_알맞는_QUERY_ID를_가져온다(metric: Metric) {
-        if (metric != Metric.BRAND_PARTNER)
+        if (metric != Metric.BRAND_PARTNER) {
             assertThat(queryStore.getQueryId(metric)).isEqualTo(metric.name.lowercase())
-        else
+        } else {
             assertThat(queryStore.getQueryId(metric)).isEqualTo("brandPartner")
+        }
     }
 }

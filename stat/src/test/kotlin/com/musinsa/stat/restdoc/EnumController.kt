@@ -46,7 +46,8 @@ fun ERROR_VALUES(): Map<String, String> {
     val errors = COMMON_ERROR_VALUES()
     // 도메인에서 사용중인 에러 추가
     errors.putAll(
-        SalesError.values().associate { Pair(it.name, it.message) })
+        SalesError.values().associate { Pair(it.name, it.message) }
+    )
     return errors
 }
 

@@ -21,7 +21,7 @@ private class SearchQueryGeneratorTest {
         assertThat(결과값).isEqualTo(
             """
             WHERE brand LIKE '%무신%' or brand_nm LIKE '%무신%'
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -39,7 +39,7 @@ private class SearchQueryGeneratorTest {
         assertThat(결과값).isEqualTo(
             """
             WHERE com_id LIKE '%musinsa%' or com_nm LIKE '%musinsa%'
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -57,7 +57,7 @@ private class SearchQueryGeneratorTest {
         assertThat(결과값).isEqualTo(
             """
             WHERE tag LIKE '%스트라이프%'
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 }

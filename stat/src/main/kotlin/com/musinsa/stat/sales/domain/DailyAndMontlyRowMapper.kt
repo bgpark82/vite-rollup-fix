@@ -10,7 +10,8 @@ import java.sql.ResultSet
 object DailyAndMontlyRowMapper : RowMapper<DailyAndMontly> {
     override fun mapRow(rs: ResultSet, rowNum: Int): DailyAndMontly {
         return DailyAndMontly(
-            rs, date = rs.getString("date")
+            rs,
+            date = rs.getString("date")
         )
     }
 }
