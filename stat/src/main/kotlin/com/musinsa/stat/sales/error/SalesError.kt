@@ -23,7 +23,8 @@ enum class SalesError(
     GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS(
         HttpStatus.BAD_REQUEST,
         "상품별 매출통계는 적어도 하나의 브랜드ID, 업체ID, 상품번호가 필요"
-    )
+    ),
+    NON_EXIST_DATA(HttpStatus.BAD_REQUEST, "조회 결과 없음.")
     ;
 
     override fun <T> throwMe(): T {

@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.dto
 
+import com.musinsa.stat.sales.error.SalesError
 import com.musinsa.stat.sales.service.PREFIX_ANNOTATION
 import java.util.stream.Stream
 
@@ -31,6 +32,11 @@ class SalesStatisticsResponse(
     val sql: String
 
     init {
+        // 검색 결과 없는 경우
+        if (jdbcQueryResult.isEmpty()) {
+            throw SalesError.NON_EXIST_DATA.throwMe()
+        }
+
         content = jdbcQueryResult
         totalItems = jdbcQueryResult[0].total
         totalPages = when {
