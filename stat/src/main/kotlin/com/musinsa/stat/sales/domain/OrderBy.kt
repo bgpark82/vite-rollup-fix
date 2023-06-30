@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.domain
 
+// TODO enum name 을 Kotlin 공식 컨벤션에 맞춘다.
 /**
  * 정렬값 관리
  */

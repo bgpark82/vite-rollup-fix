@@ -5,7 +5,11 @@ import com.musinsa.common.restdoc.GET
 import com.musinsa.common.restdoc.RestDocsControllerHelper
 import com.musinsa.common.restdoc.성공_검증
 import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
-import com.musinsa.stat.search.dto.*
+import com.musinsa.stat.search.dto.무신사_브랜드_목록
+import com.musinsa.stat.search.dto.브랜드_명세
+import com.musinsa.stat.search.dto.아디다스_업체_목록
+import com.musinsa.stat.search.dto.업체_명세
+import com.musinsa.stat.search.dto.태그_목록
 import com.musinsa.stat.search.service.SearchService
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.whenever
