@@ -34,7 +34,7 @@ class SalesStatisticsResponse(
     init {
         // 검색 결과 없는 경우
         if (jdbcQueryResult.isEmpty()) {
-            throw SalesError.NON_EXIST_DATA.throwMe()
+            throw SalesError.NON_EXIST_SALES_STATISTICS_DATA.throwMe()
         }
 
         content = jdbcQueryResult

@@ -1,10 +1,13 @@
 package com.musinsa.stat.sales.dto
 
+import com.musinsa.common.error.CodeAwareException
+import com.musinsa.stat.sales.error.SalesError
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230506
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
 
 private class SalesStatisticsResponseTest {
 
@@ -16,9 +19,9 @@ private class SalesStatisticsResponseTest {
             WHERE
                 a = "a"
                 --b = "b"
-                
+
                 --c = "c"
-                
+
                 d = "d"
         """.trimIndent()
 
@@ -29,7 +32,7 @@ private class SalesStatisticsResponseTest {
             주석과_개행문자가_포함된_쿼리
         )
 
-        assertThat(sut.sql).isEqualTo("SELECT * FROM table WHERE     a = \"a\"               d = \"d\"")
+        assertThat(sut.sql).isEqualTo("SELECT * FROM table WHERE     a = \"a\"       d = \"d\"")
     }
 
     @Test
@@ -191,5 +194,14 @@ private class SalesStatisticsResponseTest {
                 )
             }
         )
+    }
+
+    @Test
+    fun 매출통계_조회결과가_없으면_예외를_노출한다() {
+        val 에러 = assertThrows<CodeAwareException> {
+            SalesStatisticsResponse(emptyList(), 1, 1, "임의값")
+        }
+
+        assertThat(에러.error).isEqualTo(SalesError.NON_EXIST_SALES_STATISTICS_DATA)
     }
 }
