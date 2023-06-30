@@ -70,7 +70,7 @@ private class SalesServiceTest {
             startDate = LocalDate.now(),
             endDate = LocalDate.now().plusMonths(1),
             salesStart = SalesStart.SHIPPING_REQUEST,
-            orderBy = OrderBy.date,
+            orderBy = OrderBy.Date,
             orderDirection = OrderDirection.ASC,
             pageSize = 100,
             page = 1
@@ -99,7 +99,7 @@ private class SalesServiceTest {
                 startDate = 시작날짜,
                 endDate = 시작날짜_ADD_1_YEAR,
                 salesStart = SalesStart.SHIPPING_REQUEST,
-                orderBy = OrderBy.date,
+                orderBy = OrderBy.Date,
                 orderDirection = OrderDirection.ASC,
                 pageSize = 100,
                 page = 1
@@ -124,7 +124,7 @@ private class SalesServiceTest {
                 startDate = 시작날짜,
                 endDate = 시작날짜_MINUS_1_DAY,
                 salesStart = SalesStart.SHIPPING_REQUEST,
-                orderBy = OrderBy.date,
+                orderBy = OrderBy.Date,
                 orderDirection = OrderDirection.ASC,
                 pageSize = 100,
                 page = 1
@@ -143,7 +143,7 @@ private class SalesServiceTest {
                 startDate = LocalDate.now(),
                 endDate = LocalDate.now().plusMonths(1),
                 salesStart = SalesStart.SHIPPING_REQUEST,
-                orderBy = OrderBy.date,
+                orderBy = OrderBy.Date,
                 orderDirection = OrderDirection.ASC,
                 pageSize = 100,
                 page = 1,
@@ -182,7 +182,7 @@ private class SalesServiceTest {
             startDate = 해당월의_첫날이_아닌_조회_시작날짜,
             endDate = 조회_종료날짜,
             salesStart = SalesStart.SHIPPING_REQUEST,
-            orderBy = OrderBy.date,
+            orderBy = OrderBy.Date,
             orderDirection = OrderDirection.ASC,
             pageSize = 100,
             page = 1

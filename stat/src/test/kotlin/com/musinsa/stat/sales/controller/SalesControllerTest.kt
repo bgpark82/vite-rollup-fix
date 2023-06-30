@@ -56,7 +56,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         val 광고코드 = listOf("NVSH")
         val 전문관코드 = listOf("beauty", "golf")
         val 담당MD = listOf("naka.da")
-        val 정렬키 = OrderBy.date
+        val 정렬키 = OrderBy.Date
         val 정렬방향 = OrderDirection.ASC
 
         whenever(
