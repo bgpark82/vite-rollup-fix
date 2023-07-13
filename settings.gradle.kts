@@ -6,6 +6,9 @@ include("common")
 // 매출통계
 include("stat")
 
+// 데이터 통합 조회
+include("harrods")
+
 pluginManagement {
     val SPRING_BOOT_VERSION: String by settings
     val SPRING_BOOT_DEPENDENCY_MANAGEMENT_VERSION: String by settings

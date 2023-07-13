@@ -1,0 +1,19 @@
+server:
+  servlet:
+    encoding:
+      # Servlet Response UTF-8 config
+      charset: UTF-8
+      force: true
+
+spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+        format_sql: true
