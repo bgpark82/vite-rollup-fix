@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.core.JdbcTemplate
 import javax.sql.DataSource
 
+// TODO Databricks Config 값을 common 에서 분리하는 것도 좋을것 같다.
 /**
  * Databricks JDBC Template 생성
  *
@@ -18,7 +19,7 @@ class DatabricksDataSourceConfig {
 
     // @see https://docs.databricks.com/integrations/jdbc-odbc-bi.html#configure-the-databricks-odbc-and-jdbc-drivers
     /**
-     * URL, 브릭레인 클러스터
+     * URL, 브릭레인 클러스터, 매출통계 클러스터
      */
     @Suppress("PropertyName")
     val URL =
