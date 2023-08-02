@@ -21,7 +21,7 @@ group = "com.musinsa"
 version = "0.0.1-SNAPSHOT"
 
 @Suppress("PropertyName")
-val MAIN_CLASS = "com.musinsa.stat.StatApplication"
+val MAIN_CLASS = "com.musinsa.harrods.HarrodsApplication"
 
 application {
     mainClass.set(MAIN_CLASS)
