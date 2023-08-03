@@ -37,6 +37,9 @@ dependencies {
 
     // common testFixture 의존성
     testImplementation(testFixtures(project(":common")))
+
+    // Lettuce Client(Redis 연결)
+    implementation("io.lettuce:lettuce-core:6.2.5.RELEASE")
 }
 
 tasks {
