@@ -12,6 +12,7 @@ abstract class DatabricksDataSourceConfig {
     @Suppress("PropertyName")
     val TIMEOUT = 60 * 5 // 타임아웃 5분
 
+    // @see https://docs.databricks.com/integrations/jdbc-odbc-bi.html#configure-the-databricks-odbc-and-jdbc-drivers
     /**
      * 데이터브릭스 클러스터 주소
      */
