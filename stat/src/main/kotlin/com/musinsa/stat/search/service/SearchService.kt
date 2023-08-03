@@ -1,6 +1,6 @@
 package com.musinsa.stat.search.service
 
-import com.musinsa.common.databricks.service.DatabricksClient
+import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.stat.search.config.SearchQueryStore
 import com.musinsa.stat.search.domain.BrandRowMapper
 import com.musinsa.stat.search.domain.PartnerRowMapper
@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class SearchService(
-    @Qualifier("databricksJdbcTemplate") private val jdbcTemplate: JdbcTemplate,
+    @Qualifier("statDatabricksJdbcTemplate") private val jdbcTemplate: JdbcTemplate,
     private val searchQueryStore: SearchQueryStore,
-    private val databricksClient: DatabricksClient
+    private val statDatabricksClient: StatDatabricksClient
 ) {
     /**
      * 브랜드 리스트를 가져온다.
@@ -85,7 +85,7 @@ class SearchService(
     ): List<T> {
         return jdbcTemplate.query(
             replace(
-                databricksClient.getDatabricksQuery(
+                statDatabricksClient.getDatabricksQuery(
                     searchQueryUrl
                 ),
                 searchTerms,

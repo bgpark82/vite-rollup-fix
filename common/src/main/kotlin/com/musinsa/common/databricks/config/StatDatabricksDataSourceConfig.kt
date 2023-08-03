@@ -13,7 +13,7 @@ import javax.sql.DataSource
  *
  */
 @Configuration
-class DatabricksDataSourceConfig {
+class StatDatabricksDataSourceConfig {
     @Suppress("PropertyName")
     val DRIVER_CLASS_NAME = "com.databricks.client.jdbc.Driver"
 
@@ -28,7 +28,6 @@ class DatabricksDataSourceConfig {
     /**
      * databricks connection config Bean 생성
      */
-    @Bean
     fun databricksDataSourceProperties(): DataSourceProperties {
         val dataSourceProperties = DataSourceProperties()
         dataSourceProperties.driverClassName = DRIVER_CLASS_NAME
@@ -37,8 +36,8 @@ class DatabricksDataSourceConfig {
     }
 
     @Bean
-    fun databricksDataSource(): DataSource {
-        return databricksDataSourceProperties()
+    fun statDatabricksDataSource(): DataSource {
+        return this.databricksDataSourceProperties()
             .initializeDataSourceBuilder()
             .build()
     }
@@ -47,8 +46,8 @@ class DatabricksDataSourceConfig {
      * JDBC Template 생성
      */
     @Bean
-    fun databricksJdbcTemplate(@Qualifier("databricksDataSource") databricksDataSource: DataSource): JdbcTemplate {
-        val jdbcTemplate = JdbcTemplate(databricksDataSource)
+    fun statDatabricksJdbcTemplate(@Qualifier("statDatabricksDataSource") dataSource: DataSource): JdbcTemplate {
+        val jdbcTemplate = JdbcTemplate(dataSource)
 
         // 타임아웃 5분 설정
         jdbcTemplate.queryTimeout = 60 * 5

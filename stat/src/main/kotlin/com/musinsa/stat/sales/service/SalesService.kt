@@ -1,6 +1,6 @@
 package com.musinsa.stat.sales.service
 
-import com.musinsa.common.databricks.service.DatabricksClient
+import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
@@ -19,9 +19,9 @@ const val RETRIEVE_LIMIT_YEAR = 1
 
 @Service
 class SalesService(
-    @Qualifier("databricksJdbcTemplate") private val jdbcTemplate: JdbcTemplate,
+    @Qualifier("statDatabricksJdbcTemplate") private val jdbcTemplate: JdbcTemplate,
     private val queryStore: QueryStore,
-    private val databricksClient: DatabricksClient
+    private val statDatabricksClient: StatDatabricksClient
 ) {
     /**
      * 일별 매출통계를 가져온다.
@@ -81,7 +81,7 @@ class SalesService(
 
         // SQL 조립
         val originSql = generate(
-            databricksClient.getDatabricksQuery(
+            statDatabricksClient.getDatabricksQuery(
                 queryStore.getQueryId(
                     metric
                 )
