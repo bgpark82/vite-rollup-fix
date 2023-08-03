@@ -9,5 +9,8 @@ data class DatabricksHttpConnectionConfig(
     val RETRIEVE_API_PATH: String = "/api/2.0/preview/sql/queries",
 
     // TODO Move AWS Secret Manager
-    val AUTHORIZATION_TOKEN: String = "Bearer dapiac03c1cb4ac710049a572888106b65e3"
+    val STAT_AUTHORIZATION_TOKEN: String = "Bearer dapiac03c1cb4ac710049a572888106b65e3",
+
+    // TODO Create Harrods AUTH TOKEN
+    val HARRODS_AUTHORIZATION_TOKEN: String = ""
 )

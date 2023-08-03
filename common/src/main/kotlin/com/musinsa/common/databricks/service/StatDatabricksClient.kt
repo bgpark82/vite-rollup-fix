@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import java.time.Duration
 
 @Service
-class DatabricksClient(
+class StatDatabricksClient(
     private val httpClient: HttpClient
 ) {
     private val config = DatabricksHttpConnectionConfig()
@@ -29,7 +29,10 @@ class DatabricksClient(
                     .append(queryId)
                     .toString(),
                 Duration.ofSeconds(config.TIMEOUT.toLong()),
-                arrayOf(httpClient.AUTHORIZATION, config.AUTHORIZATION_TOKEN)
+                arrayOf(
+                    httpClient.AUTHORIZATION,
+                    config.STAT_AUTHORIZATION_TOKEN
+                )
             )
             readValue(response, RetrieveQuery::class.java).query
         } catch (e: Exception) {

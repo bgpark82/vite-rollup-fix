@@ -1,6 +1,6 @@
 package com.musinsa.stat.sales.service
 
-import com.musinsa.common.databricks.service.DatabricksClient
+import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.common.error.CodeAwareException
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
@@ -30,7 +30,7 @@ import java.time.LocalDate
 private class SalesServiceTest {
     private val jdbcTemplate: JdbcTemplate = mock()
     private lateinit var queryStore: QueryStore
-    private val databricksClient: DatabricksClient = mock()
+    private val statDatabricksClient: StatDatabricksClient = mock()
     private lateinit var salesService: SalesService
 
     @BeforeEach
@@ -46,7 +46,8 @@ private class SalesServiceTest {
             coupon = "필수값이라 의미 없이 추가",
             category = "필수값이라 의미 없이 추가"
         )
-        salesService = SalesService(jdbcTemplate, queryStore, databricksClient)
+        salesService =
+            SalesService(jdbcTemplate, queryStore, statDatabricksClient)
     }
 
     @Test
@@ -60,7 +61,7 @@ private class SalesServiceTest {
                 eq(DailyAndMontlyRowMapper)
             )
         ).thenReturn(테스트를_위한_DAILY_LIST)
-        whenever(databricksClient.getDatabricksQuery(anyString())).thenReturn(
+        whenever(statDatabricksClient.getDatabricksQuery(anyString())).thenReturn(
             SAMPLE_QUERY
         )
 
@@ -172,7 +173,7 @@ private class SalesServiceTest {
                 eq(DailyAndMontlyRowMapper)
             )
         ).thenReturn(테스트를_위한_DAILY_LIST)
-        whenever(databricksClient.getDatabricksQuery(anyString())).thenReturn(
+        whenever(statDatabricksClient.getDatabricksQuery(anyString())).thenReturn(
             SAMPLE_QUERY
         )
 

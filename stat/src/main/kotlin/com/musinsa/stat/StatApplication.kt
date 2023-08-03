@@ -2,8 +2,8 @@ package com.musinsa.stat
 
 import com.musinsa.common.aws.HealthCheckController
 import com.musinsa.common.config.CorsConfig
-import com.musinsa.common.databricks.config.DatabricksDataSourceConfig
-import com.musinsa.common.databricks.service.DatabricksClient
+import com.musinsa.common.databricks.config.StatDatabricksDataSourceConfig
+import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.common.error.RestControllerAdviceExceptionHandler
 import com.musinsa.common.util.HttpClient
 import com.musinsa.stat.sales.config.QueryStore
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import
 @Import(
     value = [
         CorsConfig::class, HealthCheckController::class, HttpClient::class, RestControllerAdviceExceptionHandler::class,
-        DatabricksDataSourceConfig::class, DatabricksClient::class
+        StatDatabricksDataSourceConfig::class, StatDatabricksClient::class
     ]
 )
 class StatApplication
