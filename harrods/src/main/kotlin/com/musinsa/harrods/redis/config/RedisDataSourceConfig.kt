@@ -16,7 +16,6 @@ import org.springframework.context.annotation.Configuration
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
-
 /**
  * 해롯 Redis 연결 정보
  *
@@ -26,26 +25,34 @@ import java.util.concurrent.TimeUnit
 @Configuration
 class RedisDataSourceConfig(
     @Value("custom.redis.cluster.configuration-endpoint")
-    val clusterConfigurationEndpoint: String
+    private val CLUSTER_CONFIG_ENDPOINT: String,
+
+    @Value("custom.redis.cluster.port")
+    private val PORT: Int
 ) {
+    // 레디스 클러스터와 관련된 Slow 쿼리 타임아웃
     private val META_COMMAND_TIMEOUT = Duration.ofMillis(1000)
+
+    // 레디스 읽기/쓰기를 포함한 간단한 쿼리 타임아웃
     private val DEFAULT_COMMAND_TIMEOUT = Duration.ofMillis(250)
+
+    // 레디스 클러스터 연결 타임아웃
     private val CONNECT_TIMEOUT = Duration.ofMillis(100)
 
     @Bean
     fun redisDataSource(): StatefulRedisClusterConnection<String, String> {
-        // Redis Endpoint 연결
+        // Redis Endpoint 설정
         val redisUriCluster =
-            RedisURI.Builder.redis(clusterConfigurationEndpoint).withPort(6379)
+            RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT).withPort(PORT)
                 .withSsl(true).build()
 
-        // 연결 설정값 수정
+        // Retry 전략(Random 한 시간으로 Retry 사이의 시간을 설정)
         val clientResources = DefaultClientResources.builder()
             .reconnectDelay(
                 Delay.fullJitter(
-                    Duration.ofMillis(100),  // minimum 100 millisecond delay
-                    Duration.ofSeconds(10),  // maximum 10 second delay
-                    100, TimeUnit.MILLISECONDS // 100 millisecond base
+                    Duration.ofMillis(100),
+                    Duration.ofSeconds(10),
+                    100, TimeUnit.MILLISECONDS
                 )
             )
             // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용
@@ -56,6 +63,7 @@ class RedisDataSourceConfig(
         val redisClusterClient =
             RedisClusterClient.create(clientResources, redisUriCluster)
 
+        // 타잉아웃 설정
         val timeoutOptions = TimeoutOptions.builder()
             .timeoutSource(
                 DynamicClusterTimeout(
@@ -65,26 +73,26 @@ class RedisDataSourceConfig(
             )
             .build()
 
-        // Configure the topology refreshment optionts
+        // 노드 교체나 시스템 점검으로 구성이 바뀔 시, Topology 정보 갱신
         val topologyOptions = ClusterTopologyRefreshOptions.builder()
-            .enableAllAdaptiveRefreshTriggers()
-            .enablePeriodicRefresh()
-            .dynamicRefreshSources(true)
+            .enableAllAdaptiveRefreshTriggers() // 잦은 Refresh 트리거 막음
+            .enablePeriodicRefresh()    // Topology 정보 감지 시간(default: 60)
+            .dynamicRefreshSources(true)    // true: 발견된 모든 노드로부터 Topology 정보를 얻어온다.
             .build()
 
-        // Configure the socket options
+        // Socket 속성
         val socketOptions = SocketOptions.builder()
             .connectTimeout(CONNECT_TIMEOUT)
-            .keepAlive(true)
+            .keepAlive(true)    // TCP 커넥션 유지
             .build()
 
-        // Configure the client's options
+        // 최종 설정값 적용
         val clusterClientOptions = ClusterClientOptions.builder()
             .topologyRefreshOptions(topologyOptions)
             .socketOptions(socketOptions)
-            .autoReconnect(true)
+            .autoReconnect(true)    // 자동 재연결
             .timeoutOptions(timeoutOptions)
-            .nodeFilter { it: RedisClusterNode ->
+            .nodeFilter {
                 !(it.`is`(RedisClusterNode.NodeFlag.FAIL)
                     || it.`is`(RedisClusterNode.NodeFlag.EVENTUAL_FAIL)
                     || it.`is`(RedisClusterNode.NodeFlag.NOADDR))

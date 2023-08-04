@@ -17,3 +17,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
         format_sql: true
+
+custom:
+  redis:
+    cluster:
+      port: 6379
