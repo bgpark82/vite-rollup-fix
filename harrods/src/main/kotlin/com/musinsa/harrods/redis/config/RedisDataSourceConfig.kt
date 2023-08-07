@@ -24,11 +24,11 @@ import java.util.concurrent.TimeUnit
 @Suppress("PrivatePropertyName")
 @Configuration
 class RedisDataSourceConfig(
-    @Value("custom.redis.cluster.configuration-endpoint")
+    @Value("\${custom.redis.cluster.configuration-endpoint}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
 
-    @Value("custom.redis.cluster.port")
-    private val PORT: Int
+    @Value("\${custom.redis.cluster.port}")
+    private val PORT: Int,
 ) {
     // 레디스 클러스터와 관련된 Slow 쿼리 타임아웃
     private val META_COMMAND_TIMEOUT = Duration.ofMillis(1000)
@@ -41,9 +41,13 @@ class RedisDataSourceConfig(
 
     @Bean
     fun redisDataSource(): StatefulRedisClusterConnection<String, String> {
+        println(CLUSTER_CONFIG_ENDPOINT)
+        println(PORT)
+
         // Redis Endpoint 설정
         val redisUriCluster =
-            RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT).withPort(PORT)
+            RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT)
+                .withPort(PORT)
                 .withSsl(true).build()
 
         // Retry 전략(Random 한 시간으로 Retry 사이의 시간을 설정)
