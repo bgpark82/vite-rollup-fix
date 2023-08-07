@@ -36,6 +36,8 @@ class DynamicClusterTimeout(
     override fun getTimeout(command: RedisCommand<*, *, *>): Long {
         return if (META_COMMAND_TYPES.contains(command.type)) {
             metaCommandTimeout.toMillis()
-        } else defaultCommandTimeout.toMillis()
+        } else {
+            defaultCommandTimeout.toMillis()
+        }
     }
 }

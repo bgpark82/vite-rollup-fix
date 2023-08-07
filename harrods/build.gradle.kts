@@ -74,7 +74,6 @@ tasks {
     }
 }
 
-
 // Gradle Bug 로 인해 Main Class 를 별도로 지정(Gradle 에서 MainClass 를 kt로 지정 중)
 // @see https://stackoverflow.com/questions/73438308/aws-beanstalk-kotlin-spring-boot-nosuchmethodexception-main
 tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {

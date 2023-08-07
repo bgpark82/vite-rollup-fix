@@ -52,7 +52,8 @@ class RedisDataSourceConfig(
                 Delay.fullJitter(
                     Duration.ofMillis(100),
                     Duration.ofSeconds(10),
-                    100, TimeUnit.MILLISECONDS
+                    100,
+                    TimeUnit.MILLISECONDS
                 )
             )
             // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용
@@ -76,26 +77,28 @@ class RedisDataSourceConfig(
         // 노드 교체나 시스템 점검으로 구성이 바뀔 시, Topology 정보 갱신
         val topologyOptions = ClusterTopologyRefreshOptions.builder()
             .enableAllAdaptiveRefreshTriggers() // 잦은 Refresh 트리거 막음
-            .enablePeriodicRefresh()    // Topology 정보 감지 시간(default: 60)
-            .dynamicRefreshSources(true)    // true: 발견된 모든 노드로부터 Topology 정보를 얻어온다.
+            .enablePeriodicRefresh() // Topology 정보 감지 시간(default: 60)
+            .dynamicRefreshSources(true) // true: 발견된 모든 노드로부터 Topology 정보를 얻어온다.
             .build()
 
         // Socket 속성
         val socketOptions = SocketOptions.builder()
             .connectTimeout(CONNECT_TIMEOUT)
-            .keepAlive(true)    // TCP 커넥션 유지
+            .keepAlive(true) // TCP 커넥션 유지
             .build()
 
         // 최종 설정값 적용
         val clusterClientOptions = ClusterClientOptions.builder()
             .topologyRefreshOptions(topologyOptions)
             .socketOptions(socketOptions)
-            .autoReconnect(true)    // 자동 재연결
+            .autoReconnect(true) // 자동 재연결
             .timeoutOptions(timeoutOptions)
             .nodeFilter {
-                !(it.`is`(RedisClusterNode.NodeFlag.FAIL)
-                    || it.`is`(RedisClusterNode.NodeFlag.EVENTUAL_FAIL)
-                    || it.`is`(RedisClusterNode.NodeFlag.NOADDR))
+                !(
+                    it.`is`(RedisClusterNode.NodeFlag.FAIL) ||
+                        it.`is`(RedisClusterNode.NodeFlag.EVENTUAL_FAIL) ||
+                        it.`is`(RedisClusterNode.NodeFlag.NOADDR)
+                    )
             }
             .validateClusterNodeMembership(false)
             .build()
