@@ -6,6 +6,9 @@ server:
       force: true
 
 spring:
+  profiles:
+    # 기본 프로파일을 local 설정
+    active: local
   jackson:
     serialization:
       fail-on-empty-beans: false

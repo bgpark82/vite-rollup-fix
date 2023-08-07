@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit
 
 /**
  * 해롯 Redis 연결 정보
+ * Spring-data-reds 사용하지 않는 이유: AWS ElastiCache Configuration Endpoint 정보만을 이용하여 클러스터에 접속하기 위해(오토스케일링 사용을 위해)
  *
  * @see <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/BestPractices.Clients-lettuce.html">ElastiCache Client 개발문서</a>
  */
@@ -41,9 +42,6 @@ class RedisDataSourceConfig(
 
     @Bean
     fun redisDataSource(): StatefulRedisClusterConnection<String, String> {
-        println(CLUSTER_CONFIG_ENDPOINT)
-        println(PORT)
-
         // Redis Endpoint 설정
         val redisUriCluster =
             RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT)
@@ -60,7 +58,8 @@ class RedisDataSourceConfig(
                     TimeUnit.MILLISECONDS
                 )
             )
-            // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용
+            // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용.
+            // TODO 연결 실패 시 대책 강구 필요.
 //            .dnsResolver(DirContextDnsResolver())
             .build()
 
