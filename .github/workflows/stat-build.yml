@@ -15,6 +15,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
+          cache: 'gradle'
 
       - name: Install Kotlin
         run: sudo snap install --classic kotlin --channel=1.7
