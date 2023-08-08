@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
+import org.springframework.data.redis.core.RedisTemplate
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
@@ -41,7 +44,10 @@ class RedisDataSourceConfig(
     // 레디스 클러스터 연결 타임아웃
     private val CONNECT_TIMEOUT = Duration.ofMillis(100)
 
-    @Bean
+    /**
+     * 미사용.
+     * TODO topologyOptions (노드 변경 자동 감지) 옵션 필요해질 경우 다시 고민.
+     */
     fun redisDataSource(): StatefulRedisClusterConnection<String, String> {
         // Redis Endpoint 설정
         val redisUriCluster =
@@ -108,5 +114,22 @@ class RedisDataSourceConfig(
         redisClusterClient.setOptions(clusterClientOptions)
 
         return redisClusterClient.connect()
+    }
+
+    @Bean
+    fun redisConnectionFactory(): RedisConnectionFactory {
+        return LettuceConnectionFactory(
+            LettuceConnectionFactory.createRedisConfiguration(
+                RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT).withPort(PORT)
+                    .withSsl(true).build()
+            )
+        )
+    }
+
+    @Bean
+    fun redisTemplate(): RedisTemplate<ByteArray, ByteArray> {
+        val redisTemplate = RedisTemplate<ByteArray, ByteArray>()
+        redisTemplate.setConnectionFactory(redisConnectionFactory())
+        return redisTemplate
     }
 }
