@@ -34,3 +34,14 @@ jobs:
 
       - name: Upload to S3
         run: aws s3 cp --region ap-northeast-2 stat.tar s3://musinsa-server-build/dataplatform/stat/prod/stat-test.tar
+
+      - name: Send result to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: stat_build
+          author_name: stat_build_bot
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.STAT_SLACK_WEBHOOK_URL }}
+        if: always()
