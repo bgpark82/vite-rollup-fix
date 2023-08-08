@@ -45,7 +45,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // 내장 Redis
-    implementation("it.ozimov:embedded-redis:0.7.3")
+    // 0.7.3 버전의 경우 logback 중복 의존성으로 빌드 실패
+    implementation("it.ozimov:embedded-redis:0.7.2")
 }
 
 tasks {
@@ -79,7 +80,6 @@ tasks {
         archiveFileName.set("harrods.jar")
     }
 }
-
 
 // Gradle Bug 로 인해 Main Class 를 별도로 지정(Gradle 에서 MainClass 를 kt로 지정 중)
 // @see https://stackoverflow.com/questions/73438308/aws-beanstalk-kotlin-spring-boot-nosuchmethodexception-main
