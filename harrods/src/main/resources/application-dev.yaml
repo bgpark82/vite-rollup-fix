@@ -1,4 +1,4 @@
-custom:
-  redis:
-    cluster:
-      configuration-endpoint: dev-harrods-v1-redis.cr5gwi.clustercfg.apn2.cache.amazonaws.com
+spring:
+  data:
+    redis:
+      host: dev-harrods-v1-redis.cr5gwi.clustercfg.apn2.cache.amazonaws.com

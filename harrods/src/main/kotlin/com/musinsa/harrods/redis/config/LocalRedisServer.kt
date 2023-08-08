@@ -13,7 +13,7 @@ import redis.embedded.RedisServer
 @Profile(value = ["local", "test"])
 @Configuration
 class LocalRedisServer(
-    @Value("\${custom.redis.cluster.port}")
+    @Value("\${spring.data.redis.port}")
     private val PORT: Int
 ) {
     private val redisServer: RedisServer = RedisServer(PORT)

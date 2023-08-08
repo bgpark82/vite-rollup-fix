@@ -13,10 +13,10 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @Configuration
 @EnableRedisRepositories
 class LocalRedisDataSourceConfig(
-    @Value("\${custom.redis.cluster.configuration-endpoint}")
+    @Value("\${spring.data.redis.host}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
 
-    @Value("\${custom.redis.cluster.port}")
+    @Value("\${spring.data.redis.port}")
     private val PORT: Int
 ) {
     @Bean

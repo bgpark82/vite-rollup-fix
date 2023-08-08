@@ -26,10 +26,10 @@ import java.util.concurrent.TimeUnit
 @Suppress("PrivatePropertyName")
 @Configuration
 class RedisDataSourceConfig(
-    @Value("\${custom.redis.cluster.configuration-endpoint}")
+    @Value("\${spring.data.redis.host}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
 
-    @Value("\${custom.redis.cluster.port}")
+    @Value("\${spring.data.redis.port}")
     private val PORT: Int
 ) {
     // 레디스 클러스터와 관련된 Slow 쿼리 타임아웃

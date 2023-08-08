@@ -1,4 +1,4 @@
-custom:
-  redis:
-    cluster:
-      configuration-endpoint: localhost
+spring:
+  data:
+    redis:
+      host: localhost
