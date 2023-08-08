@@ -13,6 +13,7 @@ import io.lettuce.core.resource.Delay
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
@@ -21,13 +22,14 @@ import java.util.concurrent.TimeUnit
  *
  * @see <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/BestPractices.Clients-lettuce.html">ElastiCache Client 개발문서</a>
  */
+@Profile(value = ["dev", "prod"])
 @Suppress("PrivatePropertyName")
 @Configuration
 class RedisDataSourceConfig(
-    @Value("custom.redis.cluster.configuration-endpoint")
+    @Value("\${custom.redis.cluster.configuration-endpoint}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
 
-    @Value("custom.redis.cluster.port")
+    @Value("\${custom.redis.cluster.port}")
     private val PORT: Int
 ) {
     // 레디스 클러스터와 관련된 Slow 쿼리 타임아웃
@@ -52,7 +54,8 @@ class RedisDataSourceConfig(
                 Delay.fullJitter(
                     Duration.ofMillis(100),
                     Duration.ofSeconds(10),
-                    100, TimeUnit.MILLISECONDS
+                    100,
+                    TimeUnit.MILLISECONDS
                 )
             )
             // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용
@@ -76,26 +79,28 @@ class RedisDataSourceConfig(
         // 노드 교체나 시스템 점검으로 구성이 바뀔 시, Topology 정보 갱신
         val topologyOptions = ClusterTopologyRefreshOptions.builder()
             .enableAllAdaptiveRefreshTriggers() // 잦은 Refresh 트리거 막음
-            .enablePeriodicRefresh()    // Topology 정보 감지 시간(default: 60)
-            .dynamicRefreshSources(true)    // true: 발견된 모든 노드로부터 Topology 정보를 얻어온다.
+            .enablePeriodicRefresh() // Topology 정보 감지 시간(default: 60)
+            .dynamicRefreshSources(true) // true: 발견된 모든 노드로부터 Topology 정보를 얻어온다.
             .build()
 
         // Socket 속성
         val socketOptions = SocketOptions.builder()
             .connectTimeout(CONNECT_TIMEOUT)
-            .keepAlive(true)    // TCP 커넥션 유지
+            .keepAlive(true) // TCP 커넥션 유지
             .build()
 
         // 최종 설정값 적용
         val clusterClientOptions = ClusterClientOptions.builder()
             .topologyRefreshOptions(topologyOptions)
             .socketOptions(socketOptions)
-            .autoReconnect(true)    // 자동 재연결
+            .autoReconnect(true) // 자동 재연결
             .timeoutOptions(timeoutOptions)
             .nodeFilter {
-                !(it.`is`(RedisClusterNode.NodeFlag.FAIL)
-                    || it.`is`(RedisClusterNode.NodeFlag.EVENTUAL_FAIL)
-                    || it.`is`(RedisClusterNode.NodeFlag.NOADDR))
+                !(
+                    it.`is`(RedisClusterNode.NodeFlag.FAIL) ||
+                        it.`is`(RedisClusterNode.NodeFlag.EVENTUAL_FAIL) ||
+                        it.`is`(RedisClusterNode.NodeFlag.NOADDR)
+                    )
             }
             .validateClusterNodeMembership(false)
             .build()
