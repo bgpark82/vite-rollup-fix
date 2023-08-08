@@ -40,6 +40,12 @@ dependencies {
 
     // Lettuce Client(Redis 연결)
     implementation("io.lettuce:lettuce-core:6.2.5.RELEASE")
+
+    // spring-data-redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    // 내장 Redis
+    implementation("it.ozimov:embedded-redis:0.7.3")
 }
 
 tasks {
