@@ -33,4 +33,4 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 stat/build/dist/stat.tar s3://musinsa-server-build/dataplatform/stat/prod/stat-test.tar
+        run: aws s3 cp --region ap-northeast-2 stat.tar s3://musinsa-server-build/dataplatform/stat/prod/stat-test.tar
