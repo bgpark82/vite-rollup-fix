@@ -1,10 +1,15 @@
 name: stat-build
 on:
-  push:
+  pull_request_target:
+    types:
+      - closed
     branches:
-      - feature/**
+      - master
+    paths:
+      - stat/**
 jobs:
   stat-builder:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     steps:
       - name: Check out repository
@@ -34,7 +39,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 stat.tar s3://musinsa-server-build/dataplatform/stat/prod/stat-test.tar
+        run: aws s3 cp --region ap-northeast-2 stat.tar s3://musinsa-server-build/dataplatform/stat/prod/stat.tar
 
       - name: Send result to Slack
         uses: 8398a7/action-slack@v3
