@@ -32,7 +32,7 @@ object QueryGenerator {
     private const val JOIN_SPECIALTY_GOODS = "{{joinSpecialtyGoods}}"
 
     /**
-     * 배열에서 특정 문자열이 속한 index 를 찾는다.
+     * 배열에서 특정 문자열이 속한 index를 찾는다.
      *
      * @param array 배열
      * @param target 찾을 문자열
