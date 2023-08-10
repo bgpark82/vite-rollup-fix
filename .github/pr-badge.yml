@@ -1,0 +1,31 @@
+- label: "JIRA"
+  message: "$issuePrefix"
+  color: "blue"
+  url: "https://jira.musinsa.com/browse/$issuePrefix"
+  when: "$issuePrefix"
+
+- label: "PR Size"
+  message: "Large"
+  color: "red"
+  when: "$additions > 200"
+
+- label: "PR Size"
+  message: "Medium"
+  color: "yellow"
+  when: "$additions > 80 && $additions <= 200"
+
+- label: "commits"
+  message: "$commits"
+
+- label: "deletes"
+  color: "red"
+  message: "-$deletions"
+  when: "$deletions != 0"
+
+- label: "adds"
+  color: "green"
+  message: "+$additions"
+  when: "$additions != 0"
+
+- label: "changed files"
+  message: "$payload.pull_request.changed_files"
