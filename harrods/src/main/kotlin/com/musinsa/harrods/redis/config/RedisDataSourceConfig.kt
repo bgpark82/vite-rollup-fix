@@ -13,23 +13,27 @@ import io.lettuce.core.resource.Delay
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
+import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
+import org.springframework.data.redis.core.RedisTemplate
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
 /**
  * 해롯 Redis 연결 정보
- * Spring-data-reds 사용하지 않는 이유: AWS ElastiCache Configuration Endpoint 정보만을 이용하여 클러스터에 접속하기 위해(오토스케일링 사용을 위해)
  *
  * @see <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/BestPractices.Clients-lettuce.html">ElastiCache Client 개발문서</a>
  */
+@Profile(value = ["dev", "prod"])
 @Suppress("PrivatePropertyName")
 @Configuration
 class RedisDataSourceConfig(
-    @Value("\${custom.redis.cluster.configuration-endpoint}")
+    @Value("\${spring.data.redis.host}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
 
-    @Value("\${custom.redis.cluster.port}")
-    private val PORT: Int,
+    @Value("\${spring.data.redis.port}")
+    private val PORT: Int
 ) {
     // 레디스 클러스터와 관련된 Slow 쿼리 타임아웃
     private val META_COMMAND_TIMEOUT = Duration.ofMillis(1000)
@@ -40,12 +44,14 @@ class RedisDataSourceConfig(
     // 레디스 클러스터 연결 타임아웃
     private val CONNECT_TIMEOUT = Duration.ofMillis(100)
 
-    @Bean
+    /**
+     * 미사용.
+     * TODO topologyOptions (노드 변경 자동 감지) 옵션 필요해질 경우 다시 고민.
+     */
     fun redisDataSource(): StatefulRedisClusterConnection<String, String> {
         // Redis Endpoint 설정
         val redisUriCluster =
-            RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT)
-                .withPort(PORT)
+            RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT).withPort(PORT)
                 .withSsl(true).build()
 
         // Retry 전략(Random 한 시간으로 Retry 사이의 시간을 설정)
@@ -58,8 +64,7 @@ class RedisDataSourceConfig(
                     TimeUnit.MILLISECONDS
                 )
             )
-            // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용.
-            // TODO 연결 실패 시 대책 강구 필요.
+            // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용
 //            .dnsResolver(DirContextDnsResolver())
             .build()
 
@@ -109,5 +114,22 @@ class RedisDataSourceConfig(
         redisClusterClient.setOptions(clusterClientOptions)
 
         return redisClusterClient.connect()
+    }
+
+    @Bean
+    fun redisConnectionFactory(): RedisConnectionFactory {
+        return LettuceConnectionFactory(
+            LettuceConnectionFactory.createRedisConfiguration(
+                RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT).withPort(PORT)
+                    .withSsl(true).build()
+            )
+        )
+    }
+
+    @Bean
+    fun redisTemplate(): RedisTemplate<ByteArray, ByteArray> {
+        val redisTemplate = RedisTemplate<ByteArray, ByteArray>()
+        redisTemplate.setConnectionFactory(redisConnectionFactory())
+        return redisTemplate
     }
 }
