@@ -14,6 +14,9 @@ plugins {
     // @see buildSrc/src/main/kotlin/databricks.gradle.kts
     id("databricks")
 
+    // @see buildSrc/src/main/kotlin/redis.gradle.kts
+    id("redis")
+
     // Using test fixtures(@see https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures)
     `java-test-fixtures`
 }
