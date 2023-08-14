@@ -1,4 +1,4 @@
-package com.musinsa.harrods.redis.config
+package com.musinsa.common.redis.config
 
 import io.lettuce.core.RedisURI
 import io.lettuce.core.SocketOptions

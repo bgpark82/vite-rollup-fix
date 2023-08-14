@@ -1,4 +1,4 @@
-package com.musinsa.harrods.redis.config
+package com.musinsa.common.redis.config
 
 import io.lettuce.core.TimeoutOptions
 import io.lettuce.core.protocol.CommandType

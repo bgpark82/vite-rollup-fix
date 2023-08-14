@@ -1,4 +1,4 @@
-package com.musinsa.harrods.redis.config
+package com.musinsa.common.redis.config
 
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
