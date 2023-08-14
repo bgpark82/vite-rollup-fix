@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories
 
 @Profile(value = ["local", "test"])
+@Suppress("PrivatePropertyName")
 @Configuration
 @EnableRedisRepositories
 class LocalRedisDataSourceConfig(
