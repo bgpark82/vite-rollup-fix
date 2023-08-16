@@ -12,9 +12,6 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/default.gradle.kts
     id("default")
-
-    // @see buildSrc/src/main/kotlin/databricks.gradle.kts
-    id("databricks")
 }
 
 group = "com.musinsa"
@@ -70,7 +67,6 @@ tasks {
         archiveFileName.set("harrods.jar")
     }
 }
-
 
 // Gradle Bug 로 인해 Main Class 를 별도로 지정(Gradle 에서 MainClass 를 kt로 지정 중)
 // @see https://stackoverflow.com/questions/73438308/aws-beanstalk-kotlin-spring-boot-nosuchmethodexception-main
