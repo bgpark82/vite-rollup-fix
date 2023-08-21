@@ -6,16 +6,17 @@ import org.junit.jupiter.api.Test
 
 class QueryServiceTest {
 
+    private val paramCombinator = ParamCombinator()
+    private val queryService = QueryService(paramCombinator)
+
     @Test
     fun `단일 파라미터로 쿼리를 생성한다`() {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
-            params = listOf(
-                mapOf("name" to "peter", "age" to "30")
-            )
+            params = mapOf("name" to "peter", "age" to "30")
         )
 
-        val result = QueryService().create(request)
+        val result = queryService.create(request)
 
         assertThat(result).contains("SELECT * FROM user WHERE name = peter AND age = 30")
     }
@@ -24,13 +25,10 @@ class QueryServiceTest {
     fun `복수 파라미터로 쿼리를 생성한다`() {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
-            params = listOf(
-                mapOf("name" to "peter", "age" to "30"),
-                mapOf("name" to "woo", "age" to "30")
-            )
+            params = mapOf("name" to listOf("peter", "woo"), "age" to listOf("30"))
         )
 
-        val result = QueryService().create(request)
+        val result = queryService.create(request)
 
         assertThat(result).contains(
             "SELECT * FROM user WHERE name = peter AND age = 30",
