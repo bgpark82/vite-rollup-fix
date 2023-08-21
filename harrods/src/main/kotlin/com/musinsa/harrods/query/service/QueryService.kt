@@ -6,17 +6,21 @@ const val OPEN_DOUBLE_CURLY_BRACE = "{{"
 const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
 class QueryService {
 
-    fun create(request: QueryRequest): String {
+    fun create(request: QueryRequest): List<String> {
         val (template, params) = request
-        var query = template
+        val result = mutableListOf<String>()
 
-        for ((key, value) in params) {
-            if (value is String) {
-                query = query.replace(wrapCurlyBraces(key), value)
+        for (map in params) {
+            var query = template
+            for ((key, value) in map) {
+                if (value is String) {
+                    query = query.replace(wrapCurlyBraces(key), value)
+                }
             }
+            result.add(query)
         }
 
-        return query
+        return result
     }
 
     private fun wrapCurlyBraces(value: String): String {
