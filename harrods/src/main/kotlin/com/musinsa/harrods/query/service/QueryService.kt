@@ -9,6 +9,12 @@ class QueryService(
     private val paramCombinator: ParamCombinator
 ) {
 
+    /**
+     * 템플릿과 파라미터로 쿼리를 생성한다
+     *
+     * @param request 쿼리 생성 요청
+     * @return 생성된 쿼리 리스트
+     */
     fun create(request: QueryRequest): List<String> {
         val (template, params) = request
         val result = mutableListOf<String>()

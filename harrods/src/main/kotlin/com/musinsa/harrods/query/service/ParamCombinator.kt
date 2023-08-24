@@ -2,6 +2,12 @@ package com.musinsa.harrods.query.service
 
 class ParamCombinator {
 
+    /**
+     * 파라미터로 파라미터들의 조합을 생성한다
+     *
+     * @param params 템플릿에 사용될 파라미터
+     * @return 파라미터들의 조합
+     */
     fun generate(params: Map<String, Any>): List<Map<String, Any>> {
         val keys = params.keys.toList()
         val values = params.values.toList()
