@@ -12,7 +12,7 @@ class KeyCreator {
      * @param params 파라미터 조합
      * @return 생성된 키
      */
-    fun create(query: String, params: Map<String, String>): String {
+    fun create(query: String, params: Map<String, Any>): String {
         val key = StringBuilder()
             .append(SERVICE_NAME)
             .append(COLON)

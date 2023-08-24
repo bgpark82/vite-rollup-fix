@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test
 class QueryServiceTest {
 
     private val paramCombinator = ParamCombinator()
-    private val queryService = QueryService(paramCombinator)
+    private val keyCreator = KeyCreator()
+    private val queryService = QueryService(paramCombinator, keyCreator)
 
     @Test
     fun `단일 파라미터로 쿼리를 생성한다`() {

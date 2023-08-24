@@ -6,7 +6,8 @@ const val OPEN_DOUBLE_CURLY_BRACE = "{{"
 const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
 
 class QueryService(
-    private val paramCombinator: ParamCombinator
+    private val paramCombinator: ParamCombinator,
+    private val keyCreator: KeyCreator
 ) {
 
     /**
@@ -21,13 +22,14 @@ class QueryService(
 
         val combination = paramCombinator.generate(params)
 
-        for (map in combination) {
+        for (param in combination) {
             var query = template
-            for ((key, value) in map) {
+            for ((key, value) in param) {
                 if (value is String) {
                     query = query.replace(wrapCurlyBraces(key), value)
                 }
             }
+            val key = keyCreator.create(query, param)
             result.add(query)
         }
 
