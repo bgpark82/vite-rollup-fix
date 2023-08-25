@@ -29,6 +29,9 @@ pluginManagement {
         // 특정한 어노테이션이 붙은 클래스의 접근 제한자를 open 으로 모두 변경(https://kotlinlang.org/docs/all-open-plugin.html#spring-support)
         kotlin("plugin.spring") version KOTLIN_VERSION
 
+        // non-nullable 프로퍼티를 지원, 기본 생성자 생성 가능 (https://kotlinlang.org/docs/reference/compiler-plugins.html#jpa-support)
+        kotlin("plugin.jpa") version KOTLIN_VERSION
+
         // Spring REST Docs AsciiDoc
         id("org.asciidoctor.jvm.convert") version ASCII_DOCTOR
 

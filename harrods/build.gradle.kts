@@ -6,6 +6,7 @@ plugins {
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
+    kotlin("plugin.jpa")
     id("org.asciidoctor.jvm.convert")
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jlleitschuh.gradle.ktlint-idea")
@@ -29,6 +30,8 @@ repositories {
 }
 
 dependencies {
+    runtimeOnly("com.h2database:h2")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // common 의존성
     implementation(project(":common"))
 
