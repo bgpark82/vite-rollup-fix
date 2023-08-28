@@ -20,5 +20,5 @@ data class QueryRequest(
     /**
      * cron 표현식
      */
-    val schedule: String
+    val interval: String
 )

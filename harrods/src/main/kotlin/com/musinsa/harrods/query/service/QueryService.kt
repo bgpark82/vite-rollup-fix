@@ -21,9 +21,7 @@ class QueryService(
         val (template, params) = request
         val queries = mutableListOf<Query>()
 
-        val combination = paramCombinator.generate(params)
-
-        for (param in combination) {
+        for (param in paramCombinator.generate(params)) {
             var query = template
             for ((key, value) in param) {
                 if (value is String) {
@@ -35,7 +33,7 @@ class QueryService(
                     ttl = request.ttl,
                     queries = query,
                     cacheKey = keyCreator.create(query, param),
-                    scheduleInterval = request.schedule
+                    scheduleInterval = request.interval
                 )
             )
         }

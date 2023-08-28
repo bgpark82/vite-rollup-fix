@@ -16,7 +16,7 @@ class QueryServiceTest {
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to "peter", "age" to "30"),
             ttl = 300,
-            schedule = "* * * *"
+            interval = "* * * *"
         )
 
         val result = queryService.create(request)
@@ -30,7 +30,7 @@ class QueryServiceTest {
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to listOf("peter", "woo"), "age" to listOf("30")),
             ttl = 300,
-            schedule = "* * * *"
+            interval = "* * * *"
         )
 
         val result = queryService.create(request)
