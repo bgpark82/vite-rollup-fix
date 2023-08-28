@@ -3,6 +3,7 @@ package com.musinsa.common.error
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -45,6 +46,17 @@ class RestControllerAdviceExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
     fun handleMethodArgumentTypeMismatchException(exception: MethodArgumentTypeMismatchException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(exception))
+    }
+
+
+    /**
+     * 컨트롤러를 통해 입력된 파라미터가 Jackson으로 매핑되지 않는 경우, 예외처리
+     */
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleHttpMessageNotReadableException(exception: HttpMessageNotReadableException): ResponseEntity<ErrorResponse> {
+        println(exception is HttpMessageNotReadableException)
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse(exception))
     }

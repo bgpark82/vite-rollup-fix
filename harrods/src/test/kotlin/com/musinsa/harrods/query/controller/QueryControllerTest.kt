@@ -3,8 +3,7 @@ package com.musinsa.harrods.query.controller
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.musinsa.common.redis.config.LocalRedisServer
 import com.musinsa.harrods.query.service.QueryService
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.NullAndEmptySource
+import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -22,10 +21,24 @@ class QueryControllerTest @Autowired constructor(
     @MockBean val queryService: QueryService,
     @MockBean val redisServer: LocalRedisServer
 ) {
-    @ParameterizedTest
-    @NullAndEmptySource
-    fun `template은 null이나 빈 문자열이 아니다`(template: String?) {
-        val request = MockQueryRequest(template = template, params = mapOf(), ttl = 10, interval = "* * * * *")
+    @Test
+    fun `template은 빈 문자열이 아니다`() {
+        val request = MockQueryRequest(template = "", params = mapOf(), ttl = 10, interval = "* * * * *")
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(request))
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("template"))
+    }
+
+    @Test
+    fun `template은 null이 아니다`() {
+        val request = MockQueryRequest(template = null, params = mapOf(), ttl = 10, interval = "* * * * *")
 
         mvc.perform(
             post("/queries")
