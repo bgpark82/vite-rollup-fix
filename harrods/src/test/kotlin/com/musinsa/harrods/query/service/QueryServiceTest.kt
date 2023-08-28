@@ -1,14 +1,17 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.mockito.kotlin.mock
 
 class QueryServiceTest {
 
     private val paramCombinator = ParamCombinator()
     private val keyCreator = KeyCreator()
-    private val queryService = QueryService(paramCombinator, keyCreator)
+    private val queryRepository = mock<QueryRepository>()
+    private val queryService = QueryService(paramCombinator, keyCreator, queryRepository)
 
     @Test
     fun `단일 파라미터로 쿼리를 생성한다`() {

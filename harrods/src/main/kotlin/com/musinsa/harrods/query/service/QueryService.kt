@@ -1,7 +1,9 @@
 package com.musinsa.harrods.query.service
 
 import com.musinsa.harrods.query.domain.Query
+import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 const val OPEN_DOUBLE_CURLY_BRACE = "{{"
@@ -10,7 +12,8 @@ const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
 @Service
 class QueryService(
     private val paramCombinator: ParamCombinator,
-    private val keyCreator: KeyCreator
+    private val keyCreator: KeyCreator,
+    private val queryRepository: QueryRepository
 ) {
 
     /**
@@ -19,6 +22,7 @@ class QueryService(
      * @param request 쿼리 생성 요청
      * @return 생성된 쿼리 리스트
      */
+    @Transactional
     fun create(request: QueryRequest): List<Query> {
         val (template, params) = request
         val queries = mutableListOf<Query>()
@@ -39,6 +43,8 @@ class QueryService(
                 )
             )
         }
+
+        queryRepository.saveAll(queries)
 
         return queries
     }
