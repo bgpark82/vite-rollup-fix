@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
@@ -30,9 +31,7 @@ class QueryService(
         for (param in paramCombinator.generate(params)) {
             var query = template
             for ((key, value) in param) {
-                if (value is String) {
-                    query = query.replace(wrapCurlyBraces(key), value)
-                }
+                query = query.replace(wrapCurlyBraces(key), convertToString(value))
             }
             queries.add(
                 Query.create(
@@ -51,5 +50,13 @@ class QueryService(
 
     private fun wrapCurlyBraces(value: String): String {
         return OPEN_DOUBLE_CURLY_BRACE + value + CLOSE_DOUBLE_CURLY_BRACE
+    }
+
+    private fun convertToString(value: Any): String {
+        when (value) {
+            is String -> return value
+            is Number -> return value.toString()
+            else -> ErrorCode.INVALID_TYPE.throwMe()
+        }
     }
 }
