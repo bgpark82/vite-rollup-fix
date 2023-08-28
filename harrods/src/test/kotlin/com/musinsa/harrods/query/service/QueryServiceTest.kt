@@ -9,9 +9,9 @@ import org.mockito.kotlin.mock
 class QueryServiceTest {
 
     private val paramCombinator = ParamCombinator()
-    private val keyCreator = KeyCreator()
+    private val keyGenerator = KeyGenerator()
     private val queryRepository = mock<QueryRepository>()
-    private val queryService = QueryService(paramCombinator, keyCreator, queryRepository)
+    private val queryService = QueryService(paramCombinator, keyGenerator, queryRepository)
 
     @Test
     fun `단일 파라미터로 쿼리를 생성한다`() {

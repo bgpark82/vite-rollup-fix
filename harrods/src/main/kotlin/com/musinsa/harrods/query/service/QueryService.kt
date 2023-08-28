@@ -13,7 +13,7 @@ const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
 @Service
 class QueryService(
     private val paramCombinator: ParamCombinator,
-    private val keyCreator: KeyCreator,
+    private val keyGenerator: KeyGenerator,
     private val queryRepository: QueryRepository
 ) {
 
@@ -37,7 +37,7 @@ class QueryService(
                 Query.create(
                     ttl = request.ttl,
                     queries = query,
-                    cacheKey = keyCreator.create(query, param),
+                    cacheKey = keyGenerator.generate(query, param),
                     scheduleInterval = request.interval
                 )
             )
