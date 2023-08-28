@@ -2,7 +2,6 @@ package com.musinsa.harrods
 
 import com.musinsa.common.aws.HealthCheckController
 import com.musinsa.common.config.CorsConfig
-import com.musinsa.common.databricks.config.HarrodsDatabricksDataSourceConfig
 import com.musinsa.common.error.RestControllerAdviceExceptionHandler
 import com.musinsa.common.redis.config.LocalRedisDataSourceConfig
 import com.musinsa.common.redis.config.LocalRedisServer
@@ -15,8 +14,7 @@ import org.springframework.context.annotation.Import
 @SpringBootApplication
 @Import(
     value = [
-        CorsConfig::class, HealthCheckController::class, HttpClient::class, RestControllerAdviceExceptionHandler::class,
-        HarrodsDatabricksDataSourceConfig::class, LocalRedisServer::class, LocalRedisDataSourceConfig::class, RedisDataSourceConfig::class
+        CorsConfig::class, HealthCheckController::class, RestControllerAdviceExceptionHandler::class
     ]
 )
 class HarrodsApplication

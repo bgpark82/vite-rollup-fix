@@ -10,6 +10,11 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jlleitschuh.gradle.ktlint-idea")
 
+    // @see buildSrc/src/main/kotlin/default.gradle.kts
+    id("default")
+
+    // @see buildSrc/src/main/kotlin/redis.gradle.kts
+    id("redis")
 }
 
 group = "com.musinsa"
@@ -24,6 +29,14 @@ application {
 
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    // common 의존성
+    implementation(project(":common"))
+
+    // common testFixture 의존성
+    testImplementation(testFixtures(project(":common")))
 }
 
 tasks {
