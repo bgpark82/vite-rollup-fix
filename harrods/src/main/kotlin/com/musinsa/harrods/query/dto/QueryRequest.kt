@@ -13,7 +13,7 @@ data class QueryRequest(
     /**
      * 쿼리 파라미터
      */
-    val params: Map<String, Any>,
+    val params: Map<String, Any>?,
 
     /**
      * 캐시 만료 시간 (단위: 초)

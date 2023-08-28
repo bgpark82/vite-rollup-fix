@@ -57,4 +57,18 @@ class QueryServiceTest {
         assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = peter AND age = 30")
         assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = woo AND age = 30")
     }
+
+    @Test
+    fun `빈 파라미터로 쿼리를 생성한다`() {
+        val request = QueryRequest(
+            template = "SELECT * FROM user",
+            params = null,
+            ttl = 300,
+            interval = "* * * *"
+        )
+
+        val result = queryService.create(request)
+
+        assertThat(result[0].queries).isEqualTo("SELECT * FROM user")
+    }
 }
