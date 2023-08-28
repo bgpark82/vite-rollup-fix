@@ -10,8 +10,9 @@ class QueryServiceTest {
 
     private val paramCombinator = ParamCombinator()
     private val keyGenerator = KeyGenerator()
+    private val queryGenerator = QueryGenerator()
     private val queryRepository = mock<QueryRepository>()
-    private val queryService = QueryService(paramCombinator, keyGenerator, queryRepository)
+    private val queryService = QueryService(paramCombinator, keyGenerator, queryGenerator, queryRepository)
 
     @Test
     fun `단일 파라미터로 쿼리를 생성한다`() {

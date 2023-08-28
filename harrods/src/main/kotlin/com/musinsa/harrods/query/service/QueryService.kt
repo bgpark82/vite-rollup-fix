@@ -1,19 +1,16 @@
 package com.musinsa.harrods.query.service
 
-import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
-const val OPEN_DOUBLE_CURLY_BRACE = "{{"
-const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
-
 @Service
 class QueryService(
     private val paramCombinator: ParamCombinator,
     private val keyGenerator: KeyGenerator,
+    private val queryGenerator: QueryGenerator,
     private val queryRepository: QueryRepository
 ) {
 
@@ -29,10 +26,8 @@ class QueryService(
         val queries = mutableListOf<Query>()
 
         for (param in paramCombinator.generate(params)) {
-            var query = template
-            for ((key, value) in param) {
-                query = query.replace(wrapCurlyBraces(key), convertToString(value))
-            }
+            val query = queryGenerator.generate(template, param)
+
             queries.add(
                 Query.create(
                     ttl = request.ttl,
@@ -46,17 +41,5 @@ class QueryService(
         queryRepository.saveAll(queries)
 
         return queries
-    }
-
-    private fun wrapCurlyBraces(value: String): String {
-        return OPEN_DOUBLE_CURLY_BRACE + value + CLOSE_DOUBLE_CURLY_BRACE
-    }
-
-    private fun convertToString(value: Any): String {
-        when (value) {
-            is String -> return value
-            is Number -> return value.toString()
-            else -> ErrorCode.INVALID_TYPE.throwMe()
-        }
     }
 }
