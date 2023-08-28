@@ -1,11 +1,14 @@
 package com.musinsa.harrods.query.dto
 
+import jakarta.validation.constraints.NotBlank
+
 data class QueryRequest(
 
     /**
      * 쿼리 템플릿
      */
-    val template: String,
+    @field:NotBlank(message = "템플릿은 null이거나 빈 문자열이 아니어야 합니다")
+    val template: String?,
 
     /**
      * 쿼리 파라미터
