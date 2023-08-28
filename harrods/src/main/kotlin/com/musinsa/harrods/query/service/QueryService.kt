@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.dto.QueryRequest
 
 const val OPEN_DOUBLE_CURLY_BRACE = "{{"
@@ -16,9 +17,9 @@ class QueryService(
      * @param request 쿼리 생성 요청
      * @return 생성된 쿼리 리스트
      */
-    fun create(request: QueryRequest): List<String> {
+    fun create(request: QueryRequest): List<Query> {
         val (template, params) = request
-        val result = mutableListOf<String>()
+        val queries = mutableListOf<Query>()
 
         val combination = paramCombinator.generate(params)
 
@@ -29,11 +30,17 @@ class QueryService(
                     query = query.replace(wrapCurlyBraces(key), value)
                 }
             }
-            val key = keyCreator.create(query, param)
-            result.add(query)
+            queries.add(
+                Query.create(
+                    ttl = request.ttl,
+                    queries = query,
+                    cacheKey = keyCreator.create(query, param),
+                    scheduleInterval = request.schedule
+                )
+            )
         }
 
-        return result
+        return queries
     }
 
     private fun wrapCurlyBraces(value: String): String {

@@ -36,4 +36,10 @@ class Query(
      * cron 표현식
      */
     var scheduleInterval: String
-)
+) {
+    companion object {
+        fun create(queries: String, cacheKey: String, ttl: Int, scheduleInterval: String): Query {
+            return Query(null, queries, cacheKey, ttl, scheduleInterval)
+        }
+    }
+}

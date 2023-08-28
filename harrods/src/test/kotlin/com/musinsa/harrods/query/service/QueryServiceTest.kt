@@ -14,26 +14,28 @@ class QueryServiceTest {
     fun `단일 파라미터로 쿼리를 생성한다`() {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
-            params = mapOf("name" to "peter", "age" to "30")
+            params = mapOf("name" to "peter", "age" to "30"),
+            ttl = 300,
+            schedule = "* * * *"
         )
 
         val result = queryService.create(request)
 
-        assertThat(result).contains("SELECT * FROM user WHERE name = peter AND age = 30")
+        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = peter AND age = 30")
     }
 
     @Test
     fun `복수 파라미터로 쿼리를 생성한다`() {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
-            params = mapOf("name" to listOf("peter", "woo"), "age" to listOf("30"))
+            params = mapOf("name" to listOf("peter", "woo"), "age" to listOf("30")),
+            ttl = 300,
+            schedule = "* * * *"
         )
 
         val result = queryService.create(request)
 
-        assertThat(result).contains(
-            "SELECT * FROM user WHERE name = peter AND age = 30",
-            "SELECT * FROM user WHERE name = woo AND age = 30"
-        )
+        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = peter AND age = 30")
+        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = woo AND age = 30")
     }
 }
