@@ -1,5 +1,8 @@
 package com.musinsa.harrods.query.service
 
+import org.springframework.stereotype.Component
+
+@Component
 class ParamCombinator {
 
     /**

@@ -2,10 +2,12 @@ package com.musinsa.harrods.query.service
 
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.dto.QueryRequest
+import org.springframework.stereotype.Service
 
 const val OPEN_DOUBLE_CURLY_BRACE = "{{"
 const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
 
+@Service
 class QueryService(
     private val paramCombinator: ParamCombinator,
     private val keyCreator: KeyCreator

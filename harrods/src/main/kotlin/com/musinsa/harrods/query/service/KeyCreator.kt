@@ -1,7 +1,11 @@
 package com.musinsa.harrods.query.service
 
+import org.springframework.stereotype.Component
+
 const val SERVICE_NAME = "harrods"
 const val COLON = ":"
+
+@Component
 class KeyCreator {
 
     /**
