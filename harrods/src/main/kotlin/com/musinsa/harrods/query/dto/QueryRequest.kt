@@ -30,5 +30,6 @@ data class QueryRequest(
     /**
      * cron 표현식
      */
+    // TODO: airflow cron validation
     val interval: String
 )
