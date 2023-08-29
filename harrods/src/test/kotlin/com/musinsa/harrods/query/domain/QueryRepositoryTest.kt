@@ -20,7 +20,7 @@ class QueryRepositoryTest @Autowired constructor(
         val query = "SELECT * FROM user"
         val key = "harrods:${query.hashCode()}"
         val interval = "* * * *"
-        val ttl = 1000
+        val ttl = 1000L
 
         val savedQuery =
             queryRepository.save(Query(null, query, key, ttl, interval))

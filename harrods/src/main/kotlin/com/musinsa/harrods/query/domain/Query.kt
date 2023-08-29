@@ -30,7 +30,7 @@ class Query(
     /**
      * 캐시 만료 시간 (단위: 초)
      */
-    var ttl: Int,
+    var ttl: Long?,
 
     /**
      * cron 표현식
@@ -38,7 +38,7 @@ class Query(
     var scheduleInterval: String
 ) {
     companion object {
-        fun create(queries: String, cacheKey: String, ttl: Int, scheduleInterval: String): Query {
+        fun create(queries: String, cacheKey: String, ttl: Long?, scheduleInterval: String): Query {
             return Query(null, queries, cacheKey, ttl, scheduleInterval)
         }
     }

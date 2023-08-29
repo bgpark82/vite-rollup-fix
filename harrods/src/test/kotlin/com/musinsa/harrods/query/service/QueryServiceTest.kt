@@ -19,7 +19,7 @@ class QueryServiceTest {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to "peter", "age" to "30"),
-            ttl = 300,
+            ttl = 300L,
             interval = "* * * *"
         )
 
@@ -33,7 +33,7 @@ class QueryServiceTest {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to listOf("peter", "woo"), "age" to listOf("30")),
-            ttl = 300,
+            ttl = 300L,
             interval = "* * * *"
         )
 
@@ -48,7 +48,7 @@ class QueryServiceTest {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to listOf("peter", "woo"), "age" to listOf(30)),
-            ttl = 300,
+            ttl = 300L,
             interval = "* * * *"
         )
 
@@ -63,7 +63,7 @@ class QueryServiceTest {
         val request = QueryRequest(
             template = "SELECT * FROM user",
             params = null,
-            ttl = 300,
+            ttl = 300L,
             interval = "* * * *"
         )
 

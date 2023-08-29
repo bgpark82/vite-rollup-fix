@@ -17,7 +17,7 @@ data class QueryResponse(
     /**
      * 캐시 만료 시간 (단위: 초)
      */
-    var ttl: Int,
+    var ttl: Long?,
 
     /**
      * cron 표현식

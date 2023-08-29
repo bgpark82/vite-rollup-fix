@@ -23,7 +23,7 @@ class QueryControllerTest @Autowired constructor(
 ) {
     @Test
     fun `template은 빈 문자열이 아니다`() {
-        val request = MockQueryRequest(template = "", params = mapOf(), ttl = 10, interval = "* * * * *")
+        val request = MockQueryRequest(template = "", params = mapOf(), ttl = 10L, interval = "* * * * *")
 
         mvc.perform(
             post("/queries")
@@ -38,7 +38,7 @@ class QueryControllerTest @Autowired constructor(
 
     @Test
     fun `template은 null이 아니다`() {
-        val request = MockQueryRequest(template = null, params = mapOf(), ttl = 10, interval = "* * * * *")
+        val request = MockQueryRequest(template = null, params = mapOf(), ttl = 10L, interval = "* * * * *")
 
         mvc.perform(
             post("/queries")
@@ -54,7 +54,7 @@ class QueryControllerTest @Autowired constructor(
     data class MockQueryRequest(
         val template: String? = null,
         val params: Map<String, Any>? = null,
-        val ttl: Int? = null,
+        val ttl: Long? = null,
         val interval: String? = null
     )
 }

@@ -19,6 +19,7 @@ data class QueryRequest(
      * 캐시 만료 시간 (단위: 초)
      */
     val ttl: Int,
+    val ttl: Long?,
 
     /**
      * cron 표현식
