@@ -7,6 +7,7 @@ import io.lettuce.core.api.sync.RedisCommands
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.DependsOn
 import org.springframework.context.annotation.Profile
 
 @Profile(value = ["local", "test"])
@@ -23,6 +24,7 @@ class LocalRedisDataSourceConfig(
      * Local, Test 실행을 위한 내장 Redis
      */
     @Bean
+    @DependsOn("localRedisServer")
     fun redisConnection(): StatefulRedisConnection<String, String> {
         val redisClient =
             RedisClient.create(
