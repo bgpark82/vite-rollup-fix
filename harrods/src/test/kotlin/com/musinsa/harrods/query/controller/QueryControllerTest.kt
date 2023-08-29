@@ -51,6 +51,50 @@ class QueryControllerTest @Autowired constructor(
             .andExpect(jsonPath("$.invalidField").value("template"))
     }
 
+    @Test
+    fun `ttl은 null을 허용한다`() {
+        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = null, interval = "* * * * *")
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(request))
+        )
+            .andDo(print())
+            .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `ttl은 최소값이 1이상이다`() {
+        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = -1L, interval = "* * * * *")
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(request))
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("ttl"))
+    }
+
+    @Test
+    fun `ttl은 최대값은 9_223_370_000_000_000 이하이다`() {
+        val ttlMax = 9_223_370_000_000_000L + 1L
+        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = ttlMax, interval = "* * * * *")
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsBytes(request))
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("ttl"))
+    }
+
     data class MockQueryRequest(
         val template: String? = null,
         val params: Map<String, Any>? = null,
