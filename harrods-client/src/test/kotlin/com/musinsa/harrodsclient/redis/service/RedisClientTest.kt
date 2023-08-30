@@ -1,5 +1,6 @@
 package com.musinsa.harrodsclient.redis.service
 
+import com.musinsa.common.util.ObjectMapperFactory
 import io.lettuce.core.api.sync.RedisCommands
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -13,10 +14,15 @@ import org.springframework.boot.test.context.SpringBootTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 internal class RedisClientTest {
     @Autowired
-    lateinit var redisClient: RedisClient
+    lateinit var sut: RedisClient
 
     @Autowired
     lateinit var redisCommands: RedisCommands<String, String>
+
+    private val 준비코드_BOOK_KEY = "book"
+    private val 준비코드_BOOK_VALUE = """
+            [{"title":"CPP","author":"Milton","year":"2008","price":"456.00"},{"title":"JAVA","author":"Gilson","year":"2002","price":"456.00"}]
+    """.trimIndent()
 
     @BeforeEach
     fun setUp() {
@@ -26,13 +32,12 @@ internal class RedisClientTest {
 
     @Test
     fun 아이템을_가져온다() {
-        // given
-        redisCommands.set("test-key", "value")
+        redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
 
-        // when
-        val test = redisClient.get("test-key")
+        val 결과값 = sut.get(준비코드_BOOK_KEY)
 
-        // then
-        assertThat(test).isEqualTo("value")
+        assertThat(ObjectMapperFactory.writeValueAsString(결과값)).isEqualTo(
+            준비코드_BOOK_VALUE
+        )
     }
 }
