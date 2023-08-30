@@ -40,4 +40,13 @@ internal class RedisClientTest {
             준비코드_BOOK_VALUE
         )
     }
+
+    @Test
+    fun 모든_키_아이템을_가져온다() {
+        // given
+
+        // when
+
+        // then
+    }
 }
