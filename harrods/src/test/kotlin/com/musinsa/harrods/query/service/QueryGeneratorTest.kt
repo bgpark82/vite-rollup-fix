@@ -26,4 +26,14 @@ class QueryGeneratorTest {
 
         assertThat(result).isEqualTo("SELECT * FROM user WHERE name = {{name}} AND age = 30")
     }
+
+    @Test
+    fun `리스트 타입 파라미터로 쿼리를 생성한다`() {
+        val query = "SELECT * FROM user WHERE age in ({{age}})"
+        val param = mapOf("age" to listOf(1, 2))
+
+        val result = queryGenerator.generate(query, param)
+
+        assertThat(result).isEqualTo("SELECT * FROM user WHERE age in (1,2)")
+    }
 }

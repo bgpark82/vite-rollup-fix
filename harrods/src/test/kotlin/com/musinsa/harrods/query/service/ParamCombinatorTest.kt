@@ -10,16 +10,34 @@ class ParamCombinatorTest {
         val combinator = ParamCombinator()
         val params = mapOf(
             "name" to listOf("peter", "woo"),
-            "age" to listOf("10", "20")
+            "age" to listOf(10, 20)
         )
 
         val result = combinator.generate(params)
 
         assertThat(result).containsExactlyInAnyOrder(
-            mapOf("name" to "peter", "age" to "10"),
-            mapOf("name" to "peter", "age" to "20"),
-            mapOf("name" to "woo", "age" to "10"),
-            mapOf("name" to "woo", "age" to "20")
+            mapOf("name" to "peter", "age" to 10),
+            mapOf("name" to "peter", "age" to 20),
+            mapOf("name" to "woo", "age" to 10),
+            mapOf("name" to "woo", "age" to 20)
+        )
+    }
+
+    @Test
+    fun `리스트 파라미터를 포함한다`() {
+        val combinator = ParamCombinator()
+        val params = mapOf(
+            "name" to listOf("peter", "woo"),
+            "age" to listOf(listOf(10, 20), 30)
+        )
+
+        val result = combinator.generate(params)
+
+        assertThat(result).containsExactlyInAnyOrder(
+            mapOf("name" to "peter", "age" to listOf(10, 20)),
+            mapOf("name" to "peter", "age" to 30),
+            mapOf("name" to "woo", "age" to listOf(10, 20)),
+            mapOf("name" to "woo", "age" to 30)
         )
     }
 

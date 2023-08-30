@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 
 const val OPEN_DOUBLE_CURLY_BRACE = "{{"
 const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
+const val LIST_SEPARATOR = ","
 
 @Component
 class QueryGenerator {
@@ -33,6 +34,7 @@ class QueryGenerator {
         when (value) {
             is String -> return value
             is Number -> return value.toString()
+            is List<*> -> return value.joinToString(LIST_SEPARATOR)
             else -> ErrorCode.INVALID_TYPE.throwMe()
         }
     }
