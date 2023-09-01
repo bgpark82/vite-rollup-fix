@@ -32,5 +32,11 @@ data class QueryRequest(
      * cron 표현식
      */
     // TODO: airflow cron validation
-    val interval: String
+    val interval: String,
+
+    /**
+     * 등록자 아이디
+     */
+    @field:NotBlank(message = "등록자 아이디는 null이거나 빈 문자열이 아니어야 합니다")
+    val userId: String
 )

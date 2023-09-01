@@ -21,7 +21,8 @@ class QueryServiceTest {
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to "peter", "age" to "30"),
             ttl = 300L,
-            interval = "* * * *"
+            interval = "* * * *",
+            userId = "peter.park"
         )
 
         val result = queryService.create(request)
@@ -35,7 +36,8 @@ class QueryServiceTest {
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to listOf("peter", "woo"), "age" to listOf("30")),
             ttl = 300L,
-            interval = "* * * *"
+            interval = "* * * *",
+            userId = "peter.park"
         )
 
         val result = queryService.create(request)
@@ -50,7 +52,8 @@ class QueryServiceTest {
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
             params = mapOf("name" to listOf("peter", "woo"), "age" to listOf(30)),
             ttl = 300L,
-            interval = "* * * *"
+            interval = "* * * *",
+            userId = "peter.park"
         )
 
         val result = queryService.create(request)
@@ -65,7 +68,8 @@ class QueryServiceTest {
             template = "SELECT * FROM user WHERE age IN ({{age}})",
             params = mapOf("age" to listOf(listOf(30, 40), 50)),
             ttl = 300L,
-            interval = "* * * *"
+            interval = "* * * *",
+            userId = "peter.park"
         )
 
         val result = queryService.create(request)
@@ -80,7 +84,8 @@ class QueryServiceTest {
             template = "SELECT * FROM user WHERE age IN ({{age}}) AND name = {{name}}",
             params = mapOf("age" to listOf(listOf(30, 40), 50), "name" to listOf("woo", "peter")),
             ttl = 300L,
-            interval = "* * * *"
+            interval = "* * * *",
+            userId = "peter.park"
         )
 
         val result = queryService.create(request)
@@ -99,7 +104,8 @@ class QueryServiceTest {
             template = "SELECT * FROM user",
             params = null,
             ttl = 300L,
-            interval = "* * * *"
+            interval = "* * * *",
+            userId = "peter.park"
         )
 
         val result = queryService.create(request)
