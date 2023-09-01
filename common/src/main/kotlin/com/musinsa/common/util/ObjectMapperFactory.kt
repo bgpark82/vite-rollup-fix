@@ -9,6 +9,9 @@ import com.musinsa.common.error.CommonError
  */
 object ObjectMapperFactory {
     private val mapper = jacksonObjectMapper()
+    val typeRefListMapAny =
+        object : TypeReference<List<Map<String, Any>>>() {}
+
 
     /**
      * String to JSON 변환
