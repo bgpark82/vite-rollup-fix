@@ -28,8 +28,16 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
     @Test
     fun 캐시키_파라미터는_적어도_1개_존재해야_한다() {
         val 키가_없는_요청객체 =
-            ObjectMapperFactory.writeValueAsString(Search(keys = arrayOf()))
+            ObjectMapperFactory.writeValueAsString(Search(keys = emptyArray()))
 
         mockMvc.POST("/cache", 키가_없는_요청객체).유효하지_않은_요청값_검증("keys")
+    }
+
+    @Test
+    fun 캐시키_파라미터는_최대_1000개_존재해야_한다() {
+        val 키가_1001개_요청객체 =
+            ObjectMapperFactory.writeValueAsString(Search(keys = Array(1001) { index -> index.toString() }))
+
+        mockMvc.POST("/cache", 키가_1001개_요청객체).유효하지_않은_요청값_검증("keys")
     }
 }
