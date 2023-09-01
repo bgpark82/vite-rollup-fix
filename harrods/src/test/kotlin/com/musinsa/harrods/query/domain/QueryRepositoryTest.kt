@@ -21,9 +21,10 @@ class QueryRepositoryTest @Autowired constructor(
         val key = "harrods:${query.hashCode()}"
         val interval = "* * * *"
         val ttl = 1000L
+        val userId = "peter.park"
 
         val savedQuery =
-            queryRepository.save(Query.create(query, key, ttl, interval))
+            queryRepository.save(Query.create(query, key, ttl, interval, userId))
 
         assertThat(savedQuery.id).isEqualTo(1L)
         assertThat(savedQuery.ttl).isEqualTo(ttl)

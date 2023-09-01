@@ -22,7 +22,7 @@ class QueryService(
      */
     @Transactional
     fun create(request: QueryRequest): List<Query> {
-        val (template, params) = request
+        val (template, params, ttl, interval, userId) = request
         val queries = mutableListOf<Query>()
 
         for (param in paramCombinator.generate(params)) {
@@ -30,10 +30,11 @@ class QueryService(
 
             queries.add(
                 Query.create(
-                    ttl = request.ttl,
+                    ttl = ttl,
                     queries = query,
                     cacheKey = keyGenerator.generate(query, param),
-                    scheduleInterval = request.interval
+                    scheduleInterval = interval,
+                    userId = userId
                 )
             )
         }

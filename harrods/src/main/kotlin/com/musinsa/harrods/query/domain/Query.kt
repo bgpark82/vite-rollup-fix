@@ -69,8 +69,8 @@ class Query(
 
 ) {
     companion object {
-        fun create(queries: String, cacheKey: String, ttl: Long, scheduleInterval: String): Query {
-            return Query(null, queries, cacheKey, ttl, scheduleInterval, "peter.park", LocalDateTime.now(), LocalDateTime.now(), null)
+        fun create(queries: String, cacheKey: String, ttl: Long, scheduleInterval: String, userId: String): Query {
+            return Query(null, queries, cacheKey, ttl, scheduleInterval, userId, LocalDateTime.now(), LocalDateTime.now(), null)
         }
     }
 }
