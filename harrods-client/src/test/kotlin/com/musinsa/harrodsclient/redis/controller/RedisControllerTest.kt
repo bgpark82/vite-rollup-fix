@@ -4,9 +4,12 @@ import com.musinsa.common.restdoc.POST
 import com.musinsa.common.restdoc.RestDocsControllerHelper
 import com.musinsa.common.restdoc.유효하지_않은_요청값_검증
 import com.musinsa.common.util.ObjectMapperFactory
+import com.musinsa.harrodsclient.redis.dto.KEY_SIZE_MAX
+import com.musinsa.harrodsclient.redis.dto.KEY_SIZE_MIN
 import com.musinsa.harrodsclient.redis.dto.Search
 import com.musinsa.harrodsclient.redis.service.RedisClient
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 
@@ -25,19 +28,16 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
         // doNothing
     }
 
-    @Test
-    fun 캐시키_파라미터는_적어도_1개_존재해야_한다() {
-        val 키가_없는_요청객체 =
-            ObjectMapperFactory.writeValueAsString(Search(keys = emptyArray()))
+    @ParameterizedTest
+    @CsvSource(value = ["$KEY_SIZE_MIN,-1", "$KEY_SIZE_MAX,1"])
+    fun 유효하지_않은_사이즈의_캐시키는_요청이_실패한다(KEY_SIZE: Int, ADD_SIZE: Int) {
+        val 유효하지_않은_캐시키_사이즈를_가진_요청객체 =
+            ObjectMapperFactory.writeValueAsString(요청객체_생성(KEY_SIZE + ADD_SIZE))
 
-        mockMvc.POST("/cache", 키가_없는_요청객체).유효하지_않은_요청값_검증("keys")
+        mockMvc.POST("/cache", 유효하지_않은_캐시키_사이즈를_가진_요청객체).유효하지_않은_요청값_검증("keys")
     }
 
-    @Test
-    fun 캐시키_파라미터는_최대_1000개_존재해야_한다() {
-        val 키가_1001개_요청객체 =
-            ObjectMapperFactory.writeValueAsString(Search(keys = Array(1001) { index -> index.toString() }))
-
-        mockMvc.POST("/cache", 키가_1001개_요청객체).유효하지_않은_요청값_검증("keys")
+    private fun 요청객체_생성(keySize: Int): Search {
+        return Search(keys = Array(keySize) { index -> index.toString() })
     }
 }
