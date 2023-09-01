@@ -23,7 +23,7 @@ class QueryRepositoryTest @Autowired constructor(
         val ttl = 1000L
 
         val savedQuery =
-            queryRepository.save(Query(null, query, key, ttl, interval))
+            queryRepository.save(Query.create(query, key, ttl, interval))
 
         assertThat(savedQuery.id).isEqualTo(1L)
         assertThat(savedQuery.ttl).isEqualTo(ttl)

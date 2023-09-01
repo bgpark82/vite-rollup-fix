@@ -62,7 +62,7 @@ class QueryServiceTest {
     @Test
     fun `리스트 파라미터로 쿼리를 생성한다`() {
         val request = QueryRequest(
-            template = "SELECT * FROM user WHERE age in ({{age}})",
+            template = "SELECT * FROM user WHERE age IN ({{age}})",
             params = mapOf("age" to listOf(listOf(30, 40), 50)),
             ttl = 300L,
             interval = "* * * *"
