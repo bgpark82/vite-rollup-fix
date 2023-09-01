@@ -16,11 +16,13 @@ class KeyGenerator {
      * @param params 파라미터 조합
      * @return 생성된 키
      */
-    fun generate(query: String, params: Map<String, Any>): String {
+    fun generate(query: String, params: Map<String, Any>, userId: String): String {
         val key = StringBuilder()
             .append(SERVICE_NAME)
             .append(COLON)
-            .append(query.hashCode()) // TODO: 사용자 아이디 혹은 부서명으로 구분
+            .append(userId)
+            .append(COLON)
+            .append(query.hashCode())
 
         for ((name, value) in params) {
             key.append(COLON)
