@@ -2,6 +2,7 @@ package com.musinsa.harrodsclient.redis.service
 
 import com.musinsa.common.util.ObjectMapperFactory
 import com.musinsa.common.util.ObjectMapperFactory.typeRefListMapAny
+import com.musinsa.harrodsclient.redis.dto.Search
 import io.lettuce.core.api.sync.RedisCommands
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -40,7 +41,8 @@ internal class RedisClientTest {
         redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
         redisCommands.set(준비코드_GLOSSARY_KEY, 준비코드_GLOSSARY_VALUE)
 
-        val 결과값 = sut.getAll(arrayOf(준비코드_BOOK_KEY, 준비코드_GLOSSARY_KEY))
+        val 결과값 =
+            sut.getAll(Search(keys = arrayOf(준비코드_BOOK_KEY, 준비코드_GLOSSARY_KEY)))
 
         assertThat(결과값).isEqualTo(
             listOf(
@@ -65,7 +67,7 @@ internal class RedisClientTest {
         redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
         val 없는_키 = "NON::EXISTENT::KEY"
 
-        val 결과값 = sut.getAll(arrayOf(없는_키, 준비코드_BOOK_KEY))
+        val 결과값 = sut.getAll(Search(keys = arrayOf(없는_키, 준비코드_BOOK_KEY)))
 
         assertThat(결과값).isEqualTo(
             listOf(
