@@ -36,17 +36,6 @@ internal class RedisClientTest {
     }
 
     @Test
-    fun 아이템을_가져온다() {
-        redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
-
-        val 결과값 = sut.get(준비코드_BOOK_KEY)
-
-        assertThat(ObjectMapperFactory.writeValueAsString(결과값)).isEqualTo(
-            준비코드_BOOK_VALUE
-        )
-    }
-
-    @Test
     fun 모든_키_아이템을_가져온다() {
         redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
         redisCommands.set(준비코드_GLOSSARY_KEY, 준비코드_GLOSSARY_VALUE)
@@ -73,10 +62,23 @@ internal class RedisClientTest {
 
     @Test
     fun 존재하지_않는_키에_대해서는_빈값을_리스트로_가져온다() {
-        // given
+        redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
+        val 없는_키 = "NON::EXISTENT::KEY"
 
-        // when
+        val 결과값 = sut.getAll(arrayOf(없는_키, 준비코드_BOOK_KEY))
 
-        // then
+        assertThat(결과값).isEqualTo(
+            listOf(
+                mapOf(
+                    없는_키 to "[]"
+                ),
+                mapOf(
+                    준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
+                        준비코드_BOOK_VALUE,
+                        typeRefListMapAny
+                    )
+                )
+            )
+        )
     }
 }
