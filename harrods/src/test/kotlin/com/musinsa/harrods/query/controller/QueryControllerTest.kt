@@ -52,13 +52,18 @@ class QueryControllerTest @Autowired constructor(
     }
 
     @Test
-    fun `ttl은 null을 허용한다`() {
-        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = null, interval = "* * * * *")
+    fun `ttl은 기본값은 3일이다`() {
+        val ttl이_없는_요청 = """
+            {
+              "template": "SELECT * FROM user",
+              "interval": "* * * *"
+            }
+        """.trimIndent()
 
         mvc.perform(
             post("/queries")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsBytes(request))
+                .content(ttl이_없는_요청)
         )
             .andDo(print())
             .andExpect(status().isOk)
