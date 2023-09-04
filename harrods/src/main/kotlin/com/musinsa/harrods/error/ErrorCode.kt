@@ -9,7 +9,8 @@ enum class ErrorCode(
     override val message: String
 ) : Error {
 
-    INVALID_TYPE(HttpStatus.BAD_REQUEST, "유효하지 않은 타입");
+    INVALID_TYPE(HttpStatus.BAD_REQUEST, "유효하지 않은 타입"),
+    UNSUPPORTED_PARAMETER_TYPE(HttpStatus.BAD_REQUEST, "지원하지 않는 파라미터 타입");
 
     override fun <T> throwMe(): T {
         throw CodeAwareException(this)

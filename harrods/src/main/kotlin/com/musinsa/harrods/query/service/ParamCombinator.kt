@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.error.ErrorCode
 import org.springframework.stereotype.Component
 
 @Component
@@ -38,11 +39,14 @@ class ParamCombinator {
                     generateCombination(index + 1, currentCombination)
                 }
             }
-
             // 문자, 숫자인 경우
-            if (value is String || value is Number) {
+            else if (value is String || value is Number) {
                 currentCombination[name] = value
                 generateCombination(index + 1, currentCombination)
+            }
+            // 그 외 타입인 경우 에러
+            else {
+                ErrorCode.UNSUPPORTED_PARAMETER_TYPE.throwMe()
             }
         }
 
