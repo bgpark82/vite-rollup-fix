@@ -15,7 +15,7 @@ class QueryGeneratorTest {
 
         val result = queryGenerator.generate(query, param)
 
-        assertThat(result).isEqualTo("SELECT * FROM user WHERE name = peter AND age = {{age}}")
+        assertThat(result).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = {{age}}")
     }
 
     @Test

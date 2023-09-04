@@ -20,7 +20,7 @@ class QueryServiceTest {
     fun `단일 파라미터로 쿼리를 생성한다`() {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
-            params = mapOf("name" to "peter", "age" to "30"),
+            params = mapOf("name" to "peter", "age" to 30),
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park"
@@ -28,14 +28,14 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = peter AND age = 30")
+        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
     }
 
     @Test
     fun `복수(문자, 문자) 파라미터로 쿼리를 생성한다`() {
         val request = QueryRequest(
             template = "SELECT * FROM user WHERE name = {{name}} AND age = {{age}}",
-            params = mapOf("name" to listOf("peter", "woo"), "age" to listOf("30")),
+            params = mapOf("name" to listOf("peter", "woo"), "age" to listOf(30)),
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park"
@@ -43,8 +43,8 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = peter AND age = 30")
-        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = woo AND age = 30")
+        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
+        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = 'woo' AND age = 30")
     }
 
     @Test
@@ -59,8 +59,8 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = peter AND age = 30")
-        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = woo AND age = 30")
+        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
+        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = 'woo' AND age = 30")
     }
 
     @Test
@@ -92,10 +92,10 @@ class QueryServiceTest {
         val result = queryService.create(request)
 
         assertThat(result.map(Query::queries)).containsExactlyInAnyOrder(
-            "SELECT * FROM user WHERE age IN (50) AND name = woo",
-            "SELECT * FROM user WHERE age IN (50) AND name = peter",
-            "SELECT * FROM user WHERE age IN (30,40) AND name = woo",
-            "SELECT * FROM user WHERE age IN (30,40) AND name = peter"
+            "SELECT * FROM user WHERE age IN (50) AND name = 'woo'",
+            "SELECT * FROM user WHERE age IN (50) AND name = 'peter'",
+            "SELECT * FROM user WHERE age IN (30,40) AND name = 'woo'",
+            "SELECT * FROM user WHERE age IN (30,40) AND name = 'peter'"
         )
     }
 

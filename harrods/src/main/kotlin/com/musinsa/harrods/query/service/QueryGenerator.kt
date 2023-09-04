@@ -29,7 +29,7 @@ class QueryGenerator(
 
     private fun convertToString(value: Any): String {
         when (value) {
-            is String -> return value
+            is String -> return TemplateUtils.wrapQuotations(value)
             is Number -> return value.toString()
             is List<*> -> return value.joinToString(LIST_SEPARATOR)
             else -> ErrorCode.INVALID_TYPE.throwMe()
