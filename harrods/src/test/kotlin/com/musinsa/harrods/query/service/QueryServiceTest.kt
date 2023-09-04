@@ -1,11 +1,10 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.query.domain.MockQueryRepository
 import com.musinsa.harrods.query.domain.Query
-import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
 
 class QueryServiceTest {
 
@@ -13,7 +12,7 @@ class QueryServiceTest {
     private val paramCombinator = ParamCombinator()
     private val keyGenerator = KeyGenerator()
     private val queryGenerator = QueryGenerator(templateFormatter)
-    private val queryRepository = mock<QueryRepository>()
+    private val queryRepository = MockQueryRepository()
     private val queryService = QueryService(paramCombinator, keyGenerator, queryGenerator, queryRepository)
 
     @Test
