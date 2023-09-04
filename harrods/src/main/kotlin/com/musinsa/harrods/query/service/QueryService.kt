@@ -11,7 +11,8 @@ class QueryService(
     private val paramCombinator: ParamCombinator,
     private val keyGenerator: KeyGenerator,
     private val queryGenerator: QueryGenerator,
-    private val queryRepository: QueryRepository
+    private val queryRepository: QueryRepository,
+    private val templateFormatter: TemplateFormatter
 ) {
 
     /**
@@ -25,8 +26,10 @@ class QueryService(
         val (template, params, ttl, interval, userId) = request
         val queries = mutableListOf<Query>()
 
+        val formattedTemplate = templateFormatter.format(template)
+
         for (param in paramCombinator.generate(params)) {
-            val query = queryGenerator.generate(template, param)
+            val query = queryGenerator.generate(formattedTemplate, param)
 
             queries.add(
                 Query.create(

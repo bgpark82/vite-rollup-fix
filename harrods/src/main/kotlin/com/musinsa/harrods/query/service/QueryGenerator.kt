@@ -7,9 +7,7 @@ import org.springframework.stereotype.Component
 const val LIST_SEPARATOR = ","
 
 @Component
-class QueryGenerator(
-    private val templateFormatter: TemplateFormatter
-) {
+class QueryGenerator {
 
     /**
      * 쿼리 템플릿에서 {{ key }}을 value으로 변경한다
@@ -20,7 +18,7 @@ class QueryGenerator(
      * @return 템플릿과 파라미터로 조합된 완전한 쿼리
      */
     fun generate(template: String, param: Map<String, Any>): String {
-        var query = templateFormatter.format(template)
+        var query = template
         for ((key, value) in param) {
             query = query.replace(TemplateUtils.wrapCurlyBraces(key), convertToString(value))
         }

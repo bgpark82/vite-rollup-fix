@@ -11,9 +11,9 @@ class QueryServiceTest {
     private val templateFormatter = TemplateFormatter()
     private val paramCombinator = ParamCombinator()
     private val keyGenerator = KeyGenerator()
-    private val queryGenerator = QueryGenerator(templateFormatter)
+    private val queryGenerator = QueryGenerator()
     private val queryRepository = MockQueryRepository()
-    private val queryService = QueryService(paramCombinator, keyGenerator, queryGenerator, queryRepository)
+    private val queryService = QueryService(paramCombinator, keyGenerator, queryGenerator, queryRepository, templateFormatter)
 
     @Test
     fun `단일 파라미터로 쿼리를 생성한다`() {
