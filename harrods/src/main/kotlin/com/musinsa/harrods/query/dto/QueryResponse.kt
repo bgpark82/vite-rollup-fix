@@ -5,6 +5,11 @@ import com.musinsa.harrods.query.domain.Query
 data class QueryResponse(
 
     /**
+     * 쿼리 아이디
+     */
+    var id: Long,
+
+    /**
      * 생성된 sql 쿼리
      */
     var query: String,
@@ -22,11 +27,18 @@ data class QueryResponse(
     /**
      * cron 표현식
      */
-    var interval: String
+    var interval: String,
+
+    /**
+     * 등록자 아이디
+     */
+    var userId: String
 ) {
     companion object {
         fun of(query: Query): QueryResponse {
             return QueryResponse(
+                id = query.id!!,
+                userId = query.userId,
                 query = query.queries,
                 key = query.cacheKey,
                 ttl = query.ttl,

@@ -39,8 +39,6 @@ class QueryService(
             )
         }
 
-        queryRepository.saveAll(queries)
-
-        return queries
+        return queryRepository.saveAll(queries)
     }
 }
