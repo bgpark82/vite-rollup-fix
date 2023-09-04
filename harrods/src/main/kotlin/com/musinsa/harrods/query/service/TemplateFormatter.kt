@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.utils.validator.TemplateUtils
 import org.springframework.stereotype.Component
 import java.lang.StringBuilder
@@ -18,6 +19,7 @@ class TemplateFormatter {
     fun format(template: String): String {
         val sb = StringBuilder(template)
 
+        validateCommentExist(sb)
         removeSpaceInCurlyBraces(sb)
 
         return sb.toString()
@@ -33,5 +35,14 @@ class TemplateFormatter {
             template.replace(match.range.first, match.range.last + 1, TemplateUtils.wrapCurlyBraces(match.groupValues[1]))
         }
         return template
+    }
+
+    /**
+     * 템플릿에 코멘트 존재 여부 확인
+     */
+    private fun validateCommentExist(template: StringBuilder) {
+        if (template.contains("--")) {
+            return ErrorCode.COMMENT_NOT_ALLOWED.throwMe()
+        }
     }
 }

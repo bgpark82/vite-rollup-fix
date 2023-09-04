@@ -1,7 +1,10 @@
 package com.musinsa.harrods.query.service
 
-import org.assertj.core.api.Assertions
+import com.musinsa.common.error.CodeAwareException
+import com.musinsa.harrods.error.ErrorCode
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class TemplateFormatterTest {
 
@@ -13,7 +16,7 @@ class TemplateFormatterTest {
 
         val template = templateFormatter.format(query)
 
-        Assertions.assertThat(template).isEqualTo("SELECT * FROM user WHERE name = {{name}} and age = {{age}} and gender = {{gender}} and date = {{date}}")
+        assertThat(template).isEqualTo("SELECT * FROM user WHERE name = {{name}} and age = {{age}} and gender = {{gender}} and date = {{date}}")
     }
 
     @Test
@@ -22,6 +25,18 @@ class TemplateFormatterTest {
 
         val template = templateFormatter.format(query)
 
-        Assertions.assertThat(template).isEqualTo("SELECT * FROM user")
+        assertThat(template).isEqualTo("SELECT * FROM user")
+    }
+
+    @Test
+    fun `템플릿에 코멘트는 허용하지 않는다`() {
+        val query = "SELECT * FROM user -- 사용자 테이블"
+
+        val result = assertThrows<CodeAwareException> {
+            templateFormatter.format(query)
+        }
+
+        assertThat(result.message).isEqualTo("쿼리 템플릿에 코멘트는 지원하지 않음")
+        assertThat(result.error).isEqualTo(ErrorCode.COMMENT_NOT_ALLOWED)
     }
 }
