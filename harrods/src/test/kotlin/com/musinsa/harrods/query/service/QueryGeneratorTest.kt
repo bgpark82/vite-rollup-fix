@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test
 
 class QueryGeneratorTest {
 
-    private val queryGenerator = QueryGenerator()
+    private val templateFormatter = TemplateFormatter()
+    private val queryGenerator = QueryGenerator(templateFormatter)
 
     @Test
     fun `문자 타입 파라미터로 쿼리를 생성한다`() {

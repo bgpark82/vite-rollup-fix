@@ -9,9 +9,10 @@ import org.mockito.kotlin.mock
 
 class QueryServiceTest {
 
+    private val templateFormatter = TemplateFormatter()
     private val paramCombinator = ParamCombinator()
     private val keyGenerator = KeyGenerator()
-    private val queryGenerator = QueryGenerator()
+    private val queryGenerator = QueryGenerator(templateFormatter)
     private val queryRepository = mock<QueryRepository>()
     private val queryService = QueryService(paramCombinator, keyGenerator, queryGenerator, queryRepository)
 

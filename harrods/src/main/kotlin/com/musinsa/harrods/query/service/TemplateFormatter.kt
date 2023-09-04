@@ -1,10 +1,12 @@
 package com.musinsa.harrods.query.service
 
 import com.musinsa.harrods.utils.validator.TemplateUtils
+import org.springframework.stereotype.Component
 import java.lang.StringBuilder
 
 const val TEXT_BETWEEN_CURLY_BRACES_PATTERN = "\\{\\{\\s*(.*?)\\s*\\}\\}"
 
+@Component
 class TemplateFormatter {
 
     /**
