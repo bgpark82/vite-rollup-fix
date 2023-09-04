@@ -39,8 +39,8 @@ class ParamCombinator {
                 }
             }
 
-            // 문자인 경우
-            if (value is String) {
+            // 문자, 숫자인 경우
+            if (value is String || value is Number) {
                 currentCombination[name] = value
                 generateCombination(index + 1, currentCombination)
             }
