@@ -1,10 +1,9 @@
 package com.musinsa.harrods.query.service
 
 import com.musinsa.harrods.error.ErrorCode
+import com.musinsa.harrods.utils.validator.TemplateUtils
 import org.springframework.stereotype.Component
 
-const val OPEN_DOUBLE_CURLY_BRACE = "{{"
-const val CLOSE_DOUBLE_CURLY_BRACE = "}}"
 const val LIST_SEPARATOR = ","
 
 @Component
@@ -21,13 +20,9 @@ class QueryGenerator {
     fun generate(template: String, param: Map<String, Any>): String {
         var query = template
         for ((key, value) in param) {
-            query = query.replace(wrapCurlyBraces(key), convertToString(value))
+            query = query.replace(TemplateUtils.wrapCurlyBraces(key), convertToString(value))
         }
         return query
-    }
-
-    private fun wrapCurlyBraces(value: String): String {
-        return OPEN_DOUBLE_CURLY_BRACE + value + CLOSE_DOUBLE_CURLY_BRACE
     }
 
     private fun convertToString(value: Any): String {

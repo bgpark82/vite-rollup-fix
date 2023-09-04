@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.utils.validator.TemplateUtils
 import java.lang.StringBuilder
 
 const val TEXT_BETWEEN_CURLY_BRACES_PATTERN = "\\{\\{\\s*(.*?)\\s*\\}\\}"
@@ -27,12 +28,8 @@ class TemplateFormatter {
         val regex = Regex(TEXT_BETWEEN_CURLY_BRACES_PATTERN)
         val matchResult = regex.findAll(template)
         for (match in matchResult) {
-            template.replace(match.range.first, match.range.last + 1, wrapCurlyBraces(match.groupValues[1]))
+            template.replace(match.range.first, match.range.last + 1, TemplateUtils.wrapCurlyBraces(match.groupValues[1]))
         }
         return template
-    }
-
-    private fun wrapCurlyBraces(value: String): String {
-        return OPEN_DOUBLE_CURLY_BRACE + value + CLOSE_DOUBLE_CURLY_BRACE
     }
 }
