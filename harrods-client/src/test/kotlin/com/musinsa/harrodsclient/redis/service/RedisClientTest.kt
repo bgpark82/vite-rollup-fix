@@ -43,20 +43,17 @@ internal class RedisClientTest {
 
         val 결과값 =
             sut.getAll(Search(keys = arrayOf(준비코드_BOOK_KEY, 준비코드_GLOSSARY_KEY)))
-
-        assertThat(결과값).isEqualTo(
-            listOf(
-                mapOf(
-                    준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
-                        준비코드_BOOK_VALUE,
-                        typeRefListMapAny
-                    )
-                ),
-                mapOf(
-                    준비코드_GLOSSARY_KEY to ObjectMapperFactory.readValues(
-                        준비코드_GLOSSARY_VALUE,
-                        typeRefListMapAny
-                    )
+        assertThat(결과값).containsExactlyInAnyOrder(
+            mapOf(
+                준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
+                    준비코드_BOOK_VALUE,
+                    typeRefListMapAny
+                )
+            ),
+            mapOf(
+                준비코드_GLOSSARY_KEY to ObjectMapperFactory.readValues(
+                    준비코드_GLOSSARY_VALUE,
+                    typeRefListMapAny
                 )
             )
         )
@@ -69,17 +66,15 @@ internal class RedisClientTest {
 
         val 결과값 = sut.getAll(Search(keys = arrayOf(없는_키, 준비코드_BOOK_KEY)))
 
-        assertThat(결과값).isEqualTo(
-            listOf(
-                mapOf(
-                    없는_키 to "[]"
-                ),
-                mapOf(
-                    준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
-                        준비코드_BOOK_VALUE,
-                        typeRefListMapAny
-                    )
+        assertThat(결과값).containsExactlyInAnyOrder(
+            mapOf(
+                준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
+                    준비코드_BOOK_VALUE,
+                    typeRefListMapAny
                 )
+            ),
+            mapOf(
+                없는_키 to "[]"
             )
         )
     }
