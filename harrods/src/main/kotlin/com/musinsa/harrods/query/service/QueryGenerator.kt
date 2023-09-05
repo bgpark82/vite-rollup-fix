@@ -5,6 +5,7 @@ import com.musinsa.harrods.utils.validator.TemplateUtils
 import org.springframework.stereotype.Component
 
 const val LIST_SEPARATOR = ","
+const val EMPTY_STRING = ""
 
 @Component
 class QueryGenerator {
@@ -25,12 +26,27 @@ class QueryGenerator {
         return query
     }
 
+    /**
+     * 각 타입을 문자로 변경
+     * - 숫자 -> 숫자
+     * - 문자 -> '문자'
+     * - 숫자 리스트 -> 숫자,숫자
+     * - 문자 리스트 -> '문자','문자'
+     */
     private fun convertToString(value: Any): String {
         when (value) {
             is String -> return TemplateUtils.wrapQuotations(value)
             is Number -> return value.toString()
-            is List<*> -> return value.joinToString(LIST_SEPARATOR)
+            is List<*> -> return convertListToString(value)
             else -> ErrorCode.UNSUPPORTED_PARAMETER_TYPE.throwMe()
         }
+    }
+
+    /**
+     * 리스트 타입을 문자로 변경
+     */
+    private fun convertListToString(value: List<*>): String {
+        return value.map { v: Any? -> convertToString(v ?: EMPTY_STRING) }
+            .joinToString(LIST_SEPARATOR)
     }
 }

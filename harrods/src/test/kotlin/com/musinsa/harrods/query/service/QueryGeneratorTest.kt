@@ -31,13 +31,33 @@ class QueryGeneratorTest {
     }
 
     @Test
-    fun `리스트 타입 파라미터로 쿼리를 생성한다`() {
+    fun `숫자 리스트 타입 파라미터로 쿼리를 생성한다`() {
         val query = "SELECT * FROM user WHERE age in ({{age}})"
         val param = mapOf("age" to listOf(1, 2))
 
         val result = queryGenerator.generate(query, param)
 
         assertThat(result).isEqualTo("SELECT * FROM user WHERE age in (1,2)")
+    }
+
+    @Test
+    fun `문자 리스트 타입 파라미터로 쿼리를 생성한다`() {
+        val query = "SELECT * FROM user WHERE age in ({{name}})"
+        val param = mapOf("name" to listOf("peter", "woo"))
+
+        val result = queryGenerator.generate(query, param)
+
+        assertThat(result).isEqualTo("SELECT * FROM user WHERE age in ('peter','woo')")
+    }
+
+    @Test
+    fun `빈 리스트 타입 파라미터로 쿼리를 생성한다`() {
+        val query = "SELECT * FROM user WHERE name = {{name}}"
+        val param = mapOf("name" to listOf<String>())
+
+        val result = queryGenerator.generate(query, param)
+
+        assertThat(result).isEqualTo("SELECT * FROM user WHERE name = ")
     }
 
     @Test
