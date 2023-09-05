@@ -33,6 +33,9 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // cron 표현식 의존성 (https://github.com/jmrozanec/cron-utils)
+    implementation("com.cronutils:cron-utils:9.2.0")
     // common 의존성
     implementation(project(":common"))
 
