@@ -1,5 +1,6 @@
 package com.musinsa.common.restdoc
 
+import com.musinsa.common.error.CommonError
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.http.HttpDocumentation
@@ -9,15 +10,21 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.FieldDescriptor
-import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
+import org.springframework.restdocs.payload.PayloadDocumentation.requestBody
+import org.springframework.restdocs.payload.PayloadDocumentation.responseBody
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor
 import org.springframework.restdocs.request.ParameterDescriptor
-import org.springframework.restdocs.request.RequestDocumentation.*
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
+import org.springframework.restdocs.request.RequestDocumentation.queryParameters
 import org.springframework.restdocs.snippet.Attributes
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.util.MultiValueMap
@@ -150,6 +157,26 @@ fun MockMvc.GET(
     return this.perform(
         RestDocumentationRequestBuilders.get(url)
             .contentType(MediaType.APPLICATION_JSON)
+    )
+}
+
+/**
+ * HTTP POST
+ *
+ * @param url 호스트
+ * @param body RequestBody
+ *
+ * @return ResultActions
+ *
+ */
+fun MockMvc.POST(
+    url: String,
+    body: String
+): ResultActions {
+    return this.perform(
+        RestDocumentationRequestBuilders.post(url)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(body)
     )
 }
 
@@ -295,4 +322,15 @@ fun ENUM_LINK_DOCS_BUILDER(
     return parameterWithName(name).description(
         "link:../$documentUrl.html[$description,window=blank]"
     )
+}
+
+fun ResultActions.유효하지_않은_요청값_검증(invalidField: String) {
+    this.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        .andExpect(
+            jsonPath("errorCode")
+                .value(CommonError.INVALID_REQUEST_VALUE.name)
+        ).andExpect(
+            jsonPath("invalidField")
+                .value(invalidField)
+        )
 }

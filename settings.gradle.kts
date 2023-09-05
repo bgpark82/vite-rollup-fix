@@ -9,6 +9,9 @@ include("stat")
 // 데이터 통합 조회
 include("harrods")
 
+// 데이터 통합 조회 클라이언트
+include("harrods-client")
+
 pluginManagement {
     val SPRING_BOOT_VERSION: String by settings
     val SPRING_BOOT_DEPENDENCY_MANAGEMENT_VERSION: String by settings

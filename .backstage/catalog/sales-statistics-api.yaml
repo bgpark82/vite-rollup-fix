@@ -1,5 +1,6 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
+# TODO 해롯, 해롯클라이언트 추가
 metadata:
   name: sales-statistics-api
   description: 무신사 매출통계 제공
