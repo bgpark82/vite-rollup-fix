@@ -74,7 +74,7 @@ internal class RedisClientTest {
                 )
             ),
             mapOf(
-                없는_키 to "[]"
+                없는_키 to emptyList<String>()
             )
         )
     }

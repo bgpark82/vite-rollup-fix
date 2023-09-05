@@ -29,7 +29,7 @@ class RedisClient(@Qualifier("redisCommands") private val redisCommands: RedisCo
                     )
                 )
 
-                false -> mapOf(keyValue.key to "[]")
+                false -> mapOf(keyValue.key to emptyList())
             }
         }.toList()
     }
