@@ -23,7 +23,11 @@ class LocalRedisServer(
      */
     @PostConstruct
     private fun startRedis() {
-        redisServer.start()
+        try {
+            redisServer.start()
+        } catch (e: Exception) {
+            // do nothing. redis already running
+        }
     }
 
     /**
@@ -31,6 +35,6 @@ class LocalRedisServer(
      */
     @PreDestroy
     private fun stopRedis() {
-        redisServer.stop()
+        redisServer.stop();
     }
 }
