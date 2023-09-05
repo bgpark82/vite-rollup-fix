@@ -3,6 +3,8 @@ package com.musinsa.harrods.query.domain
 import com.musinsa.common.redis.config.LocalRedisServer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -26,10 +28,27 @@ class QueryRepositoryTest @Autowired constructor(
         val savedQuery =
             queryRepository.save(Query.create(query, key, ttl, interval, userId))
 
-        assertThat(savedQuery.id).isEqualTo(1L)
         assertThat(savedQuery.ttl).isEqualTo(ttl)
         assertThat(savedQuery.queries).isEqualTo(query)
         assertThat(savedQuery.cacheKey).isEqualTo(key)
         assertThat(savedQuery.scheduleInterval).isEqualTo(interval)
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = ["harrods:123"])
+    fun `키가 존재하는지 확인한다`(이미_존재하는_키: String) {
+        queryRepository.save(
+            Query.create(
+                queries = "SELECT * FROM user",
+                cacheKey = 이미_존재하는_키,
+                ttl = 1000L,
+                scheduleInterval = "* * * *",
+                userId = "peter.park"
+            )
+        )
+
+        val isExist = queryRepository.existsByCacheKeyIn(listOf(이미_존재하는_키))
+
+        assertThat(isExist).isTrue()
     }
 }

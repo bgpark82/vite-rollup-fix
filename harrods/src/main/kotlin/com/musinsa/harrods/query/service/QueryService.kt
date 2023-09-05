@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
@@ -42,6 +43,19 @@ class QueryService(
             )
         }
 
+        validateKeyExist(queries)
+
         return queryRepository.saveAll(queries)
+    }
+
+    /**
+     * 기존에 등록된 쿼리 여부 확인
+     */
+    private fun validateKeyExist(queries: List<Query>) {
+        val keys = queries.map(Query::cacheKey)
+
+        if (queryRepository.existsByCacheKeyIn(keys)) {
+            return ErrorCode.QUERY_ALREADY_EXIST.throwMe()
+        }
     }
 }

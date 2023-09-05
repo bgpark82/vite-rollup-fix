@@ -13,6 +13,10 @@ class MockQueryRepository : QueryRepository {
     val db = mutableMapOf<Long, Query>()
     var id = 0L
 
+    override fun existsByCacheKeyIn(keys: List<String>): Boolean {
+        return false
+    }
+
     override fun <S : Query?> save(entity: S & Any): S & Any {
         entity.id = ++id
         db.put(id, entity)
