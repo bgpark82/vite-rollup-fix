@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.dto
 
+import com.musinsa.harrods.utils.validator.Cron
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
@@ -31,7 +32,8 @@ data class QueryRequest(
     /**
      * cron 표현식
      */
-    // TODO: airflow cron validation
+    @field:NotBlank(message = "interval은 필수값입니다")
+    @field:Cron(message = "유효하지 않은 cron 표현식 입니다")
     val interval: String,
 
     /**

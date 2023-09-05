@@ -26,7 +26,7 @@ class QueryControllerTest @Autowired constructor(
         val template이_빈문자열인_요청 = """
             {
                 "template": "",
-                "interval": "* * * *",
+                "interval": "* * * * *",
                 "userId": "peter.park"
             }
         """.trimIndent()
@@ -46,7 +46,7 @@ class QueryControllerTest @Autowired constructor(
     fun `template은 null이 아니다`() {
         val template이_없는_요청 = """
             {
-                "interval": "* * * *",
+                "interval": "* * * * *",
                 "userId": "peter.park"
             }
         """.trimIndent()
@@ -67,7 +67,7 @@ class QueryControllerTest @Autowired constructor(
         val ttl이_없는_요청 = """
             {
               "template": "SELECT * FROM user",
-              "interval": "* * * *",
+              "interval": "* * * * *",
               "userId": "peter.park"
             }
         """.trimIndent()
@@ -117,7 +117,7 @@ class QueryControllerTest @Autowired constructor(
         val userId가_없는_요청 = """
             {
               "template": "SELECT * FROM user",
-              "interval": "* * * *"
+              "interval": "* * * * *"
             }
         """.trimIndent()
 
@@ -130,6 +130,47 @@ class QueryControllerTest @Autowired constructor(
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
             .andExpect(jsonPath("$.invalidField").value("userId"))
+    }
+
+    @Test
+    fun `유효하지 않은 interval`() {
+        val 유효하지_않은_interval = """
+            {
+              "template": "SELECT * FROM user",
+              "interval": "* * * * * *",
+              "userId": "peter.park"
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(유효하지_않은_interval)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("interval"))
+    }
+
+    @Test
+    fun `interval은 필수값이다`() {
+        val interval이_없는_요청 = """
+            {
+              "template": "SELECT * FROM user",
+              "userId": "peter.park"
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(interval이_없는_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("interval"))
     }
 
     data class MockQueryRequest(
