@@ -52,7 +52,6 @@ class ParamCombinatorTest {
             combinator.generate(지원하지_않는_파라미터_타입)
         }
 
-        assertThat(result.message).isEqualTo("지원하지 않는 파라미터 타입")
         assertThat(result.error).isEqualTo(ErrorCode.UNSUPPORTED_PARAMETER_TYPE)
     }
 

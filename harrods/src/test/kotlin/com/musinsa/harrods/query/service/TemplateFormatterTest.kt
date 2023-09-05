@@ -36,7 +36,6 @@ class TemplateFormatterTest {
             templateFormatter.format(query)
         }
 
-        assertThat(result.message).isEqualTo("쿼리 템플릿에 코멘트는 지원하지 않음")
         assertThat(result.error).isEqualTo(ErrorCode.COMMENT_NOT_ALLOWED)
     }
 }

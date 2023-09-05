@@ -4,15 +4,18 @@ import com.musinsa.common.error.CodeAwareException
 import com.musinsa.common.error.Error
 import org.springframework.http.HttpStatus
 
+const val UNSUPPORTED_PARAMETER_TYPE_MESSAGE = "지원하지 않는 파라미터 타입입니다"
+const val COMMENT_NOT_ALLOWED_MESSAGE = "쿼리 템플릿에 코멘트는 지원하지 않습니다"
+const val QUERY_ALREADY_EXIST_MESSAGE = "이미 등록된 쿼리입니다"
+
 enum class ErrorCode(
     override val httpStatus: HttpStatus,
     override val message: String
 ) : Error {
 
-    INVALID_TYPE(HttpStatus.BAD_REQUEST, "유효하지 않은 타입"),
-    UNSUPPORTED_PARAMETER_TYPE(HttpStatus.BAD_REQUEST, "지원하지 않는 파라미터 타입"),
-    COMMENT_NOT_ALLOWED(HttpStatus.BAD_REQUEST, "쿼리 템플릿에 코멘트는 지원하지 않음"),
-    QUERY_ALREADY_EXIST(HttpStatus.BAD_REQUEST, "이미 등록된 쿼리입니다")
+    UNSUPPORTED_PARAMETER_TYPE(HttpStatus.BAD_REQUEST, UNSUPPORTED_PARAMETER_TYPE_MESSAGE),
+    COMMENT_NOT_ALLOWED(HttpStatus.BAD_REQUEST, COMMENT_NOT_ALLOWED_MESSAGE),
+    QUERY_ALREADY_EXIST(HttpStatus.BAD_REQUEST, QUERY_ALREADY_EXIST_MESSAGE)
     ;
 
     override fun <T> throwMe(): T {
