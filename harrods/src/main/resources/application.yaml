@@ -4,7 +4,6 @@ server:
       # Servlet Response UTF-8 config
       charset: UTF-8
       force: true
-    context-path: /harrods/admin
 
 spring:
   profiles:

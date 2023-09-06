@@ -1,5 +1,5 @@
 ### 단일 파라미터 조합으로 쿼리를 생성한다
-POST http://localhost:8080/harrods/admin/queries
+POST http://localhost:8080/queries
 Content-Type: application/json
 
 {
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 
 ### 리스트 파라미터 조합으로 쿼리를 생성한다
-POST http://localhost:8080/harrods/admin/queries
+POST http://localhost:8080/queries
 Content-Type: application/json
 
 {
