@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.harrods.error.ErrorCode
 import org.springframework.stereotype.Component
 
 const val SERVICE_NAME = "harrods"
@@ -31,8 +32,23 @@ class KeyGenerator {
             key.append(COLON)
                 .append(name)
                 .append(COLON)
-                .append(value)
+                .append(convertToString(value))
         }
         return key.toString()
+    }
+
+    /**
+     * 각 타입을 문자로 변경
+     * - 숫자 -> 숫자
+     * - 문자 -> 문자
+     * - 리스트 -> 문자,문자
+     */
+    private fun convertToString(value: Any): String {
+        when (value) {
+            is String -> return value
+            is Number -> return value.toString()
+            is List<*> -> return value.joinToString(separator = LIST_SEPARATOR)
+            else -> return ErrorCode.UNSUPPORTED_PARAMETER_TYPE.throwMe()
+        }
     }
 }
