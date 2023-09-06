@@ -7,6 +7,7 @@ import io.lettuce.core.cluster.ClusterClientOptions
 import io.lettuce.core.cluster.ClusterTopologyRefreshOptions
 import io.lettuce.core.cluster.RedisClusterClient
 import io.lettuce.core.cluster.api.StatefulRedisClusterConnection
+import io.lettuce.core.cluster.api.sync.RedisAdvancedClusterCommands
 import io.lettuce.core.cluster.models.partitions.RedisClusterNode
 import io.lettuce.core.resource.DefaultClientResources
 import io.lettuce.core.resource.Delay
@@ -112,5 +113,13 @@ class RedisDataSourceConfig(
         redisClusterClient.setOptions(clusterClientOptions)
 
         return redisClusterClient.connect()
+    }
+
+    /**
+     * Redis Commands
+     */
+    @Bean
+    fun redisCommands(): RedisAdvancedClusterCommands<String, String>? {
+        return this.redisConnection().sync()
     }
 }
