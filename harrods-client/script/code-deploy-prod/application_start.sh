@@ -2,7 +2,10 @@
 # Application Start
 SERVICE_DIR=/java/harrods-client/
 JAR_NAME=harrods-client
+SERVICE_NAME=harrods-client
+VERSION=1.0
 ACCOUNT_HOME=/home/ec2-user
+DATADOG_JAVA_AGENT=${ACCOUNT_HOME}/dd-java-agent.jar
 SERVER_PORT=8080
 PROFILE=prod
 
