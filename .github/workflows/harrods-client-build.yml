@@ -1,0 +1,54 @@
+name: harrods-client-build
+on:
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - master
+    paths:
+      - harrods-client/**
+jobs:
+  harrods-client-builder:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Install JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
+
+      - name: Install Kotlin
+        run: sudo snap install --classic kotlin --channel=1.7
+
+      - name: Build
+        run: ./gradlew :harrods-client:build
+
+      - name: Compress tar
+        run: tar -cvf harrods-client.tar -C ./harrods-client/build/libs .
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 harrods-client.tar s3://musinsa-server-build/dataplatform/harrods-client/dev/harrods-client.tar
+
+      - name: Send result to Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: harrods_client_build
+          author_name: harrods_client_build_bot
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        env:
+          # 배포 알람 전송
+          SLACK_WEBHOOK_URL: ${{ secrets.STAT_SLACK_WEBHOOK_URL }}
+        if: always()
