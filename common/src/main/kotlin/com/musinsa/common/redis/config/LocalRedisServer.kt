@@ -35,6 +35,6 @@ class LocalRedisServer(
      */
     @PreDestroy
     private fun stopRedis() {
-        redisServer.stop();
+        redisServer.stop()
     }
 }
