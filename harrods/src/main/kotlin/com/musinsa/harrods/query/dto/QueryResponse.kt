@@ -1,6 +1,7 @@
 package com.musinsa.harrods.query.dto
 
 import com.musinsa.harrods.query.domain.Query
+import java.time.LocalDateTime
 
 data class QueryResponse(
 
@@ -32,7 +33,17 @@ data class QueryResponse(
     /**
      * 등록자 아이디
      */
-    var userId: String
+    var userId: String,
+
+    /**
+     * 쿼리 등록 시간
+     */
+    var createdDateTime: LocalDateTime,
+
+    /**
+     * 쿼리 수정 시간
+     */
+    var modifiedDateTime: LocalDateTime
 ) {
     companion object {
         fun of(query: Query): QueryResponse {
@@ -42,7 +53,9 @@ data class QueryResponse(
                 query = query.queries,
                 key = query.cacheKey,
                 ttl = query.ttl,
-                interval = query.scheduleInterval
+                interval = query.scheduleInterval,
+                createdDateTime = query.createdDateTime,
+                modifiedDateTime = query.modifiedDateTime
             )
         }
     }
