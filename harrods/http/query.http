@@ -1,48 +1,53 @@
 ### 단일 파라미터 조합으로 쿼리를 생성한다
-POST http://localhost:8080/queries
+POST http://localhost:8080/harrods/admin/queries
 Content-Type: application/json
 
 {
-  "template": "SELECT * FROM user WHERE name = {{name}} and age={{age}}",
-  "ttl": 20,
-  "interval": "* * * *",
+  "template": "SELECT * FROM users WHERE name = {{name}} AND age = {{age}}",
+  "ttl": 86400,
+  "interval": "* * * * *",
   "params": {
     "name": ["peter", "woo"],
     "age": [10, 20]
-  }
+  },
+  "userId": "peter.park"
 }
 
 > {%
     client.test("반환값을 검증한다", function() {
         client.assert(response.status === 200, "200 응답");
-        client.assert(response.body.length === 2)
-        client.assert(response.body[0]["ttl"] === 20)
+        client.assert(response.body.length === 4)
+        client.assert(response.body[0]["ttl"] === 86400)
         client.assert(response.body[0]["interval"] === "* * * *")
-        client.assert(response.body[0]["query"] === "SELECT * FROM user WHERE name = peter")
-        client.assert(response.body[1]["query"] === "SELECT * FROM user WHERE name = woo")
+        client.assert(response.body[0]["query"] === "SELECT * FROM user WHERE name = 'peter' AND age = 10")
+        client.assert(response.body[1]["query"] === "SELECT * FROM user WHERE name = 'peter' AND age = 20")
+        client.assert(response.body[2]["query"] === "SELECT * FROM user WHERE name = 'woo' AND age = 10")
+        client.assert(response.body[3]["query"] === "SELECT * FROM user WHERE name = 'woo' AND age = 20")
     });
 %}
 
 
 ### 리스트 파라미터 조합으로 쿼리를 생성한다
-POST http://localhost:8080/queries
+POST http://localhost:8080/harrods/admin/queries
 Content-Type: application/json
 
 {
-  "template": "SELECT * FROM user WHERE name in ({{name}})",
-  "ttl": 20,
-  "interval": "* * * *",
+  "template": "SELECT * FROM user WHERE name IN ({{name}})",
+  "ttl": 86400,
+  "interval": "* * * * *",
   "params": {
     "name": [["peter", "woo"]]
-  }
+  },
+  "userId": "peter.park"
 }
 
 > {%
     client.test("반환값을 검증한다", function() {
         client.assert(response.status === 200, "200 응답");
-        client.assert(response.body.length === 2)
-        client.assert(response.body[0]["ttl"] === 20)
-        client.assert(response.body[0]["interval"] === "* * * *")
-        client.assert(response.body[0]["query"] === "SELECT * FROM user WHERE name in (peter, woo)")
+        client.assert(response.body.length === 1)
+        client.assert(response.body[0]["ttl"] === 86400)
+        client.assert(response.body[0]["interval"] === "* * * * *")
+        client.assert(response.body[0]["query"] === "SELECT * FROM user WHERE name IN ('peter', 'woo')")
     });
 %}
+
