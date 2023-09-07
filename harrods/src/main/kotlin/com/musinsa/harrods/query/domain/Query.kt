@@ -23,7 +23,7 @@ class Query(
      * 생성된 sql 쿼리
      */
     @Column(name = "query_text", nullable = false, columnDefinition = "TEXT")
-    var queries: String,
+    var query: String,
 
     /**
      * 생성된 캐시 키 (harrods:userId:hash:key:value)

@@ -29,7 +29,7 @@ class QueryRepositoryTest @Autowired constructor(
             queryRepository.save(Query.create(query, key, ttl, interval, userId))
 
         assertThat(savedQuery.ttl).isEqualTo(ttl)
-        assertThat(savedQuery.queries).isEqualTo(query)
+        assertThat(savedQuery.query).isEqualTo(query)
         assertThat(savedQuery.cacheKey).isEqualTo(key)
         assertThat(savedQuery.scheduleInterval).isEqualTo(interval)
     }

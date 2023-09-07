@@ -27,7 +27,7 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
+        assertThat(result[0].query).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
     }
 
     @Test
@@ -42,8 +42,8 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
-        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = 'woo' AND age = 30")
+        assertThat(result[0].query).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
+        assertThat(result[1].query).isEqualTo("SELECT * FROM user WHERE name = 'woo' AND age = 30")
     }
 
     @Test
@@ -58,8 +58,8 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
-        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE name = 'woo' AND age = 30")
+        assertThat(result[0].query).isEqualTo("SELECT * FROM user WHERE name = 'peter' AND age = 30")
+        assertThat(result[1].query).isEqualTo("SELECT * FROM user WHERE name = 'woo' AND age = 30")
     }
 
     @Test
@@ -74,8 +74,8 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user WHERE age IN (30,40)")
-        assertThat(result[1].queries).isEqualTo("SELECT * FROM user WHERE age IN (50)")
+        assertThat(result[0].query).isEqualTo("SELECT * FROM user WHERE age IN (30,40)")
+        assertThat(result[1].query).isEqualTo("SELECT * FROM user WHERE age IN (50)")
     }
 
     @Test
@@ -90,7 +90,7 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result.map(Query::queries)).containsExactlyInAnyOrder(
+        assertThat(result.map(Query::query)).containsExactlyInAnyOrder(
             "SELECT * FROM user WHERE age IN (50) AND name = 'woo'",
             "SELECT * FROM user WHERE age IN (50) AND name = 'peter'",
             "SELECT * FROM user WHERE age IN (30,40) AND name = 'woo'",
@@ -110,6 +110,6 @@ class QueryServiceTest {
 
         val result = queryService.create(request)
 
-        assertThat(result[0].queries).isEqualTo("SELECT * FROM user")
+        assertThat(result[0].query).isEqualTo("SELECT * FROM user")
     }
 }

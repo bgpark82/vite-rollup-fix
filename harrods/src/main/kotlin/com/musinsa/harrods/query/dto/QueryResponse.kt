@@ -50,7 +50,7 @@ data class QueryResponse(
             return QueryResponse(
                 id = query.id!!,
                 userId = query.userId,
-                query = query.queries,
+                query = query.query,
                 key = query.cacheKey,
                 ttl = query.ttl,
                 interval = query.scheduleInterval,
