@@ -23,7 +23,7 @@ class ParamCombinator {
 
         val combinations = mutableListOf<Map<String, Any>>()
 
-        fun generateCombination(index: Int, currentCombination: MutableMap<String, Any>) {
+        tailrec fun generateCombination(index: Int, currentCombination: MutableMap<String, Any>) {
             if (index == keys.size) {
                 combinations.add(currentCombination.toMap())
                 return
