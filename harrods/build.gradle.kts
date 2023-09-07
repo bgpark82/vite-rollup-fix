@@ -55,18 +55,35 @@ tasks {
     jar {
         // Plain jar 생성 금지
         enabled = false
-//
-//        // CodeDeploy build script 추가
-//        copy {
-//            from("script/code-deploy")
-//            into("build/libs/script/code-deploy")
-//        }
-//
-//        // CodeDeploy build specification 추가
-//        copy {
-//            from("./appspec.yml")
-//            into("build/libs")
-//        }
+
+        when (System.getProperties().getProperty("build_stage")) {
+            // 개발
+            "dev" -> {
+                copy {
+                    from("script/code-deploy-dev")
+                    into("build/libs/script/code-deploy")
+                }
+            }
+            // 운영
+            else -> {
+                copy {
+                    from("script/code-deploy-prod")
+                    into("build/libs/script/code-deploy")
+                }
+            }
+        }
+
+        // CodeDeploy build script 추가
+        copy {
+            from("script/code-deploy")
+            into("build/libs/script/code-deploy")
+        }
+
+        // CodeDeploy build specification 추가
+        copy {
+            from("./appspec.yml")
+            into("build/libs")
+        }
     }
 
     bootJar {
