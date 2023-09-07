@@ -1,7 +1,6 @@
 package com.musinsa.harrods.query.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.musinsa.common.redis.config.LocalRedisServer
 import com.musinsa.harrods.query.service.QueryService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,8 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class QueryControllerTest @Autowired constructor(
     val mvc: MockMvc,
     val mapper: ObjectMapper,
-    @MockBean val queryService: QueryService,
-    @MockBean val redisServer: LocalRedisServer
+    @MockBean val queryService: QueryService
 ) {
     @Test
     fun `template은 빈 문자열이 아니다`() {
