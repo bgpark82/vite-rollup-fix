@@ -26,7 +26,8 @@ jobs:
         run: sudo snap install --classic kotlin --channel=1.7
 
       - name: Build
-        run: ./gradlew :harrods-client:build
+        # TODO build_stage 분리
+        run: ./gradlew :harrods-client:build -Dbuild_stage=dev
 
       - name: Compress tar
         run: tar -cvf harrods-client.tar -C ./harrods-client/build/libs .
