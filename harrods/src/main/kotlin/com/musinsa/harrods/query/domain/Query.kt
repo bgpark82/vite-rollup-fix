@@ -12,7 +12,7 @@ import java.time.LocalDateTime
  * 생성된 쿼리 및 메타 데이터를 저장하는 도메인
  */
 @Entity
-@Table(name = "queries")
+@Table(name = "query_store")
 class Query(
 
     @Id
@@ -22,7 +22,7 @@ class Query(
     /**
      * 생성된 sql 쿼리
      */
-    @Column(name = "queries", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "query_text", nullable = false, columnDefinition = "TEXT")
     var queries: String,
 
     /**
