@@ -1,6 +1,8 @@
 package com.musinsa.common.error
 
+import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import jakarta.validation.ConstraintViolationException
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 
@@ -63,7 +65,7 @@ data class ErrorResponse constructor(
         exception = exception.javaClass.name,
         invalidField = exception.bindingResult.fieldError!!.field,
         invalidValue = exception.bindingResult.fieldError!!.rejectedValue.toString(),
-        message = exception.message
+        message = exception.message // TODO: bindingResult.errors[0].defaultMessage
     )
 
     /**
@@ -74,6 +76,23 @@ data class ErrorResponse constructor(
         exception = exception.javaClass.name,
         invalidField = exception.parameter.parameterName.toString(),
         invalidValue = exception.value.toString(),
+        message = exception.message.toString()
+    )
+
+    /**
+     * 유효하지 않은 요청값(Method Call)
+     */
+    constructor(exception: HttpMessageNotReadableException) : this(
+        errorCode = CommonError.INVALID_REQUEST_VALUE.name,
+        exception = exception.javaClass.name,
+        invalidField =  when(val cause = exception.cause) {
+            is MissingKotlinParameterException -> cause.parameter.name.toString()
+            else -> ""
+        },
+        invalidValue = when(val cause = exception.cause) {
+            is MissingKotlinParameterException -> cause.parameter.type.toString()
+            else -> ""
+        },
         message = exception.message.toString()
     )
 
