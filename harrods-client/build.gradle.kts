@@ -21,7 +21,7 @@ group = "com.musinsa"
 version = "0.0.1-SNAPSHOT"
 
 @Suppress("PropertyName")
-val MAIN_CLASS = "com.musinsa.harrods.HarrodsClientApplication"
+val MAIN_CLASS = "com.musinsa.harrodsclient.HarrodsClientApplication"
 
 application {
     mainClass.set(MAIN_CLASS)

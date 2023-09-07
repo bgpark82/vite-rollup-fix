@@ -15,7 +15,6 @@ HEAP_XMX=4096m
 
 cd ${ACCOUNT_HOME}${SERVICE_DIR}
 
-
 # 인스턴스 실행(prod)
 screen -S ${JAR_NAME} -dm java -javaagent:${DATADOG_JAVA_AGENT} -Ddd.profiling.enabled=true -XX:FlightRecorderOptions=stackdepth=256 -Ddd.service=${SERVICE_NAME} -Ddd.env=${PROFILE} -Ddd.version=${VERSION} -Xms${HEAP_XMS} -Xmx${HEAP_XMX} -jar -Dspring.profiles.active=${PROFILE} ${JAR_NAME}.jar
 
