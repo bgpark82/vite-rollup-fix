@@ -27,7 +27,7 @@ jobs:
         run: sudo snap install --classic kotlin --channel=1.7
 
       - name: Build
-        run: ./gradlew :harrods-client:build -Dbuild_stage=${{github.ref}}
+        run: ./gradlew :harrods-client:build -Dbuild_stage=${{github.ref_name}}
 
       - name: Compress tar
         run: tar -cvf harrods-client.tar -C ./harrods-client/build/libs .
@@ -40,7 +40,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 harrods-client.tar s3://musinsa-server-build/dataplatform/harrods-client/${{github.ref}}/harrods-client.tar
+        run: aws s3 cp --region ap-northeast-2 harrods-client.tar s3://musinsa-server-build/dataplatform/harrods-client/${{github.ref_name}}/harrods-client.tar
 
       - name: Send result to Slack
         uses: 8398a7/action-slack@v3
