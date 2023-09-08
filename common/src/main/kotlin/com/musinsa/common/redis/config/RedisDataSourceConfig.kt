@@ -11,6 +11,7 @@ import io.lettuce.core.cluster.api.sync.RedisAdvancedClusterCommands
 import io.lettuce.core.cluster.models.partitions.RedisClusterNode
 import io.lettuce.core.resource.DefaultClientResources
 import io.lettuce.core.resource.Delay
+import io.lettuce.core.resource.DirContextDnsResolver
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -63,8 +64,8 @@ class RedisDataSourceConfig(
                     TimeUnit.MILLISECONDS
                 )
             )
-            // dnsResolver 메소드 Deprecated 되어 DNS Resolver 디폴트값 사용
-//            .dnsResolver(DirContextDnsResolver())
+            // TODO Deprecated 처리
+            .dnsResolver(DirContextDnsResolver())
             .build()
 
         // Redis 클러스터 Client 생성
