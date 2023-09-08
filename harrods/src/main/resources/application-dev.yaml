@@ -1,7 +1,4 @@
 spring:
-  data:
-    redis:
-      host: dev-harrods-v1-redis.cr5gwi.clustercfg.apn2.cache.amazonaws.com
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://dev-harrods-mysql-rds.cacpsxq2cnl6.ap-northeast-2.rds.amazonaws.com:3306/harrods
