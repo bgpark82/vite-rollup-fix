@@ -3,6 +3,7 @@
 JAR_NAME=harrods-client
 SERVER_PORT=8080
 
+
 screen -X -S ${JAR_NAME} kill
 
 CONTINUE=1
