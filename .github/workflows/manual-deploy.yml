@@ -130,6 +130,7 @@ jobs:
     env:
       service: ${{ needs.setup_environment.outputs.service }}
       profile: ${{ needs.setup_environment.outputs.profile }}
+      build_file: ${{ needs.setup_environment.outputs.build_file }}
       build_file_path_s3: ${{ needs.setup_environment.outputs.build_file_path_s3 }}
     steps:
       - name: Send result to Slack
@@ -174,7 +175,7 @@ jobs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "*S3 Path:*\n ${{ env.build_file_path_s3 }}"
+                      "text": "*S3 Path:*\n ${{ env.build_file_path_s3 }}/${{ env.build_file }}"
                     }
                 }
               ]
