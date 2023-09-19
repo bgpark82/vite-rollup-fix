@@ -113,6 +113,9 @@ jobs:
       build_file_path_s3: ${{ needs.setup_environment.outputs.build_file_path_s3 }}
       build_file_path_local: ${{ needs.setup_environment.outputs.build_file_path_local }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Compress tar
         run: tar -cvf ${{ env.build_file }} -C ./${{ env.build_file_path_local }} .
 
@@ -127,7 +130,7 @@ jobs:
         run: aws s3 cp --region ${{ env.AWS_REGION }} ${{ env.build_file }} ${{ env.build_file_path_s3 }}/${{ env.build_file }}
 
   post:
-    name: do post action
+    name: post action
     runs-on: ubuntu-22.04
     needs: [ setup_environment, build, deploy ]
     if: ${{ inputs.deploy_flag == 'true' }}
