@@ -98,7 +98,7 @@ jobs:
 
       - name: Install Kotlin 1.7
         run: |
-          snap install --classic kotlin --channel=1.7
+          sudo snap install --classic kotlin --channel=1.7
 
       - name: Build
         run: ./gradlew :${{ needs.setup_environment.outputs.service }}:build
