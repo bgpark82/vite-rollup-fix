@@ -125,7 +125,7 @@ jobs:
   post:
     name: post action
     runs-on: ubuntu-22.04
-    needs: [ setup_environment, build ]
+    needs: [ setup_environment, build_and_deploy ]
     if: ${{ inputs.deploy_flag == 'true' }}
     env:
       service: ${{ needs.setup_environment.outputs.service }}
