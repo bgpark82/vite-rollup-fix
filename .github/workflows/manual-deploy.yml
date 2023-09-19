@@ -140,7 +140,7 @@ jobs:
           status: ${{ job.status }}
           text: ${{ env.service }}_build
           author_name: ${{ env.service }}_build_bot
-          fields: repo,message,commit,author,action,eventName,ref,workflow,took
+          fields: repo,message,commit,author,eventName,ref,workflow
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.STAT_SLACK_WEBHOOK_URL }}
 
