@@ -141,7 +141,7 @@ jobs:
           author_name: ${{ env.service }}_build_bot
           fields: repo,message,commit,author,action,eventName,ref,workflow,took
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.STAT_SLACK_WEBHOOK_URL }}
 
       - name: Send custom result to Slack
         uses: slackapi/slack-github-action@v1.24.0
@@ -180,5 +180,5 @@ jobs:
               ]
             }
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.STAT_SLACK_WEBHOOK_URL }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
