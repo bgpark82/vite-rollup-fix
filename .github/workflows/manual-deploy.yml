@@ -86,8 +86,8 @@ jobs:
     runs-on: ubuntu-22.04
     needs: [ setup_environment ]
     env:
-      service: ${{ steps.vars.outputs.service }}
-      profile: ${{ steps.vars.outputs.profile }}
+      service: ${{ needs.setup_environment.outputs.service }}
+      profile: ${{ needs.setup_environment.outputs.profile }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
