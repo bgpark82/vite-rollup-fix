@@ -85,6 +85,9 @@ jobs:
     name: build service
     runs-on: ubuntu-22.04
     needs: [ setup_environment ]
+    env:
+      service: ${{ steps.vars.outputs.service }}
+      profile: ${{ steps.vars.outputs.profile }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -101,7 +104,7 @@ jobs:
           sudo snap install --classic kotlin --channel=1.7
 
       - name: Build
-        run: ./gradlew :${{ needs.setup_environment.outputs.service }}:build
+        run: ./gradlew :${{ env.service }}:build -Dbuild_stage=${{ env.profile }}
 
   deploy:
     name: deploy service
@@ -113,7 +116,7 @@ jobs:
       build_file_path_s3: ${{ needs.setup_environment.outputs.build_file_path_s3 }}
       build_file_path_local: ${{ needs.setup_environment.outputs.build_file_path_local }}
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v3
 
       - name: Compress tar
