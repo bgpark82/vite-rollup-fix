@@ -12,14 +12,6 @@ on:
           - harrods
           - harrods-client
           - stat
-      deploy_flag:
-        description: '배포 여부를 선택해주세요'
-        required: true
-        default: 'true'
-        type: choice
-        options:
-          - 'true'
-          - 'false'
 
 env:
   AWS_REGION: ap-northeast-2
@@ -126,7 +118,6 @@ jobs:
     name: post action
     runs-on: ubuntu-22.04
     needs: [ setup_environment, build_and_deploy ]
-    if: ${{ inputs.deploy_flag == 'true' }}
     env:
       service: ${{ needs.setup_environment.outputs.service }}
       profile: ${{ needs.setup_environment.outputs.profile }}
