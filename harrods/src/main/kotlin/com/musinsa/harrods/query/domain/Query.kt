@@ -54,7 +54,7 @@ class Query(
     /**
      * 쿼리 등록 시간
      */
-    @Column(name = "create_date_time", nullable = false)
+    @Column(name = "created_date_time", nullable = false)
     var createdDateTime: LocalDateTime,
 
     /**
