@@ -25,7 +25,8 @@ class QueryControllerTest @Autowired constructor(
             {
                 "template": "",
                 "interval": "* * * * *",
-                "userId": "peter.park"
+                "userId": "peter.park",
+                "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -45,7 +46,8 @@ class QueryControllerTest @Autowired constructor(
         val template이_없는_요청 = """
             {
                 "interval": "* * * * *",
-                "userId": "peter.park"
+                "userId": "peter.park",
+                "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -66,7 +68,8 @@ class QueryControllerTest @Autowired constructor(
             {
               "template": "SELECT * FROM user",
               "interval": "* * * * *",
-              "userId": "peter.park"
+              "userId": "peter.park",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -81,7 +84,7 @@ class QueryControllerTest @Autowired constructor(
 
     @Test
     fun `ttl은 최소값이 1이상이다`() {
-        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = -1L, interval = "* * * * *", userId = "peter.park")
+        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = -1L, interval = "* * * * *", userId = "peter.park", alias = listOf("brand"))
 
         mvc.perform(
             post("/queries")
@@ -97,7 +100,7 @@ class QueryControllerTest @Autowired constructor(
     @Test
     fun `ttl은 최대값은 9_223_370_000_000_000 이하이다`() {
         val ttlMax = 9_223_370_000_000_000L + 1L
-        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = ttlMax, interval = "* * * * *", userId = "peter.park")
+        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = ttlMax, interval = "* * * * *", userId = "peter.park", alias = listOf("brand"))
 
         mvc.perform(
             post("/queries")
@@ -115,7 +118,8 @@ class QueryControllerTest @Autowired constructor(
         val userId가_없는_요청 = """
             {
               "template": "SELECT * FROM user",
-              "interval": "* * * * *"
+              "interval": "* * * * *",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -136,7 +140,8 @@ class QueryControllerTest @Autowired constructor(
             {
               "template": "SELECT * FROM user",
               "interval": "* * * * * *",
-              "userId": "peter.park"
+              "userId": "peter.park",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -156,7 +161,8 @@ class QueryControllerTest @Autowired constructor(
         val interval이_없는_요청 = """
             {
               "template": "SELECT * FROM user",
-              "userId": "peter.park"
+              "userId": "peter.park",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -176,6 +182,7 @@ class QueryControllerTest @Autowired constructor(
         val params: Map<String, Any>? = null,
         val ttl: Long? = null,
         val interval: String? = null,
-        val userId: String? = null
+        val userId: String? = null,
+        val alias: List<String>? = null
     )
 }
