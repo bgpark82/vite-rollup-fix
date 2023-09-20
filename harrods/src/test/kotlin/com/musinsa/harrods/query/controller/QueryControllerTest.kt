@@ -177,6 +177,71 @@ class QueryControllerTest @Autowired constructor(
             .andExpect(jsonPath("$.invalidField").value("interval"))
     }
 
+    @Test
+    fun `alias는 필수값이다`() {
+        val alias_없는_요청 = """
+            {
+              "template": "SELECT * FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park"
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(alias_없는_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
+    @Test
+    fun `alias는 빈값이 아니다`() {
+        val 빈_alias_요청 = """
+            {
+              "template": "SELECT * FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park",
+              "alias": []
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(빈_alias_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
+    @Test
+    fun `alias는 최대 5개가 가능하다`() {
+        val alias_6개_요청 = """
+            {
+              "template": "SELECT * FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park",
+              "alias": ["brand","age","name","gender","mobile","address"]
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(alias_6개_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
     data class MockQueryRequest(
         val template: String? = null,
         val params: Map<String, Any>? = null,
