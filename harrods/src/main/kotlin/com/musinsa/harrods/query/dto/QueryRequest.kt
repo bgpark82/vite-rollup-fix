@@ -1,9 +1,13 @@
 package com.musinsa.harrods.query.dto
 
 import com.musinsa.harrods.utils.validator.Cron
+import com.musinsa.harrods.utils.validator.Template
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotEmpty
+import jakarta.validation.constraints.Size
+import org.hibernate.validator.constraints.UniqueElements
 
 const val TTL_DEFAULT: Long = 3 * 24 * 60 * 60
 const val TTL_MAX: Long = 9_223_370_000_000_000L
@@ -14,7 +18,8 @@ data class QueryRequest(
     /**
      * 쿼리 템플릿
      */
-    @field:NotBlank(message = "템플릿은 null이거나 빈 문자열이 아니어야 합니다")
+    @field:NotBlank(message = "템플릿은 필수값입니다")
+    @field:Template(message = "유효하지 않은 템플릿입니다")
     val template: String,
 
     /**
@@ -40,5 +45,13 @@ data class QueryRequest(
      * 등록자 아이디
      */
     @field:NotBlank(message = "등록자 아이디는 null이거나 빈 문자열이 아니어야 합니다")
-    val userId: String
+    val userId: String,
+
+    /**
+     * 별칭 (cacheKey 생성에 사용, cachekeySuffix로 테이블에 저장)
+     */
+    @field:NotEmpty(message = "별칭은 필수값입니다")
+    @field:Size(min = 1, max = 5, message = "별칭은 최대 5개만 등록 가능합니다")
+    @field:UniqueElements(message = "별칭은 중복될 수 없습니다")
+    val alias: List<String>
 )

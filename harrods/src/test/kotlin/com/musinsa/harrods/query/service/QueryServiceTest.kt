@@ -22,7 +22,8 @@ class QueryServiceTest {
             params = mapOf("name" to "peter", "age" to 30),
             ttl = 300L,
             interval = "* * * *",
-            userId = "peter.park"
+            userId = "peter.park",
+            alias = listOf("brand")
         )
 
         val result = queryService.create(request)
@@ -37,7 +38,8 @@ class QueryServiceTest {
             params = mapOf("name" to listOf("peter", "woo"), "age" to listOf(30)),
             ttl = 300L,
             interval = "* * * *",
-            userId = "peter.park"
+            userId = "peter.park",
+            alias = listOf("brand")
         )
 
         val result = queryService.create(request)
@@ -53,7 +55,8 @@ class QueryServiceTest {
             params = mapOf("name" to listOf("peter", "woo"), "age" to listOf(30)),
             ttl = 300L,
             interval = "* * * *",
-            userId = "peter.park"
+            userId = "peter.park",
+            alias = listOf("brand")
         )
 
         val result = queryService.create(request)
@@ -69,7 +72,8 @@ class QueryServiceTest {
             params = mapOf("age" to listOf(listOf(30, 40), 50)),
             ttl = 300L,
             interval = "* * * *",
-            userId = "peter.park"
+            userId = "peter.park",
+            alias = listOf("brand")
         )
 
         val result = queryService.create(request)
@@ -85,7 +89,8 @@ class QueryServiceTest {
             params = mapOf("age" to listOf(listOf(30, 40), 50), "name" to listOf("woo", "peter")),
             ttl = 300L,
             interval = "* * * *",
-            userId = "peter.park"
+            userId = "peter.park",
+            alias = listOf("brand")
         )
 
         val result = queryService.create(request)
@@ -105,7 +110,8 @@ class QueryServiceTest {
             params = null,
             ttl = 300L,
             interval = "* * * *",
-            userId = "peter.park"
+            userId = "peter.park",
+            alias = listOf("brand")
         )
 
         val result = queryService.create(request)

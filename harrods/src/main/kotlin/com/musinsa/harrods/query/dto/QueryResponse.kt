@@ -43,7 +43,12 @@ data class QueryResponse(
     /**
      * 쿼리 수정 시간
      */
-    var modifiedDateTime: LocalDateTime
+    var modifiedDateTime: LocalDateTime,
+
+    /**
+     * 별칭
+     */
+    var alias: List<String>
 ) {
     companion object {
         fun of(query: Query): QueryResponse {
@@ -55,7 +60,8 @@ data class QueryResponse(
                 ttl = query.ttl,
                 interval = query.scheduleInterval,
                 createdDateTime = query.createdDateTime,
-                modifiedDateTime = query.modifiedDateTime
+                modifiedDateTime = query.modifiedDateTime,
+                alias = query.cacheKeySuffix
             )
         }
     }

@@ -25,7 +25,8 @@ class QueryControllerTest @Autowired constructor(
             {
                 "template": "",
                 "interval": "* * * * *",
-                "userId": "peter.park"
+                "userId": "peter.park",
+                "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -45,7 +46,8 @@ class QueryControllerTest @Autowired constructor(
         val template이_없는_요청 = """
             {
                 "interval": "* * * * *",
-                "userId": "peter.park"
+                "userId": "peter.park",
+                "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -61,12 +63,35 @@ class QueryControllerTest @Autowired constructor(
     }
 
     @Test
+    fun `template의 select절에 *를 포함할 수 없다`() {
+        val asterisk을_포함한_요청 = """
+            {
+                "template": "SELECT * FROM user",
+                "interval": "* * * * *",
+                "userId": "peter.park",
+                "alias": ["brand"]
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asterisk을_포함한_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("template"))
+    }
+
+    @Test
     fun `ttl은 기본값은 3일이다`() {
         val ttl이_없는_요청 = """
             {
-              "template": "SELECT * FROM user",
+              "template": "SELECT user.brand as brand FROM user",
               "interval": "* * * * *",
-              "userId": "peter.park"
+              "userId": "peter.park",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -81,7 +106,7 @@ class QueryControllerTest @Autowired constructor(
 
     @Test
     fun `ttl은 최소값이 1이상이다`() {
-        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = -1L, interval = "* * * * *", userId = "peter.park")
+        val request = MockQueryRequest(template = "SELECT user.brand as brand FROM user", params = mapOf(), ttl = -1L, interval = "* * * * *", userId = "peter.park", alias = listOf("brand"))
 
         mvc.perform(
             post("/queries")
@@ -97,7 +122,7 @@ class QueryControllerTest @Autowired constructor(
     @Test
     fun `ttl은 최대값은 9_223_370_000_000_000 이하이다`() {
         val ttlMax = 9_223_370_000_000_000L + 1L
-        val request = MockQueryRequest(template = "SELECT * FROM user", params = mapOf(), ttl = ttlMax, interval = "* * * * *", userId = "peter.park")
+        val request = MockQueryRequest(template = "SELECT user.brand as brand FROM user", params = mapOf(), ttl = ttlMax, interval = "* * * * *", userId = "peter.park", alias = listOf("brand"))
 
         mvc.perform(
             post("/queries")
@@ -114,8 +139,9 @@ class QueryControllerTest @Autowired constructor(
     fun `등록자 아이디는 필수값이다`() {
         val userId가_없는_요청 = """
             {
-              "template": "SELECT * FROM user",
-              "interval": "* * * * *"
+              "template": "SELECT user.brand as brand FROM user",
+              "interval": "* * * * *",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -134,9 +160,10 @@ class QueryControllerTest @Autowired constructor(
     fun `유효하지 않은 interval`() {
         val 유효하지_않은_interval = """
             {
-              "template": "SELECT * FROM user",
+              "template": "SELECT user.brand as brand FROM user",
               "interval": "* * * * * *",
-              "userId": "peter.park"
+              "userId": "peter.park",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -155,8 +182,9 @@ class QueryControllerTest @Autowired constructor(
     fun `interval은 필수값이다`() {
         val interval이_없는_요청 = """
             {
-              "template": "SELECT * FROM user",
-              "userId": "peter.park"
+              "template": "SELECT user.brand as brand FROM user",
+              "userId": "peter.park",
+              "alias": ["brand"]
             }
         """.trimIndent()
 
@@ -171,11 +199,99 @@ class QueryControllerTest @Autowired constructor(
             .andExpect(jsonPath("$.invalidField").value("interval"))
     }
 
+    @Test
+    fun `alias는 필수값이다`() {
+        val alias_없는_요청 = """
+            {
+              "template": "SELECT user.brand as brand FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park"
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(alias_없는_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
+    @Test
+    fun `alias는 빈값이 아니다`() {
+        val 빈_alias_요청 = """
+            {
+              "template": "SELECT user.brand as brand FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park",
+              "alias": []
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(빈_alias_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
+    @Test
+    fun `alias는 최대 5개가 가능하다`() {
+        val alias_6개_요청 = """
+            {
+              "template": "SELECT user.brand as brand FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park",
+              "alias": ["brand","age","name","gender","mobile","address"]
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(alias_6개_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
+    @Test
+    fun `alias는 중복 불가능하다`() {
+        val 중복_alias_요청 = """
+            {
+              "template": "SELECT user.brand as brand FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park",
+              "alias": ["brand","brand"]
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(중복_alias_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
     data class MockQueryRequest(
         val template: String? = null,
         val params: Map<String, Any>? = null,
         val ttl: Long? = null,
         val interval: String? = null,
-        val userId: String? = null
+        val userId: String? = null,
+        val alias: List<String>? = null
     )
 }

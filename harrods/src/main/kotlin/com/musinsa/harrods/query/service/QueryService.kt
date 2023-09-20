@@ -24,7 +24,7 @@ class QueryService(
      */
     @Transactional
     fun create(request: QueryRequest): List<Query> {
-        val (template, params, ttl, interval, userId) = request
+        val (template, params, ttl, interval, userId, alias) = request
         val queries = mutableListOf<Query>()
 
         val formattedTemplate = templateFormatter.format(template)
@@ -36,9 +36,10 @@ class QueryService(
                 Query.create(
                     ttl = ttl,
                     queries = query,
-                    cacheKey = keyGenerator.generate(query, param, userId),
+                    cacheKey = keyGenerator.generate(query, userId),
                     scheduleInterval = interval,
-                    userId = userId
+                    userId = userId,
+                    cacheKeySuffix = alias
                 )
             )
         }
