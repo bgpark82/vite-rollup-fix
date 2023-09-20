@@ -1,13 +1,13 @@
 package com.musinsa.harrods.query.dto
 
 import com.musinsa.harrods.utils.validator.Cron
+import com.musinsa.harrods.utils.validator.Template
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.Size
 import org.hibernate.validator.constraints.UniqueElements
-import kotlin.math.min
 
 const val TTL_DEFAULT: Long = 3 * 24 * 60 * 60
 const val TTL_MAX: Long = 9_223_370_000_000_000L
@@ -18,7 +18,8 @@ data class QueryRequest(
     /**
      * 쿼리 템플릿
      */
-    @field:NotBlank(message = "템플릿은 null이거나 빈 문자열이 아니어야 합니다")
+    @field:NotBlank(message = "템플릿은 필수값입니다")
+    @field:Template(message = "유효하지 않은 템플릿입니다")
     val template: String,
 
     /**
