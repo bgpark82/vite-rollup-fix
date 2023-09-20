@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.Size
+import org.hibernate.validator.constraints.UniqueElements
 import kotlin.math.min
 
 const val TTL_DEFAULT: Long = 3 * 24 * 60 * 60
@@ -50,5 +51,6 @@ data class QueryRequest(
      */
     @field:NotEmpty(message = "별칭은 필수값입니다")
     @field:Size(min = 1, max = 5, message = "별칭은 최대 5개만 등록 가능합니다")
+    @field:UniqueElements(message = "별칭은 중복될 수 없습니다")
     val alias: List<String>
 )

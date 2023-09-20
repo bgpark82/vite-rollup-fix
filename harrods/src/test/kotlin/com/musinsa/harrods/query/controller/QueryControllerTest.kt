@@ -242,6 +242,28 @@ class QueryControllerTest @Autowired constructor(
             .andExpect(jsonPath("$.invalidField").value("alias"))
     }
 
+    @Test
+    fun `alias는 중복 불가능하다`() {
+        val 중복_alias_요청 = """
+            {
+              "template": "SELECT * FROM user",
+              "interval": "* * * * *",
+              "userId": "peter.park",
+              "alias": ["brand","brand"]
+            }
+        """.trimIndent()
+
+        mvc.perform(
+            post("/queries")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(중복_alias_요청)
+        )
+            .andDo(print())
+            .andExpect(status().isBadRequest)
+            .andExpect(jsonPath("$.errorCode").value("INVALID_REQUEST_VALUE"))
+            .andExpect(jsonPath("$.invalidField").value("alias"))
+    }
+
     data class MockQueryRequest(
         val template: String? = null,
         val params: Map<String, Any>? = null,
