@@ -36,7 +36,7 @@ class QueryService(
                 Query.create(
                     ttl = ttl,
                     queries = query,
-                    cacheKey = keyGenerator.generate(query, param, userId),
+                    cacheKey = keyGenerator.generate(query, userId),
                     scheduleInterval = interval,
                     userId = userId
                 )
