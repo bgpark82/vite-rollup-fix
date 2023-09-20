@@ -1,11 +1,13 @@
 package com.musinsa.harrods.query.domain
 
+import io.hypersistence.utils.hibernate.type.json.JsonType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import org.hibernate.annotations.Type
 import java.time.LocalDateTime
 
 /**
@@ -65,7 +67,14 @@ class Query(
      * 마지막으로 캐시된 시간 (외부 스케쥴러에서 등록)
      */
     @Column(name = "last_cached_date_time", nullable = true)
-    var lastCachedDateTime: LocalDateTime? = null
+    var lastCachedDateTime: LocalDateTime? = null,
+
+    /**
+     * 캐시 키에 추가될 파라미터 (외부 스케쥴러에서 사용)
+     */
+    @Type(value = JsonType::class)
+    @Column(name = "cache_key_suffix", columnDefinition = "json")
+    var cacheKeySuffix: List<String>
 
 ) {
     companion object {
