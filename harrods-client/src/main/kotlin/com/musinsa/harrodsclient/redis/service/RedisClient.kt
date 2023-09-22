@@ -1,7 +1,7 @@
 package com.musinsa.harrodsclient.redis.service
 
 import com.musinsa.common.util.ObjectMapperFactory
-import com.musinsa.common.util.ObjectMapperFactory.typeRefListMapAny
+import com.musinsa.common.util.ObjectMapperFactory.typeRefMapAny
 import com.musinsa.harrodsclient.redis.dto.Search
 import io.lettuce.core.api.sync.RedisStringCommands
 import org.springframework.beans.factory.annotation.Qualifier
@@ -30,11 +30,11 @@ class RedisClient(
                 true -> mapOf(
                     keyValue.key to ObjectMapperFactory.readValues(
                         keyValue.value,
-                        typeRefListMapAny
+                        typeRefMapAny
                     )
                 )
 
-                false -> mapOf(keyValue.key to emptyList())
+                false -> mapOf(keyValue.key to emptyMap())
             }
         }.toList()
     }

@@ -1,7 +1,7 @@
 package com.musinsa.harrodsclient.redis.service
 
 import com.musinsa.common.util.ObjectMapperFactory
-import com.musinsa.common.util.ObjectMapperFactory.typeRefListMapAny
+import com.musinsa.common.util.ObjectMapperFactory.typeRefMapAny
 import com.musinsa.harrodsclient.redis.dto.Search
 import io.lettuce.core.api.sync.RedisCommands
 import org.assertj.core.api.Assertions.assertThat
@@ -23,11 +23,11 @@ internal class RedisClientTest {
 
     private val 준비코드_BOOK_KEY = "book"
     private val 준비코드_BOOK_VALUE = """
-            [{"title":"CPP","author":"Milton","year":"2008","price":"456.00"},{"title":"JAVA","author":"Gilson","year":"2002","price":"456.00"}]
+        {"title":"CPP","author":"Milton","year":"2008","price":"456.00"},{"title":"JAVA","author":"Gilson","year":"2002","price":"456.00"}
     """.trimIndent()
     private val 준비코드_GLOSSARY_KEY = "glossary"
     private val 준비코드_GLOSSARY_VALUE = """
-        [{"title":"example glossary","GlossDiv":{"title":"S","GlossList":{"GlossEntry":{"ID":"SGML","SortAs":"SGML","GlossTerm":"Standard Generalized Markup Language","Acronym":"SGML","Abbrev":"ISO 8879:1986","GlossDef":{"para":"A meta-markup language, used to create markup languages such as DocBook.","GlossSeeAlso":["GML","XML"]},"GlossSee":"markup"}}}}]
+        {"title":"example glossary","GlossDiv":{"title":"S","GlossList":{"GlossEntry":{"ID":"SGML","SortAs":"SGML","GlossTerm":"Standard Generalized Markup Language","Acronym":"SGML","Abbrev":"ISO 8879:1986","GlossDef":{"para":"A meta-markup language, used to create markup languages such as DocBook.","GlossSeeAlso":["GML","XML"]},"GlossSee":"markup"}}}}
     """.trimIndent()
 
     @BeforeEach
@@ -43,17 +43,18 @@ internal class RedisClientTest {
 
         val 결과값 =
             sut.getAll(Search(keys = arrayOf(준비코드_BOOK_KEY, 준비코드_GLOSSARY_KEY)))
+
         assertThat(결과값).containsExactlyInAnyOrder(
             mapOf(
                 준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
                     준비코드_BOOK_VALUE,
-                    typeRefListMapAny
+                    typeRefMapAny
                 )
             ),
             mapOf(
                 준비코드_GLOSSARY_KEY to ObjectMapperFactory.readValues(
                     준비코드_GLOSSARY_VALUE,
-                    typeRefListMapAny
+                    typeRefMapAny
                 )
             )
         )
@@ -70,11 +71,11 @@ internal class RedisClientTest {
             mapOf(
                 준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
                     준비코드_BOOK_VALUE,
-                    typeRefListMapAny
+                    typeRefMapAny
                 )
             ),
             mapOf(
-                없는_키 to emptyList<String>()
+                없는_키 to emptyMap<String, Any>()
             )
         )
     }
