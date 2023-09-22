@@ -11,6 +11,8 @@ object ObjectMapperFactory {
     private val mapper = jacksonObjectMapper()
     val typeRefListMapAny =
         object : TypeReference<List<Map<String, Any>>>() {}
+    val typeRefMapAny =
+        object : TypeReference<Map<String, Any>>() {}
 
 
     /**
@@ -60,6 +62,25 @@ object ObjectMapperFactory {
         jsonString: String,
         typeRef: TypeReference<List<T>>
     ): List<T> {
+        return try {
+            mapper.readValue(jsonString, typeRef)
+        } catch (e: Exception) {
+            CommonError.FAIL_CONVERT_STRING_TO_JSON.throwMe()
+        }
+    }
+
+    /**
+     * String to JSON 변환
+     *
+     * @param jsonString 문자열
+     * @param typeRef TypeReference
+     *
+     * @return JSON 객체
+     */
+    fun <T> readValues(
+        jsonString: String,
+        typeRef: TypeReference<T>
+    ): T {
         return try {
             mapper.readValue(jsonString, typeRef)
         } catch (e: Exception) {
