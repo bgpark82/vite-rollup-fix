@@ -12,6 +12,9 @@ import io.lettuce.core.cluster.models.partitions.RedisClusterNode
 import io.lettuce.core.resource.DefaultClientResources
 import io.lettuce.core.resource.Delay
 import io.lettuce.core.resource.DirContextDnsResolver
+import io.lettuce.core.support.ConnectionPoolSupport
+import org.apache.commons.pool2.impl.GenericObjectPool
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -43,12 +46,39 @@ class RedisDataSourceConfig(
     // 레디스 클러스터 연결 타임아웃
     private val CONNECT_TIMEOUT = Duration.ofMillis(100)
 
+    // 동시에 사용할 수 있는 최대 커넥션 갯수
+    private val CONNECTION_MAX_TOTAL = 200
+
+    // 반납할때 최대로 유지될 수 있는 커넥션 갯수
+    private val CONNECTION_MAX_IDLE = 200
+
+    // 최소한으로 유지할 커넥션 갯수
+    private val CONNECTION_MIN_IDLE = 0
+
     /**
-     * Redis Cluster 를 Node 기입없이 사용하기 위한 Bean
+     * Connection Pool 연결 설정
+     *
+     * GenericObjectPool
+     * - 유휴, 활성 인스턴스 수 제한
+     * - Pool 에서 유휴 상태인 인스턴스 퇴출
+     */
+    fun createConnectionPoolConfig(): GenericObjectPoolConfig<StatefulRedisClusterConnection<String, String>> {
+        val poolConfig =
+            GenericObjectPoolConfig<StatefulRedisClusterConnection<String, String>>()
+        poolConfig.maxTotal = CONNECTION_MAX_TOTAL
+        poolConfig.maxIdle = CONNECTION_MAX_IDLE
+        poolConfig.minIdle = CONNECTION_MIN_IDLE
+        return poolConfig
+    }
+
+    /**
+     * Redis Cluster 를 Node 기입없이 사용하기 위한 Connection Pool
      * Redis Cluster 오토 스케일링 사용을 위해서 필수.
+     *
+     * @return ConnectionPool
      */
     @Bean
-    fun redisConnection(): StatefulRedisClusterConnection<String, String> {
+    fun createRedisConnectionPool(): GenericObjectPool<StatefulRedisClusterConnection<String, String>> {
         // Redis Endpoint 설정
         val redisUriCluster =
             RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT).withPort(PORT)
@@ -113,14 +143,27 @@ class RedisDataSourceConfig(
 
         redisClusterClient.setOptions(clusterClientOptions)
 
-        return redisClusterClient.connect()
+        // Connection Pool 생성 후 리턴
+        return ConnectionPoolSupport
+            .createGenericObjectPool(
+                { redisClusterClient.connect() },
+                createConnectionPoolConfig()
+            )
     }
 
     /**
-     * Redis Commands
+     * Connection Pool 에서 유휴 Connection 을 획득한다.
+     */
+    @Bean
+    fun borrowConnection(): StatefulRedisClusterConnection<String, String> {
+        return this.createRedisConnectionPool().borrowObject()
+    }
+
+    /**
+     * 실질적으로 Redis Command 수행
      */
     @Bean
     fun redisCommands(): RedisAdvancedClusterCommands<String, String>? {
-        return this.redisConnection().sync()
+        return this.borrowConnection().sync()
     }
 }
