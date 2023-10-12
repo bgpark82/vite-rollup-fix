@@ -31,6 +31,8 @@ class RedisClient(
         println("HARRODS Active Session::::" + createRedisConnectionPool.numActive)
         println("HARRODS Idle Session::::" + createRedisConnectionPool.numIdle)
         println("HARRODS Wait Session::::" + createRedisConnectionPool.numWaiters)
+        println("HARRODS createdCount Session::::" + createRedisConnectionPool.createdCount)
+        println("HARRODS borrowedCount Session::::" + createRedisConnectionPool.borrowedCount)
 
         return redisStringCommands.mget(*search.keys).map { keyValue ->
             when (keyValue.hasValue()) {
