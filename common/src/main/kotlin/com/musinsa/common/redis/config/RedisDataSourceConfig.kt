@@ -156,9 +156,6 @@ class RedisDataSourceConfig(
      */
     @Bean
     fun borrowConnection(): StatefulRedisClusterConnection<String, String> {
-        println("HARRODS Active Session::::" + this.createRedisConnectionPool().numActive)
-        println("HARRODS Active Session::::" + this.createRedisConnectionPool().numIdle)
-        println("HARRODS Active Session::::" + this.createRedisConnectionPool().numWaiters)
         return this.createRedisConnectionPool().borrowObject()
     }
 
