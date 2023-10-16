@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.DependsOn
+import org.springframework.context.annotation.EnableMBeanExport
 import org.springframework.context.annotation.Profile
+import org.springframework.jmx.support.RegistrationPolicy
 
 @Profile(value = ["local", "test"])
 @Configuration
+@EnableMBeanExport(registration = RegistrationPolicy.IGNORE_EXISTING)
 class LocalRedisDataSourceConfig(
     @Value("\${spring.data.redis.host}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
