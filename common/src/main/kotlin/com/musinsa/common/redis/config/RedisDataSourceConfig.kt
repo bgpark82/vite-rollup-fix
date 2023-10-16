@@ -7,7 +7,6 @@ import io.lettuce.core.cluster.ClusterClientOptions
 import io.lettuce.core.cluster.ClusterTopologyRefreshOptions
 import io.lettuce.core.cluster.RedisClusterClient
 import io.lettuce.core.cluster.api.StatefulRedisClusterConnection
-import io.lettuce.core.cluster.api.sync.RedisAdvancedClusterCommands
 import io.lettuce.core.cluster.models.partitions.RedisClusterNode
 import io.lettuce.core.resource.DefaultClientResources
 import io.lettuce.core.resource.Delay
@@ -78,7 +77,7 @@ class RedisDataSourceConfig(
      * @return ConnectionPool
      */
     @Bean
-    fun createRedisConnectionPool(): GenericObjectPool<StatefulRedisClusterConnection<String, String>> {
+    fun redisConnectionPool(): GenericObjectPool<StatefulRedisClusterConnection<String, String>> {
         // Redis Endpoint 설정
         val redisUriCluster =
             RedisURI.Builder.redis(CLUSTER_CONFIG_ENDPOINT).withPort(PORT)
@@ -149,21 +148,5 @@ class RedisDataSourceConfig(
                 { redisClusterClient.connect() },
                 createConnectionPoolConfig()
             )
-    }
-
-    /**
-     * Connection Pool 에서 유휴 Connection 을 획득한다.
-     */
-    @Bean
-    fun borrowConnection(): StatefulRedisClusterConnection<String, String> {
-        return this.createRedisConnectionPool().borrowObject()
-    }
-
-    /**
-     * 실질적으로 Redis Command 수행
-     */
-    @Bean
-    fun redisCommands(): RedisAdvancedClusterCommands<String, String>? {
-        return this.borrowConnection().sync()
     }
 }
