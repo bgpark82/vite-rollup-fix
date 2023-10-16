@@ -3,8 +3,10 @@ package com.musinsa.harrodsclient.redis.service
 import com.musinsa.common.util.ObjectMapperFactory
 import com.musinsa.common.util.ObjectMapperFactory.typeRefMapAny
 import com.musinsa.harrodsclient.redis.dto.Search
-import io.lettuce.core.api.sync.RedisCommands
+import io.lettuce.core.api.StatefulRedisConnection
+import org.apache.commons.pool2.impl.GenericObjectPool
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +21,9 @@ internal class RedisClientTest {
     lateinit var sut: RedisClient
 
     @Autowired
-    lateinit var redisCommands: RedisCommands<String, String>
+    lateinit var redisConnectionPool: GenericObjectPool<StatefulRedisConnection<String, String>>
+
+    lateinit var redisConnection: StatefulRedisConnection<String, String>
 
     private val 준비코드_BOOK_KEY = "book"
     private val 준비코드_BOOK_VALUE = """
@@ -33,13 +37,22 @@ internal class RedisClientTest {
     @BeforeEach
     fun setUp() {
         // 내장 Redis Clear all
-        redisCommands.flushall()
+        redisConnection = redisConnectionPool.borrowObject()
+        redisConnection.sync().flushall()
+    }
+
+    @AfterEach
+    fun clear() {
+        // Session 정리
+        redisConnection.close()
     }
 
     @Test
     fun 모든_키_아이템을_가져온다() {
-        redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
-        redisCommands.set(준비코드_GLOSSARY_KEY, 준비코드_GLOSSARY_VALUE)
+        redisConnection.sync()
+            .set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
+        redisConnection.sync()
+            .set(준비코드_GLOSSARY_KEY, 준비코드_GLOSSARY_VALUE)
 
         val 결과값 =
             sut.getAll(Search(keys = arrayOf(준비코드_BOOK_KEY, 준비코드_GLOSSARY_KEY)))
@@ -62,7 +75,8 @@ internal class RedisClientTest {
 
     @Test
     fun 존재하지_않는_키에_대해서는_빈값을_리스트로_가져온다() {
-        redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
+        redisConnection.sync()
+            .set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
         val 없는_키 = "NON::EXISTENT::KEY"
 
         val 결과값 = sut.getAll(Search(keys = arrayOf(없는_키, 준비코드_BOOK_KEY)))
