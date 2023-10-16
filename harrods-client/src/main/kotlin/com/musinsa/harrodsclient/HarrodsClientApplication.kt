@@ -6,8 +6,6 @@ import com.musinsa.common.error.RestControllerAdviceExceptionHandler
 import com.musinsa.common.redis.config.LocalRedisDataSourceConfig
 import com.musinsa.common.redis.config.LocalRedisServer
 import com.musinsa.common.redis.config.RedisDataSourceConfig
-import com.musinsa.common.redis.service.LocalRedisConnection
-import com.musinsa.common.redis.service.RedisConnection
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.runApplication
@@ -21,8 +19,7 @@ import org.springframework.context.annotation.Import
 @Import(
     value = [
         CorsConfig::class, HealthCheckController::class, RestControllerAdviceExceptionHandler::class,
-        LocalRedisServer::class, LocalRedisDataSourceConfig::class, RedisDataSourceConfig::class,
-        LocalRedisConnection::class, RedisConnection::class
+        LocalRedisServer::class, LocalRedisDataSourceConfig::class, RedisDataSourceConfig::class
     ]
 )
 class HarrodsClientApplication
