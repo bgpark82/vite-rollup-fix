@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Import
     value = [
         CorsConfig::class, HealthCheckController::class, RestControllerAdviceExceptionHandler::class,
         LocalRedisServer::class, LocalRedisDataSourceConfig::class, RedisDataSourceConfig::class,
-        LocalReactiveRedisDataSourceConfig::class,
+        LocalReactiveRedisDataSourceConfig::class
     ]
 )
 class HarrodsClientApplication
