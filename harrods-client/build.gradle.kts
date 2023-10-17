@@ -15,6 +15,9 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/redis.gradle.kts
     id("redis")
+
+    // @see buildSrc/src/main/kotlin/coroutine.gradle.kts
+    id("coroutine")
 }
 
 group = "com.musinsa"
