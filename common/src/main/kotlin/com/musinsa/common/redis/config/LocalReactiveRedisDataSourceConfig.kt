@@ -3,6 +3,7 @@ package com.musinsa.common.redis.config
 import io.lettuce.core.RedisClient
 import io.lettuce.core.RedisURI
 import io.lettuce.core.api.StatefulRedisConnection
+import io.lettuce.core.api.reactive.RedisReactiveCommands
 import io.lettuce.core.api.sync.RedisCommands
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -10,9 +11,9 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.DependsOn
 import org.springframework.context.annotation.Profile
 
-//@Profile(value = ["local", "test"])
-//@Configuration
-class LocalRedisDataSourceConfig(
+@Profile(value = ["local", "test"])
+@Configuration
+class LocalReactiveRedisDataSourceConfig(
     @Value("\${spring.data.redis.host}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
 
@@ -23,7 +24,7 @@ class LocalRedisDataSourceConfig(
     /**
      * Local, Test 실행을 위한 내장 Redis
      */
-//    @Bean
+    @Bean
     @DependsOn("localRedisServer")
     fun redisConnection(): StatefulRedisConnection<String, String> {
         val redisClient =
@@ -38,8 +39,8 @@ class LocalRedisDataSourceConfig(
     /**
      * Redis Commands
      */
-//    @Bean
-    fun redisCommands(): RedisCommands<String, String> {
-        return this.redisConnection().sync()
+    @Bean
+    fun redisCommands(): RedisReactiveCommands<String, String> {
+        return this.redisConnection().reactive()
     }
 }
