@@ -9,9 +9,9 @@ DATADOG_JAVA_AGENT=${ACCOUNT_HOME}/dd-java-agent.jar
 SERVER_PORT=8080
 PROFILE=dev
 
-# Heap size 4GB (dev)
-HEAP_XMS=4096m
-HEAP_XMX=4096m
+# Heap size 24GB (dev)
+HEAP_XMS=24g
+HEAP_XMX=24g
 
 cd ${ACCOUNT_HOME}${SERVICE_DIR}
 
