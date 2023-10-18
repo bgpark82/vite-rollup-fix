@@ -32,6 +32,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             ),
             parameterWithName("partnerId").description(
                 "업체".plus(리스트_설명).plus(PARTNER_ID_SIZE_MAX)
+                    .plus(GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS)
             )
                 .optional(),
             parameterWithName("category").description(
@@ -48,11 +49,12 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
                 .optional(),
             parameterWithName("goodsNumber").description(
                 "상품코드".plus(리스트_설명).plus(GOODS_NUMBER_SIZE_MAX)
+                    .plus(GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS)
             ).optional(),
             parameterWithName("brandId").description(
                 "브랜드".plus(리스트_설명).plus(
                     BRAND_ID_SIZE_MAX
-                )
+                ).plus(GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS)
             )
                 .optional(),
             parameterWithName("couponNumber").description(
@@ -76,7 +78,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             parameterWithName("mdId").description(
                 "담당MD".plus(리스트_설명).plus(
                     MD_ID_SIZE_MAX
-                )
+                ).plus(GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS)
             )
                 .optional(),
             ENUM_LINK_DOCS_BUILDER("orderBy", ORDER_BY_DOCUMENT_URL, "정렬키"),
