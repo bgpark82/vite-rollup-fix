@@ -2,6 +2,7 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderDirection
+import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesStart
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -437,9 +438,9 @@ internal class QueryGeneratorTest {
     fun 페이징_파라미터_추가() {
         val 쿼리 = """
             ORDER BY `{{orderBy}}` {{orderDirection}}
-            
+
             LIMIT {{pageSize}}
-            
+
             OFFSET {{page}}
         """.trimIndent()
 
@@ -454,10 +455,37 @@ internal class QueryGeneratorTest {
         assertThat(변경된_쿼리).isEqualTo(
             """
             ORDER BY `date` DESC
-            
+
             LIMIT 100
-            
+
             OFFSET 1
+            """.trimIndent()
+        )
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = PartnerType::class)
+    fun `업체 구분 파라미터 추가`(업체구분: PartnerType) {
+        val 쿼리 = "  AND om.com_type_cd = {{partnerType}}"
+
+        val 변경된_쿼리 = QueryGenerator.applyPartnerType(쿼리, 업체구분)
+
+        assertThat(변경된_쿼리).isEqualTo("  AND om.com_type_cd = ${업체구분.code}")
+    }
+
+    @Test
+    fun `업체 구분 파라미터가 존재하지 않으면 쿼리에서 주석처리 된다`() {
+        val 쿼리 = """
+                -- 업체구분
+                AND om.com_type_cd = {{partnerType}}
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applyPartnerType(쿼리, null)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+                -- 업체구분
+                --AND om.com_type_cd = {{partnerType}}
             """.trimIndent()
         )
     }

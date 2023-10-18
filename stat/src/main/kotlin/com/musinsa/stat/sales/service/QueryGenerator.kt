@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 
@@ -397,5 +398,12 @@ object QueryGenerator {
                 PAGE_SIZE,
                 pageSize.toString()
             ).replace(PAGE, page.toString())
+    }
+
+    /**
+     * 업체 구분 추가
+     */
+    fun applyPartnerType(query: String, partnerType: PartnerType?): String {
+        return ""
     }
 }
