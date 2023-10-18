@@ -24,7 +24,7 @@ class SalesService(
     private val statDatabricksClient: StatDatabricksClient
 ) {
     /**
-     * 일별 매출통계를 가져온다.
+     * 매출통계를 가져온다.
      *
      * @param metric 매출통계 유형
      * @param startDate 시작날짜
@@ -71,14 +71,6 @@ class SalesService(
         // 조회기간 유효성 체크
         retrieveDateValidCheck(startDate, endDate)
 
-        // 상품별 매출통계 요청 파라미터 유효성 체크
-        checkGoodsStatisticsRequestParamsValid(
-            metric = metric,
-            partnerId = partnerId,
-            goodsNumber = goodsNumber,
-            brandId = brandId
-        )
-
         // SQL 조립
         val originSql = generate(
             statDatabricksClient.getDatabricksQuery(
@@ -114,6 +106,78 @@ class SalesService(
     }
 
     /**
+     * 상품별 매출통계 유효성 체크를 위해 메소드 분리
+     *
+     * @param metric 매출통계 유형
+     * @param startDate 시작날짜
+     * @param endDate 종료날짜
+     * @param tag 태그. 기본값: 빈배열
+     * @param salesStart 매출시점
+     * @param partnerId 업체
+     * @param category 카테고리
+     * @param styleNumber 스타일넘버
+     * @param goodsNumber 상품코드
+     * @param brandId 브랜드
+     * @param couponNumber 쿠폰
+     * @param adCode 광고코드
+     * @param specialtyCode 전문관코드
+     * @param mdId 담당MD
+     * @param orderBy 정렬키
+     * @param orderDirection 정렬 방향
+     * @param pageSize 페이지 사이즈
+     * @param page 페이지
+     *
+     * @return 매출통계 지표
+     *
+     * @throws SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS
+     */
+    fun getGoodsSalesStatistics(
+        metric: Metric,
+        startDate: LocalDate,
+        endDate: LocalDate,
+        tag: List<String>? = emptyList(),
+        salesStart: SalesStart,
+        partnerId: List<String>? = emptyList(),
+        category: List<String>? = emptyList(),
+        styleNumber: List<String>? = emptyList(),
+        goodsNumber: List<String>? = emptyList(),
+        brandId: List<String>? = emptyList(),
+        couponNumber: List<String>? = emptyList(),
+        adCode: List<String>? = emptyList(),
+        specialtyCode: List<String>? = emptyList(),
+        mdId: List<String>? = emptyList(),
+        orderBy: OrderBy,
+        orderDirection: OrderDirection,
+        pageSize: Long,
+        page: Long
+    ): SalesStatisticsResponse {
+        // 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값이 있어야 한다.
+        if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty() && mdId.isNullOrEmpty()) {
+            return SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS.throwMe()
+        }
+        return getSalesStatistics(
+            metric,
+            startDate,
+            endDate,
+            tag,
+            salesStart,
+            partnerId,
+            category,
+            styleNumber,
+            goodsNumber,
+            brandId,
+            couponNumber,
+            adCode,
+            specialtyCode,
+            mdId,
+            orderBy,
+            orderDirection,
+            pageSize,
+            page
+        )
+    }
+
+    /**
      * 조회기간이 유효한지 확인한다.
      *
      * @param startDate 시작날짜
@@ -145,28 +209,6 @@ class SalesService(
      */
     private fun convertDate(date: LocalDate): String {
         return date.toString().filterNot { it == '-' }
-    }
-
-    /**
-     * 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID 값이 있어야 한다.
-     *
-     * @param partnerId 업체 ID
-     * @param goodsNumber 상품번호
-     * @param brandId 브랜드 ID
-     *
-     * @throws SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS
-     */
-    private fun checkGoodsStatisticsRequestParamsValid(
-        metric: Metric,
-        partnerId: List<String>?,
-        goodsNumber: List<String>?,
-        brandId: List<String>?
-    ) {
-        if (metric == Metric.GOODS) {
-            if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty()) {
-                return SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS.throwMe()
-            }
-        }
     }
 
     /**

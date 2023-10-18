@@ -44,7 +44,7 @@ class SalesController(private val salesService: SalesService) {
      * @param tag 태그
      * @param salesStart 매출시점
      * @param partnerId 업체
-     * @param category
+     * @param category 카테고리
      * @param styleNumber 스타일넘버
      * @param goodsNumber 상품코드
      * @param brandId 브랜드
