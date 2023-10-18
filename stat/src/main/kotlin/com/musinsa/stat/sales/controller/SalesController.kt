@@ -114,25 +114,48 @@ class SalesController(private val salesService: SalesService) {
             defaultValue = PAGE_DEFAULT_VALUE
         ) page: Long
     ): SalesStatisticsResponse {
-        return salesService.getSalesStatistics(
-            metric,
-            startDate,
-            endDate,
-            tag,
-            salesStart,
-            partnerId,
-            category,
-            styleNumber,
-            goodsNumber,
-            brandId,
-            couponNumber,
-            adCode,
-            specialtyCode,
-            mdId,
-            orderBy,
-            orderDirection,
-            pageSize,
-            page
-        )
+        return when (metric) {
+            Metric.GOODS -> salesService.getGoodsSalesStatistics(
+                metric,
+                startDate,
+                endDate,
+                tag,
+                salesStart,
+                partnerId,
+                category,
+                styleNumber,
+                goodsNumber,
+                brandId,
+                couponNumber,
+                adCode,
+                specialtyCode,
+                mdId,
+                orderBy,
+                orderDirection,
+                pageSize,
+                page
+            )
+
+            else -> salesService.getSalesStatistics(
+                metric,
+                startDate,
+                endDate,
+                tag,
+                salesStart,
+                partnerId,
+                category,
+                styleNumber,
+                goodsNumber,
+                brandId,
+                couponNumber,
+                adCode,
+                specialtyCode,
+                mdId,
+                orderBy,
+                orderDirection,
+                pageSize,
+                page
+            )
+        }
     }
 }
