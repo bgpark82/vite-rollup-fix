@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/cache")
 class RedisController(private val redisClient: RedisClient) {
     @PostMapping
-    fun getAll(
+    suspend fun getAll(
         @Valid @RequestBody
         search: Search
     ): List<Map<String, Any>> {

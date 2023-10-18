@@ -3,7 +3,8 @@ package com.musinsa.harrodsclient.redis.service
 import com.musinsa.common.util.ObjectMapperFactory
 import com.musinsa.common.util.ObjectMapperFactory.typeRefMapAny
 import com.musinsa.harrodsclient.redis.dto.Search
-import io.lettuce.core.api.sync.RedisCommands
+import io.lettuce.core.api.reactive.RedisReactiveCommands
+import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,7 +20,7 @@ internal class RedisClientTest {
     lateinit var sut: RedisClient
 
     @Autowired
-    lateinit var redisCommands: RedisCommands<String, String>
+    lateinit var redisCommands: RedisReactiveCommands<String, String>
 
     private val 준비코드_BOOK_KEY = "book"
     private val 준비코드_BOOK_VALUE = """
@@ -37,46 +38,57 @@ internal class RedisClientTest {
     }
 
     @Test
-    fun 모든_키_아이템을_가져온다() {
-        redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
-        redisCommands.set(준비코드_GLOSSARY_KEY, 준비코드_GLOSSARY_VALUE)
+    fun `모든_키_아이템을_가져온다`() {
+        runBlocking {
+            redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE).block()
+            redisCommands.set(준비코드_GLOSSARY_KEY, 준비코드_GLOSSARY_VALUE).block()
 
-        val 결과값 =
-            sut.getAll(Search(keys = arrayOf(준비코드_BOOK_KEY, 준비코드_GLOSSARY_KEY)))
+            val 결과값 = sut.getAll(Search(keys = arrayOf(준비코드_BOOK_KEY, 준비코드_GLOSSARY_KEY)))
 
-        assertThat(결과값).containsExactlyInAnyOrder(
-            mapOf(
-                준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
-                    준비코드_BOOK_VALUE,
-                    typeRefMapAny
-                )
-            ),
-            mapOf(
-                준비코드_GLOSSARY_KEY to ObjectMapperFactory.readValues(
-                    준비코드_GLOSSARY_VALUE,
-                    typeRefMapAny
+            assertThat(결과값).containsExactlyInAnyOrder(
+                mapOf(
+                    준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
+                        준비코드_BOOK_VALUE,
+                        typeRefMapAny
+                    )
+                ),
+                mapOf(
+                    준비코드_GLOSSARY_KEY to ObjectMapperFactory.readValues(
+                        준비코드_GLOSSARY_VALUE,
+                        typeRefMapAny
+                    )
                 )
             )
-        )
+        }
     }
 
     @Test
-    fun 존재하지_않는_키에_대해서는_빈값을_리스트로_가져온다() {
-        redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE)
-        val 없는_키 = "NON::EXISTENT::KEY"
+    fun `존재하지_않는_키에_대해서는_빈값을_리스트로_가져온다`() {
+        runBlocking {
+            redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE).block()
 
-        val 결과값 = sut.getAll(Search(keys = arrayOf(없는_키, 준비코드_BOOK_KEY)))
+            val 없는_키 = "NON::EXISTENT::KEY"
 
-        assertThat(결과값).containsExactlyInAnyOrder(
-            mapOf(
-                준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
-                    준비코드_BOOK_VALUE,
-                    typeRefMapAny
+            val 결과값 = sut.getAll(
+                Search(
+                    keys = arrayOf(
+                        없는_키,
+                        준비코드_BOOK_KEY
+                    )
                 )
-            ),
-            mapOf(
-                없는_키 to emptyMap<String, Any>()
             )
-        )
+
+            assertThat(결과값).containsExactlyInAnyOrder(
+                mapOf(
+                    준비코드_BOOK_KEY to ObjectMapperFactory.readValues(
+                        준비코드_BOOK_VALUE,
+                        typeRefMapAny
+                    )
+                ),
+                mapOf(
+                    없는_키 to emptyMap<String, Any>()
+                )
+            )
+        }
     }
 }
