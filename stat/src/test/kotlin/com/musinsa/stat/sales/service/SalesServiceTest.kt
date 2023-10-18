@@ -137,7 +137,7 @@ private class SalesServiceTest {
     }
 
     @Test
-    fun `상품별 매출통계는 적어도 하나의 브랜드 업체코드 상품번호 담당MD 값이 없으면 예외 발생`() {
+    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_담당MD_값이_없으면_예외_발생() {
         val 에러 = assertThrows<CodeAwareException> {
             salesService.getGoodsSalesStatistics(
                 metric = Metric.GOODS,
