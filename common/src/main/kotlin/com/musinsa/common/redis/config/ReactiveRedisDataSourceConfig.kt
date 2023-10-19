@@ -13,9 +13,6 @@ import io.lettuce.core.resource.DefaultClientResources
 import io.lettuce.core.resource.Delay
 import io.lettuce.core.resource.DirContextDnsResolver
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
@@ -24,10 +21,10 @@ import java.util.concurrent.TimeUnit
  *
  * @see <a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/BestPractices.Clients-lettuce.html">ElastiCache Client 개발문서</a>
  */
-@Profile(value = ["dev", "prod"])
-@Suppress("PrivatePropertyName")
-@Configuration
-class RedisReactiveDataSourceConfig(
+//@Profile(value = ["dev", "prod"])
+//@Suppress("PrivatePropertyName")
+//@Configuration
+class ReactiveRedisDataSourceConfig(
     @Value("\${spring.data.redis.host}")
     private val CLUSTER_CONFIG_ENDPOINT: String,
 
@@ -47,7 +44,7 @@ class RedisReactiveDataSourceConfig(
      * Redis Cluster 를 Node 기입없이 사용하기 위한 Bean
      * Redis Cluster 오토 스케일링 사용을 위해서 필수.
      */
-    @Bean
+//    @Bean
     fun redisConnection(): StatefulRedisClusterConnection<String, String> {
         // Redis Endpoint 설정
         val redisUriCluster =
@@ -119,7 +116,7 @@ class RedisReactiveDataSourceConfig(
     /**
      * Redis Commands
      */
-    @Bean
+//    @Bean
     fun redisCommands(): RedisAdvancedClusterReactiveCommands<String, String>? {
         return this.redisConnection().reactive()
     }
