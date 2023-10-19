@@ -21,9 +21,6 @@ internal class RedisClientTest {
     @Autowired
     lateinit var sut: RedisClient
 
-//    @Autowired
-//    lateinit var redisCommands: RedisReactiveCommands<String, String>
-
     @Autowired
     lateinit var redisConnectionPool: GenericObjectPool<StatefulRedisConnection<String, String>>
 
@@ -40,9 +37,6 @@ internal class RedisClientTest {
 
     @BeforeEach
     fun setUp() {
-        // 내장 Redis Clear all
-//        redisCommands.flushall()
-
         redisConnection = redisConnectionPool.borrowObject()
         redisConnection.reactive().flushall()
     }
@@ -56,9 +50,6 @@ internal class RedisClientTest {
     @Test
     fun `모든_키_아이템을_가져온다`() {
         runBlocking {
-//            redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE).block()
-//            redisCommands.set(준비코드_GLOSSARY_KEY, 준비코드_GLOSSARY_VALUE).block()
-
             redisConnection.reactive()
                 .set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE).block()
             redisConnection.reactive()
@@ -86,7 +77,6 @@ internal class RedisClientTest {
     @Test
     fun `존재하지_않는_키에_대해서는_빈값을_리스트로_가져온다`() {
         runBlocking {
-//            redisCommands.set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE).block()
             redisConnection.reactive()
                 .set(준비코드_BOOK_KEY, 준비코드_BOOK_VALUE).block()
 
