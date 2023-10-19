@@ -1,7 +1,6 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.Metric
-import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 
@@ -24,6 +23,7 @@ object QueryGenerator {
     private val AD_CODE = "\\{\\{adCode}}".toRegex()
     private val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
     private val MD_ID = "\\{\\{mdId}}".toRegex()
+    private val PARTNER_TYPE = "\\{\\{partnerType}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
     private val ORDER_DIRECTION = "\\{\\{orderDirection}}".toRegex()
     private val PAGE_SIZE = "\\{\\{pageSize}}".toRegex()
@@ -133,6 +133,30 @@ object QueryGenerator {
             )
         }
         return replaceParamListToSQLInParam(query, target, params)
+    }
+
+    /**
+     * 파라미터가 비었다면 WHERE 절 주석처리를 하고, 그렇지 않으면 값을 설정한다.
+     *
+     * @param query 원본 쿼리
+     * @param target 변환할 정규표현식
+     * @param params 파라미터
+     *
+     * @return 주석처리 혹은 WHERE 형태를 적용한 쿼리
+     */
+    private fun replaceParamOrAnnotate(
+        query: String,
+        target: Regex,
+        params: String?
+    ): String {
+        if (params.isNullOrBlank()) {
+            val array = query.lines() as ArrayList<String>
+            return annotateUnusedWhereCondition(
+                array,
+                getStringLineNumber(array, target.toString().replace("\\", ""))
+            )
+        }
+        return query.replace(target, params)
     }
 
     /**
@@ -403,7 +427,7 @@ object QueryGenerator {
     /**
      * 업체 구분 추가
      */
-    fun applyPartnerType(query: String, partnerType: PartnerType?): String {
-        return ""
+    fun applyPartnerType(query: String, partnerType: String?): String {
+        return replaceParamOrAnnotate(query, PARTNER_TYPE, partnerType)
     }
 }

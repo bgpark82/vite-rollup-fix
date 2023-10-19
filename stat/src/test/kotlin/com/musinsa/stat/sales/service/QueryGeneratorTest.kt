@@ -468,7 +468,7 @@ internal class QueryGeneratorTest {
     fun `업체 구분 파라미터 추가`(업체구분: PartnerType) {
         val 쿼리 = "  AND om.com_type_cd = {{partnerType}}"
 
-        val 변경된_쿼리 = QueryGenerator.applyPartnerType(쿼리, 업체구분)
+        val 변경된_쿼리 = QueryGenerator.applyPartnerType(쿼리, 업체구분.code.toString())
 
         assertThat(변경된_쿼리).isEqualTo("  AND om.com_type_cd = ${업체구분.code}")
     }
