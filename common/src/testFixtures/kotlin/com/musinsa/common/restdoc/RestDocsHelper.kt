@@ -11,8 +11,10 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.FieldDescriptor
+import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestBody
+import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.restdocs.payload.PayloadDocumentation.responseBody
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor
@@ -192,7 +194,7 @@ fun ResultActions.성공_검증(예상_응답: String): ResultActions {
  *
  * @see https://docs.spring.io/spring-framework/reference/testing/spring-mvc-test-framework/async-requests.html
  */
-fun ResultActions.성공_검증_AWAIT(예상_응답: String): ResultActions {
+fun ResultActions.성공_검증_AWAIT(예상_응답: Any): ResultActions {
     return this.andExpect(MockMvcResultMatchers.status().isOk)
         .andExpect(request().asyncStarted())
         .andExpect(request().asyncResult(예상_응답))
