@@ -3,6 +3,7 @@ package com.musinsa.stat.sales.controller
 import com.musinsa.common.restdoc.ENUM_LINK_DOCS_BUILDER
 import com.musinsa.stat.restdoc.ORDER_BY_DOCUMENT_URL
 import com.musinsa.stat.restdoc.ORDER_DIRECTION_DOCUMENT_URL
+import com.musinsa.stat.restdoc.PARTNER_TYPE_DOCUMENT_URL
 import com.musinsa.stat.restdoc.SALES_START_DOCUMENT_URL
 import com.musinsa.stat.sales.service.RETRIEVE_LIMIT_YEAR
 import org.springframework.restdocs.request.ParameterDescriptor
@@ -81,6 +82,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
                 ).plus(GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS)
             )
                 .optional(),
+            ENUM_LINK_DOCS_BUILDER("partnerType", PARTNER_TYPE_DOCUMENT_URL, "업체구분").optional(),
             ENUM_LINK_DOCS_BUILDER("orderBy", ORDER_BY_DOCUMENT_URL, "정렬키"),
             ENUM_LINK_DOCS_BUILDER(
                 "orderDirection",

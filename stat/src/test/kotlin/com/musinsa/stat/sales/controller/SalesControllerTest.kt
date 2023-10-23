@@ -10,6 +10,7 @@ import com.musinsa.stat.restdoc.METRIC_DOCUMENT_URL
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
+import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.dto.매출통계_명세
@@ -48,6 +49,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
     val 광고코드 = listOf("NVSH")
     val 전문관코드 = listOf("beauty", "golf")
     val 담당MD = listOf("naka.da")
+    val 업체구분 = PartnerType.STORE
     val 정렬키 = OrderBy.Date
     val 정렬방향 = OrderDirection.ASC
 
@@ -100,6 +102,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             adCode = 광고코드,
             specialtyCode = 전문관코드,
             mdId = 담당MD,
+            partnerType = 업체구분,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
             pageSize = 페이지_사이즈,
@@ -136,6 +139,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             adCode = 광고코드,
             specialtyCode = 전문관코드,
             mdId = 담당MD,
+            partnerType = 업체구분,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
             pageSize = 페이지_사이즈,
@@ -169,6 +173,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 adCode = 광고코드,
                 specialtyCode = 전문관코드,
                 mdId = 담당MD,
+                partnerType = 업체구분,
                 orderBy = 정렬키,
                 orderDirection = 정렬방향,
                 pageSize = 페이지_사이즈,
@@ -190,6 +195,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["adCode"] = 광고코드
         queryParams["specialtyCode"] = 전문관코드
         queryParams["mdId"] = 담당MD
+        queryParams["partnerType"] = 업체구분.name
         queryParams["orderBy"] = 정렬키.toString()
         queryParams["orderDirection"] = 정렬방향.toString()
         queryParams["pageSize"] = 페이지_사이즈.toString()

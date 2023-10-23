@@ -3,6 +3,7 @@ package com.musinsa.stat.sales.controller
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
+import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
@@ -54,6 +55,7 @@ class SalesController(private val salesService: SalesService) {
      * @param adCode 광고코드
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
+     * @param partnerType 업체 구분
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -102,6 +104,7 @@ class SalesController(private val salesService: SalesService) {
         @Size(max = MD_ID_SIZE_MAX)
         @RequestParam(required = false)
         mdId: List<String>?,
+        @RequestParam(required = false) partnerType: PartnerType?,
         @RequestParam(required = true) orderBy: OrderBy,
         @RequestParam(
             required = false,
@@ -132,6 +135,7 @@ class SalesController(private val salesService: SalesService) {
                 adCode,
                 specialtyCode,
                 mdId,
+                partnerType,
                 orderBy,
                 orderDirection,
                 pageSize,
@@ -153,6 +157,7 @@ class SalesController(private val salesService: SalesService) {
                 adCode,
                 specialtyCode,
                 mdId,
+                partnerType,
                 orderBy,
                 orderDirection,
                 pageSize,

@@ -4,6 +4,7 @@ import com.musinsa.common.restdoc.COMMON_ERROR_VALUES
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
+import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 import org.springframework.web.bind.annotation.GetMapping
@@ -40,6 +41,11 @@ internal class EnumController {
     fun getOrderDirectionValues(): Map<String, String> {
         return ORDER_DIRECTION_VALUES()
     }
+
+    @GetMapping("/partner-type")
+    fun getPartnerTypeValues(): Map<String, String> {
+        return PARTNER_TYPE_VALUES()
+    }
 }
 
 fun ERROR_VALUES(): Map<String, String> {
@@ -65,4 +71,8 @@ fun SALES_START_VALUES(): Map<String, String> {
 
 fun ORDER_DIRECTION_VALUES(): Map<String, String> {
     return OrderDirection.values().associate { Pair(it.name, it.description) }
+}
+
+fun PARTNER_TYPE_VALUES(): Map<String, String> {
+    return PartnerType.values().associate { Pair(it.name, "DB값: ".plus(it.code.toString()).plus(", 설명: ").plus(it.description)) }
 }
