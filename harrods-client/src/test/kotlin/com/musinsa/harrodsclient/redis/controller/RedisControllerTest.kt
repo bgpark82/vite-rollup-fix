@@ -30,7 +30,7 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
 
     @ParameterizedTest
     @CsvSource(value = ["$KEY_SIZE_MIN,-1", "$KEY_SIZE_MAX,1"])
-    fun 유효하지_않은_사이즈의_캐시키는_요청이_실패한다(KEY_SIZE: Int, ADD_SIZE: Int) {
+    fun `유효하지 않은 사이즈의 캐시키는 요청이 실패한다`(KEY_SIZE: Int, ADD_SIZE: Int) {
         val 유효하지_않은_캐시키_사이즈를_가진_요청객체 =
             ObjectMapperFactory.writeValueAsString(요청객체_생성(KEY_SIZE + ADD_SIZE))
 
