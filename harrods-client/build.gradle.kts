@@ -109,6 +109,14 @@ tasks {
 
         outputs.dir(project.property("SNIPPETS_DIR")!!)
         useJUnitPlatform()
+
+        // cache api response body 파일 복사 (Hard Copy)
+        doLast {
+            copy {
+                from("src/test/resources/harrods-client")
+                into("build/generated-snippets/harrods-client")
+            }
+        }
     }
 
     asciidoctor {
