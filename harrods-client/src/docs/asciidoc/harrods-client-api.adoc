@@ -21,8 +21,8 @@ endif::[]
 
 ex) /client/cache
 
-* 개발 url: https://harrods.dev.data.musinsa.com
-* 운영 url: https://harrods.data.musinsa.com
+* 개발: https://harrods.dev.data.musinsa.com
+* 운영: https://harrods.data.musinsa.com
 ====
 
 * Error Code
@@ -46,5 +46,5 @@ include::{snippets}/harrods-client/http-request.adoc[]
 ** Request Body
 include::{snippets}/harrods-client/request-fields.adoc[]
 * 응답
-include::{snippets}/harrods-client/http-response.adoc[]
+include::{snippets}/harrods-client/response-body.adoc[]
 ** 키값이 존재하지 않을 시, Empty("{}") 값을 리턴한다.
