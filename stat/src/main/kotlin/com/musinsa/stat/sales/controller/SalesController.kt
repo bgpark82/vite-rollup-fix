@@ -30,6 +30,8 @@ const val COUPON_NUMBER_SIZE_MAX = 200
 const val AD_CODE_SIZE_MAX = 200
 const val SPECIALTY_CODE_SIZE_MAX = 100
 const val MD_ID_SIZE_MAX = 100
+const val GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS =
+    ". 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값 필요"
 
 @RestController
 @RequestMapping("/sales-statistics")
@@ -44,7 +46,7 @@ class SalesController(private val salesService: SalesService) {
      * @param tag 태그
      * @param salesStart 매출시점
      * @param partnerId 업체
-     * @param category
+     * @param category 카테고리
      * @param styleNumber 스타일넘버
      * @param goodsNumber 상품코드
      * @param brandId 브랜드
@@ -114,25 +116,48 @@ class SalesController(private val salesService: SalesService) {
             defaultValue = PAGE_DEFAULT_VALUE
         ) page: Long
     ): SalesStatisticsResponse {
-        return salesService.getSalesStatistics(
-            metric,
-            startDate,
-            endDate,
-            tag,
-            salesStart,
-            partnerId,
-            category,
-            styleNumber,
-            goodsNumber,
-            brandId,
-            couponNumber,
-            adCode,
-            specialtyCode,
-            mdId,
-            orderBy,
-            orderDirection,
-            pageSize,
-            page
-        )
+        return when (metric) {
+            Metric.GOODS -> salesService.getGoodsSalesStatistics(
+                metric,
+                startDate,
+                endDate,
+                tag,
+                salesStart,
+                partnerId,
+                category,
+                styleNumber,
+                goodsNumber,
+                brandId,
+                couponNumber,
+                adCode,
+                specialtyCode,
+                mdId,
+                orderBy,
+                orderDirection,
+                pageSize,
+                page
+            )
+
+            else -> salesService.getSalesStatistics(
+                metric,
+                startDate,
+                endDate,
+                tag,
+                salesStart,
+                partnerId,
+                category,
+                styleNumber,
+                goodsNumber,
+                brandId,
+                couponNumber,
+                adCode,
+                specialtyCode,
+                mdId,
+                orderBy,
+                orderDirection,
+                pageSize,
+                page
+            )
+        }
     }
 }
