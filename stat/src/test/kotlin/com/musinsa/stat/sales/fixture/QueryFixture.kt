@@ -56,7 +56,7 @@ object QueryFixture {
           --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
           --{{joinSpecialtyGoods}}JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
 
-        WHERE 
+        WHERE
           -- 일자
           om.ord_state_date >= '{{startDate}}'
           AND om.ord_state_date <= '{{endDate}}'
@@ -94,12 +94,15 @@ object QueryFixture {
           -- 담당MD
           AND om.md_id IN ({{mdId}})
 
+          -- 업체구분
+          AND om.com_type_cd = {{partnerType}}
+
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` {{orderDirection}}
-        
+
         LIMIT {{pageSize}}
-        
+
         OFFSET {{page}}
     """.trimIndent()
 }

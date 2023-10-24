@@ -94,7 +94,10 @@ class SalesService(
             adCode,
             specialtyCode,
             mdId,
-            partnerType?.code.toString(),
+            partnerType = when (partnerType) {
+                null -> null
+                else -> partnerType.code.toString()
+            },
             orderBy.alias, metric, orderDirection.name, pageSize, page
         )
 
