@@ -1,7 +1,6 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # TODO
-    url:
-    username:
-    password:
+    url: jdbc:mysql://prod-harrods-mysql-rds.cacpsxq2cnl6.ap-northeast-2.rds.amazonaws.com
+    username: harrods_admin
+    password: gilwoo1!2@
