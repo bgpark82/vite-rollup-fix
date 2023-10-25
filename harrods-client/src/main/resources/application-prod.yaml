@@ -1,4 +1,4 @@
 spring:
   data:
     redis:
-      host: clustercfg.prod-harrods-v1-redis.cr5gwi.apn2.cache.amazonaws.com:6379
+      host: clustercfg.prod-harrods-v1-redis.cr5gwi.apn2.cache.amazonaws.com
