@@ -97,6 +97,9 @@ object QueryFixture {
           -- 업체구분
           AND om.com_type_cd = {{partnerType}}
 
+          -- 품목(상품 옵션)
+          AND om.opt_kind_cd = '{{goodsKind}}'
+
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` {{orderDirection}}
