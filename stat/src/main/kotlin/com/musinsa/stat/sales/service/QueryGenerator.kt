@@ -275,7 +275,8 @@ object QueryGenerator {
                         mdId
                     ),
                     partnerType
-                ), goodsKind
+                ),
+                goodsKind
             ),
             orderBy,
             orderDirection,
