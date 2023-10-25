@@ -225,6 +225,7 @@ object QueryGenerator {
         specialtyCode: List<String>?,
         mdId: List<String>?,
         partnerType: String?,
+        goodsKind: String?,
         orderBy: String,
         metric: Metric,
         orderDirection: String,
@@ -232,47 +233,49 @@ object QueryGenerator {
         page: Long
     ): String {
         return applyPagingParams(
-            applyPartnerType(
-                applyMdIdOrAnnotate(
-                    applySpecialtyCodeOrAnnotate(
-                        applyAdCodeOrAnnotate(
-                            applyCouponNumberOrAnnotate(
-                                applyBrandIdOrAnnotate(
-                                    applyGoodsNumberOrAnnotate(
-                                        applyStyleNumberOrAnnotate(
-                                            applyCategoryOrAnnotate(
-                                                applyPartnerIdOrAnnotate(
-                                                    applySalesStart(
-                                                        applyTagOrAnnotate(
-                                                            applyStarDateAndEndDate(
-                                                                query,
-                                                                startDate,
-                                                                endDate
+            applyGoodsKind(
+                applyPartnerType(
+                    applyMdIdOrAnnotate(
+                        applySpecialtyCodeOrAnnotate(
+                            applyAdCodeOrAnnotate(
+                                applyCouponNumberOrAnnotate(
+                                    applyBrandIdOrAnnotate(
+                                        applyGoodsNumberOrAnnotate(
+                                            applyStyleNumberOrAnnotate(
+                                                applyCategoryOrAnnotate(
+                                                    applyPartnerIdOrAnnotate(
+                                                        applySalesStart(
+                                                            applyTagOrAnnotate(
+                                                                applyStarDateAndEndDate(
+                                                                    query,
+                                                                    startDate,
+                                                                    endDate
+                                                                ),
+                                                                tag
                                                             ),
-                                                            tag
+                                                            salesStart
                                                         ),
-                                                        salesStart
+                                                        partnerId
                                                     ),
-                                                    partnerId
+                                                    category
                                                 ),
-                                                category
+                                                styleNumber
                                             ),
-                                            styleNumber
+                                            goodsNumber
                                         ),
-                                        goodsNumber
+                                        brandId
                                     ),
-                                    brandId
+                                    couponNumber,
+                                    metric
                                 ),
-                                couponNumber,
-                                metric
+                                adCode
                             ),
-                            adCode
+                            specialtyCode
                         ),
-                        specialtyCode
+                        mdId
                     ),
-                    mdId
-                ),
-                partnerType
+                    partnerType
+                ), goodsKind
             ),
             orderBy,
             orderDirection,
