@@ -8,12 +8,9 @@ enum class GoodsKind(val description: String) {
     BEAUTY("BEAUTY"),
     TICKET("TICKET"),
     SHOES("SHOES"),
-    HAT("HAT"),
     BAG("BAG"),
     WATCH("WATCH"),
     CAP("CAP"),
     ETC("ETC"),
-    ACCESSORY("ACCESSORY"),
-    Watch("Watch"),
-    WEBBING("Webbing : Acrylic")
+    ACCESSORY("ACCESSORY")
 }
