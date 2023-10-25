@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+// TODO 해롯 클라이언트 컨트롤러와 통합
 /**
  * Metric Enum 아스키독 노출을 위한 테스트 전용 컨트롤러
  */

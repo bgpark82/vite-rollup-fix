@@ -1,0 +1,6 @@
+// RedisClient 메소드가 Coroutine 작성되어 있어, 응답값을 Rest Docs 생성이 불가능하여 결과값만을 대체한다.
+
+[source,json,options="wrap"]
+----
+[{"harrods:peter.park:1990737503:gender:M:brand:twn:gender:M":{"brand":"twn","gender":"M","age_band.0":10515,"age_band.19":20256,"age_band.24":17019,"age_band.29":10902,"age_band.34":4476,"age_band.40":5636,"gender.F":0,"gender.M":68804,"gender.N":0,"total":68804,"quantity":69195}},{"harrods:peter.park:1413978463:brand:blackmoment":{"brand":"blackmoment","age_band.0":317,"age_band.19":1963,"age_band.24":1549,"age_band.29":649,"age_band.34":300,"age_band.40":907,"gender.F":5685,"gender.M":0,"gender.N":0,"total":5685,"quantity":5727}},{"test:not:exist":{}}]
+----

@@ -1,6 +1,7 @@
 package com.musinsa.common.restdoc
 
 import com.musinsa.common.error.CommonError
+import org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.Conversions.string
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.http.HttpDocumentation
@@ -10,8 +11,10 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
 import org.springframework.restdocs.payload.FieldDescriptor
+import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestBody
+import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
 import org.springframework.restdocs.payload.PayloadDocumentation.responseBody
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor
@@ -25,6 +28,7 @@ import org.springframework.test.web.servlet.ResultActions
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.request
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.util.MultiValueMap
@@ -183,6 +187,17 @@ fun MockMvc.POST(
 fun ResultActions.성공_검증(예상_응답: String): ResultActions {
     return this.andExpect(MockMvcResultMatchers.status().isOk)
         .andExpect(content().string(예상_응답))
+}
+
+/**
+ * Coroutine suspend 메소드 테스트용도
+ *
+ * @see https://docs.spring.io/spring-framework/reference/testing/spring-mvc-test-framework/async-requests.html
+ */
+fun ResultActions.성공_검증_AWAIT(예상_응답: Any): ResultActions {
+    return this.andExpect(MockMvcResultMatchers.status().isOk)
+        .andExpect(request().asyncStarted())
+        .andExpect(request().asyncResult(예상_응답))
 }
 
 /**
