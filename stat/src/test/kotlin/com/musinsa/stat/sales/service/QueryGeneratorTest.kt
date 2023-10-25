@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.service
 
+import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
@@ -486,6 +487,33 @@ internal class QueryGeneratorTest {
             """
                 -- 업체구분
                 --AND om.com_type_cd = {{partnerType}}
+            """.trimIndent()
+        )
+    }
+
+    @ParameterizedTest
+    @EnumSource(value = GoodsKind::class)
+    fun `품목 파라미터 추가`(품목: GoodsKind) {
+        val 쿼리 = "  AND om.opt_kind_cd = '{{goodsKind}}'"
+
+        val 변경된_쿼리 = QueryGenerator.applyGoodsKind(쿼리, 품목.description)
+
+        assertThat(변경된_쿼리).isEqualTo("  AND om.opt_kind_cd = '${품목.description}'")
+    }
+
+    @Test
+    fun `품목 파라미터가 존재하지 않으면 쿼리에서 주석처리 된다`() {
+        val 쿼리 = """
+            -- 품목(상품 옵션)
+            AND om.opt_kind_cd = '{{goodsKind}}'
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applyGoodsKind(쿼리, null)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            -- 품목(상품 옵션)
+            --AND om.opt_kind_cd = '{{goodsKind}}'
             """.trimIndent()
         )
     }

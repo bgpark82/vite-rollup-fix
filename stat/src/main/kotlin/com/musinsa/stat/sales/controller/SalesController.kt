@@ -1,5 +1,6 @@
 package com.musinsa.stat.sales.controller
 
+import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
@@ -105,6 +106,7 @@ class SalesController(private val salesService: SalesService) {
         @RequestParam(required = false)
         mdId: List<String>?,
         @RequestParam(required = false) partnerType: PartnerType?,
+        @RequestParam(required = false) goodsKind: GoodsKind?,
         @RequestParam(required = true) orderBy: OrderBy,
         @RequestParam(
             required = false,
@@ -136,6 +138,7 @@ class SalesController(private val salesService: SalesService) {
                 specialtyCode,
                 mdId,
                 partnerType,
+                goodsKind,
                 orderBy,
                 orderDirection,
                 pageSize,
@@ -158,6 +161,7 @@ class SalesController(private val salesService: SalesService) {
                 specialtyCode,
                 mdId,
                 partnerType,
+                goodsKind,
                 orderBy,
                 orderDirection,
                 pageSize,

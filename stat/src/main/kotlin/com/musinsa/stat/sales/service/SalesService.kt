@@ -2,6 +2,7 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
+import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
@@ -42,6 +43,7 @@ class SalesService(
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param partnerType 업체 구분
+     * @param goodsKind 품목
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -66,6 +68,7 @@ class SalesService(
         specialtyCode: List<String>? = emptyList(),
         mdId: List<String>? = emptyList(),
         partnerType: PartnerType? = null,
+        goodsKind: GoodsKind? = null,
         orderBy: OrderBy,
         orderDirection: OrderDirection,
         pageSize: Long,
@@ -97,6 +100,10 @@ class SalesService(
             partnerType = when (partnerType) {
                 null -> null
                 else -> partnerType.code.toString()
+            },
+            goodsKind = when (goodsKind) {
+                null -> null
+                else -> goodsKind.description
             },
             orderBy.alias, metric, orderDirection.name, pageSize, page
         )
@@ -130,6 +137,7 @@ class SalesService(
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param partnerType 업체 구분
+     * @param goodsKind 품목
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -155,6 +163,7 @@ class SalesService(
         specialtyCode: List<String>? = emptyList(),
         mdId: List<String>? = emptyList(),
         partnerType: PartnerType? = null,
+        goodsKind: GoodsKind? = null,
         orderBy: OrderBy,
         orderDirection: OrderDirection,
         pageSize: Long,
@@ -180,6 +189,7 @@ class SalesService(
             specialtyCode,
             mdId,
             partnerType,
+            goodsKind,
             orderBy,
             orderDirection,
             pageSize,

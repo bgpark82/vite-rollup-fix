@@ -24,6 +24,7 @@ object QueryGenerator {
     private val SPECIALTY_CODE = "\\{\\{specialtyCode}}".toRegex()
     private val MD_ID = "\\{\\{mdId}}".toRegex()
     private val PARTNER_TYPE = "\\{\\{partnerType}}".toRegex()
+    private val GOODS_KIND = "\\{\\{goodsKind}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
     private val ORDER_DIRECTION = "\\{\\{orderDirection}}".toRegex()
     private val PAGE_SIZE = "\\{\\{pageSize}}".toRegex()
@@ -224,6 +225,7 @@ object QueryGenerator {
         specialtyCode: List<String>?,
         mdId: List<String>?,
         partnerType: String?,
+        goodsKind: String?,
         orderBy: String,
         metric: Metric,
         orderDirection: String,
@@ -231,47 +233,50 @@ object QueryGenerator {
         page: Long
     ): String {
         return applyPagingParams(
-            applyPartnerType(
-                applyMdIdOrAnnotate(
-                    applySpecialtyCodeOrAnnotate(
-                        applyAdCodeOrAnnotate(
-                            applyCouponNumberOrAnnotate(
-                                applyBrandIdOrAnnotate(
-                                    applyGoodsNumberOrAnnotate(
-                                        applyStyleNumberOrAnnotate(
-                                            applyCategoryOrAnnotate(
-                                                applyPartnerIdOrAnnotate(
-                                                    applySalesStart(
-                                                        applyTagOrAnnotate(
-                                                            applyStarDateAndEndDate(
-                                                                query,
-                                                                startDate,
-                                                                endDate
+            applyGoodsKind(
+                applyPartnerType(
+                    applyMdIdOrAnnotate(
+                        applySpecialtyCodeOrAnnotate(
+                            applyAdCodeOrAnnotate(
+                                applyCouponNumberOrAnnotate(
+                                    applyBrandIdOrAnnotate(
+                                        applyGoodsNumberOrAnnotate(
+                                            applyStyleNumberOrAnnotate(
+                                                applyCategoryOrAnnotate(
+                                                    applyPartnerIdOrAnnotate(
+                                                        applySalesStart(
+                                                            applyTagOrAnnotate(
+                                                                applyStarDateAndEndDate(
+                                                                    query,
+                                                                    startDate,
+                                                                    endDate
+                                                                ),
+                                                                tag
                                                             ),
-                                                            tag
+                                                            salesStart
                                                         ),
-                                                        salesStart
+                                                        partnerId
                                                     ),
-                                                    partnerId
+                                                    category
                                                 ),
-                                                category
+                                                styleNumber
                                             ),
-                                            styleNumber
+                                            goodsNumber
                                         ),
-                                        goodsNumber
+                                        brandId
                                     ),
-                                    brandId
+                                    couponNumber,
+                                    metric
                                 ),
-                                couponNumber,
-                                metric
+                                adCode
                             ),
-                            adCode
+                            specialtyCode
                         ),
-                        specialtyCode
+                        mdId
                     ),
-                    mdId
+                    partnerType
                 ),
-                partnerType
+                goodsKind
             ),
             orderBy,
             orderDirection,
@@ -434,5 +439,12 @@ object QueryGenerator {
      */
     fun applyPartnerType(query: String, partnerType: String?): String {
         return replaceParamOrAnnotate(query, PARTNER_TYPE, partnerType)
+    }
+
+    /**
+     * 품목(상품 옵션) 추가
+     */
+    fun applyGoodsKind(query: String, goodsKind: String?): String {
+        return replaceParamOrAnnotate(query, GOODS_KIND, goodsKind)
     }
 }
