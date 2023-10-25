@@ -1,28 +1,20 @@
 #!/usr/bin/sh
-
-PROFILE=prod
-JAR_NAME=harrods
-SERVER_PORT=8080
 SERVICE_DIR=/java/harrods/
-ACCOUNT_HOME=/home/ec2-user
-SERVICE_HOME_DIR=${ACCOUNT_HOME}${SERVICE_DIR}
-
-# Datadog
+JAR_NAME=harrods
 SERVICE_NAME=harrods
 VERSION=1.0
+ACCOUNT_HOME=/home/ec2-user
 DATADOG_JAVA_AGENT=${ACCOUNT_HOME}/dd-java-agent.jar
+SERVER_PORT=8080
+PROFILE=prod
 
 # Heap size 4GB (prod)
 HEAP_XMS=4096m
 HEAP_XMX=4096m
 
-# 디렉토리 생성
-if [ ! -d "${SERVICE_HOME_DIR}" ]; then
-    mkdir -p "${SERVICE_HOME_DIR}"
-    echo "directory created: ${SERVICE_HOME_DIR}"
-else
-    echo "directory already exist: ${SERVICE_HOME_DIR}"
-fi
+SERVICE_HOME_DIR=${ACCOUNT_HOME}${SERVICE_DIR}
+
+# Datadog
 
 # 디렉토리 이동
 cd ${SERVICE_HOME_DIR}
