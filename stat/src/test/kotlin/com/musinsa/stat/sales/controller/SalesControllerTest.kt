@@ -7,6 +7,7 @@ import com.musinsa.common.restdoc.RestDocsControllerHelper
 import com.musinsa.common.restdoc.성공_검증
 import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
 import com.musinsa.stat.restdoc.METRIC_DOCUMENT_URL
+import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
@@ -50,6 +51,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
     val 전문관코드 = listOf("beauty", "golf")
     val 담당MD = listOf("naka.da")
     val 업체구분 = PartnerType.STORE
+    val 품목 = GoodsKind.ACCESSORY
     val 정렬키 = OrderBy.Date
     val 정렬방향 = OrderDirection.ASC
 
@@ -103,6 +105,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             specialtyCode = 전문관코드,
             mdId = 담당MD,
             partnerType = 업체구분,
+            goodsKind = 품목,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
             pageSize = 페이지_사이즈,
@@ -140,6 +143,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             specialtyCode = 전문관코드,
             mdId = 담당MD,
             partnerType = 업체구분,
+            goodsKind = 품목,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
             pageSize = 페이지_사이즈,
@@ -174,6 +178,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 specialtyCode = 전문관코드,
                 mdId = 담당MD,
                 partnerType = 업체구분,
+                goodsKind = 품목,
                 orderBy = 정렬키,
                 orderDirection = 정렬방향,
                 pageSize = 페이지_사이즈,
@@ -196,6 +201,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["specialtyCode"] = 전문관코드
         queryParams["mdId"] = 담당MD
         queryParams["partnerType"] = 업체구분.name
+        queryParams["goodsKind"] = 품목.name
         queryParams["orderBy"] = 정렬키.toString()
         queryParams["orderDirection"] = 정렬방향.toString()
         queryParams["pageSize"] = 페이지_사이즈.toString()

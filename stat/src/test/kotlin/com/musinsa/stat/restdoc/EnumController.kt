@@ -1,6 +1,7 @@
 package com.musinsa.stat.restdoc
 
 import com.musinsa.common.restdoc.COMMON_ERROR_VALUES
+import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
@@ -46,6 +47,11 @@ internal class EnumController {
     fun getPartnerTypeValues(): Map<String, String> {
         return PARTNER_TYPE_VALUES()
     }
+
+    @GetMapping("/goods-kind")
+    fun getGoodsKindValues(): Map<String, String> {
+        return GOODS_KIND_VALUES()
+    }
 }
 
 fun ERROR_VALUES(): Map<String, String> {
@@ -74,5 +80,14 @@ fun ORDER_DIRECTION_VALUES(): Map<String, String> {
 }
 
 fun PARTNER_TYPE_VALUES(): Map<String, String> {
-    return PartnerType.values().associate { Pair(it.name, "DB값: ".plus(it.code.toString()).plus(", 설명: ").plus(it.description)) }
+    return PartnerType.values().associate {
+        Pair(
+            it.name,
+            "DB값: ".plus(it.code.toString()).plus(", 설명: ").plus(it.description)
+        )
+    }
+}
+
+fun GOODS_KIND_VALUES(): Map<String, String> {
+    return GoodsKind.values().associate { Pair(it.name, it.description) }
 }
