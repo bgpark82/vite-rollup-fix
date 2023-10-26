@@ -26,6 +26,9 @@ jobs:
       - name: Install Kotlin
         run: sudo snap install --classic kotlin --channel=1.7
 
+      - name: Clean
+        run: ./gradlew :stat:clean
+
       - name: Build
         run: ./gradlew :stat:build
 

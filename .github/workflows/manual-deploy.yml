@@ -98,6 +98,9 @@ jobs:
         run: |
           sudo snap install --classic kotlin --channel=1.7
 
+      - name: Clean
+        run: ./gradlew :${{ env.service }}:clean
+
       - name: Build
         run: ./gradlew :${{ env.service }}:build -Dbuild_stage=${{ env.profile }}
 
