@@ -37,4 +37,5 @@ out/
 .vscode/
 
 ### Spring REST Docs Path ###
-**/src/main/resources/static/docs/
+# TODO Gradle Task 순서 조절로, 하위 디렉토리 git ignore 설정
+#**/src/main/resources/static/docs/

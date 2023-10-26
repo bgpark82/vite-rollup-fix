@@ -98,20 +98,17 @@ tasks {
 
         // Directory 설정
         inputs.dir(project.property("SNIPPETS_DIR")!!)
-    }
 
-    // Ascii Doc 파일 복사
-    task("copyDocs") {
-        dependsOn(asciidoctor)
-
-        copy {
-            from("build/docs/asciidoc")
-            into("src/main/resources/static/docs")
+        doLast {
+            copy {
+                from("build/docs/asciidoc")
+                into("src/main/resources/static/docs")
+            }
         }
     }
 
     build {
         // Ascii Doc 파일 생성이 성공해야만, Build 진행
-        dependsOn("copyDocs")
+        dependsOn(asciidoctor)
     }
 }
