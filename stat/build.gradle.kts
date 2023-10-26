@@ -35,15 +35,6 @@ dependencies {
     testImplementation(testFixtures(project(":common")))
 }
 
-// Source Set 추가(Rest Docs static 파일 추가를 위해)
-sourceSets {
-    main {
-        resources {
-            srcDirs("src/main/resources", "src/main/configs")
-        }
-    }
-}
-
 tasks {
     withType<KotlinCompile> {
         kotlinOptions {
