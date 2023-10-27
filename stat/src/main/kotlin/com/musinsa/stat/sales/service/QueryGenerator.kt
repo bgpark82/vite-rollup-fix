@@ -2,7 +2,6 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.SalesStart
-import com.musinsa.stat.sales.error.SalesError
 
 const val PREFIX_ANNOTATION = "--"
 
@@ -39,7 +38,7 @@ object QueryGenerator {
      * @param array 배열
      * @param target 찾을 문자열
      *
-     * @return target 이 속한 배열
+     * @return target 이 속한 배열. -1: 주석 처리 대상 없음
      */
     fun getStringLineNumber(
         array: ArrayList<String>,
@@ -49,7 +48,7 @@ object QueryGenerator {
             array.indexOfFirst { str -> str.contains(target) }
         return when (index >= 0) {
             true -> index
-            false -> SalesError.UNKNOWN_SEARCH_PARAM.throwMe()
+            false -> -1
         }
     }
 
@@ -57,7 +56,7 @@ object QueryGenerator {
      * 사용하지 않는 조건을 주석처리한다.
      *
      * @param array 배열처리된 쿼리
-     * @param index 주석처리할 SQL 라인
+     * @param index 주석처리할 SQL 라인.
      *
      * @return 주석처리된 쿼리
      */
@@ -65,6 +64,12 @@ object QueryGenerator {
         array: ArrayList<String>,
         index: Int
     ): String {
+        // 주석 처리 대상 없음
+        if (index < 0) {
+            return array.joinToString(separator = "\n")
+                .trimIndent()
+        }
+
         array[index] =
             StringBuilder().append(PREFIX_ANNOTATION).append(array[index])
                 .toString()
@@ -107,9 +112,15 @@ object QueryGenerator {
             params
         ).lines() as ArrayList<String>
         val index = getStringLineNumber(array, joinTarget)
-        array[index] =
-            array[index].replace(PREFIX_ANNOTATION.plus(joinTarget), "")
-        return array.joinToString(separator = "\n").trimIndent()
+        return when (index >= 0) {
+            true -> {
+                array[index] =
+                    array[index].replace(PREFIX_ANNOTATION.plus(joinTarget), "")
+                array.joinToString(separator = "\n").trimIndent()
+            }
+
+            false -> array.joinToString(separator = "\n").trimIndent()
+        }
     }
 
     /**

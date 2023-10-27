@@ -2,6 +2,7 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesStart
@@ -9,6 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
+import java.time.LocalDate
 
 internal class QueryGeneratorTest {
     @Test
@@ -516,5 +518,38 @@ internal class QueryGeneratorTest {
             --AND om.opt_kind_cd = '{{goodsKind}}'
             """.trimIndent()
         )
+    }
+
+    @Test
+    fun `현재 매출통계에서 사용하지 않는 파라미터가 입력될 시 아무일도 일어나지 않는다`() {
+        val 쿼리 = """
+            -- 아무것도 없는 쿼리
+            -- 아무것도 없는 쿼리
+        """.trimIndent()
+
+        val 변경되지_않은_쿼리 = QueryGenerator.generate(
+            query = 쿼리, metric = Metric.DAILY,
+            startDate = LocalDate.now().toString(),
+            endDate = LocalDate.now().plusMonths(1).toString(),
+            tag = emptyList(),
+            salesStart = SalesStart.SHIPPING_REQUEST,
+            partnerId = emptyList(),
+            category = emptyList(),
+            styleNumber = emptyList(),
+            goodsNumber = emptyList(),
+            brandId = emptyList(),
+            couponNumber = emptyList(),
+            adCode = emptyList(),
+            specialtyCode = emptyList(),
+            mdId = emptyList(),
+            partnerType = null,
+            goodsKind = null,
+            orderBy = OrderBy.Date.toString(),
+            orderDirection = OrderDirection.ASC.toString(),
+            pageSize = 100,
+            page = 1
+        )
+
+        assertThat(변경되지_않은_쿼리).isEqualTo(쿼리.trimIndent())
     }
 }

@@ -12,10 +12,6 @@ enum class SalesError(
     override val message: String
 ) : Error {
     NON_VALID_DATE_PERIOD(HttpStatus.BAD_REQUEST, "유효하지 않은 조회기간."),
-    UNKNOWN_SEARCH_PARAM(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-        "알려지지 않은 검색 파라미터"
-    ),
     UNKNOWN_QUERY_RESULT_VALUE(
         HttpStatus.INTERNAL_SERVER_ERROR,
         "알려 지지 않은 쿼리 결과 항목"
