@@ -545,6 +545,7 @@ internal class QueryGeneratorTest {
             mdId = emptyList(),
             partnerType = null,
             goodsKind = null,
+            salesFunnel = SalesFunnel.DEFAULT,
             orderBy = OrderBy.Date.toString(),
             orderDirection = OrderDirection.ASC.toString(),
             pageSize = 100,

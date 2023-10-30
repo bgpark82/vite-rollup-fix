@@ -7,6 +7,7 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
+import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.error.SalesError
@@ -44,6 +45,7 @@ class SalesService(
      * @param mdId 담당MD
      * @param partnerType 업체 구분
      * @param goodsKind 품목
+     * @param salesFunnel 판매 경로
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -69,6 +71,7 @@ class SalesService(
         mdId: List<String>? = emptyList(),
         partnerType: PartnerType? = null,
         goodsKind: GoodsKind? = null,
+        salesFunnel: SalesFunnel,
         orderBy: OrderBy,
         orderDirection: OrderDirection,
         pageSize: Long,
@@ -105,6 +108,7 @@ class SalesService(
                 null -> null
                 else -> goodsKind.description
             },
+            salesFunnel,
             orderBy.alias, metric, orderDirection.name, pageSize, page
         )
 
@@ -138,6 +142,7 @@ class SalesService(
      * @param mdId 담당MD
      * @param partnerType 업체 구분
      * @param goodsKind 품목
+     * @param salesFunnel 판매 경로
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -164,6 +169,7 @@ class SalesService(
         mdId: List<String>? = emptyList(),
         partnerType: PartnerType? = null,
         goodsKind: GoodsKind? = null,
+        salesFunnel: SalesFunnel,
         orderBy: OrderBy,
         orderDirection: OrderDirection,
         pageSize: Long,
@@ -190,6 +196,7 @@ class SalesService(
             mdId,
             partnerType,
             goodsKind,
+            salesFunnel,
             orderBy,
             orderDirection,
             pageSize,

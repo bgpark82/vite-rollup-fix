@@ -12,6 +12,7 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
+import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.dto.매출통계_명세
@@ -52,6 +53,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
     val 담당MD = listOf("naka.da")
     val 업체구분 = PartnerType.STORE
     val 품목 = GoodsKind.ACCESSORY
+    val 판매경로 = SalesFunnel.MOBILE_APP
     val 정렬키 = OrderBy.Date
     val 정렬방향 = OrderDirection.ASC
 
@@ -106,6 +108,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             mdId = 담당MD,
             partnerType = 업체구분,
             goodsKind = 품목,
+            salesFunnel = 판매경로,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
             pageSize = 페이지_사이즈,
@@ -144,6 +147,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             mdId = 담당MD,
             partnerType = 업체구분,
             goodsKind = 품목,
+            salesFunnel = 판매경로,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
             pageSize = 페이지_사이즈,
@@ -179,6 +183,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 mdId = 담당MD,
                 partnerType = 업체구분,
                 goodsKind = 품목,
+                salesFunnel = 판매경로,
                 orderBy = 정렬키,
                 orderDirection = 정렬방향,
                 pageSize = 페이지_사이즈,
@@ -202,6 +207,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["mdId"] = 담당MD
         queryParams["partnerType"] = 업체구분.name
         queryParams["goodsKind"] = 품목.name
+        queryParams["salesFunnel"] = 판매경로.name
         queryParams["orderBy"] = 정렬키.toString()
         queryParams["orderDirection"] = 정렬방향.toString()
         queryParams["pageSize"] = 페이지_사이즈.toString()

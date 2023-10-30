@@ -242,6 +242,7 @@ object QueryGenerator {
         mdId: List<String>?,
         partnerType: String?,
         goodsKind: String?,
+        salesFunnel: SalesFunnel,
         orderBy: String,
         metric: Metric,
         orderDirection: String,
@@ -249,50 +250,53 @@ object QueryGenerator {
         page: Long
     ): String {
         return applyPagingParams(
-            applyGoodsKind(
-                applyPartnerType(
-                    applyMdIdOrAnnotate(
-                        applySpecialtyCodeOrAnnotate(
-                            applyAdCodeOrAnnotate(
-                                applyCouponNumberOrAnnotate(
-                                    applyBrandIdOrAnnotate(
-                                        applyGoodsNumberOrAnnotate(
-                                            applyStyleNumberOrAnnotate(
-                                                applyCategoryOrAnnotate(
-                                                    applyPartnerIdOrAnnotate(
-                                                        applySalesStart(
-                                                            applyTagOrAnnotate(
-                                                                applyStarDateAndEndDate(
-                                                                    query,
-                                                                    startDate,
-                                                                    endDate
+            applySalesFunnel(
+                applyGoodsKind(
+                    applyPartnerType(
+                        applyMdIdOrAnnotate(
+                            applySpecialtyCodeOrAnnotate(
+                                applyAdCodeOrAnnotate(
+                                    applyCouponNumberOrAnnotate(
+                                        applyBrandIdOrAnnotate(
+                                            applyGoodsNumberOrAnnotate(
+                                                applyStyleNumberOrAnnotate(
+                                                    applyCategoryOrAnnotate(
+                                                        applyPartnerIdOrAnnotate(
+                                                            applySalesStart(
+                                                                applyTagOrAnnotate(
+                                                                    applyStarDateAndEndDate(
+                                                                        query,
+                                                                        startDate,
+                                                                        endDate
+                                                                    ),
+                                                                    tag
                                                                 ),
-                                                                tag
+                                                                salesStart
                                                             ),
-                                                            salesStart
+                                                            partnerId
                                                         ),
-                                                        partnerId
+                                                        category
                                                     ),
-                                                    category
+                                                    styleNumber
                                                 ),
-                                                styleNumber
+                                                goodsNumber
                                             ),
-                                            goodsNumber
+                                            brandId
                                         ),
-                                        brandId
+                                        couponNumber,
+                                        metric
                                     ),
-                                    couponNumber,
-                                    metric
+                                    adCode
                                 ),
-                                adCode
+                                specialtyCode
                             ),
-                            specialtyCode
+                            mdId
                         ),
-                        mdId
+                        partnerType
                     ),
-                    partnerType
+                    goodsKind
                 ),
-                goodsKind
+                salesFunnel
             ),
             orderBy,
             orderDirection,
