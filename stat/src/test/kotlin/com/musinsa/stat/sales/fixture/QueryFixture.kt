@@ -100,6 +100,12 @@ object QueryFixture {
           -- 품목(상품 옵션)
           AND om.opt_kind_cd = '{{goodsKind}}'
 
+          -- 모바일 여부
+          AND om.mobile_yn = '{{isMobile}}'
+
+          -- 앱 여부
+          AND om.app_yn = '{{isApp}}'
+
         GROUP BY 1
 
         ORDER BY `{{orderBy}}` {{orderDirection}}
