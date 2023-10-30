@@ -552,4 +552,19 @@ internal class QueryGeneratorTest {
 
         assertThat(변경되지_않은_쿼리).isEqualTo(쿼리.trimIndent())
     }
+
+    @Test
+    fun `판매 경로가 기본인 경우 쿼리에서 mobile_yn, app_yn 값이 주석처리 된다`() {
+
+    }
+
+    @Test
+    fun `판매 경로가 모바일 앱인 경우 쿼리에서 mobile_yn Y, app_yn N 값이 적용된다`() {
+
+    }
+
+    @Test
+    fun `판매 경로가 모바일 웹인 경우 쿼리에서 mobile_yn Y, app_yn Y 값이 적용된다`() {
+
+    }
 }

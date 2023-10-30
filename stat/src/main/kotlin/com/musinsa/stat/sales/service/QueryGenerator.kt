@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
 
 const val PREFIX_ANNOTATION = "--"
@@ -457,5 +458,13 @@ object QueryGenerator {
      */
     fun applyGoodsKind(query: String, goodsKind: String?): String {
         return replaceParamOrAnnotate(query, GOODS_KIND, goodsKind)
+    }
+
+    /**
+     * 판매 경로 쿼리 적용
+     */
+    fun applySalesFunnel(query: String, salesFunnel: SalesFunnel): String {
+        // TODO
+        return ""
     }
 }
