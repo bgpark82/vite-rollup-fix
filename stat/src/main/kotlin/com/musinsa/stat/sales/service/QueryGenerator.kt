@@ -299,6 +299,53 @@ object QueryGenerator {
                     goodsKind
                 ),
                 salesFunnel
+            applyAdHours(
+                applyGoodsKind(
+                    applyPartnerType(
+                        applyMdIdOrAnnotate(
+                            applySpecialtyCodeOrAnnotate(
+                                applyAdCodeOrAnnotate(
+                                    applyCouponNumberOrAnnotate(
+                                        applyBrandIdOrAnnotate(
+                                            applyGoodsNumberOrAnnotate(
+                                                applyStyleNumberOrAnnotate(
+                                                    applyCategoryOrAnnotate(
+                                                        applyPartnerIdOrAnnotate(
+                                                            applySalesStart(
+                                                                applyTagOrAnnotate(
+                                                                    applyStarDateAndEndDate(
+                                                                        query,
+                                                                        startDate,
+                                                                        endDate
+                                                                    ),
+                                                                    tag
+                                                                ),
+                                                                salesStart
+                                                            ),
+                                                            partnerId
+                                                        ),
+                                                        category
+                                                    ),
+                                                    styleNumber
+                                                ),
+                                                goodsNumber
+                                            ),
+                                            brandId
+                                        ),
+                                        couponNumber,
+                                        metric
+                                    ),
+                                    adCode
+                                ),
+                                specialtyCode
+                            ),
+                            mdId
+                        ),
+                        partnerType
+                    ),
+                    goodsKind
+                ),
+                adHours
             ),
             orderBy,
             orderDirection,
