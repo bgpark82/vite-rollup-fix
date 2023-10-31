@@ -27,6 +27,7 @@ object QueryGenerator {
     private val GOODS_KIND = "\\{\\{goodsKind}}".toRegex()
     private val IS_MOBILE = "\\{\\{isMobile}}".toRegex()
     private val IS_APP = "\\{\\{isApp}}".toRegex()
+    private val AD_HOURS = "\\{\\{adHours}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
     private val ORDER_DIRECTION = "\\{\\{orderDirection}}".toRegex()
     private val PAGE_SIZE = "\\{\\{pageSize}}".toRegex()
@@ -509,5 +510,12 @@ object QueryGenerator {
                 )
             }
         }
+    }
+
+    /**
+     * 광고집계시간 추가
+     */
+    fun applyAdHours(query: String, adHours: Long?): String {
+        return replaceParamOrAnnotate(query, AD_HOURS, adHours?.toString())
     }
 }

@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
+import org.junit.jupiter.params.provider.ValueSource
 import java.time.LocalDate
 
 internal class QueryGeneratorTest {
@@ -517,6 +518,33 @@ internal class QueryGeneratorTest {
             """
             -- 품목(상품 옵션)
             --AND om.opt_kind_cd = '{{goodsKind}}'
+            """.trimIndent()
+        )
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = [60 * 60 * 3, 60 * 60 * 24, 60 * 60 * 24 * 7])
+    fun `광고집계시간 파라미터 추가`(광고집계시간: Long) {
+        val 쿼리 = "  AND ot.advt <= {{adHours}}"
+
+        val 변경된_쿼리 = QueryGenerator.applyAdHours(쿼리, 광고집계시간)
+
+        assertThat(변경된_쿼리).isEqualTo("  AND ot.advt <= $광고집계시간")
+    }
+
+    @Test
+    fun `광고집계시간 파라미터가 존재하지 않으면 쿼리에서 주석처리 된다`() {
+        val 쿼리 = """
+            -- 광고집계시간
+            AND ot.advt <= {{adHours}}
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applyAdHours(쿼리, null)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            -- 광고집계시간
+            --AND ot.advt <= {{adHours}}
             """.trimIndent()
         )
     }

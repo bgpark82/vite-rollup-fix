@@ -56,6 +56,7 @@ class SalesController(private val salesService: SalesService) {
      * @param brandId 브랜드
      * @param couponNumber 쿠폰
      * @param adCode 광고코드
+     * @param adHours 광고집계시간
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param partnerType 업체 구분
@@ -113,6 +114,7 @@ class SalesController(private val salesService: SalesService) {
             required = false,
             defaultValue = SALES_FUNNEL_DEFAULT_VALUE
         ) salesFunnel: SalesFunnel,
+        @RequestParam(required = false) adHours: Long?,
         @RequestParam(required = true) orderBy: OrderBy,
         @RequestParam(
             required = false,
