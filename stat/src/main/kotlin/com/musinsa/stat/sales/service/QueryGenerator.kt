@@ -244,6 +244,7 @@ object QueryGenerator {
         partnerType: String?,
         goodsKind: String?,
         salesFunnel: SalesFunnel,
+        adHours: Long?,
         orderBy: String,
         metric: Metric,
         orderDirection: String,

@@ -574,6 +574,7 @@ internal class QueryGeneratorTest {
             partnerType = null,
             goodsKind = null,
             salesFunnel = SalesFunnel.DEFAULT,
+            adHours = null,
             orderBy = OrderBy.Date.toString(),
             orderDirection = OrderDirection.ASC.toString(),
             pageSize = 100,
