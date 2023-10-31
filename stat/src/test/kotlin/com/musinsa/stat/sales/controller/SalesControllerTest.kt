@@ -54,6 +54,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
     val 업체구분 = PartnerType.STORE
     val 품목 = GoodsKind.ACCESSORY
     val 판매경로 = SalesFunnel.MOBILE_APP
+    val 광고집계시간 = 10800L
     val 정렬키 = OrderBy.Date
     val 정렬방향 = OrderDirection.ASC
 
@@ -108,6 +109,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             mdId = 담당MD,
             partnerType = 업체구분,
             goodsKind = 품목,
+            adHours = 광고집계시간,
             salesFunnel = 판매경로,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
@@ -148,6 +150,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
             partnerType = 업체구분,
             goodsKind = 품목,
             salesFunnel = 판매경로,
+            adHours = 광고집계시간,
             orderBy = 정렬키,
             orderDirection = 정렬방향,
             pageSize = 페이지_사이즈,
@@ -184,6 +187,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 partnerType = 업체구분,
                 goodsKind = 품목,
                 salesFunnel = 판매경로,
+                adHours = 광고집계시간,
                 orderBy = 정렬키,
                 orderDirection = 정렬방향,
                 pageSize = 페이지_사이즈,
@@ -208,6 +212,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         queryParams["partnerType"] = 업체구분.name
         queryParams["goodsKind"] = 품목.name
         queryParams["salesFunnel"] = 판매경로.name
+        queryParams["adHours"] = 광고집계시간.toString()
         queryParams["orderBy"] = 정렬키.toString()
         queryParams["orderDirection"] = 정렬방향.toString()
         queryParams["pageSize"] = 페이지_사이즈.toString()

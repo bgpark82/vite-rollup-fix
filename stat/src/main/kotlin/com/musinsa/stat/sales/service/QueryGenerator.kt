@@ -27,10 +27,12 @@ object QueryGenerator {
     private val GOODS_KIND = "\\{\\{goodsKind}}".toRegex()
     private val IS_MOBILE = "\\{\\{isMobile}}".toRegex()
     private val IS_APP = "\\{\\{isApp}}".toRegex()
+    private val AD_HOURS = "\\{\\{adHours}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
     private val ORDER_DIRECTION = "\\{\\{orderDirection}}".toRegex()
     private val PAGE_SIZE = "\\{\\{pageSize}}".toRegex()
     private val PAGE = "\\{\\{page}}".toRegex()
+    private const val JOIN_AD_HOURS = "{{joinAdHours}}"
     private const val JOIN_GOODS_TAGS = "{{joinGoodsTags}}"
     private const val JOIN_COUPON = "{{joinCoupon}}"
     private const val JOIN_SPECIALTY_GOODS = "{{joinSpecialtyGoods}}"
@@ -96,7 +98,7 @@ object QueryGenerator {
     private fun removeAnnotationSQLFromPhraseOrKeepAnnotation(
         query: String,
         joinTarget: String,
-        params: List<String>?,
+        params: List<Any>?,
         whereTarget: Regex
     ): String {
         // 값이 없는 경우
@@ -189,16 +191,29 @@ object QueryGenerator {
     private fun replaceParamListToSQLInParam(
         query: String,
         target: Regex,
-        params: List<String>
+        params: List<Any>
     ): String {
-        return query.replace(
-            target,
-            params.joinToString(
+        return query.replace(target, joinParams(params))
+    }
+
+    /**
+     * 리스트 파라미터를 타입에 따라 문자형으로 조인한다
+     *
+     * @param params 파라미터 리스트
+     *
+     * @return 파라미터를 조인한 문자
+     */
+    private fun joinParams(params: List<Any>): String {
+        if (params.isNullOrEmpty()) return ""
+
+        return when (params[0]) {
+            is String -> params.joinToString(
                 separator = "', '",
                 prefix = "'",
                 postfix = "'"
             )
-        )
+            else -> params.joinToString(separator = ", ") // 그외 숫자 타입 등
+        }
     }
 
     /**
@@ -243,6 +258,7 @@ object QueryGenerator {
         partnerType: String?,
         goodsKind: String?,
         salesFunnel: SalesFunnel,
+        adHours: Long?,
         orderBy: String,
         metric: Metric,
         orderDirection: String,
@@ -250,53 +266,56 @@ object QueryGenerator {
         page: Long
     ): String {
         return applyPagingParams(
-            applySalesFunnel(
-                applyGoodsKind(
-                    applyPartnerType(
-                        applyMdIdOrAnnotate(
-                            applySpecialtyCodeOrAnnotate(
-                                applyAdCodeOrAnnotate(
-                                    applyCouponNumberOrAnnotate(
-                                        applyBrandIdOrAnnotate(
-                                            applyGoodsNumberOrAnnotate(
-                                                applyStyleNumberOrAnnotate(
-                                                    applyCategoryOrAnnotate(
-                                                        applyPartnerIdOrAnnotate(
-                                                            applySalesStart(
-                                                                applyTagOrAnnotate(
-                                                                    applyStarDateAndEndDate(
-                                                                        query,
-                                                                        startDate,
-                                                                        endDate
+            applyAdHours(
+                applySalesFunnel(
+                    applyGoodsKind(
+                        applyPartnerType(
+                            applyMdIdOrAnnotate(
+                                applySpecialtyCodeOrAnnotate(
+                                    applyAdCodeOrAnnotate(
+                                        applyCouponNumberOrAnnotate(
+                                            applyBrandIdOrAnnotate(
+                                                applyGoodsNumberOrAnnotate(
+                                                    applyStyleNumberOrAnnotate(
+                                                        applyCategoryOrAnnotate(
+                                                            applyPartnerIdOrAnnotate(
+                                                                applySalesStart(
+                                                                    applyTagOrAnnotate(
+                                                                        applyStarDateAndEndDate(
+                                                                            query,
+                                                                            startDate,
+                                                                            endDate
+                                                                        ),
+                                                                        tag
                                                                     ),
-                                                                    tag
+                                                                    salesStart
                                                                 ),
-                                                                salesStart
+                                                                partnerId
                                                             ),
-                                                            partnerId
+                                                            category
                                                         ),
-                                                        category
+                                                        styleNumber
                                                     ),
-                                                    styleNumber
+                                                    goodsNumber
                                                 ),
-                                                goodsNumber
+                                                brandId
                                             ),
-                                            brandId
+                                            couponNumber,
+                                            metric
                                         ),
-                                        couponNumber,
-                                        metric
+                                        adCode
                                     ),
-                                    adCode
+                                    specialtyCode
                                 ),
-                                specialtyCode
+                                mdId
                             ),
-                            mdId
+                            partnerType
                         ),
-                        partnerType
+                        goodsKind
                     ),
-                    goodsKind
+                    salesFunnel
                 ),
-                salesFunnel
+                adHours
             ),
             orderBy,
             orderDirection,
@@ -509,5 +528,18 @@ object QueryGenerator {
                 )
             }
         }
+    }
+
+    /**
+     * 광고집계시간 추가
+     * 광고집계시간은 3시간, 1일, 7일만 제공
+     */
+    fun applyAdHours(query: String, adHours: Long?): String {
+        return removeAnnotationSQLFromPhraseOrKeepAnnotation(
+            query,
+            JOIN_AD_HOURS,
+            adHours?.let { listOf(adHours) },
+            AD_HOURS
+        )
     }
 }

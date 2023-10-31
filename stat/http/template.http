@@ -1,0 +1,3 @@
+### 템플릿 조회
+GET https://musinsa-data-ws.cloud.databricks.com/api/2.0/preview/sql/queries/64dc91a0-731c-45a5-a0b2-d74170bffc81
+Authorization: Bearer dapiac03c1cb4ac710049a572888106b65e3

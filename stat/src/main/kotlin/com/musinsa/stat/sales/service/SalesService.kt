@@ -72,6 +72,7 @@ class SalesService(
         partnerType: PartnerType? = null,
         goodsKind: GoodsKind? = null,
         salesFunnel: SalesFunnel,
+        adHours: Long? = null,
         orderBy: OrderBy,
         orderDirection: OrderDirection,
         pageSize: Long,
@@ -109,6 +110,7 @@ class SalesService(
                 else -> goodsKind.description
             },
             salesFunnel,
+            adHours,
             orderBy.alias, metric, orderDirection.name, pageSize, page
         )
 
@@ -170,6 +172,7 @@ class SalesService(
         partnerType: PartnerType? = null,
         goodsKind: GoodsKind? = null,
         salesFunnel: SalesFunnel,
+        adHours: Long? = null,
         orderBy: OrderBy,
         orderDirection: OrderDirection,
         pageSize: Long,
@@ -197,6 +200,7 @@ class SalesService(
             partnerType,
             goodsKind,
             salesFunnel,
+            adHours,
             orderBy,
             orderDirection,
             pageSize,

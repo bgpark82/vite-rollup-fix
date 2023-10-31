@@ -11,6 +11,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
+import org.junit.jupiter.params.provider.ValueSource
 import java.time.LocalDate
 
 internal class QueryGeneratorTest {
@@ -521,6 +522,45 @@ internal class QueryGeneratorTest {
         )
     }
 
+    @ParameterizedTest
+    @ValueSource(longs = [60 * 60 * 3, 60 * 60 * 24, 60 * 60 * 24 * 7])
+    fun `광고집계시간이 존재하면 광고집계시간 파라미터 추가 및 JOIN 주석 해제한다`(광고집계시간: Long) {
+        val 쿼리 = """
+            --{{joinAdHours}}LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
+            -- 광고집계시간
+            AND ot.advt <= {{adHours}}
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applyAdHours(쿼리, 광고집계시간)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
+            -- 광고집계시간
+            AND ot.advt <= $광고집계시간
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `광고집계시간이 없으면 주석처리한다`() {
+        val 쿼리 = """
+            --{{joinAdHours}}LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
+            -- 광고집계시간
+            AND ot.advt <= {{adHours}}
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applyAdHours(쿼리, null)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            --{{joinAdHours}}LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
+            -- 광고집계시간
+            --AND ot.advt <= {{adHours}}
+            """.trimIndent()
+        )
+    }
+
     @Test
     fun `현재 매출통계에서 사용하지 않는 파라미터가 입력될 시 아무일도 일어나지 않는다`() {
         val 쿼리 = """
@@ -546,6 +586,7 @@ internal class QueryGeneratorTest {
             partnerType = null,
             goodsKind = null,
             salesFunnel = SalesFunnel.DEFAULT,
+            adHours = null,
             orderBy = OrderBy.Date.toString(),
             orderDirection = OrderDirection.ASC.toString(),
             pageSize = 100,
