@@ -524,17 +524,28 @@ internal class QueryGeneratorTest {
 
     @ParameterizedTest
     @ValueSource(longs = [60 * 60 * 3, 60 * 60 * 24, 60 * 60 * 24 * 7])
-    fun `광고집계시간 파라미터 추가`(광고집계시간: Long) {
-        val 쿼리 = "  AND ot.advt <= {{adHours}}"
+    fun `광고집계시간이 존재하면 광고집계시간 파라미터 추가 및 JOIN 주석 해제한다`(광고집계시간: Long) {
+        val 쿼리 = """
+            --{{joinAdHours}}LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
+            -- 광고집계시간
+            AND ot.advt <= {{adHours}}
+        """.trimIndent()
 
         val 변경된_쿼리 = QueryGenerator.applyAdHours(쿼리, 광고집계시간)
 
-        assertThat(변경된_쿼리).isEqualTo("  AND ot.advt <= $광고집계시간")
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
+            -- 광고집계시간
+            AND ot.advt <= $광고집계시간
+            """.trimIndent()
+        )
     }
 
     @Test
-    fun `광고집계시간 파라미터가 존재하지 않으면 쿼리에서 주석처리 된다`() {
+    fun `광고집계시간이 없으면 주석처리한다`() {
         val 쿼리 = """
+            --{{joinAdHours}}LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
             -- 광고집계시간
             AND ot.advt <= {{adHours}}
         """.trimIndent()
@@ -543,6 +554,7 @@ internal class QueryGeneratorTest {
 
         assertThat(변경된_쿼리).isEqualTo(
             """
+            --{{joinAdHours}}LEFT JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
             -- 광고집계시간
             --AND ot.advt <= {{adHours}}
             """.trimIndent()
