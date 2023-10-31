@@ -1,0 +1,30 @@
+### 광고별 매출통계 요청 (3시간)
+GET {{host}}/stat/sales-statistics/AD?
+    startDate=20230926&
+    endDate=20231026&
+    adHours=10800&
+    salesStart=SHIPPING_REQUEST&
+    orderBy=adCode
+
+### 광고별 매출통계 요청 (1일)
+GET {{host}}/stat/sales-statistics/AD?
+    startDate=20230926&
+    endDate=20231026&
+    adHours=86400&
+    salesStart=SHIPPING_REQUEST&
+    orderBy=adCode
+
+### 광고별 매출통계 요청 (7일)
+GET {{host}}/stat/sales-statistics/AD?
+    startDate=20230926&
+    endDate=20231026&
+    adHours=604800&
+    salesStart=SHIPPING_REQUEST&
+    orderBy=adCode
+
+### 광고별 매출통계 요청 (adHours 제거)
+GET {{host}}/stat/sales-statistics/AD?
+    startDate=20230926&
+    endDate=20231026&
+    salesStart=SHIPPING_REQUEST&
+    orderBy=adCode
