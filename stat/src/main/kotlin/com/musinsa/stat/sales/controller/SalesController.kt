@@ -5,6 +5,7 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
+import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
@@ -34,6 +35,7 @@ const val SPECIALTY_CODE_SIZE_MAX = 100
 const val MD_ID_SIZE_MAX = 100
 const val GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS =
     ". 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값 필요"
+const val SALES_FUNNEL_DEFAULT_VALUE = "DEFAULT"
 
 @RestController
 @RequestMapping("/sales-statistics")
@@ -107,6 +109,10 @@ class SalesController(private val salesService: SalesService) {
         mdId: List<String>?,
         @RequestParam(required = false) partnerType: PartnerType?,
         @RequestParam(required = false) goodsKind: GoodsKind?,
+        @RequestParam(
+            required = false,
+            defaultValue = SALES_FUNNEL_DEFAULT_VALUE
+        ) salesFunnel: SalesFunnel,
         @RequestParam(required = true) orderBy: OrderBy,
         @RequestParam(
             required = false,
@@ -139,6 +145,7 @@ class SalesController(private val salesService: SalesService) {
                 mdId,
                 partnerType,
                 goodsKind,
+                salesFunnel,
                 orderBy,
                 orderDirection,
                 pageSize,
@@ -162,6 +169,7 @@ class SalesController(private val salesService: SalesService) {
                 mdId,
                 partnerType,
                 goodsKind,
+                salesFunnel,
                 orderBy,
                 orderDirection,
                 pageSize,

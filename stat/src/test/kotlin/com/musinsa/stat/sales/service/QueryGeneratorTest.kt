@@ -5,6 +5,7 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
+import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -544,6 +545,7 @@ internal class QueryGeneratorTest {
             mdId = emptyList(),
             partnerType = null,
             goodsKind = null,
+            salesFunnel = SalesFunnel.DEFAULT,
             orderBy = OrderBy.Date.toString(),
             orderDirection = OrderDirection.ASC.toString(),
             pageSize = 100,
@@ -551,5 +553,74 @@ internal class QueryGeneratorTest {
         )
 
         assertThat(변경되지_않은_쿼리).isEqualTo(쿼리.trimIndent())
+    }
+
+    @Test
+    fun `판매 경로가 기본인 경우 쿼리에서 mobile_yn, app_yn 값이 주석처리 된다`() {
+        val 쿼리 = """
+            -- 모바일 여부
+            AND om.mobile_yn = '{{isMobile}}'
+
+            -- 앱 여부
+            AND om.app_yn = '{{isApp}}'
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applySalesFunnel(쿼리, SalesFunnel.DEFAULT)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            -- 모바일 여부
+            --AND om.mobile_yn = '{{isMobile}}'
+
+            -- 앱 여부
+            --AND om.app_yn = '{{isApp}}'
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `판매 경로가 모바일 앱인 경우 쿼리에서 mobile_yn Y, app_yn Y 값이 적용된다`() {
+        val 쿼리 = """
+            -- 모바일 여부
+            AND om.mobile_yn = '{{isMobile}}'
+
+            -- 앱 여부
+            AND om.app_yn = '{{isApp}}'
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applySalesFunnel(쿼리, SalesFunnel.MOBILE_APP)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            -- 모바일 여부
+            AND om.mobile_yn = 'Y'
+
+            -- 앱 여부
+            AND om.app_yn = 'Y'
+            """.trimIndent()
+        )
+    }
+
+    @Test
+    fun `판매 경로가 모바일 웹인 경우 쿼리에서 mobile_yn Y, app_yn N 값이 적용된다`() {
+        val 쿼리 = """
+            -- 모바일 여부
+            AND om.mobile_yn = '{{isMobile}}'
+
+            -- 앱 여부
+            AND om.app_yn = '{{isApp}}'
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applySalesFunnel(쿼리, SalesFunnel.MOBILE_WEB)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            -- 모바일 여부
+            AND om.mobile_yn = 'Y'
+
+            -- 앱 여부
+            AND om.app_yn = 'N'
+            """.trimIndent()
+        )
     }
 }

@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.service
 
 import com.musinsa.stat.sales.domain.Metric
+import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
 
 const val PREFIX_ANNOTATION = "--"
@@ -24,6 +25,8 @@ object QueryGenerator {
     private val MD_ID = "\\{\\{mdId}}".toRegex()
     private val PARTNER_TYPE = "\\{\\{partnerType}}".toRegex()
     private val GOODS_KIND = "\\{\\{goodsKind}}".toRegex()
+    private val IS_MOBILE = "\\{\\{isMobile}}".toRegex()
+    private val IS_APP = "\\{\\{isApp}}".toRegex()
     private val ORDER_BY = "\\{\\{orderBy}}".toRegex()
     private val ORDER_DIRECTION = "\\{\\{orderDirection}}".toRegex()
     private val PAGE_SIZE = "\\{\\{pageSize}}".toRegex()
@@ -31,6 +34,8 @@ object QueryGenerator {
     private const val JOIN_GOODS_TAGS = "{{joinGoodsTags}}"
     private const val JOIN_COUPON = "{{joinCoupon}}"
     private const val JOIN_SPECIALTY_GOODS = "{{joinSpecialtyGoods}}"
+    private const val Y = "Y"
+    private const val N = "N"
 
     /**
      * 배열에서 특정 문자열이 속한 index를 찾는다.
@@ -237,6 +242,7 @@ object QueryGenerator {
         mdId: List<String>?,
         partnerType: String?,
         goodsKind: String?,
+        salesFunnel: SalesFunnel,
         orderBy: String,
         metric: Metric,
         orderDirection: String,
@@ -244,50 +250,53 @@ object QueryGenerator {
         page: Long
     ): String {
         return applyPagingParams(
-            applyGoodsKind(
-                applyPartnerType(
-                    applyMdIdOrAnnotate(
-                        applySpecialtyCodeOrAnnotate(
-                            applyAdCodeOrAnnotate(
-                                applyCouponNumberOrAnnotate(
-                                    applyBrandIdOrAnnotate(
-                                        applyGoodsNumberOrAnnotate(
-                                            applyStyleNumberOrAnnotate(
-                                                applyCategoryOrAnnotate(
-                                                    applyPartnerIdOrAnnotate(
-                                                        applySalesStart(
-                                                            applyTagOrAnnotate(
-                                                                applyStarDateAndEndDate(
-                                                                    query,
-                                                                    startDate,
-                                                                    endDate
+            applySalesFunnel(
+                applyGoodsKind(
+                    applyPartnerType(
+                        applyMdIdOrAnnotate(
+                            applySpecialtyCodeOrAnnotate(
+                                applyAdCodeOrAnnotate(
+                                    applyCouponNumberOrAnnotate(
+                                        applyBrandIdOrAnnotate(
+                                            applyGoodsNumberOrAnnotate(
+                                                applyStyleNumberOrAnnotate(
+                                                    applyCategoryOrAnnotate(
+                                                        applyPartnerIdOrAnnotate(
+                                                            applySalesStart(
+                                                                applyTagOrAnnotate(
+                                                                    applyStarDateAndEndDate(
+                                                                        query,
+                                                                        startDate,
+                                                                        endDate
+                                                                    ),
+                                                                    tag
                                                                 ),
-                                                                tag
+                                                                salesStart
                                                             ),
-                                                            salesStart
+                                                            partnerId
                                                         ),
-                                                        partnerId
+                                                        category
                                                     ),
-                                                    category
+                                                    styleNumber
                                                 ),
-                                                styleNumber
+                                                goodsNumber
                                             ),
-                                            goodsNumber
+                                            brandId
                                         ),
-                                        brandId
+                                        couponNumber,
+                                        metric
                                     ),
-                                    couponNumber,
-                                    metric
+                                    adCode
                                 ),
-                                adCode
+                                specialtyCode
                             ),
-                            specialtyCode
+                            mdId
                         ),
-                        mdId
+                        partnerType
                     ),
-                    partnerType
+                    goodsKind
                 ),
-                goodsKind
+                salesFunnel
             ),
             orderBy,
             orderDirection,
@@ -457,5 +466,48 @@ object QueryGenerator {
      */
     fun applyGoodsKind(query: String, goodsKind: String?): String {
         return replaceParamOrAnnotate(query, GOODS_KIND, goodsKind)
+    }
+
+    /**
+     * 판매 경로 쿼리 적용
+     */
+    fun applySalesFunnel(query: String, salesFunnel: SalesFunnel): String {
+        return when (salesFunnel) {
+            SalesFunnel.MOBILE_APP -> {
+                replaceParamOrAnnotate(
+                    replaceParamOrAnnotate(
+                        query,
+                        IS_MOBILE,
+                        Y
+                    ),
+                    IS_APP,
+                    Y
+                )
+            }
+
+            SalesFunnel.MOBILE_WEB -> {
+                replaceParamOrAnnotate(
+                    replaceParamOrAnnotate(
+                        query,
+                        IS_MOBILE,
+                        Y
+                    ),
+                    IS_APP,
+                    N
+                )
+            }
+
+            else -> {
+                replaceParamOrAnnotate(
+                    replaceParamOrAnnotate(
+                        query,
+                        IS_MOBILE,
+                        null
+                    ),
+                    IS_APP,
+                    null
+                )
+            }
+        }
     }
 }

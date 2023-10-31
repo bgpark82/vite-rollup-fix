@@ -13,6 +13,7 @@ const val SALES_START_DOCUMENT_URL = "enum/sales-start"
 const val ORDER_DIRECTION_DOCUMENT_URL = "enum/order-direction"
 const val PARTNER_TYPE_DOCUMENT_URL = "enum/partner-type"
 const val GOODS_KIND_DOCUMENT_URL = "enum/goods-kind"
+const val SALES_FUNNEL_DOCUMENT_URL = "enum/sales-funnel"
 
 @WebMvcTest(controllers = [EnumController::class])
 class EnumControllerTest : RestDocsEnumControllerHelper() {
@@ -64,6 +65,15 @@ class EnumControllerTest : RestDocsEnumControllerHelper() {
             .ENUM_DOCS_생성(
                 GOODS_KIND_DOCUMENT_URL,
                 GOODS_KIND_VALUES()
+            )
+    }
+
+    @Test
+    fun `SALES_FUNNEL 목록 가져오기`() {
+        mockMvc.GET("/test/sales-funnel")
+            .ENUM_DOCS_생성(
+                SALES_FUNNEL_DOCUMENT_URL,
+                SALES_FUNNEL_VALUES()
             )
     }
 }

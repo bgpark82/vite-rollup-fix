@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>GET /sales-statistics/DAILY?startDate=20230505&amp;endDate=20230506&amp;tag=%EC%B2%AD%EB%B0%94%EC%A7%80&amp;tag=%EB%B0%98%EB%B0%94%EC%A7%80&amp;salesStart=SHIPPING_REQUEST&amp;partnerId=musinsa&amp;category=004002&amp;styleNumber=DMMT73961-OW&amp;goodsNumber=174846&amp;brandId=greentoys&amp;couponNumber=75559&amp;couponNumber=12345&amp;adCode=NVSH&amp;specialtyCode=beauty&amp;specialtyCode=golf&amp;mdId=naka.da&amp;partnerType=STORE&amp;goodsKind=ACCESSORY&amp;orderBy=Date&amp;orderDirection=ASC&amp;pageSize=500&amp;page=0 HTTP/1.1
+<pre>GET /sales-statistics/DAILY?startDate=20230505&amp;endDate=20230506&amp;tag=%EC%B2%AD%EB%B0%94%EC%A7%80&amp;tag=%EB%B0%98%EB%B0%94%EC%A7%80&amp;salesStart=SHIPPING_REQUEST&amp;partnerId=musinsa&amp;category=004002&amp;styleNumber=DMMT73961-OW&amp;goodsNumber=174846&amp;brandId=greentoys&amp;couponNumber=75559&amp;couponNumber=12345&amp;adCode=NVSH&amp;specialtyCode=beauty&amp;specialtyCode=golf&amp;mdId=naka.da&amp;partnerType=STORE&amp;goodsKind=ACCESSORY&amp;salesFunnel=MOBILE_APP&amp;orderBy=Date&amp;orderDirection=ASC&amp;pageSize=500&amp;page=0 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: data.musinsa.com</pre>
 </div>
@@ -589,6 +589,11 @@ Host: data.musinsa.com</pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>goodsKind</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../enum/goods-kind.html" target="blank">품목(상품 옵션)</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>salesFunnel</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../enum/sales-funnel.html" target="blank">판매 경로</a></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>

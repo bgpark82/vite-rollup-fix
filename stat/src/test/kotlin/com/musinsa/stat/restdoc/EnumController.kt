@@ -6,6 +6,7 @@ import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
+import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
 import com.musinsa.stat.sales.error.SalesError
 import org.springframework.web.bind.annotation.GetMapping
@@ -53,6 +54,11 @@ internal class EnumController {
     fun getGoodsKindValues(): Map<String, String> {
         return GOODS_KIND_VALUES()
     }
+
+    @GetMapping("/sales-funnel")
+    fun getSalesFunnelValues(): Map<String, String> {
+        return SALES_FUNNEL_VALUES()
+    }
 }
 
 fun ERROR_VALUES(): Map<String, String> {
@@ -91,4 +97,8 @@ fun PARTNER_TYPE_VALUES(): Map<String, String> {
 
 fun GOODS_KIND_VALUES(): Map<String, String> {
     return GoodsKind.values().associate { Pair(it.name, it.description) }
+}
+
+fun SALES_FUNNEL_VALUES(): Map<String, String> {
+    return SalesFunnel.values().associate { Pair(it.name, it.description) }
 }
