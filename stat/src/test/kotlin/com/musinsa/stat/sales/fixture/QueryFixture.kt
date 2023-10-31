@@ -52,6 +52,7 @@ object QueryFixture {
           ,COUNT(*) OVER() AS `total`
 
         FROM datamart.datamart.orders_merged om
+          --{{joinAdHours}}JOIN datamart.datamart.order_track ot on om.ord_no = ot.ord_no
           --{{joinGoodsTags}}JOIN datamart.datamart.goods_tags as gt ON om.goods_no = gt.goods_no
           --{{joinCoupon}}JOIN datamart.datamart.coupon as c ON om.coupon_no = c.coupon_no
           --{{joinSpecialtyGoods}}JOIN datamart.datamart.specialty_goods as sg ON om.goods_no = sg.goods_no
@@ -105,6 +106,9 @@ object QueryFixture {
 
           -- 앱 여부
           AND om.app_yn = '{{isApp}}'
+
+          -- 광고집계시간
+          AND ot.advt <= {{adHours}}
 
         GROUP BY 1
 

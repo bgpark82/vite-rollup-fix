@@ -99,6 +99,9 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
                 SALES_FUNNEL_DOCUMENT_URL,
                 "판매 경로"
             ).optional(),
+            parameterWithName("adHours").description(
+                "광고집계시간(단위: 초) : 3시간, 1일, 7일"
+            ).optional(),
             ENUM_LINK_DOCS_BUILDER("orderBy", ORDER_BY_DOCUMENT_URL, "정렬키"),
             ENUM_LINK_DOCS_BUILDER(
                 "orderDirection",
