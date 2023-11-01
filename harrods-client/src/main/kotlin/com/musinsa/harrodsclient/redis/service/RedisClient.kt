@@ -10,6 +10,9 @@ import kotlinx.coroutines.async
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 
+const val KEY = "key"
+const val VALUE = "value"
+
 /**
  * Redis Client Service
  */
@@ -40,8 +43,8 @@ class RedisClient(
                     )
 
                 false -> mapOf(
-                    "key" to keyValue.key,
-                    "value" to emptyMap<String, Any>()
+                    KEY to keyValue.key,
+                    VALUE to emptyMap<String, Any>()
                 )
             }
         }.toList()
