@@ -101,7 +101,7 @@ internal class RedisClientTest {
                     typeRefMapAny
                 ),
                 mapOf(
-                    "key" to "없는_키",
+                    "key" to 없는_키,
                     "value" to emptyMap<String, Any>()
                 )
             )

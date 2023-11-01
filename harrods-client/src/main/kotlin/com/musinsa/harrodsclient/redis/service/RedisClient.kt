@@ -27,16 +27,22 @@ class RedisClient(
      * @return 모든 캐시값
      */
     suspend fun getAll(search: Search): List<Map<String, Any>> {
-        return CoroutineScope(Dispatchers.IO).async { redisConnection.mget(search.keys) }.await().map { keyValue ->
+        return CoroutineScope(Dispatchers.IO).async {
+            redisConnection.mget(
+                search.keys
+            )
+        }.await().map { keyValue ->
             when (keyValue.hasValue()) {
-                true -> mapOf(
-                    keyValue.key to ObjectMapperFactory.readValues(
+                true ->
+                    ObjectMapperFactory.readValues(
                         keyValue.value,
                         typeRefMapAny
                     )
-                )
 
-                false -> mapOf(keyValue.key to emptyMap())
+                false -> mapOf(
+                    "key" to keyValue.key,
+                    "value" to emptyMap<String, Any>()
+                )
             }
         }.toList()
     }
