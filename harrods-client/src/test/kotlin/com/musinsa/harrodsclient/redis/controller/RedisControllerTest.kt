@@ -10,7 +10,9 @@ import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
 import com.musinsa.harrodsclient.redis.dto.KEY_SIZE_MAX
 import com.musinsa.harrodsclient.redis.dto.KEY_SIZE_MIN
 import com.musinsa.harrodsclient.redis.dto.Search
+import com.musinsa.harrodsclient.redis.service.KEY
 import com.musinsa.harrodsclient.redis.service.RedisClient
+import com.musinsa.harrodsclient.redis.service.VALUE
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -45,17 +47,20 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
     @Test
     fun `캐시 가져오기`() {
         // given
-        val SAMPLE_1 = "harrods:peter.park:1990737503:gender:M:brand:twn:gender:M"
-        val SAMPLE_2 = "harrods:peter.park:1413978463:brand:blackmoment"
+        val SAMPLE_1 = "harrods:woo.choi:1355159473:goods_no:2559251"
+        val SAMPLE_2 = "harrods:woo.choi:-1050180701:goods_no:2725587"
         val SAMPLE_1_VAL = """
-                {"brand": "twn", "gender": "M", "age_band.0": 10515, "age_band.19": 20256, "age_band.24": 17019, "age_band.29": 10902, "age_band.34": 4476, "age_band.40": 5636, "gender.F": 0, "gender.M": 68804, "gender.N": 0, "total": 68804, "quantity": 69195}
+                {"key": "harrods:woo.choi:1355159473:goods_no:2559251", "value": {"goods_no": "2559251", "age_band.0": 0, "age_band.19": 0, "age_band.24": 2, "age_band.29": 1, "age_band.34": 2, "age_band.40": 1, "age_band.N": 1, "gender.F": 4, "gender.M": 2, "gender.N": 1, "total": 7}}
         """.trimIndent()
         val SAMPLE_2_VAL = """
-                {"brand": "blackmoment", "age_band.0": 317, "age_band.19": 1963, "age_band.24": 1549, "age_band.29": 649, "age_band.34": 300, "age_band.40": 907, "gender.F": 5685, "gender.M": 0, "gender.N": 0, "total": 5685, "quantity": 5727}
+                {"key": "harrods:woo.choi:-1050180701:goods_no:2725587", "value": {"goods_no": 2725587, "age_band.0": 97, "age_band.19": 289, "age_band.24": 195, "age_band.29": 75, "age_band.34": 12, "age_band.40": 111, "gender.F": 339, "gender.M": 440, "gender.N": 0, "total": 779, "quantity": 780}}
         """.trimIndent()
         val SAMPLE_3 = "test:not:exist"
         val 조회키 = Search(arrayOf(SAMPLE_1, SAMPLE_2, SAMPLE_3))
-        val 응답값 = readValues("[{\"$SAMPLE_1\":$SAMPLE_1_VAL}, {\"$SAMPLE_2\":$SAMPLE_2_VAL}, {\"$SAMPLE_3\":{}}]", typeRefListMapAny)
+        val 응답값 = readValues(
+            "[$SAMPLE_1_VAL, $SAMPLE_2_VAL, {\"$KEY\": \"$SAMPLE_3\", \"$VALUE\": {}}]",
+            typeRefListMapAny
+        )
 
         runBlocking {
             whenever(redisClient.getAll(any())).thenReturn(응답값)
@@ -66,7 +71,8 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
                         "harrods-client",
                         requestFields(
                             fieldWithPath("keys")
-                                .type(JsonFieldType.ARRAY).description("조회할 키.".plus("최소: $KEY_SIZE_MIN. 최대: $KEY_SIZE_MAX"))
+                                .type(JsonFieldType.ARRAY)
+                                .description("조회할 키.".plus("최소: $KEY_SIZE_MIN. 최대: $KEY_SIZE_MAX"))
                         )
                     )
                 )
