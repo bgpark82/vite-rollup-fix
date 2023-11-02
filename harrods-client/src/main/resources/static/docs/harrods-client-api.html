@@ -554,7 +554,12 @@ Content-Type: application/json;charset=UTF-8
   "exception" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
   "invalidField" : "metric",
   "invalidValue" : "APPLE",
-  "message" : "에러 메시지"
+  "message" : "에러 메시지",
+  "error" : {
+    "code" : "INVALID_REQUEST_VALUE",
+    "message" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
+    "usermessage" : "에러 메시지"
+  }
 }</code></pre>
 </div>
 </div>
@@ -603,6 +608,21 @@ Content-Type: application/json;charset=UTF-8
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">에러코드. ==errorCode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외종류. ==exception</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.usermessage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지. ==message</p></td>
 </tr>
 </tbody>
 </table>
@@ -673,46 +693,50 @@ Host: data.musinsa.com
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">[
-    {
-        "key":"harrods:woo.choi:1355159473:goods_no:2559251",
-        "value":{
-            "goods_no":"2559251",
-            "age_band.0":0,
-            "age_band.19":0,
-            "age_band.24":2,
-            "age_band.29":1,
-            "age_band.34":2,
-            "age_band.40":1,
-            "age_band.N":1,
-            "gender.F":4,
-            "gender.M":2,
-            "gender.N":1,
-            "total":7
+<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
+    "code": "OK",
+    "message": "요청이 성공하였습니다.",
+    "data": [
+        {
+            "key": "harrods:woo.choi:1355159473:goods_no:2559251",
+            "value": {
+                "goods_no": "2559251",
+                "age_band.0": 0,
+                "age_band.19": 0,
+                "age_band.24": 2,
+                "age_band.29": 1,
+                "age_band.34": 2,
+                "age_band.40": 1,
+                "age_band.N": 1,
+                "gender.F": 4,
+                "gender.M": 2,
+                "gender.N": 1,
+                "total": 7
+            }
+        },
+        {
+            "key": "harrods:woo.choi:-1050180701:goods_no:2725587",
+            "value": {
+                "goods_no": 2725587,
+                "age_band.0": 97,
+                "age_band.19": 289,
+                "age_band.24": 195,
+                "age_band.29": 75,
+                "age_band.34": 12,
+                "age_band.40": 111,
+                "gender.F": 339,
+                "gender.M": 440,
+                "gender.N": 0,
+                "total": 779,
+                "quantity": 780
+            }
+        },
+        {
+            "key": "test:not:exist",
+            "value": {}
         }
-    },
-    {
-        "key":"harrods:woo.choi:-1050180701:goods_no:2725587",
-        "value":{
-            "goods_no":2725587,
-            "age_band.0":97,
-            "age_band.19":289,
-            "age_band.24":195,
-            "age_band.29":75,
-            "age_band.34":12,
-            "age_band.40":111,
-            "gender.F":339,
-            "gender.M":440,
-            "gender.N":0,
-            "total":779,
-            "quantity":780
-        }
-    },
-    {
-        "key":"test:not:exist",
-        "value":{}
-    }
-]</code></pre>
+    ]
+}</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -760,7 +784,7 @@ Host: data.musinsa.com
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-11-01 10:35:58 +0900
+Last updated 2023-11-02 10:15:12 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

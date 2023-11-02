@@ -1,6 +1,7 @@
 package com.musinsa.common.error
 
 import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
+import com.musinsa.common.devstandard.FailResponse
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -37,6 +38,11 @@ data class ErrorResponse constructor(
      */
     val message: String
 ) {
+    /**
+     * 무신사 실패 응답 표준
+     */
+    val error: FailResponse
+
     /**
      * 의도된 에러
      */
@@ -85,11 +91,11 @@ data class ErrorResponse constructor(
     constructor(exception: HttpMessageNotReadableException) : this(
         errorCode = CommonError.INVALID_REQUEST_VALUE.name,
         exception = exception.javaClass.name,
-        invalidField =  when(val cause = exception.cause) {
+        invalidField = when (val cause = exception.cause) {
             is MissingKotlinParameterException -> cause.parameter.name.toString()
             else -> ""
         },
-        invalidValue = when(val cause = exception.cause) {
+        invalidValue = when (val cause = exception.cause) {
             is MissingKotlinParameterException -> cause.parameter.type.toString()
             else -> ""
         },
@@ -104,4 +110,15 @@ data class ErrorResponse constructor(
         exception = exception.javaClass.name,
         message = exception.message.toString()
     )
+
+    /**
+     * 생성자 호출 이후, class 초기화 로직에서 무신사 에러 응답 포맷 추가
+     */
+    init {
+        error = FailResponse(
+            code = this.errorCode,
+            message = this.exception,
+            usermessage = this.message
+        )
+    }
 }

@@ -2,44 +2,48 @@
 
 [source,json,options="nowrap"]
 ----
-[
-    {
-        "key":"harrods:woo.choi:1355159473:goods_no:2559251",
-        "value":{
-            "goods_no":"2559251",
-            "age_band.0":0,
-            "age_band.19":0,
-            "age_band.24":2,
-            "age_band.29":1,
-            "age_band.34":2,
-            "age_band.40":1,
-            "age_band.N":1,
-            "gender.F":4,
-            "gender.M":2,
-            "gender.N":1,
-            "total":7
+{
+    "code": "OK",
+    "message": "요청이 성공하였습니다.",
+    "data": [
+        {
+            "key": "harrods:woo.choi:1355159473:goods_no:2559251",
+            "value": {
+                "goods_no": "2559251",
+                "age_band.0": 0,
+                "age_band.19": 0,
+                "age_band.24": 2,
+                "age_band.29": 1,
+                "age_band.34": 2,
+                "age_band.40": 1,
+                "age_band.N": 1,
+                "gender.F": 4,
+                "gender.M": 2,
+                "gender.N": 1,
+                "total": 7
+            }
+        },
+        {
+            "key": "harrods:woo.choi:-1050180701:goods_no:2725587",
+            "value": {
+                "goods_no": 2725587,
+                "age_band.0": 97,
+                "age_band.19": 289,
+                "age_band.24": 195,
+                "age_band.29": 75,
+                "age_band.34": 12,
+                "age_band.40": 111,
+                "gender.F": 339,
+                "gender.M": 440,
+                "gender.N": 0,
+                "total": 779,
+                "quantity": 780
+            }
+        },
+        {
+            "key": "test:not:exist",
+            "value": {}
         }
-    },
-    {
-        "key":"harrods:woo.choi:-1050180701:goods_no:2725587",
-        "value":{
-            "goods_no":2725587,
-            "age_band.0":97,
-            "age_band.19":289,
-            "age_band.24":195,
-            "age_band.29":75,
-            "age_band.34":12,
-            "age_band.40":111,
-            "gender.F":339,
-            "gender.M":440,
-            "gender.N":0,
-            "total":779,
-            "quantity":780
-        }
-    },
-    {
-        "key":"test:not:exist",
-        "value":{}
-    }
-]
+    ]
+}
 ----
