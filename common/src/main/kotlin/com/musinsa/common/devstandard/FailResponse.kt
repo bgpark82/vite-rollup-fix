@@ -3,7 +3,7 @@ package com.musinsa.common.devstandard
 /**
  * 무신사 실패 응답 표준 Format
  */
-data class Error(
+data class FailResponse(
     /**
      * 에러 코드값
      */
