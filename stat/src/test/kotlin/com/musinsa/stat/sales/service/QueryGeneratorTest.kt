@@ -664,4 +664,27 @@ internal class QueryGeneratorTest {
             """.trimIndent()
         )
     }
+
+    @Test
+    fun `판매 경로가 모바일 ALL인 경우 쿼리에서 mobile_yn Y 값이 적용 되고, app_yn N 값이 주석처리 된다`() {
+        val 쿼리 = """
+            -- 모바일 여부
+            AND om.mobile_yn = '{{isMobile}}'
+
+            -- 앱 여부
+            AND om.app_yn = '{{isApp}}'
+        """.trimIndent()
+
+        val 변경된_쿼리 = QueryGenerator.applySalesFunnel(쿼리, SalesFunnel.MOBILE_ALL)
+
+        assertThat(변경된_쿼리).isEqualTo(
+            """
+            -- 모바일 여부
+            AND om.mobile_yn = 'Y'
+
+            -- 앱 여부
+            --AND om.app_yn = '{{isApp}}'
+            """.trimIndent()
+        )
+    }
 }
