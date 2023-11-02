@@ -1,9 +1,11 @@
 package com.musinsa.harrodsclient.redis.controller
 
+import com.musinsa.common.devstandard.SuccessResponse
 import com.musinsa.common.restdoc.POST
 import com.musinsa.common.restdoc.RestDocsControllerHelper
 import com.musinsa.common.restdoc.성공_검증_AWAIT
 import com.musinsa.common.restdoc.유효하지_않은_요청값_검증
+import com.musinsa.common.util.ObjectMapperFactory.readValue
 import com.musinsa.common.util.ObjectMapperFactory.readValues
 import com.musinsa.common.util.ObjectMapperFactory.typeRefListMapAny
 import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
@@ -61,11 +63,19 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
             "[$SAMPLE_1_VAL, $SAMPLE_2_VAL, {\"$KEY\": \"$SAMPLE_3\", \"$VALUE\": {}}]",
             typeRefListMapAny
         )
+        val API_응답값 = readValue(
+            writeValueAsString(
+                SuccessResponse(
+                    data = 응답값
+                )
+            ),
+            SuccessResponse::class.java
+        )
 
         runBlocking {
             whenever(redisClient.getAll(any())).thenReturn(응답값)
 
-            mockMvc.POST("/cache", writeValueAsString(조회키)).성공_검증_AWAIT(응답값)
+            mockMvc.POST("/cache", writeValueAsString(조회키)).성공_검증_AWAIT(API_응답값)
                 .andDo(
                     document(
                         "harrods-client",

@@ -1,5 +1,6 @@
 package com.musinsa.harrodsclient.redis.controller
 
+import com.musinsa.common.devstandard.SuccessResponse
 import com.musinsa.harrodsclient.redis.dto.Search
 import com.musinsa.harrodsclient.redis.service.RedisClient
 import jakarta.validation.Valid
@@ -15,7 +16,7 @@ class RedisController(private val redisClient: RedisClient) {
     suspend fun getAll(
         @Valid @RequestBody
         search: Search
-    ): List<Map<String, Any>> {
-        return redisClient.getAll(search)
+    ): SuccessResponse {
+        return SuccessResponse(data = redisClient.getAll(search))
     }
 }
