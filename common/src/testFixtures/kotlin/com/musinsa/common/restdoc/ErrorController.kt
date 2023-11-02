@@ -46,7 +46,16 @@ fun 에러_명세_가져오기(): List<FieldDescriptor> {
             .description("입력오류 값. default: Empty"),
         fieldWithPath("message")
             .type(JsonFieldType.STRING)
-            .description("예외 메시지")
+            .description("예외 메시지"),
+        fieldWithPath("error.code")
+            .type(JsonFieldType.STRING)
+            .description("에러코드. ==errorCode"),
+        fieldWithPath("error.message")
+            .type(JsonFieldType.STRING)
+            .description("예외종류. ==exception"),
+        fieldWithPath("error.usermessage")
+            .type(JsonFieldType.STRING)
+            .description("예외 메시지. ==message")
     )
 }
 

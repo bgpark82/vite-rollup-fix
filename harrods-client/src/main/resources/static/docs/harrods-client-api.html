@@ -554,7 +554,12 @@ Content-Type: application/json;charset=UTF-8
   "exception" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
   "invalidField" : "metric",
   "invalidValue" : "APPLE",
-  "message" : "에러 메시지"
+  "message" : "에러 메시지",
+  "error" : {
+    "code" : "INVALID_REQUEST_VALUE",
+    "message" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
+    "usermessage" : "에러 메시지"
+  }
 }</code></pre>
 </div>
 </div>
@@ -603,6 +608,21 @@ Content-Type: application/json;charset=UTF-8
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>message</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">에러코드. ==errorCode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외종류. ==exception</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.usermessage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지. ==message</p></td>
 </tr>
 </tbody>
 </table>
