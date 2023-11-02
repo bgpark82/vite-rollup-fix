@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>GET /sales-statistics/DAILY?startDate=20230505&amp;endDate=20230506&amp;tag=%EC%B2%AD%EB%B0%94%EC%A7%80&amp;tag=%EB%B0%98%EB%B0%94%EC%A7%80&amp;salesStart=SHIPPING_REQUEST&amp;partnerId=musinsa&amp;category=004002&amp;styleNumber=DMMT73961-OW&amp;goodsNumber=174846&amp;brandId=greentoys&amp;couponNumber=75559&amp;couponNumber=12345&amp;adCode=NVSH&amp;specialtyCode=beauty&amp;specialtyCode=golf&amp;mdId=naka.da&amp;partnerType=STORE&amp;goodsKind=ACCESSORY&amp;salesFunnel=MOBILE_APP&amp;orderBy=Date&amp;orderDirection=ASC&amp;pageSize=500&amp;page=0 HTTP/1.1
+<pre>GET /sales-statistics/DAILY?startDate=20230505&amp;endDate=20230506&amp;tag=%EC%B2%AD%EB%B0%94%EC%A7%80&amp;tag=%EB%B0%98%EB%B0%94%EC%A7%80&amp;salesStart=SHIPPING_REQUEST&amp;partnerId=musinsa&amp;category=004002&amp;styleNumber=DMMT73961-OW&amp;goodsNumber=174846&amp;brandId=greentoys&amp;couponNumber=75559&amp;couponNumber=12345&amp;adCode=NVSH&amp;specialtyCode=beauty&amp;specialtyCode=golf&amp;mdId=naka.da&amp;partnerType=STORE&amp;goodsKind=ACCESSORY&amp;salesFunnel=MOBILE_APP&amp;adHours=10800&amp;orderBy=Date&amp;orderDirection=ASC&amp;pageSize=500&amp;page=0 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Host: data.musinsa.com</pre>
 </div>
@@ -538,7 +538,7 @@ Host: data.musinsa.com</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>partnerId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">업체(List). 최대: 100. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값 필요</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">업체(List). 최대: 100. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -553,12 +553,12 @@ Host: data.musinsa.com</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>goodsNumber</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상품코드(List). 최대: 200. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값 필요</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품코드(List). 최대: 200. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>brandId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드(List). 최대: 100. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값 필요</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">브랜드(List). 최대: 100. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -573,12 +573,12 @@ Host: data.musinsa.com</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>specialtyCode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전문관코드(List). 최대: 100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">전문관코드(List). 최대: 100. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>mdId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">담당MD(List). 최대: 100. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값 필요</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">담당MD(List). 최대: 100. 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -594,6 +594,11 @@ Host: data.musinsa.com</pre>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>salesFunnel</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../enum/sales-funnel.html" target="blank">판매 경로</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>adHours</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">광고집계시간(단위: 초) : 3시간, 1일, 7일</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
@@ -1560,7 +1565,7 @@ Content-Type: application/json;charset=UTF-8
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2023-06-09 09:45:50 +0900
+Last updated 2023-08-28 11:57:41 +0900
 </div>
 </div>
 </body>

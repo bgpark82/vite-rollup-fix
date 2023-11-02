@@ -34,7 +34,7 @@ const val AD_CODE_SIZE_MAX = 200
 const val SPECIALTY_CODE_SIZE_MAX = 100
 const val MD_ID_SIZE_MAX = 100
 const val GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS =
-    ". 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값 필요"
+    ". 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요"
 const val SALES_FUNNEL_DEFAULT_VALUE = "DEFAULT"
 
 @RestController

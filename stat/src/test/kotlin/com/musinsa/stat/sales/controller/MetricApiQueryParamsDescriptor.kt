@@ -75,7 +75,7 @@ fun 매출통계_조회_요청값_명세(): MutableList<ParameterDescriptor> {
             parameterWithName("specialtyCode").description(
                 "전문관코드".plus(리스트_설명).plus(
                     SPECIALTY_CODE_SIZE_MAX
-                )
+                ).plus(GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS)
             )
                 .optional(),
             parameterWithName("mdId").description(
