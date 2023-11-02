@@ -141,7 +141,7 @@ private class SalesServiceTest {
     }
 
     @Test
-    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_담당MD_값이_없으면_예외_발생() {
+    fun 상품별_매출통계는_적어도_하나의_브랜드_업체코드_상품번호_담당MD_전문관코드_값이_없으면_예외_발생() {
         val 에러 = assertThrows<CodeAwareException> {
             salesService.getGoodsSalesStatistics(
                 metric = Metric.GOODS,

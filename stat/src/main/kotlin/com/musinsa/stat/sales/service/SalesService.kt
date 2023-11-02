@@ -178,8 +178,8 @@ class SalesService(
         pageSize: Long,
         page: Long
     ): SalesStatisticsResponse {
-        // 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD 값이 있어야 한다.
-        if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty() && mdId.isNullOrEmpty()) {
+        // 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관코드 값이 있어야 한다.
+        if (partnerId.isNullOrEmpty() && goodsNumber.isNullOrEmpty() && brandId.isNullOrEmpty() && mdId.isNullOrEmpty() && specialtyCode.isNullOrEmpty()) {
             return SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS.throwMe()
         }
         return getSalesStatistics(

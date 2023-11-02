@@ -524,7 +524,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상품별 매출통계는 적어도 하나의 브랜드ID, 업체ID, 상품번호가 필요</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">상품별 매출통계는 적어도 하나의 브랜드ID, 업체ID, 상품번호, MD ID, 전문관 코드가 필요</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>NON_EXIST_SALES_STATISTICS_DATA</code></p></td>
@@ -556,7 +556,12 @@ Content-Type: application/json;charset=UTF-8
   "exception" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
   "invalidField" : "metric",
   "invalidValue" : "APPLE",
-  "message" : "에러 메시지"
+  "message" : "에러 메시지",
+  "error" : {
+    "code" : "INVALID_REQUEST_VALUE",
+    "message" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
+    "usermessage" : "에러 메시지"
+  }
 }</code></pre>
 </div>
 </div>
@@ -606,6 +611,21 @@ Content-Type: application/json;charset=UTF-8
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">에러코드. ==errorCode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외종류. ==exception</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.usermessage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지. ==message</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -644,7 +664,7 @@ Content-Type: application/json;charset=UTF-8
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0<br>
-Last updated 2023-06-16 11:39:21 +0900
+Last updated 2023-08-28 11:57:41 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

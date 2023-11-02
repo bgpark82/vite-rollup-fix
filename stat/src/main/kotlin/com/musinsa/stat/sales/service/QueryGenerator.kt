@@ -212,6 +212,7 @@ object QueryGenerator {
                 prefix = "'",
                 postfix = "'"
             )
+
             else -> params.joinToString(separator = ", ") // 그외 숫자 타입 등
         }
     }
@@ -513,6 +514,18 @@ object QueryGenerator {
                     ),
                     IS_APP,
                     N
+                )
+            }
+
+            SalesFunnel.MOBILE_ALL -> {
+                replaceParamOrAnnotate(
+                    replaceParamOrAnnotate(
+                        query,
+                        IS_MOBILE,
+                        Y
+                    ),
+                    IS_APP,
+                    null
                 )
             }
 
