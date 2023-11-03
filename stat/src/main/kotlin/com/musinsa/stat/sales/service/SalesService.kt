@@ -46,6 +46,7 @@ class SalesService(
      * @param partnerType 업체 구분
      * @param goodsKind 품목
      * @param salesFunnel 판매 경로
+     * @param adHours 광고집계시간
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -145,6 +146,7 @@ class SalesService(
      * @param partnerType 업체 구분
      * @param goodsKind 품목
      * @param salesFunnel 판매 경로
+     * @param adHours 광고집계시간
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
