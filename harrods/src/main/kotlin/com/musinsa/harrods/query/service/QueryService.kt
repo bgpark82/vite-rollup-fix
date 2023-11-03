@@ -6,6 +6,7 @@ import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryService(
@@ -47,6 +48,11 @@ class QueryService(
         validateKeyExist(queries)
 
         return queryRepository.saveAll(queries)
+    }
+
+    @Transactional(readOnly = true)
+    fun findAll(): List<Query> {
+        return queryRepository.findAll();
     }
 
     /**

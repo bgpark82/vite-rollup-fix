@@ -77,6 +77,9 @@ class Query(
     var cacheKeySuffix: List<String>
 
 ) {
+    // TODO: jpa-plugin 이슈 해결
+    constructor(): this(null, "", "", 0L, "", "", LocalDateTime.now(), LocalDateTime.now(), null, emptyList())
+
     companion object {
         fun create(queries: String, cacheKey: String, ttl: Long, scheduleInterval: String, userId: String, cacheKeySuffix: List<String>): Query {
             return Query(null, queries, cacheKey, ttl, scheduleInterval, userId, LocalDateTime.now(), LocalDateTime.now(), null, cacheKeySuffix)

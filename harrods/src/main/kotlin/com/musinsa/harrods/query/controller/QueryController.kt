@@ -22,4 +22,10 @@ class QueryController(
         val savedQueries = queryService.create(request)
         return ResponseEntity.ok(savedQueries.map(QueryResponse::of))
     }
+
+    @GetMapping("/queries")
+    fun getAll(): ResponseEntity<List<QueryResponse>> {
+        val queries = queryService.findAll()
+        return ResponseEntity.ok(queries.map(QueryResponse::of))
+    }
 }
