@@ -1,10 +1,11 @@
 package com.musinsa.harrods.query.service
 
+import com.musinsa.common.error.CodeAwareException
 import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
-import jakarta.transaction.Transactional
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -53,6 +54,11 @@ class QueryService(
     @Transactional(readOnly = true)
     fun findAll(): List<Query> {
         return queryRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    fun findById(id: Long): Query {
+        return queryRepository.findByIdOrNull(id) ?: ErrorCode.QUERY_NOT_FOUND.throwMe()
     }
 
     /**

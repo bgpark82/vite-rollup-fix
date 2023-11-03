@@ -5,9 +5,7 @@ import com.musinsa.harrods.query.dto.QueryResponse
 import com.musinsa.harrods.query.service.QueryService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 class QueryController(
@@ -27,5 +25,11 @@ class QueryController(
     fun getAll(): ResponseEntity<List<QueryResponse>> {
         val queries = queryService.findAll()
         return ResponseEntity.ok(queries.map(QueryResponse::of))
+    }
+
+    @GetMapping("/queries/{id}")
+    fun getAll(@PathVariable id: Long): ResponseEntity<QueryResponse> {
+        val query = queryService.findById(id)
+        return ResponseEntity.ok(QueryResponse.of(query))
     }
 }
