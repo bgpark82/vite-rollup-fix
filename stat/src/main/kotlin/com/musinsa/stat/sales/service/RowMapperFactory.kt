@@ -3,7 +3,6 @@ package com.musinsa.stat.sales.service
 import com.musinsa.stat.sales.domain.AdRowMapper
 import com.musinsa.stat.sales.domain.BrandPartnerRowMapper
 import com.musinsa.stat.sales.domain.BrandRowMapper
-import com.musinsa.stat.sales.domain.CategoryRowMapper
 import com.musinsa.stat.sales.domain.CouponRowMapper
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.GoodsRowMapper
@@ -27,7 +26,6 @@ class RowMapperFactory private constructor() {
                 Metric.GOODS -> GoodsRowMapper
                 Metric.AD -> AdRowMapper
                 Metric.COUPON -> CouponRowMapper
-                Metric.CATEGORY -> CategoryRowMapper
             }
         }
     }

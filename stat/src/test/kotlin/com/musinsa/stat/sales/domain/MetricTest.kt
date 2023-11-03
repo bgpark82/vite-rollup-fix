@@ -7,8 +7,8 @@ import org.junit.jupiter.params.provider.EnumSource
 
 private class MetricTest {
     @Test
-    fun 매출통계유형은_9개_존재한다() {
-        assertThat(Metric.values().size).isEqualTo(9)
+    fun 매출통계유형은_8개_존재한다() {
+        assertThat(Metric.values().size).isEqualTo(8)
     }
 
     @ParameterizedTest
@@ -22,8 +22,7 @@ private class MetricTest {
             Metric.BRAND_PARTNER,
             Metric.GOODS,
             Metric.AD,
-            Metric.COUPON,
-            Metric.CATEGORY
+            Metric.COUPON
         )
         assertThat(metric.description).isIn(
             "일별",
@@ -33,8 +32,7 @@ private class MetricTest {
             "브랜드업체별",
             "상품별",
             "광고별",
-            "쿠폰별",
-            "카테고리별"
+            "쿠폰별"
         )
     }
 }

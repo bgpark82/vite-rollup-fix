@@ -28,7 +28,6 @@ data class QueryStore(
             Metric.GOODS -> goods
             Metric.AD -> ad
             Metric.COUPON -> coupon
-            Metric.CATEGORY -> category
         }
     }
 }
