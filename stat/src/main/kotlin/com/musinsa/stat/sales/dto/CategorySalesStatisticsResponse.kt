@@ -1,6 +1,7 @@
 package com.musinsa.stat.sales.dto
 
 import com.musinsa.stat.sales.error.SalesError
+import com.musinsa.stat.sales.service.PREFIX_ANNOTATION
 import java.util.stream.Stream
 
 /**
@@ -25,8 +26,17 @@ class CategorySalesStatisticsResponse(
     // 평균
     val average: SalesStatisticsMetric
 
+    // 모든 페이지 갯수
+    val totalPages: Long
+
     // 결과값
-    val content: List<Category>
+    val content: List<SalesStatisticsMetric>
+
+    // 모든 아이템 갯수
+    val totalItems: Long
+
+    // SQL
+    val sql: String
 
     init {
         // 검색 결과 없는 경우
@@ -37,6 +47,11 @@ class CategorySalesStatisticsResponse(
         // 대분류 값이 없는 경우는 불필요한 쿼리 결과이므로, 결과값 Row 에서 삭제
         content = jdbcQueryResult.filter {
             !it.largeCategoryCode.isNullOrBlank()
+        }
+        totalItems = jdbcQueryResult[0].total
+        totalPages = when {
+            totalItems % pageSize > 0 -> totalItems / pageSize + 1
+            else -> totalItems / pageSize
         }
 
         // 합계, 평균의 경우 소분류 카테고리명이 없는 결과값은 제외하고 계산한다.
@@ -366,6 +381,16 @@ class CategorySalesStatisticsResponse(
             profitMarginExcludedVAT.second,
             0
         )
+    }
+
+    /**
+     * SQL 에서 주석을 포함한 라인을 제거한다.
+     * 개행문자는 공백으로 치환한다.
+     */
+    init {
+        sql = originSql.lines().filterNot { it.contains(PREFIX_ANNOTATION) }
+            .toList()
+            .joinToString(separator = "\n").trimIndent().replace("\n", " ")
     }
 
     @JvmName("calculateSumAndAverageLong")
