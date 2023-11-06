@@ -22,13 +22,15 @@ class TemplateServiceTest {
             ttl = 300L,
             interval = "* * * * *",
             userId = "peter.park",
-            alias = listOf("brand")
+            alias = listOf("brand"),
+            name = "템플릿 이름"
         )
 
         templateService.create(request)
 
         val savedTemplate = templateRepository.findAll()
         assertThat(savedTemplate.size).isEqualTo(1)
+        assertThat(savedTemplate[0].name).isEqualTo("템플릿 이름")
         assertThat(savedTemplate[0].userId).isEqualTo("peter.park")
     }
 }

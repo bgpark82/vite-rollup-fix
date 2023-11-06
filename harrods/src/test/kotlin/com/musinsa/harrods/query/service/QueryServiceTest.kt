@@ -22,7 +22,8 @@ class QueryServiceTest {
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park",
-            alias = listOf("brand")
+            alias = listOf("brand"),
+            name = "템플릿 이름"
         )
 
         val result = queryService.generate(request.template, request)
@@ -38,7 +39,8 @@ class QueryServiceTest {
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park",
-            alias = listOf("brand")
+            alias = listOf("brand"),
+            name = "템플릿 이름"
         )
 
         val result = queryService.generate(request.template, request)
@@ -55,7 +57,8 @@ class QueryServiceTest {
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park",
-            alias = listOf("brand")
+            alias = listOf("brand"),
+            name = "템플릿 이름"
         )
 
         val result = queryService.generate(request.template, request)
@@ -72,7 +75,8 @@ class QueryServiceTest {
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park",
-            alias = listOf("brand")
+            alias = listOf("brand"),
+            name = "템플릿 이름"
         )
 
         val result = queryService.generate(request.template, request)
@@ -89,7 +93,8 @@ class QueryServiceTest {
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park",
-            alias = listOf("brand")
+            alias = listOf("brand"),
+            name = "템플릿 이름"
         )
 
         val result = queryService.generate(request.template, request)
@@ -110,7 +115,8 @@ class QueryServiceTest {
             ttl = 300L,
             interval = "* * * *",
             userId = "peter.park",
-            alias = listOf("brand")
+            alias = listOf("brand"),
+            name = "템플릿 이름"
         )
 
         val result = queryService.generate(request.template, request)
