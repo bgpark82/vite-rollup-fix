@@ -1,8 +1,6 @@
 package com.musinsa.stat.sales.dto
 
 import com.musinsa.stat.sales.error.SalesError
-import com.musinsa.stat.sales.service.PREFIX_ANNOTATION
-import java.util.stream.Stream
 
 /**
  * 카테고리별 매출통계의 경우 쿼리 결과가 자체적으로 '집계(ROLL UP)' 되어 나온다.
@@ -19,24 +17,12 @@ class CategorySalesStatisticsResponse(
     // 페이지
     val page: Long,
     originSql: String
-) {
-    // 합계
-    val sum: SalesStatisticsMetric
-
-    // 평균
-    val average: SalesStatisticsMetric
-
-    // 모든 페이지 갯수
-    val totalPages: Long
-
-    // 결과값
-    val content: List<SalesStatisticsMetric>
-
-    // 모든 아이템 갯수
-    val totalItems: Long
-
-    // SQL
-    val sql: String
+) : StatisticsResponse(originSql) {
+    override val sum: SalesStatisticsMetric
+    override val average: SalesStatisticsMetric
+    override val totalPages: Long
+    override val content: List<SalesStatisticsMetric>
+    override val totalItems: Long
 
     init {
         // 검색 결과 없는 경우
@@ -381,30 +367,5 @@ class CategorySalesStatisticsResponse(
             profitMarginExcludedVAT.second,
             0
         )
-    }
-
-    /**
-     * SQL 에서 주석을 포함한 라인을 제거한다.
-     * 개행문자는 공백으로 치환한다.
-     */
-    init {
-        sql = originSql.lines().filterNot { it.contains(PREFIX_ANNOTATION) }
-            .toList()
-            .joinToString(separator = "\n").trimIndent().replace("\n", " ")
-    }
-
-    @JvmName("calculateSumAndAverageLong")
-    private fun calculateSumAndAverage(stream: Stream<Long>): Pair<Long, Long> {
-        val list = stream.toList()
-        return Pair(list.sum(), list.average().toLong())
-    }
-
-    /**
-     * 합계는 0으로 표기하며, 평균을 소수점 2자리까지 구한다.
-     */
-    @JvmName("calculateSumAndAverageDouble")
-    private fun calculateSumAndAverage(stream: Stream<Double>): Pair<Double, Double> {
-        val list = stream.toList()
-        return Pair(0.0, String.format("%.2f", list.average()).toDouble())
     }
 }
