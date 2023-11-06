@@ -1,10 +1,11 @@
 package com.musinsa.harrods.query.service
 
-import com.musinsa.common.error.CodeAwareException
 import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.domain.QueryRepository
 import com.musinsa.harrods.query.dto.QueryRequest
+import com.musinsa.harrods.template.domain.Template
+import com.musinsa.harrods.template.domain.TemplateRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,7 +16,8 @@ class QueryService(
     private val keyGenerator: KeyGenerator,
     private val queryGenerator: QueryGenerator,
     private val queryRepository: QueryRepository,
-    private val templateFormatter: TemplateFormatter
+    private val templateFormatter: TemplateFormatter,
+    private val templateRepository: TemplateRepository
 ) {
 
     /**
@@ -48,12 +50,21 @@ class QueryService(
 
         validateKeyExist(queries)
 
-        return queryRepository.saveAll(queries)
+        val savedTemplate = templateRepository.save(
+            Template.create(
+                // TODO: Template 도메인으로 이동 및 템플릿 이름 추가
+                name = "브랜드별 통계",
+                userId = userId,
+                queries = queries
+            )
+        )
+
+        return savedTemplate.queries
     }
 
     @Transactional(readOnly = true)
     fun findAll(): List<Query> {
-        return queryRepository.findAll();
+        return queryRepository.findAll()
     }
 
     @Transactional(readOnly = true)

@@ -1,6 +1,7 @@
 package com.musinsa.harrods.query.service
 
 import com.musinsa.harrods.query.domain.MockQueryRepository
+import com.musinsa.harrods.query.domain.MockTemplateRepository
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.dto.QueryRequest
 import org.assertj.core.api.Assertions.assertThat
@@ -13,7 +14,8 @@ class QueryServiceTest {
     private val keyGenerator = KeyGenerator()
     private val queryGenerator = QueryGenerator()
     private val queryRepository = MockQueryRepository()
-    private val queryService = QueryService(paramCombinator, keyGenerator, queryGenerator, queryRepository, templateFormatter)
+    private val templateRepository = MockTemplateRepository()
+    private val queryService = QueryService(paramCombinator, keyGenerator, queryGenerator, queryRepository, templateFormatter, templateRepository)
 
     @Test
     fun `단일 파라미터로 쿼리를 생성한다`() {
@@ -121,6 +123,20 @@ class QueryServiceTest {
 
     @Test
     fun `템플릿을 생성한다`() {
+        val request = QueryRequest(
+            template = "SELECT * FROM user",
+            params = null,
+            ttl = 300L,
+            interval = "* * * * *",
+            userId = "peter.park",
+            alias = listOf("brand")
+        )
 
+        queryService.create(request)
+
+        val savedTemplate = templateRepository.findAll()
+        assertThat(savedTemplate.size).isEqualTo(1)
+        assertThat(savedTemplate[0].userId).isEqualTo("peter.park")
+        assertThat(savedTemplate[0].queries.size).isEqualTo(1)
     }
 }
