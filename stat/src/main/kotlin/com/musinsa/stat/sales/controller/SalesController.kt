@@ -7,6 +7,7 @@ import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
+import com.musinsa.stat.sales.dto.CategorySalesStatisticsResponse
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
 import jakarta.validation.constraints.Size
@@ -36,6 +37,8 @@ const val MD_ID_SIZE_MAX = 100
 const val GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS =
     ". 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요"
 const val SALES_FUNNEL_DEFAULT_VALUE = "DEFAULT"
+const val CATEGORY_ORDER_BY_DEFAULT_VALUE = "LargeCategoryCode"
+
 
 @RestController
 @RequestMapping("/sales-statistics")
@@ -258,7 +261,10 @@ class SalesController(private val salesService: SalesService) {
             defaultValue = SALES_FUNNEL_DEFAULT_VALUE
         ) salesFunnel: SalesFunnel,
         @RequestParam(required = false) adHours: Long?,
-        @RequestParam(required = true) orderBy: OrderBy,
+        @RequestParam(
+            required = false,
+            defaultValue = CATEGORY_ORDER_BY_DEFAULT_VALUE
+        ) orderBy: OrderBy,
         @RequestParam(
             required = false,
             defaultValue = ORDER_DIRECTION_DEFAULT_VALUE
@@ -271,7 +277,29 @@ class SalesController(private val salesService: SalesService) {
             required = false,
             defaultValue = PAGE_DEFAULT_VALUE
         ) page: Long
-    ) {
-        // TODO
+    ): CategorySalesStatisticsResponse {
+        return salesService.getCategorySalesStatistics(
+            startDate,
+            endDate,
+            tag,
+            salesStart,
+            partnerId,
+            category,
+            styleNumber,
+            goodsNumber,
+            brandId,
+            couponNumber,
+            adCode,
+            specialtyCode,
+            mdId,
+            partnerType,
+            goodsKind,
+            salesFunnel,
+            adHours,
+            orderBy,
+            orderDirection,
+            pageSize,
+            page
+        )
     }
 }
