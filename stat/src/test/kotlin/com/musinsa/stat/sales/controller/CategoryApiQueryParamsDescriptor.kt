@@ -105,7 +105,7 @@ fun 카테고리별_매출통계_조회_요청값_명세(): MutableList<Paramete
             ENUM_LINK_DOCS_BUILDER(
                 "orderBy",
                 ORDER_BY_DOCUMENT_URL,
-                "정렬키. 기본값: ".plus(CATEGORY_ORDER_BY_DEFAULT_VALUE)
+                "정렬키. 카테고리별 매출통계 기본값: ".plus(CATEGORY_ORDER_BY_DEFAULT_VALUE)
             ).optional(),
             ENUM_LINK_DOCS_BUILDER(
                 "orderDirection",

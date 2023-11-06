@@ -1,0 +1,18 @@
+// snippet 경로를 못 읽어들이는 버그로 인해 추가
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+= 카테고리별 매출통계 조회
+* sum: 합계
+* average: 평균(% 수치의 경우는 0.0 노출)
+
+* 요청
+include::{snippets}/sales-statistics/category/http-request.adoc[]
+* 요청값 상세
+** Query Parameters
+include::{snippets}/sales-statistics/category/query-parameters.adoc[]
+* 응답
+include::{snippets}/sales-statistics/category/http-response.adoc[]
+* 응답값 상세
+include::{snippets}/sales-statistics/category/response-fields.adoc[]
