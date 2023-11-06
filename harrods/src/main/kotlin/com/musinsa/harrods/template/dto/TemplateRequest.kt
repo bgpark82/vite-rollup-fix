@@ -53,5 +53,10 @@ data class TemplateRequest(
     @field:NotEmpty(message = "별칭은 필수값입니다")
     @field:Size(min = 1, max = 5, message = "별칭은 최대 5개만 등록 가능합니다")
     @field:UniqueElements(message = "별칭은 중복될 수 없습니다")
-    val alias: List<String>
+    val alias: List<String>,
+
+    /**
+     * 템플릿 이름
+     */
+    val name: String?
 )

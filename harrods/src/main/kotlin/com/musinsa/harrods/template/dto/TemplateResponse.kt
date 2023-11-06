@@ -9,7 +9,7 @@ data class TemplateResponse(
 
     val id: Long?,
 
-    val name: String,
+    val name: String?,
 
     val userId: String,
 

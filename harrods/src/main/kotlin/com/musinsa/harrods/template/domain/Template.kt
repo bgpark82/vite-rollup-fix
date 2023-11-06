@@ -23,7 +23,7 @@ class Template(
     /**
      * 템플릿 명
      */
-    var name: String,
+    var name: String?,
 
     /**
      * 등록자 아이디
@@ -55,7 +55,7 @@ class Template(
     constructor() : this(null, "", "", LocalDateTime.now(), LocalDateTime.now(), emptyList())
 
     companion object {
-        fun create(name: String, userId: String, queries: List<Query>): Template {
+        fun create(name: String?, userId: String, queries: List<Query>): Template {
             return Template(
                 id = null,
                 name = name,

@@ -29,7 +29,7 @@ class TemplateService(
 
         return templateRepository.save(
             Template.create(
-                name = "브랜드별 통계",
+                name = request.name,
                 userId = request.userId,
                 queries = queries
             )
