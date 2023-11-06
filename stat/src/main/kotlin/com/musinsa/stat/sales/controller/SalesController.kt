@@ -39,7 +39,6 @@ const val GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS =
 const val SALES_FUNNEL_DEFAULT_VALUE = "DEFAULT"
 const val CATEGORY_ORDER_BY_DEFAULT_VALUE = "LargeCategoryCode"
 
-
 @RestController
 @RequestMapping("/sales-statistics")
 @Validated
