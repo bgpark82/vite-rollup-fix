@@ -22,6 +22,9 @@ class CategorySalesStatisticsResponse(
     // 합계
     val sum: SalesStatisticsMetric
 
+    // 평균
+    val average: SalesStatisticsMetric
+
     // 결과값
     val content: List<Category>
 
@@ -311,6 +314,56 @@ class CategorySalesStatisticsResponse(
             originalPriceExcludedVAT.first,
             profitExcludedVAT.first,
             profitMarginExcludedVAT.first,
+            0
+        )
+
+        // 평균
+        average = SalesStatisticsMetric(
+            sellQuantity.second,
+            sellAmount.second,
+            refundQuantity.second,
+            refundAmount.second,
+            exchangeQuantity.second,
+            exchangeAmount.second,
+            tradeQuantity.second,
+            tradeAmount.second,
+            memberDiscounts.second,
+            affiliateDiscounts.second,
+            otherDiscounts.second,
+            couponDiscounts.second,
+            partnerCouponDiscounts.second,
+            pointDiscounts.second,
+            prePointDiscounts.second,
+            cartDiscounts.second,
+            groupDiscounts.second,
+            totalDiscounts.second,
+            discountRate.second,
+            paymentFees.second,
+            paymentAmount.second,
+            sales.second,
+            originalPrice.second,
+            profit.second,
+            profitMargin.second,
+            purchasesTradeAmount.second,
+            purchasesDiscounts.second,
+            purchasesPaymentFees.second,
+            purchasesPaymentAmount.second,
+            purchasesOriginalPrice.second,
+            purchasesProfit.second,
+            purchasesProfitMargin.second,
+            purchasesRatio.second,
+            partnerTradeAmount.second,
+            partnerDiscounts.second,
+            partnerPaymentFees.second,
+            partnerPaymentAmount.second,
+            partnerSellFees.second,
+            partnerFees.second,
+            partnerSellGrants.second,
+            partnerProfitMargin.second,
+            salesExcludedVAT.second,
+            originalPriceExcludedVAT.second,
+            profitExcludedVAT.second,
+            profitMarginExcludedVAT.second,
             0
         )
     }

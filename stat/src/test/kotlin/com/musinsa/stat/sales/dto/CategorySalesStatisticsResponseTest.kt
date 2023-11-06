@@ -32,4 +32,16 @@ internal class CategorySalesStatisticsResponseTest {
 
         assertThat(카테고리_리스트.sum.sellQuantity).isEqualTo(280933)
     }
+
+    @Test
+    fun `소분류 카테고리명이 Null 인 경우를 제외하고 평균을 구한다`() {
+        val 카테고리_리스트 = CategorySalesStatisticsResponse(
+            쿼리_결과_카테고리_리스트(),
+            PAGE_SIZE_DEFAULT_VALUE.toLong(),
+            PAGE_DEFAULT_VALUE.toLong(),
+            "originSql"
+        )
+
+        assertThat(카테고리_리스트.average.sellQuantity).isEqualTo(46822)
+    }
 }
