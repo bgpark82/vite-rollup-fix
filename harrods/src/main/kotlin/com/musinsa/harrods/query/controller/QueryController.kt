@@ -8,11 +8,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping("/queries")
 class QueryController(
     private val queryService: QueryService
 ) {
 
-    @PostMapping("/queries")
+    @PostMapping
     fun create(
         @Valid @RequestBody
         request: QueryRequest
@@ -21,13 +22,13 @@ class QueryController(
         return ResponseEntity.ok(savedQueries.map(QueryResponse::of))
     }
 
-    @GetMapping("/queries")
+    @GetMapping
     fun getAll(): ResponseEntity<List<QueryResponse>> {
         val queries = queryService.findAll()
         return ResponseEntity.ok(queries.map(QueryResponse::of))
     }
 
-    @GetMapping("/queries/{id}")
+    @GetMapping("/{id}")
     fun getAll(@PathVariable id: Long): ResponseEntity<QueryResponse> {
         val query = queryService.findById(id)
         return ResponseEntity.ok(QueryResponse.of(query))
