@@ -2,7 +2,6 @@ package com.musinsa.harrods.template.service
 
 import com.musinsa.harrods.query.domain.MockTemplateRepository
 import com.musinsa.harrods.query.service.QueryService
-import com.musinsa.harrods.query.service.TemplateFormatter
 import com.musinsa.harrods.template.dto.TemplateRequest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

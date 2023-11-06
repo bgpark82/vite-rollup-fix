@@ -2,6 +2,7 @@ package com.musinsa.harrods.query.service
 
 import com.musinsa.common.error.CodeAwareException
 import com.musinsa.harrods.error.ErrorCode
+import com.musinsa.harrods.template.service.TemplateFormatter
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
