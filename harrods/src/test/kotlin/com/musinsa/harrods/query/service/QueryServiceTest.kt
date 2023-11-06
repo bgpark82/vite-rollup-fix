@@ -118,4 +118,9 @@ class QueryServiceTest {
 
         assertThat(result[0].query).isEqualTo("SELECT * FROM user")
     }
+
+    @Test
+    fun `템플릿을 생성한다`() {
+
+    }
 }
