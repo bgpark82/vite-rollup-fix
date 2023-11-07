@@ -3,50 +3,61 @@ package com.musinsa.harrods.query.service
 import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.query.domain.Query
 import com.musinsa.harrods.query.domain.QueryRepository
-import com.musinsa.harrods.query.dto.QueryRequest
-import jakarta.transaction.Transactional
+import com.musinsa.harrods.template.dto.TemplateRequest
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryService(
     private val paramCombinator: ParamCombinator,
     private val keyGenerator: KeyGenerator,
     private val queryGenerator: QueryGenerator,
-    private val queryRepository: QueryRepository,
-    private val templateFormatter: TemplateFormatter
+    private val queryRepository: QueryRepository
 ) {
 
     /**
      * 템플릿과 파라미터로 쿼리를 생성한다
      *
-     * @param request 쿼리 생성 요청
+     * @param template 검증된 템플릿
+     * @param request 요청 파라미터
+     *
      * @return 생성된 쿼리 리스트
      */
     @Transactional
-    fun create(request: QueryRequest): List<Query> {
-        val (template, params, ttl, interval, userId, alias) = request
+    fun generate(
+        template: String,
+        request: TemplateRequest
+    ): MutableList<Query> {
         val queries = mutableListOf<Query>()
 
-        val formattedTemplate = templateFormatter.format(template)
-
-        for (param in paramCombinator.generate(params)) {
-            val query = queryGenerator.generate(formattedTemplate, param)
+        for (param in paramCombinator.generate(request.params)) {
+            val query = queryGenerator.generate(template, param)
 
             queries.add(
                 Query.create(
-                    ttl = ttl,
+                    ttl = request.ttl,
                     queries = query,
-                    cacheKey = keyGenerator.generate(query, userId),
-                    scheduleInterval = interval,
-                    userId = userId,
-                    cacheKeySuffix = alias
+                    cacheKey = keyGenerator.generate(query, request.userId),
+                    scheduleInterval = request.interval,
+                    userId = request.userId,
+                    cacheKeySuffix = request.alias
                 )
             )
         }
 
         validateKeyExist(queries)
+        return queries
+    }
 
-        return queryRepository.saveAll(queries)
+    @Transactional(readOnly = true)
+    fun findAll(): List<Query> {
+        return queryRepository.findAll()
+    }
+
+    @Transactional(readOnly = true)
+    fun findById(id: Long): Query {
+        return queryRepository.findByIdOrNull(id) ?: ErrorCode.QUERY_NOT_FOUND.throwMe()
     }
 
     /**

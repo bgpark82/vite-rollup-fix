@@ -1,5 +1,6 @@
 package com.musinsa.harrods.query.dto
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import com.musinsa.harrods.query.domain.Query
 import java.time.LocalDateTime
 
@@ -38,12 +39,20 @@ data class QueryResponse(
     /**
      * 쿼리 등록 시간
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     var createdDateTime: LocalDateTime,
 
     /**
      * 쿼리 수정 시간
      */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     var modifiedDateTime: LocalDateTime,
+
+    /**
+     * 마지막으로 캐시된 시간
+     */
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    var lastCachedDateTime: LocalDateTime?,
 
     /**
      * 별칭
@@ -61,6 +70,7 @@ data class QueryResponse(
                 interval = query.scheduleInterval,
                 createdDateTime = query.createdDateTime,
                 modifiedDateTime = query.modifiedDateTime,
+                lastCachedDateTime = query.lastCachedDateTime,
                 alias = query.cacheKeySuffix
             )
         }

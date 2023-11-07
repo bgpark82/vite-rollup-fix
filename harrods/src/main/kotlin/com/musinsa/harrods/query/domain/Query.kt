@@ -1,11 +1,14 @@
 package com.musinsa.harrods.query.domain
 
+import com.musinsa.harrods.template.domain.Template
 import io.hypersistence.utils.hibernate.type.json.JsonType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import org.hibernate.annotations.Type
 import java.time.LocalDateTime
@@ -74,12 +77,16 @@ class Query(
      */
     @Type(value = JsonType::class)
     @Column(name = "cache_key_suffix", columnDefinition = "json")
-    var cacheKeySuffix: List<String>
+    var cacheKeySuffix: List<String> = mutableListOf(),
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    var template: Template? = null
 
 ) {
+
     companion object {
         fun create(queries: String, cacheKey: String, ttl: Long, scheduleInterval: String, userId: String, cacheKeySuffix: List<String>): Query {
-            return Query(null, queries, cacheKey, ttl, scheduleInterval, userId, LocalDateTime.now(), LocalDateTime.now(), null, cacheKeySuffix)
+            return Query(null, queries, cacheKey, ttl, scheduleInterval, userId, LocalDateTime.now(), LocalDateTime.now(), null, cacheKeySuffix, null)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.musinsa.harrods.query.service
+package com.musinsa.harrods.template.service
 
 import com.musinsa.harrods.error.ErrorCode
 import com.musinsa.harrods.utils.validator.TemplateUtils
