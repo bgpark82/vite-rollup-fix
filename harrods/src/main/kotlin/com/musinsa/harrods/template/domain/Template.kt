@@ -51,9 +51,6 @@ class Template(
     var queries: List<Query> = mutableListOf()
 ) {
 
-    // TODO: jpa-plugin 이슈 해결
-    constructor() : this(null, "", "", LocalDateTime.now(), LocalDateTime.now(), emptyList())
-
     companion object {
         fun create(name: String?, userId: String, queries: List<Query>): Template {
             return Template(

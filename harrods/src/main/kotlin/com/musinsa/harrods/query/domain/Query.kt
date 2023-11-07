@@ -83,8 +83,6 @@ class Query(
     var template: Template? = null
 
 ) {
-    // TODO: jpa-plugin 이슈 해결
-    constructor() : this(null, "", "", 0L, "", "", LocalDateTime.now(), LocalDateTime.now(), null, emptyList(), null)
 
     companion object {
         fun create(queries: String, cacheKey: String, ttl: Long, scheduleInterval: String, userId: String, cacheKeySuffix: List<String>): Query {
