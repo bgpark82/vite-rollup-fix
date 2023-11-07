@@ -3,7 +3,6 @@ package com.musinsa.stat.sales.service
 import com.musinsa.stat.sales.domain.AdRowMapper
 import com.musinsa.stat.sales.domain.BrandPartnerRowMapper
 import com.musinsa.stat.sales.domain.BrandRowMapper
-import com.musinsa.stat.sales.domain.CategoryRowMapper
 import com.musinsa.stat.sales.domain.CouponRowMapper
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.GoodsRowMapper
@@ -67,13 +66,6 @@ private class RowMapperFactoryTest {
     fun 쿠폰별매출통계_ROW_MAPPER_를_가져온다() {
         assertThat(RowMapperFactory.getRowMapper(Metric.COUPON)).isInstanceOf(
             CouponRowMapper::class.java
-        )
-    }
-
-    @Test
-    fun 카테고리별매출통계_ROW_MAPPER_를_가져온다() {
-        assertThat(RowMapperFactory.getRowMapper(Metric.CATEGORY)).isInstanceOf(
-            CategoryRowMapper::class.java
         )
     }
 }

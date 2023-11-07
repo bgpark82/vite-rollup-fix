@@ -3,14 +3,17 @@ package com.musinsa.stat.sales.service
 import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.common.error.CodeAwareException
 import com.musinsa.stat.sales.config.QueryStore
+import com.musinsa.stat.sales.domain.CategoryRowMapper
 import com.musinsa.stat.sales.domain.DailyAndMontlyRowMapper
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
 import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
+import com.musinsa.stat.sales.dto.CategorySalesStatisticsResponse
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.error.SalesError
+import com.musinsa.stat.sales.fixture.CategoryFixture.쿼리_결과_카테고리_리스트
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230505
 import com.musinsa.stat.sales.fixture.DailyFixture.DAILY_20230506
 import com.musinsa.stat.sales.fixture.QueryFixture.SAMPLE_QUERY
@@ -198,5 +201,40 @@ private class SalesServiceTest {
 
         // then
         assertThat(결과값.contains("om.ord_state_date >= '$해당월의_첫날'")).isTrue
+    }
+
+    @Test
+    fun `카테고리별 매출통계를 가져온다`() {
+        // given
+        val 카테고리_리스트 = 쿼리_결과_카테고리_리스트()
+        whenever(
+            jdbcTemplate.query(
+                anyString(),
+                eq(CategoryRowMapper)
+            )
+        ).thenReturn(카테고리_리스트)
+        whenever(statDatabricksClient.getDatabricksQuery(anyString())).thenReturn(
+            SAMPLE_QUERY
+        )
+
+        // when
+        val 결과값 = salesService.getCategorySalesStatistics(
+            startDate = LocalDate.now(),
+            endDate = LocalDate.now().plusMonths(1),
+            salesStart = SalesStart.SHIPPING_REQUEST,
+            salesFunnel = SalesFunnel.DEFAULT,
+            orderBy = OrderBy.LargeCategoryCode,
+            orderDirection = OrderDirection.ASC,
+            pageSize = 100,
+            page = 1
+        )
+
+        // then
+        val 기댓값 = CategorySalesStatisticsResponse(카테고리_리스트, 100, 1, "SQL")
+        assertAll(
+            { assertThat(결과값.sum).isNotNull },
+            { assertThat(결과값.average).isNotNull },
+            { assertThat(결과값.content.toString()).isEqualTo(기댓값.content.toString()) }
+        )
     }
 }

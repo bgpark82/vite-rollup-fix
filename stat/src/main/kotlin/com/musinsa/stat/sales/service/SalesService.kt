@@ -2,6 +2,7 @@ package com.musinsa.stat.sales.service
 
 import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.stat.sales.config.QueryStore
+import com.musinsa.stat.sales.domain.CategoryRowMapper
 import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
@@ -9,6 +10,7 @@ import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
+import com.musinsa.stat.sales.dto.CategorySalesStatisticsResponse
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.error.SalesError
 import com.musinsa.stat.sales.service.QueryGenerator.generate
@@ -46,6 +48,7 @@ class SalesService(
      * @param partnerType 업체 구분
      * @param goodsKind 품목
      * @param salesFunnel 판매 경로
+     * @param adHours 광고집계시간
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -111,7 +114,7 @@ class SalesService(
             },
             salesFunnel,
             adHours,
-            orderBy.alias, metric, orderDirection.name, pageSize, page
+            orderBy.alias, metric.name, orderDirection.name, pageSize, page
         )
 
         return SalesStatisticsResponse(
@@ -127,32 +130,6 @@ class SalesService(
 
     /**
      * 상품별 매출통계 유효성 체크를 위해 메소드 분리
-     *
-     * @param metric 매출통계 유형
-     * @param startDate 시작날짜
-     * @param endDate 종료날짜
-     * @param tag 태그. 기본값: 빈배열
-     * @param salesStart 매출시점
-     * @param partnerId 업체
-     * @param category 카테고리
-     * @param styleNumber 스타일넘버
-     * @param goodsNumber 상품코드
-     * @param brandId 브랜드
-     * @param couponNumber 쿠폰
-     * @param adCode 광고코드
-     * @param specialtyCode 전문관코드
-     * @param mdId 담당MD
-     * @param partnerType 업체 구분
-     * @param goodsKind 품목
-     * @param salesFunnel 판매 경로
-     * @param orderBy 정렬키
-     * @param orderDirection 정렬 방향
-     * @param pageSize 페이지 사이즈
-     * @param page 페이지
-     *
-     * @return 매출통계 지표
-     *
-     * @throws SalesError.GOODS_STATISTICS_NEED_BRAND_PARTNER_GOODS_PARAMETERS
      */
     fun getGoodsSalesStatistics(
         metric: Metric,
@@ -205,6 +182,77 @@ class SalesService(
             orderDirection,
             pageSize,
             page
+        )
+    }
+
+    /**
+     * 카테고리별 매출통계를 가져온다.
+     */
+    fun getCategorySalesStatistics(
+        startDate: LocalDate,
+        endDate: LocalDate,
+        tag: List<String>? = emptyList(),
+        salesStart: SalesStart,
+        partnerId: List<String>? = emptyList(),
+        category: List<String>? = emptyList(),
+        styleNumber: List<String>? = emptyList(),
+        goodsNumber: List<String>? = emptyList(),
+        brandId: List<String>? = emptyList(),
+        couponNumber: List<String>? = emptyList(),
+        adCode: List<String>? = emptyList(),
+        specialtyCode: List<String>? = emptyList(),
+        mdId: List<String>? = emptyList(),
+        partnerType: PartnerType? = null,
+        goodsKind: GoodsKind? = null,
+        salesFunnel: SalesFunnel,
+        adHours: Long? = null,
+        orderBy: OrderBy,
+        orderDirection: OrderDirection,
+        pageSize: Long,
+        page: Long
+    ): CategorySalesStatisticsResponse {
+        // 조회기간 유효성 체크
+        retrieveDateValidCheck(startDate, endDate)
+
+        // SQL 조립
+        val originSql = generate(
+            statDatabricksClient.getDatabricksQuery(
+                queryStore.category
+            ),
+            convertDate(startDate),
+            convertDate(endDate),
+            tag,
+            salesStart,
+            partnerId,
+            category,
+            styleNumber,
+            goodsNumber,
+            brandId,
+            couponNumber,
+            adCode,
+            specialtyCode,
+            mdId,
+            partnerType = when (partnerType) {
+                null -> null
+                else -> partnerType.code.toString()
+            },
+            goodsKind = when (goodsKind) {
+                null -> null
+                else -> goodsKind.description
+            },
+            salesFunnel,
+            adHours,
+            orderBy.alias,
+            // 카테고리는 Metric 에 포함되지 않아서 아무 값이나 입력
+            "NO-METRIC",
+            orderDirection.name, pageSize, page
+        )
+
+        return CategorySalesStatisticsResponse(
+            jdbcTemplate.query(originSql, CategoryRowMapper),
+            pageSize,
+            page,
+            originSql
         )
     }
 

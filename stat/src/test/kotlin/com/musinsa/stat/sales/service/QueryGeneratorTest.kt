@@ -288,7 +288,7 @@ internal class QueryGeneratorTest {
             QueryGenerator.applyCouponNumberOrAnnotate(
                 쿼리,
                 arrayListOf("72852", "12345"),
-                metric
+                metric.name
             )
 
         assertThat(변경된_쿼리).isEqualTo(
@@ -310,7 +310,7 @@ internal class QueryGeneratorTest {
             QueryGenerator.applyCouponNumberOrAnnotate(
                 쿼리,
                 arrayListOf("72852", "12345"),
-                Metric.COUPON
+                Metric.COUPON.name
             )
 
         assertThat(변경된_쿼리).isEqualTo(
@@ -333,7 +333,7 @@ internal class QueryGeneratorTest {
             QueryGenerator.applyCouponNumberOrAnnotate(
                 쿼리,
                 emptyList(),
-                Metric.DAILY
+                Metric.DAILY.name
             )
 
         assertThat(변경된_쿼리).isEqualTo(
@@ -569,7 +569,7 @@ internal class QueryGeneratorTest {
         """.trimIndent()
 
         val 변경되지_않은_쿼리 = QueryGenerator.generate(
-            query = 쿼리, metric = Metric.DAILY,
+            query = 쿼리, metric = Metric.DAILY.name,
             startDate = LocalDate.now().toString(),
             endDate = LocalDate.now().plusMonths(1).toString(),
             tag = emptyList(),

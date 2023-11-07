@@ -14,9 +14,12 @@ import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
+import com.musinsa.stat.sales.dto.CategorySalesStatisticsResponse
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.dto.매출통계_명세
 import com.musinsa.stat.sales.dto.일별_월별_명세
+import com.musinsa.stat.sales.dto.카테고리별_명세
+import com.musinsa.stat.sales.fixture.CategoryFixture
 import com.musinsa.stat.sales.fixture.DailyFixture
 import com.musinsa.stat.sales.service.SalesService
 import org.junit.jupiter.api.Test
@@ -56,6 +59,7 @@ private class SalesControllerTest : RestDocsControllerHelper() {
     val 판매경로 = SalesFunnel.MOBILE_APP
     val 광고집계시간 = 10800L
     val 정렬키 = OrderBy.Date
+    val 카테고리별_정렬키 = OrderBy.LargeCategoryCode
     val 정렬방향 = OrderDirection.ASC
 
     @Test
@@ -158,6 +162,19 @@ private class SalesControllerTest : RestDocsControllerHelper() {
         )
     }
 
+    @Test
+    fun `카테고리별 매출통계 가져오기`() {
+        val queryParams = 카테고리별_파라미터_설정(카테고리별_응답값_설정())
+
+        mockMvc.GET("/sales-statistics/CATEGORY", queryParams)
+            .성공_검증(writeValueAsString(카테고리별_응답값_설정()))
+            .DOCS_생성(
+                "sales-statistics/category",
+                카테고리별_매출통계_조회_요청값_명세(),
+                매출통계_명세(카테고리별_명세())
+            )
+    }
+
     private fun 파라미터_설정(
         지표: Metric,
         응답값: SalesStatisticsResponse
@@ -229,6 +246,78 @@ private class SalesControllerTest : RestDocsControllerHelper() {
                 DailyFixture.DAILY_20230505(),
                 DailyFixture.DAILY_20230506()
             ),
+            페이지_사이즈,
+            페이지,
+            "실행된 SQL"
+        )
+    }
+
+    private fun 카테고리별_파라미터_설정(
+        응답값: CategorySalesStatisticsResponse
+    ): LinkedMultiValueMap<String, String> {
+        whenever(
+            salesService.getCategorySalesStatistics(
+                startDate = LocalDate.parse(
+                    시작날짜,
+                    DateTimeFormatter.ofPattern("yyyyMMdd")
+                ),
+                endDate = LocalDate.parse(
+                    종료날짜,
+                    DateTimeFormatter.ofPattern("yyyyMMdd")
+                ),
+                tag = 태그,
+                salesStart = 매출시점,
+                partnerId = 업체,
+                category = 카테고리,
+                styleNumber = 스타일넘버,
+                goodsNumber = 상품코드,
+                brandId = 브랜드,
+                couponNumber = 쿠폰,
+                adCode = 광고코드,
+                specialtyCode = 전문관코드,
+                mdId = 담당MD,
+                partnerType = 업체구분,
+                goodsKind = 품목,
+                salesFunnel = 판매경로,
+                adHours = 광고집계시간,
+                orderBy = 카테고리별_정렬키,
+                orderDirection = 정렬방향,
+                pageSize = 페이지_사이즈,
+                page = 페이지
+            )
+        ).thenReturn(응답값)
+
+        val queryParams = LinkedMultiValueMap<String, String>()
+        queryParams["startDate"] = 시작날짜
+        queryParams["endDate"] = 종료날짜
+        queryParams["tag"] = 태그
+        queryParams["salesStart"] = 매출시점.name
+        queryParams["partnerId"] = 업체
+        queryParams["category"] = 카테고리
+        queryParams["styleNumber"] = 스타일넘버
+        queryParams["goodsNumber"] = 상품코드
+        queryParams["brandId"] = 브랜드
+        queryParams["couponNumber"] = 쿠폰
+        queryParams["adCode"] = 광고코드
+        queryParams["specialtyCode"] = 전문관코드
+        queryParams["mdId"] = 담당MD
+        queryParams["partnerType"] = 업체구분.name
+        queryParams["goodsKind"] = 품목.name
+        queryParams["salesFunnel"] = 판매경로.name
+        queryParams["adHours"] = 광고집계시간.toString()
+        queryParams["orderBy"] = 카테고리별_정렬키.toString()
+        queryParams["orderDirection"] = 정렬방향.toString()
+        queryParams["pageSize"] = 페이지_사이즈.toString()
+        queryParams["page"] = 페이지.toString()
+
+        return queryParams
+    }
+
+    private fun 카테고리별_응답값_설정(): CategorySalesStatisticsResponse {
+        val 페이지_사이즈: Long = 500
+        val 페이지: Long = 0
+        return CategorySalesStatisticsResponse(
+            CategoryFixture.쿼리_결과_카테고리_리스트(),
             페이지_사이즈,
             페이지,
             "실행된 SQL"

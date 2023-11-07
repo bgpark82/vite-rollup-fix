@@ -7,6 +7,7 @@ import com.musinsa.stat.sales.domain.OrderDirection
 import com.musinsa.stat.sales.domain.PartnerType
 import com.musinsa.stat.sales.domain.SalesFunnel
 import com.musinsa.stat.sales.domain.SalesStart
+import com.musinsa.stat.sales.dto.CategorySalesStatisticsResponse
 import com.musinsa.stat.sales.dto.SalesStatisticsResponse
 import com.musinsa.stat.sales.service.SalesService
 import jakarta.validation.constraints.Size
@@ -36,18 +37,19 @@ const val MD_ID_SIZE_MAX = 100
 const val GOODS_SALES_STATISTICS_VALID_PARAM_CONDITION_DOCS =
     ". 상품별 매출통계의 경우 적어도 하나의 업체 ID, 상품번호, 브랜드 ID, MD, 전문관 코드 값 필요"
 const val SALES_FUNNEL_DEFAULT_VALUE = "DEFAULT"
+const val CATEGORY_ORDER_BY_DEFAULT_VALUE = "LargeCategoryCode"
 
 @RestController
 @RequestMapping("/sales-statistics")
 @Validated
 class SalesController(private val salesService: SalesService) {
     /**
-     * 일별 매출통계를 가져온다.
+     * 매출통계를 가져온다.
      *
      * @param metric 매출통계 유형
-     * @param startDate 시작날짜(8자리 yyyyMMdd)
-     * @param endDate 종료날짜(8자리 yyyyMMdd)
-     * @param tag 태그
+     * @param startDate 시작날짜
+     * @param endDate 종료날짜
+     * @param tag 태그. 기본값: 빈배열
      * @param salesStart 매출시점
      * @param partnerId 업체
      * @param category 카테고리
@@ -56,10 +58,12 @@ class SalesController(private val salesService: SalesService) {
      * @param brandId 브랜드
      * @param couponNumber 쿠폰
      * @param adCode 광고코드
-     * @param adHours 광고집계시간
      * @param specialtyCode 전문관코드
      * @param mdId 담당MD
      * @param partnerType 업체 구분
+     * @param goodsKind 품목
+     * @param salesFunnel 판매 경로
+     * @param adHours 광고집계시간
      * @param orderBy 정렬키
      * @param orderDirection 정렬 방향
      * @param pageSize 페이지 사이즈
@@ -180,5 +184,121 @@ class SalesController(private val salesService: SalesService) {
                 page
             )
         }
+    }
+
+    /**
+     * 카테고리별 매출통계를 가져온다.
+     *
+     * @param startDate 시작날짜
+     * @param endDate 종료날짜
+     * @param tag 태그. 기본값: 빈배열
+     * @param salesStart 매출시점
+     * @param partnerId 업체
+     * @param category 카테고리
+     * @param styleNumber 스타일넘버
+     * @param goodsNumber 상품코드
+     * @param brandId 브랜드
+     * @param couponNumber 쿠폰
+     * @param adCode 광고코드
+     * @param specialtyCode 전문관코드
+     * @param mdId 담당MD
+     * @param partnerType 업체 구분
+     * @param goodsKind 품목
+     * @param salesFunnel 판매 경로
+     * @param adHours 광고집계시간
+     * @param orderBy 정렬키
+     * @param orderDirection 정렬 방향
+     * @param pageSize 페이지 사이즈
+     * @param page 페이지
+     *
+     * @return 매출통계 지표
+     *
+     */
+    @GetMapping("/CATEGORY")
+    fun categorySalesStatistics(
+        @RequestParam(required = true)
+        @DateTimeFormat(pattern = DATE_FORMAT)
+        startDate: LocalDate,
+        @RequestParam(required = true)
+        @DateTimeFormat(pattern = DATE_FORMAT)
+        endDate: LocalDate,
+        @Size(max = TAG_SIZE_MAX)
+        @RequestParam(required = false)
+        tag: List<String>?,
+        @RequestParam(required = true) salesStart: SalesStart,
+        @Size(max = PARTNER_ID_SIZE_MAX)
+        @RequestParam(required = false)
+        partnerId: List<String>?,
+        @Size(max = CATEGORY_SIZE_MAX)
+        @RequestParam(required = false)
+        category: List<String>?,
+        @Size(max = STYLE_NUMBER_SIZE_MAX)
+        @RequestParam(required = false)
+        styleNumber: List<String>?,
+        @Size(max = GOODS_NUMBER_SIZE_MAX)
+        @RequestParam(required = false)
+        goodsNumber: List<String>?,
+        @Size(max = BRAND_ID_SIZE_MAX)
+        @RequestParam(required = false)
+        brandId: List<String>?,
+        @Size(max = COUPON_NUMBER_SIZE_MAX)
+        @RequestParam(required = false)
+        couponNumber: List<String>?,
+        @Size(max = AD_CODE_SIZE_MAX)
+        @RequestParam(required = false)
+        adCode: List<String>?,
+        @Size(max = SPECIALTY_CODE_SIZE_MAX)
+        @RequestParam(required = false)
+        specialtyCode: List<String>?,
+        @Size(max = MD_ID_SIZE_MAX)
+        @RequestParam(required = false)
+        mdId: List<String>?,
+        @RequestParam(required = false) partnerType: PartnerType?,
+        @RequestParam(required = false) goodsKind: GoodsKind?,
+        @RequestParam(
+            required = false,
+            defaultValue = SALES_FUNNEL_DEFAULT_VALUE
+        ) salesFunnel: SalesFunnel,
+        @RequestParam(required = false) adHours: Long?,
+        @RequestParam(
+            required = false,
+            defaultValue = CATEGORY_ORDER_BY_DEFAULT_VALUE
+        ) orderBy: OrderBy,
+        @RequestParam(
+            required = false,
+            defaultValue = ORDER_DIRECTION_DEFAULT_VALUE
+        ) orderDirection: OrderDirection,
+        @RequestParam(
+            required = false,
+            defaultValue = PAGE_SIZE_DEFAULT_VALUE
+        ) pageSize: Long,
+        @RequestParam(
+            required = false,
+            defaultValue = PAGE_DEFAULT_VALUE
+        ) page: Long
+    ): CategorySalesStatisticsResponse {
+        return salesService.getCategorySalesStatistics(
+            startDate,
+            endDate,
+            tag,
+            salesStart,
+            partnerId,
+            category,
+            styleNumber,
+            goodsNumber,
+            brandId,
+            couponNumber,
+            adCode,
+            specialtyCode,
+            mdId,
+            partnerType,
+            goodsKind,
+            salesFunnel,
+            adHours,
+            orderBy,
+            orderDirection,
+            pageSize,
+            page
+        )
     }
 }

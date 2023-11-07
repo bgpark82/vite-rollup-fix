@@ -261,7 +261,7 @@ object QueryGenerator {
         salesFunnel: SalesFunnel,
         adHours: Long?,
         orderBy: String,
-        metric: Metric,
+        metric: String,
         orderDirection: String,
         pageSize: Long,
         page: Long
@@ -409,10 +409,10 @@ object QueryGenerator {
     fun applyCouponNumberOrAnnotate(
         query: String,
         couponNumber: List<String>?,
-        metric: Metric
+        metric: String
     ): String {
         // 쿠폰별 매출통계는 이미 JOIN 이 적용 되어 있으므로, WHERE 절 주석 여부만 확인
-        if (metric == Metric.COUPON) {
+        if (metric == Metric.COUPON.name) {
             return replaceParamListOrAnnotate(
                 query,
                 COUPON_NUMBER,

@@ -39,6 +39,10 @@ include::{snippets}/error-body/response-fields.adoc[]
 
 * link:sales/statistics.html[매출통계 조회,window=blank]
 
+== 카테고리별 조회
+
+* link:sales/category-statistics.html[카테고리별 매출통계 조회,window=blank]
+
 == 검색
 
 * link:search/brand.html[브랜드 검색,window=blank]
