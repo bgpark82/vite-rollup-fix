@@ -6,7 +6,7 @@ plugins {
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
-    kotlin("plugin.jpa")
+    kotlin("plugin.jpa") version "1.9.20"
     id("org.asciidoctor.jvm.convert")
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jlleitschuh.gradle.ktlint-idea")
