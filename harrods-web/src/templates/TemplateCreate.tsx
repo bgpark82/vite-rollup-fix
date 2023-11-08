@@ -1,4 +1,4 @@
-import {Create, SimpleForm, TextInput} from "react-admin";
+import {Create, SimpleForm, TextInput, required} from "react-admin";
 import QueryInput from "./QueryInput";
 import JsonInput from "./JsonInput";
 
@@ -22,6 +22,7 @@ export const TemplateCreate = () => {
                            source="interval"
                            placeholder="* * * * *"
                            helperText="배치가 실행되는 주기"
+                           validate={required("interval은 필수값입니다")}
                 />
                 <TextInput resettable
                            label=""
@@ -34,6 +35,7 @@ export const TemplateCreate = () => {
                            source="userId"
                            placeholder="peter.park"
                            helperText="@musinsa.com을 제외한 이메일"
+                           validate={required("등록자 아이디는 필수값입니다")}
                 />
                 <JsonInput source="params"
                            height="100px"
