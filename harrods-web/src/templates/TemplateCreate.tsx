@@ -3,13 +3,13 @@ import QueryInput from "./QueryInput";
 import JsonInput from "./JsonInput";
 
 export const TemplateCreate = () => {
-    // @ts-ignore
     return (
         <Create title="템플릿 생성">
             <SimpleForm sx={{width: "100%"}} >
                 <QueryInput source="template"
                             height="400px"
                             width="1000px"
+                            validate={required("템플릿은 필수값입니다")}
                 />
                 <TextInput resettable
                            label=""
@@ -46,6 +46,7 @@ export const TemplateCreate = () => {
                            height="100px"
                            width="400px"
                            placeholder='[ "alias", "username" ]'
+                           validate={[required("별칭은 필수값입니다")]}
                 />
             </SimpleForm>
         </Create>
