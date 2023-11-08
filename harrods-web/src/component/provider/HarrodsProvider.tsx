@@ -1,6 +1,7 @@
 import {DataProvider, fetchUtils} from "react-admin";
 
-const BASE_URL = "http://localhost:8080/admin"
+// @see https://vitejs.dev/guide/env-and-mode.html
+const BASE_URL = import.meta.env.VITE_HARRODS_API_URL
 const httpClient = fetchUtils.fetchJson;
 
 // @ts-ignore
