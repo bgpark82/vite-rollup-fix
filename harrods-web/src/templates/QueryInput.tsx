@@ -1,5 +1,7 @@
-import {useInput} from "react-admin";
+import {InputHelperText, useInput} from "react-admin";
 import QueryEditor from "./QueryEditor";
+import ErrorInputText from "./ErrorInputText";
+import React from "react";
 
 /**
  * useInput은 외부 컴포넌트를 리액트 어드민의 Input 태그와 연결시키는 Adaptor
@@ -19,11 +21,13 @@ const QueryInput = ({source, ...rest}) => {
     const {
         id,
         field,
+        fieldState
     } = useInput({ source, ...rest })
 
     return (
         <label htmlFor={id} >
             <QueryEditor {...field} {...rest} />
+            {fieldState.error && <ErrorInputText message={fieldState.error.message} />}
         </label>
     );
 };
