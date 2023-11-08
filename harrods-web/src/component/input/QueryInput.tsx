@@ -1,6 +1,6 @@
 import {InputHelperText, useInput} from "react-admin";
 import QueryEditor from "./QueryEditor";
-import ErrorInputText from "./ErrorInputText";
+import ErrorInputText from "../field/ErrorInputText";
 import React from "react";
 
 /**

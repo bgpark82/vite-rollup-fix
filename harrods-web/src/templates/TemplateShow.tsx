@@ -6,7 +6,7 @@ import {
     SimpleShowLayout,
     TextField
 } from "react-admin";
-import QueryField from "./QueryField";
+import QueryField from "../component/field/QueryField";
 
 export const TemplateShow = () => {
     return (

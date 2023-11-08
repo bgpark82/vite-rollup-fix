@@ -1,6 +1,6 @@
 import {Create, SimpleForm, TextInput, required, Labeled} from "react-admin";
-import QueryInput from "./QueryInput";
-import JsonInput from "./JsonInput";
+import QueryInput from "../component/input/QueryInput";
+import JsonInput from "../component/input/JsonInput";
 import {Grid} from "@mui/material";
 
 export const TemplateCreate = () => {

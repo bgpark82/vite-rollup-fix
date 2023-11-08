@@ -1,5 +1,5 @@
 import {NumberField, Show, SimpleShowLayout, TextField} from "react-admin";
-import QueryField from "../templates/QueryField";
+import QueryField from "../component/field/QueryField";
 
 export const QueryShow = () => {
     return (

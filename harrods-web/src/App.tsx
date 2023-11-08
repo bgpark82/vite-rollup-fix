@@ -1,5 +1,5 @@
 import {Admin, Resource,} from "react-admin";
-import {harrodsDataProvider} from "../provider/HarrodsProvider";
+import {harrodsDataProvider} from "./component/provider/HarrodsProvider";
 import {TemplateList} from "./templates/TemplateList";
 import {TemplateShow} from "./templates/TemplateShow";
 import {QueryList} from "./queries/QueryList";

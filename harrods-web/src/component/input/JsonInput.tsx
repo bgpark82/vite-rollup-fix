@@ -1,7 +1,7 @@
 import React from 'react';
 import {InputHelperText, useInput} from "react-admin";
 import JsonEditor from "./JsonEditor";
-import ErrorInputText from "./ErrorInputText";
+import ErrorInputText from "../field/ErrorInputText";
 
 const JsonInput = ({ source, ...rest }: any) => {
 
