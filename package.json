@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@codemirror/lang-sql": "^6.5.4",
+    "@uiw/react-codemirror": "^4.21.20",
+    "sql-formatter": "^13.0.4"
+  }
+}
