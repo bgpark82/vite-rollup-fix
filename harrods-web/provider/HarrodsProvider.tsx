@@ -16,4 +16,20 @@ export const harrodsDataProvider: DataProvider =  {
             .then(({json}) => ({
                 data: json
             })),
+    create: (resource: string, params: any) =>
+        httpClient(`${BASE_URL}/${resource}`, {
+            method: "POST",
+            body: JSON.stringify(params.data),
+        }).then((res) => ({
+            data: { ...params.data, id: res.json.id}
+        }))
 };
+
+/**
+ * httpClient(`${BASE_URL}/${resource}`, {
+ *             method: "POST",
+ *             body: JSON.stringify(params.data),
+ *         }).then((res) => ({
+ *             data: { ...params.data, id: res.json.id}
+ *         }))
+ */
