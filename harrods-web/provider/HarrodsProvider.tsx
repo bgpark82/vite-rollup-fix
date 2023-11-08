@@ -11,4 +11,9 @@ export const harrodsDataProvider: DataProvider =  {
             .then(({json}) => (
                 {data : json, total: json.length}
             )),
+    getOne: (resource: string, params: any) =>
+        httpClient(`${BASE_URL}/${resource}/${params.id}`)
+            .then(({json}) => ({
+                data: json
+            })),
 };
