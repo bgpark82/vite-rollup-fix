@@ -1,15 +1,22 @@
 import {Create, SimpleForm, TextInput} from "react-admin";
+import QueryInput from "./QueryInput";
+import JsonInput from "./JsonInput";
 
 export const TemplateCreate = () => {
+    // @ts-ignore
     return (
         <Create title="템플릿 생성">
             <SimpleForm sx={{width: "100%"}} >
-                <TextInput source="template"/>
+                <QueryInput source="template"
+                            height="400px"
+                            width="1000px"
+                />
                 <TextInput resettable
                            label=""
                            source="name"
                            placeholder="데이터플랫폼 템플릿"
-                           helperText="템플릿 이름"/>
+                           helperText="템플릿 이름"
+                />
                 <TextInput resettable
                            label=""
                            source="interval"
@@ -28,8 +35,16 @@ export const TemplateCreate = () => {
                            placeholder="peter.park"
                            helperText="@musinsa.com을 제외한 이메일"
                 />
-                <TextInput source="params"/>
-                <TextInput source="alias"/>
+                <JsonInput source="params"
+                           height="100px"
+                           width="400px"
+                           placeholder='{ "username": "peter.park" }'
+                />
+                <JsonInput source="alias"
+                           height="100px"
+                           width="400px"
+                           placeholder='[ "alias", "username" ]'
+                />
             </SimpleForm>
         </Create>
     )
