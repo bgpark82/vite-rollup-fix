@@ -1,10 +1,4 @@
-import {
-  Admin,
-  Resource,
-  ListGuesser,
-  EditGuesser,
-  ShowGuesser,
-} from "react-admin";
-import { dataProvider } from "./dataProvider";
+import {Admin,} from "react-admin";
+import {harrodsDataProvider} from "../provider/HarrodsProvider";
 
-export const App = () => <Admin dataProvider={dataProvider}></Admin>;
+export const App = () => <Admin dataProvider={harrodsDataProvider}></Admin>;
