@@ -1,7 +1,7 @@
 import {Datagrid, List, NumberField, TextField} from "react-admin";
 
 export const QueryList = () => (
-    <List>
+    <List title="쿼리">
         <Datagrid rowClick="show">
             <TextField source="id" label="아이디" />
             <TextField source="key" label="캐시 키" />

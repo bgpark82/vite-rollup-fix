@@ -1,7 +1,7 @@
 import {Datagrid, DateField, List, TextField} from "react-admin";
 
 export const TemplateList = () => (
-    <List>
+    <List title="템플릿">
         <Datagrid rowClick="show">
             <TextField source="id" label="아이디"/>
             <TextField source="name" label="템플릿 이름"/>
