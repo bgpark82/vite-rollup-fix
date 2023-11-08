@@ -6,6 +6,7 @@ import {
     SimpleShowLayout,
     TextField
 } from "react-admin";
+import QueryField from "./QueryField";
 
 export const TemplateShow = () => {
     return (
@@ -18,7 +19,7 @@ export const TemplateShow = () => {
                 <TextField source="modifiedDateTime"/>
                 <ArrayField source="queries">
                     <Datagrid rowClick="show">
-                        <TextField source="query"/>
+                        <QueryField source="query" height="300px" width="600px"/>
                         <TextField source="key"/>
                         <TextField source="alias"/>
                         <NumberField source="ttl"/>
