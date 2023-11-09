@@ -6,7 +6,8 @@ import {QueryList} from "./queries/QueryList";
 import {QueryShow} from "./queries/QueryShow";
 import {TemplateCreate} from "./templates/TemplateCreate";
 
-export const App = () => <Admin dataProvider={harrodsDataProvider}>
-    <Resource name="templates" list={TemplateList} show={TemplateShow} create={TemplateCreate}/>
-    <Resource name="queries" list={QueryList} show={QueryShow}/>
-</Admin>;
+export const App = () =>
+    <Admin basename="/web" dataProvider={harrodsDataProvider} >
+        <Resource name="templates" list={TemplateList} show={TemplateShow} create={TemplateCreate}/>
+        <Resource name="queries" list={QueryList} show={QueryShow}/>
+    </Admin>
