@@ -1,32 +1,26 @@
-# harrods-web
+# Harrods Admin
 
-## Installation
+## 설치
 
-Install the application dependencies by running:
-
+1. 의존성 설치
 ```sh
 npm install
 ```
 
-## Development
+2. 환경변수 설정
+루트 디렉토리에 `.env.local` 파일 생성
+```sh
+VITE_HARRODS_API_URL=http://localhost:8080/admin # 해롯 로컬 서버 API
+```
 
-Start the application in development mode by running:
-
+## 실행
+`.env.local` 환경변수를 읽어 로컬에서 실행
 ```sh
 npm run dev
 ```
 
-## Production
-
-Build the application in production mode by running:
-
+## 배포 파일 생성
 ```sh
 npm run build
 ```
-
-## DataProvider
-
-The included data provider use [ra-data-json-server](https://github.com/marmelab/react-admin/tree/master/packages/ra-data-json-server). It fits REST APIs powered by [JSON Server](https://github.com/typicode/json-server), such as [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
-
-You'll find an `.env` file at the project root that includes a `VITE_JSON_SERVER_URL` variable. Set it to the URL of your backend. By default, we set it to targets [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
 
