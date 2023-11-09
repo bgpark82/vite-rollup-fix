@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-sql": "^6.5.4",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.17",
+    "@uiw/react-codemirror": "^4.21.20",
+    "sql-formatter": "^13.0.4"
+  }
+}
