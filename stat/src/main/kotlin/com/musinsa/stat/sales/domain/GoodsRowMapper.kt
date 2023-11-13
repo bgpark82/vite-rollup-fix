@@ -16,7 +16,8 @@ object GoodsRowMapper : RowMapper<Goods> {
             brandName = rs.getString("브랜드명"),
             category = rs.getString("카테고리") ?: NULL_VALUE,
             mdId = rs.getString("담당MD"),
-            goodsStatusName = rs.getString("상품상태")
+            goodsStatusName = rs.getString("상품상태"),
+            thumbnail = rs.getString("썸네일")
         )
     }
 }

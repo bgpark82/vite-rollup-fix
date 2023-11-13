@@ -2,6 +2,7 @@ package com.musinsa.stat.sales.fixture
 
 import com.musinsa.stat.sales.dto.DailyAndMontly
 import java.sql.Types
+import javax.sql.rowset.CachedRowSet
 import javax.sql.rowset.RowSetMetaDataImpl
 import javax.sql.rowset.RowSetProvider
 
@@ -216,6 +217,10 @@ object DailyFixture {
     }
 
     fun DAILY_20230506(): DailyAndMontly {
+        return DailyAndMontly(DAILY_20230506_CachedRowSet(), "20230506")
+    }
+
+    fun DAILY_20230506_CachedRowSet(): CachedRowSet {
         val rowSetTemp = RowSetProvider.newFactory().createCachedRowSet()
         rowSetTemp.setMetaData(createDailyRowSetMetaDataImpl())
         rowSetTemp.moveToInsertRow()
@@ -268,6 +273,6 @@ object DailyFixture {
         rowSetTemp.updateDouble("이익률(VAT별도)", 24.08)
         rowSetTemp.updateLong("total", 2)
 
-        return DailyAndMontly(rowSetTemp, "20230506")
+        return rowSetTemp
     }
 }

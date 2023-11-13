@@ -3,6 +3,9 @@ package com.musinsa.stat.sales.dto
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.sql.ResultSet
 
+// 썸네일 이미지 CDN 서버
+const val IMAGE_MUSINSA_CDN = "https://image.msscdn.net"
+
 data class Goods(
     @JsonIgnore
     val rs: ResultSet,
@@ -40,5 +43,14 @@ data class Goods(
     /**
      * 상품상태
      */
-    val goodsStatusName: String
-) : SalesStatisticsMetric(rs)
+    val goodsStatusName: String,
+
+    /**
+     * 상품 썸네일
+     */
+    var thumbnail: String
+) : SalesStatisticsMetric(rs) {
+    init {
+        thumbnail = IMAGE_MUSINSA_CDN.plus(this.thumbnail)
+    }
+}
