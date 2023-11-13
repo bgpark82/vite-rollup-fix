@@ -40,5 +40,10 @@ data class Goods(
     /**
      * 상품상태
      */
-    val goodsStatusName: String
+    val goodsStatusName: String,
+
+    /**
+     * 상품 썸네일
+     */
+    val thumbnail: String
 ) : SalesStatisticsMetric(rs)
