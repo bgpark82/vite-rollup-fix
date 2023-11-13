@@ -3,6 +3,9 @@ package com.musinsa.stat.sales.dto
 import com.fasterxml.jackson.annotation.JsonIgnore
 import java.sql.ResultSet
 
+// 썸네일 이미지 CDN 서버
+const val IMAGE_MUSINSA_CDN = "https://image.msscdn.net"
+
 data class Goods(
     @JsonIgnore
     val rs: ResultSet,
