@@ -1,7 +1,6 @@
 package com.musinsa.stat.sales.domain
 
 import com.musinsa.stat.sales.dto.Goods
-import com.musinsa.stat.sales.dto.IMAGE_MUSINSA_CDN
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 
@@ -18,7 +17,7 @@ object GoodsRowMapper : RowMapper<Goods> {
             category = rs.getString("카테고리") ?: NULL_VALUE,
             mdId = rs.getString("담당MD"),
             goodsStatusName = rs.getString("상품상태"),
-            thumbnail = IMAGE_MUSINSA_CDN.plus(rs.getString("썸네일"))
+            thumbnail = rs.getString("썸네일")
         )
     }
 }

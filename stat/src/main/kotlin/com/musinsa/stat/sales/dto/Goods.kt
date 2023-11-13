@@ -48,5 +48,9 @@ data class Goods(
     /**
      * 상품 썸네일
      */
-    val thumbnail: String
-) : SalesStatisticsMetric(rs)
+    var thumbnail: String
+) : SalesStatisticsMetric(rs) {
+    init {
+        thumbnail = IMAGE_MUSINSA_CDN.plus(this.thumbnail)
+    }
+}
