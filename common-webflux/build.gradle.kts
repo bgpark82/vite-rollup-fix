@@ -31,9 +31,6 @@ application {
 dependencies {
     // common 의존성 가져오기, 의존성 내보내기
     api(project(":common"))
-
-    // testFixtures 에서 사용하는 의존성 선언
-    testFixturesImplementation(project(":common"))
 }
 
 tasks {

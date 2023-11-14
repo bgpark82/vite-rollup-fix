@@ -33,7 +33,6 @@ dependencies {
     api(project(":common"))
 
     // testFixtures 에서 사용하는 의존성 선언
-    testFixturesImplementation(project(":common"))
     testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-web")
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
