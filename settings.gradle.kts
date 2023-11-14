@@ -3,6 +3,9 @@ rootProject.name = "dataplatform"
 // 공통
 include("common")
 
+// 공통-WebMvc
+include("common-mvc")
+
 // 매출통계
 include("stat")
 
