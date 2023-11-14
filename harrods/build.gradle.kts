@@ -38,11 +38,12 @@ dependencies {
     implementation("com.cronutils:cron-utils:9.2.0")
     // json 컬럼 컨버터 (https://github.com/vladmihalcea/hypersistence-utils)
     implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.5.2")
+
     // common 의존성
-    implementation(project(":common"))
+    implementation(project(":common-mvc"))
 
     // common testFixture 의존성
-    testImplementation(testFixtures(project(":common")))
+    testImplementation(testFixtures(project(":common-mvc")))
 }
 
 tasks {
