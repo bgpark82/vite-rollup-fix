@@ -28,10 +28,10 @@ application {
 }
 
 dependencies {
-    // common 의존성
+    // common-mvc 의존성
     implementation(project(":common-mvc"))
 
-    // common testFixture 의존성
+    // common-mvc testFixture 의존성
     testImplementation(testFixtures(project(":common-mvc")))
 }
 
