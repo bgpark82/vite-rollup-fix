@@ -36,10 +36,10 @@ repositories {
 
 dependencies {
     // common 의존성
-    implementation(project(":common"))
+    implementation(project(":common-mvc"))
 
     // common testFixture 의존성
-    testImplementation(testFixtures(project(":common")))
+    testImplementation(testFixtures(project(":common-mvc")))
 }
 
 tasks {
