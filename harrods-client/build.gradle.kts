@@ -18,6 +18,9 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/coroutine.gradle.kts
     id("coroutine")
+
+    // @see buildSrc/src/main/kotlin/webmvc.gradle.kts
+    id("webmvc")
 }
 
 group = "com.musinsa"
