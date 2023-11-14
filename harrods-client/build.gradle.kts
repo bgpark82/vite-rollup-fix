@@ -16,8 +16,8 @@ plugins {
     // @see buildSrc/src/main/kotlin/redis.gradle.kts
     id("redis")
 
-    // @see buildSrc/src/main/kotlin/coroutine.gradle.kts
-    id("coroutine")
+    // @see buildSrc/src/main/kotlin/webflux.gradle.kts
+    id("webflux")
 
     // @see buildSrc/src/main/kotlin/webmvc.gradle.kts
     id("webmvc")
