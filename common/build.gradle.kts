@@ -16,9 +16,6 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/redis.gradle.kts
     id("redis")
-
-    // Using test fixtures(@see https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures)
-    `java-test-fixtures`
 }
 
 group = "com.musinsa"
@@ -29,13 +26,6 @@ val MAIN_CLASS = "com.musinsa.common.CommonApplication"
 
 application {
     mainClass.set(MAIN_CLASS)
-}
-
-// testFixtures 에서 사용하는 의존성 선언
-dependencies {
-    testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    testFixturesImplementation("org.springframework.boot:spring-boot-starter-web")
-    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks {
