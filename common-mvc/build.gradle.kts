@@ -10,6 +10,12 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/default.gradle.kts
     id("default")
+
+    // @see buildSrc/src/main/kotlin/webmvc.gradle.kts
+    id("webmvc")
+
+    // Using test fixtures(@see https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures)
+    `java-test-fixtures`
 }
 
 group = "com.musinsa"
@@ -20,6 +26,17 @@ val MAIN_CLASS = "com.musinsa.commonmvc.CommonMvcApplication"
 
 application {
     mainClass.set(MAIN_CLASS)
+}
+
+dependencies {
+    // common 의존성 가져오기, 의존성 내보내기
+    api(project(":common"))
+
+    // testFixtures 에서 사용하는 의존성 선언
+    testFixturesImplementation(project(":common"))
+    testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-web")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks {
