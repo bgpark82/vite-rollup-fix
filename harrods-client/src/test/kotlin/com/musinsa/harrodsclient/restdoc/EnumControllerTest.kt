@@ -1,8 +1,8 @@
 package com.musinsa.harrodsclient.restdoc
 
-import com.musinsa.common.restdoc.ENUM_DOCS_생성
-import com.musinsa.common.restdoc.GET
-import com.musinsa.common.restdoc.RestDocsEnumControllerHelper
+import com.musinsa.commonmvc.restdoc.ENUM_DOCS_생성
+import com.musinsa.commonmvc.restdoc.GET
+import com.musinsa.commonmvc.restdoc.RestDocsEnumControllerHelper
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 
