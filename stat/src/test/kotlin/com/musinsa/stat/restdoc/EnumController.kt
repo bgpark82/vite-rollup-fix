@@ -1,6 +1,6 @@
 package com.musinsa.stat.restdoc
 
-import com.musinsa.common.restdoc.COMMON_ERROR_VALUES
+import com.musinsa.commonmvc.restdoc.COMMON_ERROR_VALUES
 import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric
 import com.musinsa.stat.sales.domain.OrderBy
