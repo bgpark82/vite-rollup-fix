@@ -18,9 +18,6 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/webflux.gradle.kts
     id("webflux")
-
-    // @see buildSrc/src/main/kotlin/webmvc.gradle.kts
-    id("webmvc")
 }
 
 group = "com.musinsa"
@@ -38,11 +35,12 @@ repositories {
 }
 
 dependencies {
-    // common-mvc 의존성
-    implementation(project(":common-mvc"))
+    // common-webflux 의존성
+    implementation(project(":common-webflux"))
 
+    // TODO common-webflux testFixture 의존성
     // common-mvc testFixture 의존성
-    testImplementation(testFixtures(project(":common-mvc")))
+//    testImplementation(testFixtures(project(":common-mvc")))
 }
 
 tasks {
