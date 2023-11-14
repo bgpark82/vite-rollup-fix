@@ -4,8 +4,6 @@ server:
       # Servlet Response UTF-8 config
       charset: UTF-8
       force: true
-    # Root Path config
-    context-path: /client
 
 spring:
   profiles:
@@ -25,3 +23,7 @@ spring:
   data:
     redis:
       port: 6379
+  webflux:
+    # Root Path config
+    base-path: /client
+
