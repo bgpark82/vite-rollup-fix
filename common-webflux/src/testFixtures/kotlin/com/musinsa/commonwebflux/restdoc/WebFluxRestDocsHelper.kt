@@ -1,12 +1,18 @@
 package com.musinsa.commonwebflux.restdoc
 
 import org.springframework.context.ApplicationContext
+import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
 import org.springframework.restdocs.http.HttpDocumentation
 import org.springframework.restdocs.operation.preprocess.Preprocessors.modifyHeaders
 import org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint
+import org.springframework.restdocs.payload.FieldDescriptor
+import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.requestBody
 import org.springframework.restdocs.payload.PayloadDocumentation.responseBody
+import org.springframework.restdocs.payload.PayloadSubsectionExtractor
+import org.springframework.restdocs.snippet.Attributes
+import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
 
@@ -14,6 +20,9 @@ import org.springframework.test.web.reactive.server.WebTestClient
  * Spring REST Docs 문서 생성에 필요한 기능들
  */
 private const val BASE_URL = "https://*.data.musinsa.com"
+private const val ENUM_SNIPPET =
+    "enum-response"    // 해당 값이 testFixtures/resources/org/springframework/restdocs/templates/asciidoctor/enum-response-fields.snippet 을 읽는다.
+
 
 /**
  * WebTestClient 생성
@@ -71,4 +80,68 @@ fun buildEnumWebTestClient(
         .configureClient()
         .filter(restDocumentationConfigurer)
         .build()
+}
+
+/**
+ * HTTP GET
+ *
+ * @param url 호스트
+ *
+ * @return WebTestClient.ResponseSpec
+ *
+ */
+fun WebTestClient.GET(
+    url: String
+): WebTestClient.ResponseSpec {
+    return this.get().uri(url).accept(MediaType.APPLICATION_JSON).exchange()
+}
+
+/**
+ * ENUM DOCS 생성
+ *
+ * @param documentUrl 생성 경로
+ * @param enumValues Map 형태의 Enum
+ */
+fun WebTestClient.ResponseSpec.ENUM_DOCS_생성(
+    documentUrl: String,
+    enumValues: Map<String, String>
+): WebTestClient.BodyContentSpec {
+    return this.expectBody().consumeWith(
+        document(
+            documentUrl,
+            enumResponseFields(
+                ENUM_SNIPPET,
+                enumValues.map { enum ->
+                    PayloadDocumentation.fieldWithPath(enum.key)
+                        .description(
+                            enum.value
+                        )
+                }.toList()
+            )
+        )
+    )
+}
+
+/**
+ * Enum Snippet 을 읽고, Docs 로 생성한다.
+ *
+ * @param type snippet template 이름(ENUM_SNIPPET)
+ * @param descriptors Docs 변환할 값(API 응답값)
+ * @param attributes Docs 로 생성될 속성값
+ * @param subsectionExtractor descriptors 가 포함된 경로(응답값 json 경로)
+ */
+private fun enumResponseFields(
+    type: String,
+    descriptors: List<FieldDescriptor>,
+    attributes: Map<String, Any> = Attributes.attributes(
+        Attributes.key("name").value("description")
+    ),
+    subsectionExtractor: PayloadSubsectionExtractor<*>? = null
+): EnumResponseFieldsSnippet {
+    return EnumResponseFieldsSnippet(
+        type = type,
+        descriptors = descriptors,
+        attributes = attributes,
+        subsectionExtractor = subsectionExtractor
+    )
 }
