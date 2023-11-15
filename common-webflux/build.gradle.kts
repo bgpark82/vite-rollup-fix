@@ -37,7 +37,7 @@ dependencies {
     testFixturesImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-webflux")
     testFixturesImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    testFixturesImplementation("org.springframework.restdocs:spring-restdocs-webtestclient")
 }
 
 tasks {

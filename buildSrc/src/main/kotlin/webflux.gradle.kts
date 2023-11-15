@@ -20,6 +20,6 @@ dependencies {
     // 코틀린 리액터
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
-    // Spring REST Docs
-    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    // Spring REST Docs(WebTestClient)
+    testImplementation("org.springframework.restdocs:spring-restdocs-webtestclient")
 }

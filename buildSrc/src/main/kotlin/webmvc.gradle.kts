@@ -14,6 +14,6 @@ dependencies {
     // Web
     implementation("org.springframework.boot:spring-boot-starter-web")
 
-    // Spring REST Docs
+    // Spring REST Docs(MockMvc)
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
