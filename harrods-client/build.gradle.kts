@@ -38,9 +38,8 @@ dependencies {
     // common-webflux 의존성
     implementation(project(":common-webflux"))
 
-    // TODO common-webflux testFixture 의존성
-    // common-mvc testFixture 의존성
-//    testImplementation(testFixtures(project(":common-mvc")))
+    // common-webflux testFixture 의존성
+    testImplementation(testFixtures(project(":common-webflux")))
 }
 
 tasks {
