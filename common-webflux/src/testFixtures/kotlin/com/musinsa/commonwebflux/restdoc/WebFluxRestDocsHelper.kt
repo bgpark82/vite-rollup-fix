@@ -1,5 +1,6 @@
 package com.musinsa.commonwebflux.restdoc
 
+import com.musinsa.common.error.CommonError
 import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
@@ -16,6 +17,8 @@ import org.springframework.restdocs.snippet.Attributes
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.documentationConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
+import org.springframework.web.reactive.function.BodyInserters
 
 /**
  * Spring REST Docs 문서 생성에 필요한 기능들
@@ -98,6 +101,23 @@ fun WebTestClient.GET(
 }
 
 /**
+ * HTTP POST
+ *
+ * @param url 호스트
+ * @param body RequestBody
+ *
+ * @return ResultActions
+ *
+ */
+fun WebTestClient.POST(
+    url: String,
+    body: String
+): WebTestClient.ResponseSpec {
+    return this.post().uri(url).accept(MediaType.APPLICATION_JSON)
+        .body(BodyInserters.fromValue(body)).exchange()
+}
+
+/**
  * ENUM DOCS 생성
  *
  * @param documentUrl 생성 경로
@@ -161,4 +181,16 @@ private fun enumResponseFields(
         attributes = attributes,
         subsectionExtractor = subsectionExtractor
     )
+}
+
+fun WebTestClient.ResponseSpec.유효하지_않은_요청값_검증(invalidField: String) {
+//    this.expectStatus().isBadRequest
+    this.andExpect(MockMvcResultMatchers.status().isBadRequest)
+        .andExpect(
+            MockMvcResultMatchers.jsonPath("errorCode")
+                .value(CommonError.INVALID_REQUEST_VALUE.name)
+        ).andExpect(
+            MockMvcResultMatchers.jsonPath("invalidField")
+                .value(invalidField)
+        )
 }
