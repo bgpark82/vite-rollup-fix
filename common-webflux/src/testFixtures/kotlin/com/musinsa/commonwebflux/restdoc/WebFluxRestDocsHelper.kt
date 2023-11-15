@@ -10,6 +10,7 @@ import org.springframework.restdocs.payload.FieldDescriptor
 import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.requestBody
 import org.springframework.restdocs.payload.PayloadDocumentation.responseBody
+import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
 import org.springframework.restdocs.payload.PayloadSubsectionExtractor
 import org.springframework.restdocs.snippet.Attributes
 import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document
@@ -118,6 +119,22 @@ fun WebTestClient.ResponseSpec.ENUM_DOCS_생성(
                         )
                 }.toList()
             )
+        )
+    )
+}
+
+/**
+ * ResponseBody 가 있는 DOCS 생성
+ */
+@JvmName("DOCS_생성_RESPONSE_BODY")
+fun WebTestClient.ResponseSpec.DOCS_생성(
+    documentUrl: String,
+    responseFields: List<FieldDescriptor>
+): WebTestClient.BodyContentSpec {
+    return this.expectBody().consumeWith(
+        document(
+            documentUrl,
+            responseFields(responseFields)
         )
     )
 }
