@@ -31,6 +31,13 @@ application {
 dependencies {
     // common 의존성 가져오기, 의존성 내보내기
     api(project(":common"))
+
+    // testFixtures 에서 사용하는 의존성 선언
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-test")
+    testFixturesImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    testFixturesImplementation("org.springframework.boot:spring-boot-starter-webflux")
+    testFixturesImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 }
 
 tasks {
