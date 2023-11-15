@@ -13,7 +13,6 @@ import org.springframework.test.web.reactive.server.WebTestClient
 /**
  * Spring REST Docs 문서 생성에 필요한 기능들
  */
-private const val UTF8 = "UTF-8"
 private const val BASE_URL = "https://*.data.musinsa.com"
 
 /**
@@ -49,6 +48,27 @@ fun buildWebTestClient(
 
     return WebTestClient.bindToApplicationContext(applicationContext)
         .configureClient().baseUrl(BASE_URL)
+        .filter(restDocumentationConfigurer)
+        .build()
+}
+
+/**
+ * Enum 노출용 WebTestClient 생성
+ * Spring REST Docs 에 필요한 설정들을 선언한다.
+ */
+fun buildEnumWebTestClient(
+    applicationContext: ApplicationContext,
+    restDocumentation: RestDocumentationContextProvider
+): WebTestClient {
+    val restDocumentationConfigurer = documentationConfiguration(
+        restDocumentation
+    )
+
+    // 스니펫 설정 없음
+    restDocumentationConfigurer.snippets().withDefaults()
+
+    return WebTestClient.bindToApplicationContext(applicationContext)
+        .configureClient()
         .filter(restDocumentationConfigurer)
         .build()
 }

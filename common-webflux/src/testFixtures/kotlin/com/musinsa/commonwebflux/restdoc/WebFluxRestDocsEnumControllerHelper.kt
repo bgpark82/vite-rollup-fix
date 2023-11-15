@@ -22,7 +22,7 @@ open class WebFluxRestDocsEnumControllerHelper {
         applicationContext: ApplicationContext,
         restDocumentation: RestDocumentationContextProvider
     ) {
-        this.webTestClient = buildWebTestClient(
+        this.webTestClient = buildEnumWebTestClient(
             applicationContext,
             restDocumentation
         )
