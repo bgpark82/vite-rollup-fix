@@ -1,4 +1,4 @@
-import {Create, SimpleForm, TextInput, required, Labeled} from "react-admin";
+import {Create, Labeled, SimpleForm, TextInput} from "react-admin";
 import QueryInput from "../component/input/QueryInput";
 import JsonInput from "../component/input/JsonInput";
 import {Grid} from "@mui/material";
@@ -13,7 +13,6 @@ export const TemplateCreate = () => {
                             <QueryInput source="template"
                                         height="400px"
                                         width="1000px"
-                                        validate={required("템플릿은 필수값입니다")}
                             />
                         </Labeled>
                     </Grid>
@@ -34,7 +33,6 @@ export const TemplateCreate = () => {
                                        source="interval"
                                        placeholder="* * * * *"
                                        helperText="배치가 실행되는 주기"
-                                       validate={required("interval은 필수값입니다")}
                             />
                         </Labeled>
                     </Grid>
@@ -55,7 +53,6 @@ export const TemplateCreate = () => {
                                        source="userId"
                                        placeholder="peter.park"
                                        helperText="@musinsa.com을 제외한 이메일"
-                                       validate={required("등록인 아이디는 필수값입니다")}
                             />
                         </Labeled>
                     </Grid>
@@ -74,7 +71,6 @@ export const TemplateCreate = () => {
                                        height="100px"
                                        width="400px"
                                        placeholder='[ "alias", "username" ]'
-                                       validate={[required("별칭은 필수값입니다")]}
                             />
                         </Labeled>
                     </Grid>
