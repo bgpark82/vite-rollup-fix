@@ -1,4 +1,4 @@
-package com.musinsa.commonwebflux.restdoc
+package com.musinsa.common.restdoc
 
 import com.musinsa.common.error.CommonError
 import com.musinsa.common.error.ErrorResponse

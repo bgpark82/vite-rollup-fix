@@ -38,6 +38,9 @@ dependencies {
     // common-webflux 의존성
     implementation(project(":common-webflux"))
 
+    // common testFixture 의존성
+    testImplementation(testFixtures(project(":common")))
+
     // common-webflux testFixture 의존성
     testImplementation(testFixtures(project(":common-webflux")))
 }
