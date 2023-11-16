@@ -547,14 +547,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 
 {
   "errorCode" : "INVALID_REQUEST_VALUE",
   "exception" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
   "invalidField" : "metric",
   "invalidValue" : "APPLE",
-  "message" : "에러 메시지"
+  "message" : "에러 메시지",
+  "error" : {
+    "code" : "INVALID_REQUEST_VALUE",
+    "message" : "org.springframework.web.method.annotation.MethodArgumentTypeMismatchException",
+    "usermessage" : "에러 메시지"
+  }
 }</code></pre>
 </div>
 </div>
@@ -604,6 +609,21 @@ Content-Type: application/json;charset=UTF-8
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.code</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">에러코드. ==errorCode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.message</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외종류. ==exception</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>error.usermessage</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">예외 메시지. ==message</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -621,8 +641,9 @@ Content-Type: application/json;charset=UTF-8
 <div class="listingblock">
 <div class="content">
 <pre>POST /cache HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Host: data.musinsa.com
+Content-Type: application/json
+Accept: application/json
+Host: localhost:8080
 
 {
   "keys" : [ "harrods:woo.choi:1355159473:goods_no:2559251", "harrods:woo.choi:-1050180701:goods_no:2725587", "test:not:exist" ]
@@ -673,50 +694,46 @@ Host: data.musinsa.com
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="json" class="language-json hljs">{
-    "code": "OK",
-    "message": "요청이 성공하였습니다.",
-    "data": [
-        {
-            "key": "harrods:woo.choi:1355159473:goods_no:2559251",
-            "value": {
-                "goods_no": "2559251",
-                "age_band.0": 0,
-                "age_band.19": 0,
-                "age_band.24": 2,
-                "age_band.29": 1,
-                "age_band.34": 2,
-                "age_band.40": 1,
-                "age_band.N": 1,
-                "gender.F": 4,
-                "gender.M": 2,
-                "gender.N": 1,
-                "total": 7
-            }
-        },
-        {
-            "key": "harrods:woo.choi:-1050180701:goods_no:2725587",
-            "value": {
-                "goods_no": 2725587,
-                "age_band.0": 97,
-                "age_band.19": 289,
-                "age_band.24": 195,
-                "age_band.29": 75,
-                "age_band.34": 12,
-                "age_band.40": 111,
-                "gender.F": 339,
-                "gender.M": 440,
-                "gender.N": 0,
-                "total": 779,
-                "quantity": 780
-            }
-        },
-        {
-            "key": "test:not:exist",
-            "value": {}
-        }
-    ]
-}</code></pre>
+<pre>{
+  "code" : "OK",
+  "message" : "요청이 성공하였습니다.",
+  "data" : [ {
+    "key" : "harrods:woo.choi:1355159473:goods_no:2559251",
+    "value" : {
+      "goods_no" : "2559251",
+      "age_band.0" : 0,
+      "age_band.19" : 0,
+      "age_band.24" : 2,
+      "age_band.29" : 1,
+      "age_band.34" : 2,
+      "age_band.40" : 1,
+      "age_band.N" : 1,
+      "gender.F" : 4,
+      "gender.M" : 2,
+      "gender.N" : 1,
+      "total" : 7
+    }
+  }, {
+    "key" : "harrods:woo.choi:-1050180701:goods_no:2725587",
+    "value" : {
+      "goods_no" : 2725587,
+      "age_band.0" : 97,
+      "age_band.19" : 289,
+      "age_band.24" : 195,
+      "age_band.29" : 75,
+      "age_band.34" : 12,
+      "age_band.40" : 111,
+      "gender.F" : 339,
+      "gender.M" : 440,
+      "gender.N" : 0,
+      "total" : 779,
+      "quantity" : 780
+    }
+  }, {
+    "key" : "test:not:exist",
+    "value" : { }
+  } ]
+}</pre>
 </div>
 </div>
 <div class="ulist">
