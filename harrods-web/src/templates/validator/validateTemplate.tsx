@@ -1,3 +1,8 @@
+
+const EXTRACT_AS_IN_COLUMNS_PATTERN = /\bAS\s+(`?[\w.]+`?)\b/gi;
+const EXTRACT_COLUMNS_BETWEEN_SELECT_AND_FROM_PATTERN = /\bSELECT\b([\s\S]*?)\bFROM\b/i;
+const EXTRACT_PARAMETER_BETWEEN_PARENTHESES_PATTERN = /\{\{(.*?)\}\}/g;
+
 export const validateTemplate = ({template, params, alias}: any) => {
     if (!template) return '템플릿은 필수값입니다'
 
@@ -43,11 +48,11 @@ function extractParamsKey(params: any) {
 }
 
 function extractColumns(template: any) {
-    return template.match(/\bSELECT\b([\s\S]*?)\bFROM\b/i)?.[1]
+    return template.match(EXTRACT_COLUMNS_BETWEEN_SELECT_AND_FROM_PATTERN)?.[1]
 }
 
 function extractColumnAlias(columns: any) {
-    return Array.from(columns.matchAll(/\bAS\s+(`?[\w.]+`?)\b/gi), (match: any) => match[1]);
+    return Array.from(columns.matchAll(EXTRACT_AS_IN_COLUMNS_PATTERN), (match: any) => match[1]);
 }
 
 function isEqual(templateParams: any[], inputParams: string[]) {
@@ -57,5 +62,5 @@ function isEqual(templateParams: any[], inputParams: string[]) {
 }
 
 function extractParams(template: any) {
-    return Array.from(template.matchAll(/\{\{(.*?)\}\}/g), (match: any) => match[1]);
+    return Array.from(template.matchAll(EXTRACT_PARAMETER_BETWEEN_PARENTHESES_PATTERN), (match: any) => match[1]);
 }
