@@ -41,6 +41,7 @@ jobs:
             profile="dev"
           else
             profile="${{ github.ref_name }}"
+          fi
 
           build_file="${service}.tar"
 
