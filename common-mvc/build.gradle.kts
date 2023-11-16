@@ -32,6 +32,9 @@ dependencies {
     // common 의존성 가져오기, 의존성 내보내기
     api(project(":common"))
 
+    // common testFixture 의존성
+    testFixturesImplementation(testFixtures(project(":common")))
+
     // testFixtures 에서 사용하는 의존성 선언
     testFixturesImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testFixturesImplementation("org.springframework.boot:spring-boot-starter-web")
