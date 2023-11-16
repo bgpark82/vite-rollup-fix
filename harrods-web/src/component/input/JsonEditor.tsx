@@ -6,7 +6,12 @@ import {jsonLanguage} from "@codemirror/lang-json";
 const ParamEditor = (props: any) => {
 
     const handleChange = (val: string) => {
-        props.onChange(JSON.parse(val))
+        try {
+            props.onChange(JSON.parse(val));
+        } catch (e) {
+            // json 형식이 아닌 경우, 유효성 검사를 위해 일단 등록
+            props.onChange(val);
+        }
     }
 
     return (
