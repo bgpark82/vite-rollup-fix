@@ -1,6 +1,7 @@
 package com.musinsa.commonwebflux.restdoc
 
 import com.musinsa.common.error.CommonError
+import org.assertj.core.api.Assertions.assertThat
 import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
 import org.springframework.restdocs.RestDocumentationContextProvider
@@ -188,4 +189,11 @@ fun WebTestClient.ResponseSpec.유효하지_않은_요청값_검증(invalidField
         .expectBody()
         .jsonPath("errorCode").isEqualTo(CommonError.INVALID_REQUEST_VALUE.name)
         .jsonPath("invalidField").isEqualTo(invalidField)
+}
+
+fun WebTestClient.ResponseSpec.성공_검증(예상_응답: String): WebTestClient.BodyContentSpec {
+    return this.expectStatus().isOk
+        .expectBody().consumeWith {
+            assertThat(String(it.responseBody!!)).isEqualTo(예상_응답)
+        }
 }
