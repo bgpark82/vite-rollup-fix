@@ -2,11 +2,18 @@ import {Create, Labeled, SimpleForm, TextInput} from "react-admin";
 import QueryInput from "../component/input/QueryInput";
 import JsonInput from "../component/input/JsonInput";
 import {Grid} from "@mui/material";
+import {TemplateCreateValidator} from "./validator/TemplateCreateValidator";
 
 export const TemplateCreate = () => {
+
+    const handleValidation = (values: any) => {
+        const validator = new TemplateCreateValidator(values);
+        return validator.validate()
+    }
+
     return (
         <Create title="템플릿 생성">
-            <SimpleForm sx={{width: "80%"}} >
+            <SimpleForm style={{width: "80%"}} validate={handleValidation}>
                 <Grid container rowSpacing={3}>
                     <Grid item xs={12}>
                         <Labeled label="템플릿" isRequired>
