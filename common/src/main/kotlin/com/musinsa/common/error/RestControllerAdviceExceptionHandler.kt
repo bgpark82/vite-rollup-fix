@@ -7,6 +7,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.bind.support.WebExchangeBindException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 
 /**
@@ -57,6 +58,17 @@ class RestControllerAdviceExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleHttpMessageNotReadableException(exception: HttpMessageNotReadableException): ResponseEntity<ErrorResponse> {
         println(exception is HttpMessageNotReadableException)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorResponse(exception))
+    }
+
+
+    /**
+     * 컨트롤러를 통해 입력된 데이터가 유효하지 않을 시(invalid), 예외처리
+     * WebFlux Error
+     */
+    @ExceptionHandler(WebExchangeBindException::class)
+    fun handleWebExchangeBindException(exception: WebExchangeBindException): ResponseEntity<ErrorResponse> {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(ErrorResponse(exception))
     }
