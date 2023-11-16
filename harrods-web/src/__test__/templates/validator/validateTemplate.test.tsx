@@ -11,6 +11,14 @@ describe('validateTemplate 테스트', () => {
 
             expect(message).toBe("템플릿은 필수값입니다")
         });
+
+        test('쿼리 형식이 아닌 템플릿의 경우 에러 메세지', () => {
+            const values = {template: "abc"};
+
+            const message = validateTemplate(values)
+
+            expect(message).toBe("쿼리 형식으로 작성해주세요")
+        });
     });
 
     describe('template과 params 검증', () => {

@@ -22,8 +22,9 @@ export const validateTemplate = ({template, params, alias}: any) => {
 
     // 2. 별칭 검증
     const columns = extractColumns(template);
-    const columnAlias = extractColumnAlias(columns);
+    if (!columns) return "쿼리 형식으로 작성해주세요"
 
+    const columnAlias = extractColumnAlias(columns);
     if (!alias) return "별칭이 존재하지 않습니다"
 
     if (columns.includes("*")) return "SELECT절에 *는 허용하지 않습니다"
@@ -42,7 +43,7 @@ function extractParamsKey(params: any) {
 }
 
 function extractColumns(template: any) {
-    return template.match(/SELECT(.*?)FROM/)[1];
+    return template.match(/\bSELECT\b([\s\S]*?)\bFROM\b/i)?.[1]
 }
 
 function extractColumnAlias(columns: any) {
