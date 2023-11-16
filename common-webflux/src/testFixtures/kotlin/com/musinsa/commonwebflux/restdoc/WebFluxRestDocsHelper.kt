@@ -1,6 +1,7 @@
 package com.musinsa.commonwebflux.restdoc
 
 import com.musinsa.common.error.CommonError
+import com.musinsa.common.restdoc.EnumResponseFieldsSnippet
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
