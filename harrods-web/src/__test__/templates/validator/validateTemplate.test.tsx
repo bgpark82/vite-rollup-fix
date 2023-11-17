@@ -133,67 +133,69 @@ describe('validateTemplate 테스트', () => {
     });
 
     test('상품통계 템플릿 테스트', () => {
-        const values = {template: "select t1.goods_no as group,\n" +
-                "       SUM(IF(t1.age_band = 'age_band.0', t1.cnt, 0)) AS `age_band.0`,\n" +
-                "       SUM(IF(t1.age_band = 'age_band.19', t1.cnt, 0)) AS `age_band.19`,\n" +
-                "       SUM(IF(t1.age_band = 'age_band.24', t1.cnt, 0)) AS `age_band.24`,\n" +
-                "       SUM(IF(t1.age_band = 'age_band.29', t1.cnt, 0)) AS `age_band.29`,\n" +
-                "       SUM(IF(t1.age_band = 'age_band.34', t1.cnt, 0)) AS `age_band.34`,\n" +
-                "       SUM(IF(t1.age_band = 'age_band.40', t1.cnt, 0)) AS `age_band.40`,\n" +
-                "       SUM(IF(t1.gender = 'gender.F', t1.cnt, 0)) AS `gender.F`,\n" +
-                "       SUM(IF(t1.gender = 'gender.M', t1.cnt, 0)) AS `gender.M`,\n" +
-                "       SUM(IF(t1.gender = 'gender.N', t1.cnt, 0)) AS `gender.N`,\n" +
-                "       SUM(t1.cnt) AS total,\n" +
-                "       SUM(t1.qty) AS quantity\n" +
-                "\n" +
-                "  from (\n" +
-                "\t\tSELECT o.uid,\n" +
-                "\t\t       o.goods_no,\n" +
-                "\t\t       CASE WHEN o.age <= 18 THEN 'age_band.0'\n" +
-                "            \t\tWHEN o.age >= 19 AND o.age < 24 THEN 'age_band.19'\n" +
-                "            \t\tWHEN o.age >= 24 AND o.age < 29 THEN 'age_band.24'\n" +
-                "            \t\tWHEN o.age >= 29 AND o.age < 34 THEN 'age_band.29'\n" +
-                "            \t\tWHEN o.age >= 34 AND o.age < 40 THEN 'age_band.34'\n" +
-                "            \t\tELSE 'age_band.40' END AS age_band,\n" +
-                "       \n" +
-                "\t\t       CASE WHEN o.gender = 'F' THEN 'gender.F'\n" +
-                "                WHEN o.gender = 'M' THEN 'gender.M'\n" +
-                "                ELSE 'gender.N' END AS gender,\n" +
-                "\n" +
-                "\t\t       SUM(IF(o.ord_state = 5, 1, -1)) AS cnt,\n" +
-                "\t\t       SUM(IF(o.ord_state = 5, o.qty, -1*o.qty)) AS qty\n" +
-                "\t\t  \n" +
-                "\t\t  FROM (SELECT ow.ord_wonga_no, \n" +
-                "\t\t\t\t       om.uid AS uid, \n" +
-                "\t\t\t\t       ow.goods_no AS goods_no, \n" +
-                "\t\t\t\t       u.age AS age, \n" +
-                "\t\t\t\t       u.gender AS gender,\n" +
-                "\t\t\t\t       -- INT(date_format(now(), 'yyyy'))-m.birth1 AS age, \n" +
-                "\t\t\t\t       -- m.sex AS gender,\n" +
-                "\t\t\t\t       ow.ord_state AS ord_state, \n" +
-                "\t\t\t\t       ow.qty AS qty \n" +
-                "\t\t\t\t  FROM musinsa.bizest.order_opt_wonga ow JOIN musinsa.bizest.order_opt oo ON ow.ord_opt_no = oo.ord_opt_no\n" +
-                "\t\t\t\t                                         JOIN musinsa.bizest.order_mst om ON oo.ord_no = om.ord_no\n" +
-                "\t\t\t\t                                         JOIN datamart.datamart.users u ON om.uid = u.uid\n" +
-                "\t\t\t\t                                         -- JOIN musinsa.member.rb_s_mbrdata m ON om.uid = m.memberuid\n" +
-                "\t\t\t\t WHERE ow.ord_state IN (5, 60, 61)\n" +
-                "\t\t\t\t   AND ow.ord_state_date >= date_format(date_add(now(), -365),'yyyyMMdd')\n" +
-                "\t\t\t\t   AND ow.ord_state_date < date_format(now(),'yyyyMMdd')\n" +
-                "\t\t\t\t   AND u.gender = {{gender}}\n" +
-                "\t\t\t\t   ) o\n" +
-                "\t\t GROUP BY all\n" +
-                "\t\t ) t1 JOIN (SELECT goods_no\n" +
-                "\t\t      \t      FROM musinsa.bizest.order_opt_wonga\n" +
-                "\t\t\t         WHERE ord_state IN (5, 60, 61)\n" +
-                "\t\t\t           AND ut >= date_format(dateadd(HOUR, 9-2, now()), 'yyyy-MM-dd HH:mm:ss') -- utc 에 9시간을 더하고(KST) 2시간 이전\n" +
-                "\t\t\t           AND ut < date_format(dateadd(HOUR, 9-1, now()), 'yyyy-MM-dd HH:mm:ss')\n" +
-                "\t\t\t         GROUP BY all) t2 ON t1.goods_no = t2.goods_no\n" +
-                "  GROUP BY all",
+        const values = {template: `SELECT t1.goods_no AS goods_no,
+                       SUM(IF(t1.age_band = 'age_band.0', t1.cnt, 0)) AS \`age_band.0\`,
+                       SUM(IF(t1.age_band = 'age_band.19', t1.cnt, 0)) AS \`age_band.19\`,
+                       SUM(IF(t1.age_band = 'age_band.24', t1.cnt, 0)) AS \`age_band.24\`,
+                       SUM(IF(t1.age_band = 'age_band.29', t1.cnt, 0)) AS \`age_band.29\`,
+                       SUM(IF(t1.age_band = 'age_band.34', t1.cnt, 0)) AS \`age_band.34\`,
+                       SUM(IF(t1.age_band = 'age_band.40', t1.cnt, 0)) AS \`age_band.40\`,
+                       SUM(IF(t1.gender = 'gender.F', t1.cnt, 0)) AS \`gender.F\`,
+                       SUM(IF(t1.gender = 'gender.M', t1.cnt, 0)) AS \`gender.M\`,
+                       SUM(IF(t1.gender = 'gender.N', t1.cnt, 0)) AS \`gender.N\`,
+                       SUM(t1.cnt) AS total,
+                       SUM(t1.qty) AS quantity
+
+                  FROM (
+                SELECT o.uid,
+                       o.goods_no,
+                       CASE WHEN o.age <= 18 THEN 'age_band.0'
+                            WHEN o.age >= 19 AND o.age < 24 THEN 'age_band.19'
+                            WHEN o.age >= 24 AND o.age < 29 THEN 'age_band.24'
+                            WHEN o.age >= 29 AND o.age < 34 THEN 'age_band.29'
+                            WHEN o.age >= 34 AND o.age < 40 THEN 'age_band.34'
+                            ELSE 'age_band.40' END AS age_band,
+
+                       CASE WHEN o.gender = 'F' THEN 'gender.F'
+                                WHEN o.gender = 'M' THEN 'gender.M'
+                                ELSE 'gender.N' END AS gender,
+
+                       SUM(IF(o.ord_state = 5, 1, -1)) AS cnt,
+                       SUM(IF(o.ord_state = 5, o.qty, -1*o.qty)) AS qty
+
+                  FROM (SELECT ow.ord_wonga_no,
+                       om.uid AS uid,
+                       ow.goods_no AS goods_no,
+                       u.age AS age,
+                       u.gender AS gender,
+                       -- INT(date_format(now(), 'yyyy'))-m.birth1 AS age,
+                       -- m.sex AS gender,
+                       ow.ord_state AS ord_state,
+                       ow.qty AS qty
+                  FROM musinsa.bizest.order_opt_wonga ow JOIN musinsa.bizest.order_opt oo ON ow.ord_opt_no = oo.ord_opt_no
+                                                         JOIN musinsa.bizest.order_mst om ON oo.ord_no = om.ord_no
+                                                         JOIN datamart.datamart.users u ON om.uid = u.uid
+                                                         -- JOIN musinsa.member.rb_s_mbrdata m ON om.uid = m.memberuid
+                 WHERE ow.ord_state IN (5, 60, 61)
+                   AND ow.ord_state_date >= date_format(date_add(now(), -365),'yyyyMMdd')
+                   AND ow.ord_state_date < date_format(now(),'yyyyMMdd')
+                   AND u.gender = {{gender}}
+                   ) o
+                 GROUP BY all
+                 ) t1 JOIN (SELECT goods_no
+                            FROM musinsa.bizest.order_opt_wonga
+                         WHERE ord_state IN (5, 60, 61)
+                           AND ut >= date_format(dateadd(HOUR, 9-2, now()), 'yyyy-MM-dd HH:mm:ss') -- utc 에 9시간을 더하고(KST) 2시간 이전
+                           AND ut < date_format(dateadd(HOUR, 9-1, now()), 'yyyy-MM-dd HH:mm:ss')
+                         GROUP BY all) t2 ON t1.goods_no = t2.goods_no
+                  GROUP BY all
+            `,
             params: {"gender": ["F","M"]},
-            alias:["group"]};
+            alias:["goods_no"]};
 
         const message = validateTemplate(values)
 
         expect(message).toBe(undefined)
     });
 });
+
