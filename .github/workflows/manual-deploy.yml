@@ -35,7 +35,14 @@ jobs:
         id: vars
         run: |
           service="${{ inputs.service }}"
-          profile="${{ github.ref_name }}"
+
+          # dev, develop, feature* 브랜치의 경우 dev 설정, 그 외는 브랜치값 그대로 사용
+          if [[ "${{ github.ref_name }}" == "dev" ]] || [[ "${{ github.ref_name }}" == "develop" ]] || [[ ${{ github.ref_name }} == feature* ]]; then
+            profile="dev"
+          else
+            profile="${{ github.ref_name }}"
+          fi
+
           build_file="${service}.tar"
 
           echo "service=$service" >> $GITHUB_OUTPUT
