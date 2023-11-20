@@ -6,6 +6,7 @@ import java.sql.ResultSet
 
 object GoodsRowMapper : RowMapper<Goods> {
     private const val NULL_VALUE = "값없음"
+    private const val THUMBNAIL_NULL_VALUE = "/null-value"
 
     override fun mapRow(rs: ResultSet, rowNum: Int): Goods {
         return Goods(
@@ -17,7 +18,7 @@ object GoodsRowMapper : RowMapper<Goods> {
             category = rs.getString("카테고리") ?: NULL_VALUE,
             mdId = rs.getString("담당MD"),
             goodsStatusName = rs.getString("상품상태"),
-            thumbnail = rs.getString("썸네일")
+            thumbnail = rs.getString("썸네일") ?: THUMBNAIL_NULL_VALUE
         )
     }
 }
