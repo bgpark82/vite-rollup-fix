@@ -1,0 +1,25 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: harrods-web
+  description: 데이터 통합 제공 어드민 Web
+  annotations:
+    musinsa.backstage.io/template: "backstage-component-bitbucket:v0.0.1"
+    backstage.musinsa.io/endpoint: https://harrods.data.musinsa.com/web
+
+  labels:
+    env: prd
+    project: dataplatform-api
+    service: harrods-web
+    module: admin
+  links:
+    - title: Wiki(프로젝트 기술 문서)
+      url: https://wiki.musinsa.com/pages/viewpage.action?pageId=169800864
+    - title: Source Code
+      url: https://github.com/musinsa/dataplatform-api/tree/prod/harrods-web
+    # TODO 어드민 사용 가이드 추가
+
+spec:
+  type: web
+  lifecycle: production
+  owner: group:group:default/데이터플랫폼팀 (데이터본부)
