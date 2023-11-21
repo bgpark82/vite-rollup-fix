@@ -9,7 +9,7 @@ metadata:
 
   labels:
     env: prd
-    project: harrods-client
+    project: dataplatform-api
     service: harrods-client
     module: api
   links:

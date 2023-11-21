@@ -9,7 +9,7 @@ metadata:
 
   labels:
     env: prd
-    project: sales-statistics
+    project: dataplatform-api
     service: sales-statistics
     module: api
   links:

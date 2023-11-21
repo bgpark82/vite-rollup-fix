@@ -9,7 +9,7 @@ metadata:
 
   labels:
     env: prd
-    project: harrods
+    project: dataplatform-api
     service: harrods
     module: api
   links:
@@ -29,3 +29,6 @@ spec:
   # 제공중인 API
   providesApis:
     - harrods-api # kind:API 리소스에 대한 이름
+  # 사용중인 API
+  consumesApis:
+    - harrods-web #해롯 어드민
