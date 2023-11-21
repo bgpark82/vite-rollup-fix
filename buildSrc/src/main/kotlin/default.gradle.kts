@@ -29,9 +29,6 @@ dependencies {
     // 코틀린 리플렉션
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    // Web
-    implementation("org.springframework.boot:spring-boot-starter-web")
-
     // 유효성 체크
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
@@ -45,8 +42,9 @@ dependencies {
     // @see https://github.com/mockito/mockito-kotlin/wiki/Mocking-and-verifying
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
 
-    // MockMvc Test 를 사용하는 Spring REST Docs
-    testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+    // Spring Web
+    implementation("org.springframework:spring-web:6.0.13")
+
 }
 
 tasks {

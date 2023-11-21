@@ -1,11 +1,11 @@
 package com.musinsa.stat.sales.controller
 
-import com.musinsa.common.restdoc.DOCS_생성
-import com.musinsa.common.restdoc.ENUM_LINK_DOCS_BUILDER
-import com.musinsa.common.restdoc.GET
-import com.musinsa.common.restdoc.RestDocsControllerHelper
-import com.musinsa.common.restdoc.성공_검증
 import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
+import com.musinsa.commonmvc.restdoc.DOCS_생성
+import com.musinsa.commonmvc.restdoc.ENUM_LINK_DOCS_BUILDER
+import com.musinsa.commonmvc.restdoc.GET
+import com.musinsa.commonmvc.restdoc.RestDocsControllerHelper
+import com.musinsa.commonmvc.restdoc.성공_검증
 import com.musinsa.stat.restdoc.METRIC_DOCUMENT_URL
 import com.musinsa.stat.sales.domain.GoodsKind
 import com.musinsa.stat.sales.domain.Metric

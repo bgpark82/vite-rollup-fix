@@ -5,6 +5,7 @@ import com.musinsa.common.devstandard.FailResponse
 import jakarta.validation.ConstraintViolationException
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.bind.support.WebExchangeBindException
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 
 /**
@@ -100,6 +101,18 @@ data class ErrorResponse constructor(
             else -> ""
         },
         message = exception.message.toString()
+    )
+
+    /**
+     * 컨트롤러를 통해 입력된 데이터가 유효하지 않을 시(invalid)
+     * WebFlux Error
+     */
+    constructor(exception: WebExchangeBindException) : this(
+        errorCode = CommonError.INVALID_REQUEST_VALUE.name,
+        exception = exception.javaClass.name,
+        invalidField = exception.bindingResult.fieldError!!.field,
+        invalidValue = exception.bindingResult.fieldError!!.rejectedValue.toString(),
+        message = exception.message
     )
 
     /**

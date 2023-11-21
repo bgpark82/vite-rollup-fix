@@ -13,6 +13,9 @@ plugins {
 
     // @see buildSrc/src/main/kotlin/default.gradle.kts
     id("default")
+
+    // @see buildSrc/src/main/kotlin/webmvc.gradle.kts
+    id("webmvc")
 }
 
 group = "com.musinsa"
@@ -38,11 +41,12 @@ dependencies {
     implementation("com.cronutils:cron-utils:9.2.0")
     // json 컬럼 컨버터 (https://github.com/vladmihalcea/hypersistence-utils)
     implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.5.2")
-    // common 의존성
-    implementation(project(":common"))
 
-    // common testFixture 의존성
-    testImplementation(testFixtures(project(":common")))
+    // common-mvc 의존성
+    implementation(project(":common-mvc"))
+
+    // common-mvc testFixture 의존성
+    testImplementation(testFixtures(project(":common-mvc")))
 }
 
 tasks {

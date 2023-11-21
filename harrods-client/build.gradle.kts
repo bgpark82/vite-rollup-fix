@@ -16,8 +16,8 @@ plugins {
     // @see buildSrc/src/main/kotlin/redis.gradle.kts
     id("redis")
 
-    // @see buildSrc/src/main/kotlin/coroutine.gradle.kts
-    id("coroutine")
+    // @see buildSrc/src/main/kotlin/webflux.gradle.kts
+    id("webflux")
 }
 
 group = "com.musinsa"
@@ -35,11 +35,14 @@ repositories {
 }
 
 dependencies {
-    // common 의존성
-    implementation(project(":common"))
+    // common-webflux 의존성
+    implementation(project(":common-webflux"))
 
     // common testFixture 의존성
     testImplementation(testFixtures(project(":common")))
+
+    // common-webflux testFixture 의존성
+    testImplementation(testFixtures(project(":common-webflux")))
 }
 
 tasks {
@@ -109,14 +112,6 @@ tasks {
 
         outputs.dir(project.property("SNIPPETS_DIR")!!)
         useJUnitPlatform()
-
-        // cache api response body 파일 복사 (Hard Copy)
-        doLast {
-            copy {
-                from("src/test/resources/harrods-client")
-                into("build/generated-snippets/harrods-client")
-            }
-        }
     }
 
     asciidoctor {

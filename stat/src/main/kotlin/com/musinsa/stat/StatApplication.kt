@@ -1,11 +1,11 @@
 package com.musinsa.stat
 
-import com.musinsa.common.aws.HealthCheckController
-import com.musinsa.common.config.CorsConfig
 import com.musinsa.common.databricks.config.StatDatabricksDataSourceConfig
 import com.musinsa.common.databricks.service.StatDatabricksClient
 import com.musinsa.common.error.RestControllerAdviceExceptionHandler
 import com.musinsa.common.util.HttpClient
+import com.musinsa.commonmvc.aws.HealthCheckController
+import com.musinsa.commonmvc.config.CorsConfig
 import com.musinsa.stat.sales.config.QueryStore
 import com.musinsa.stat.search.config.SearchQueryStore
 import org.springframework.boot.autoconfigure.SpringBootApplication

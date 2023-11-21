@@ -1,6 +1,6 @@
 package com.musinsa.stat.sales.controller
 
-import com.musinsa.common.restdoc.ENUM_LINK_DOCS_BUILDER
+import com.musinsa.commonmvc.restdoc.ENUM_LINK_DOCS_BUILDER
 import com.musinsa.stat.restdoc.GOODS_KIND_DOCUMENT_URL
 import com.musinsa.stat.restdoc.ORDER_BY_DOCUMENT_URL
 import com.musinsa.stat.restdoc.ORDER_DIRECTION_DOCUMENT_URL

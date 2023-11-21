@@ -1,14 +1,13 @@
 package com.musinsa.harrodsclient.redis.controller
 
 import com.musinsa.common.devstandard.SuccessResponse
-import com.musinsa.common.restdoc.POST
-import com.musinsa.common.restdoc.RestDocsControllerHelper
-import com.musinsa.common.restdoc.성공_검증_AWAIT
-import com.musinsa.common.restdoc.유효하지_않은_요청값_검증
-import com.musinsa.common.util.ObjectMapperFactory.readValue
 import com.musinsa.common.util.ObjectMapperFactory.readValues
 import com.musinsa.common.util.ObjectMapperFactory.typeRefListMapAny
 import com.musinsa.common.util.ObjectMapperFactory.writeValueAsString
+import com.musinsa.commonwebflux.restdoc.POST
+import com.musinsa.commonwebflux.restdoc.WebFluxRestDocsControllerHelper
+import com.musinsa.commonwebflux.restdoc.성공_검증
+import com.musinsa.commonwebflux.restdoc.유효하지_않은_요청값_검증
 import com.musinsa.harrodsclient.redis.dto.KEY_SIZE_MAX
 import com.musinsa.harrodsclient.redis.dto.KEY_SIZE_MIN
 import com.musinsa.harrodsclient.redis.dto.Search
@@ -21,15 +20,15 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.requestFields
+import org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document
 
-@WebMvcTest(controllers = [RedisController::class])
-internal class RedisControllerTest : RestDocsControllerHelper() {
+@WebFluxTest(controllers = [RedisController::class])
+internal class RedisControllerTest : WebFluxRestDocsControllerHelper() {
     @MockBean
     lateinit var redisClient: RedisClient
 
@@ -39,7 +38,8 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
         val 유효하지_않은_캐시키_사이즈를_가진_요청객체 =
             writeValueAsString(요청객체_생성(KEY_SIZE + ADD_SIZE))
 
-        mockMvc.POST("/cache", 유효하지_않은_캐시키_사이즈를_가진_요청객체).유효하지_않은_요청값_검증("keys")
+        webTestClient.POST("/cache", 유효하지_않은_캐시키_사이즈를_가진_요청객체)
+            .유효하지_않은_요청값_검증("keys")
     }
 
     private fun 요청객체_생성(keySize: Int): Search {
@@ -63,20 +63,14 @@ internal class RedisControllerTest : RestDocsControllerHelper() {
             "[$SAMPLE_1_VAL, $SAMPLE_2_VAL, {\"$KEY\": \"$SAMPLE_3\", \"$VALUE\": {}}]",
             typeRefListMapAny
         )
-        val API_응답값 = readValue(
-            writeValueAsString(
-                SuccessResponse(
-                    data = 응답값
-                )
-            ),
-            SuccessResponse::class.java
-        )
+        val API_응답값 = writeValueAsString(SuccessResponse(data = 응답값))
 
         runBlocking {
             whenever(redisClient.getAll(any())).thenReturn(응답값)
 
-            mockMvc.POST("/cache", writeValueAsString(조회키)).성공_검증_AWAIT(API_응답값)
-                .andDo(
+            webTestClient.POST("/cache", writeValueAsString(조회키))
+                .성공_검증(API_응답값)
+                .consumeWith(
                     document(
                         "harrods-client",
                         requestFields(

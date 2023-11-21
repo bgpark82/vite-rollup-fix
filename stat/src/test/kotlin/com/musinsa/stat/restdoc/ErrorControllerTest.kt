@@ -1,11 +1,11 @@
 package com.musinsa.stat.restdoc
 
-import com.musinsa.common.restdoc.DOCS_생성
 import com.musinsa.common.restdoc.ERROR_BODY_URL
 import com.musinsa.common.restdoc.ErrorController
-import com.musinsa.common.restdoc.GET
-import com.musinsa.common.restdoc.RestDocsControllerHelper
 import com.musinsa.common.restdoc.에러_명세_가져오기
+import com.musinsa.commonmvc.restdoc.DOCS_생성
+import com.musinsa.commonmvc.restdoc.GET
+import com.musinsa.commonmvc.restdoc.RestDocsControllerHelper
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
