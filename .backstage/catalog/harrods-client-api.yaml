@@ -1,0 +1,34 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: harrods-client-api
+  description: 데이터 통합 제공 클라이언트 API
+  annotations:
+    musinsa.backstage.io/template: "backstage-component-bitbucket:v0.0.1"
+    backstage.musinsa.io/endpoint: https://harrods.data.musinsa.com/client
+
+  labels:
+    env: prd
+    project: harrods-client
+    service: harrods-client
+    module: api
+  links:
+    - title: 대시보드(datadog)
+      url: https://app.datadoghq.com/dashboard/j7z-nm3-i73?refresh_mode=sliding&from_ts=1700539707858&to_ts=1700543307858&live=true
+    - title: APM(datadog) # TODO Netty 적용 후 URL 변경
+      url: https://app.datadoghq.com/apm/services/harrods-client/operations/servlet.request/resources?dependencyMap=qson%3A%28data%3A%28dependencyLayout%3AhybridView%29%2Cversion%3A%210%29&env=prod&panels=qson%3A%28data%3A%28%29%2Cversion%3A%210%29&resources=qson%3A%28data%3A%28visible%3A%21t%2Chits%3A%28selected%3Atotal%29%2Cerrors%3A%28selected%3Atotal%29%2Clatency%3A%28selected%3Ap95%29%2CtopN%3A%215%29%2Cversion%3A%211%29&summary=qson%3A%28data%3A%28visible%3A%21t%2Cerrors%3A%28selected%3Acount%29%2Chits%3A%28selected%3Acount%29%2Clatency%3A%28selected%3Alatency%2Cslot%3A%28agg%3A75%29%2Cdistribution%3A%28isLogScale%3A%21f%29%29%2Csublayer%3A%28slot%3A%28layers%3Aservice%29%2Cselected%3Apercentage%29%29%2Cversion%3A%211%29&view=spans&start=1700540168222&end=1700543768222&paused=false
+    - title: Wiki(프로젝트 기술 문서)
+      url: https://wiki.musinsa.com/pages/viewpage.action?pageId=154107081
+    - title: Source Code
+      url: https://github.com/musinsa/dataplatform-api/tree/prod/harrods-client
+
+spec:
+  type: api
+  lifecycle: production
+  owner: group:group:default/데이터플랫폼팀 (데이터본부)
+  # 제공중인 API
+  providesApis:
+    - harrods-client-api # kind:API 리소스에 대한 이름
+  # 사용중인 API
+  consumesApis:
+    - goods-detail-api #전시개발팀

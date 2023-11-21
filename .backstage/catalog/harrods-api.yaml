@@ -20,7 +20,7 @@ metadata:
     - title: Wiki(프로젝트 기술 문서)
       url: https://wiki.musinsa.com/pages/viewpage.action?pageId=154107081
     - title: Source Code
-      url: https://github.com/musinsa/dataplatform-api/tree/dev/harrods
+      url: https://github.com/musinsa/dataplatform-api/tree/prod/harrods
 
 spec:
   type: api
