@@ -21,6 +21,8 @@ metadata:
       url: https://wiki.musinsa.com/pages/viewpage.action?pageId=154107081
     - title: Source Code
       url: https://github.com/musinsa/dataplatform-api/tree/prod/harrods-client
+    - title: API Docs
+      url: https://harrods.data.musinsa.com/client/docs/harrods-client-api.html
 
 spec:
   type: api

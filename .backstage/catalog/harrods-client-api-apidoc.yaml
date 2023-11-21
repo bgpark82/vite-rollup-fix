@@ -1,0 +1,17 @@
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: harrods-client-api
+  description: 데이터 통합 제공 클라이언트 API
+  annotations:
+    backstage.musinsa.io/endpoint: https://harrods.data.musinsa.com/client
+  links:
+    - title: API 문서
+      url: https://harrods.data.musinsa.com/client/docs/harrods-client-api.html
+
+spec:
+  type: openapi
+  lifecycle: production
+  owner: group:group:default/데이터플랫폼팀 (데이터본부)
+
+  definition: " "
