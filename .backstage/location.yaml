@@ -1,3 +1,5 @@
+# 백스테이지 템플릿 추가 가이드
+# https://backstage.dev.musinsa.io/docs/default/template/backstage-component-bitbucket
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
