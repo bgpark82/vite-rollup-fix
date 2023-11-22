@@ -17,7 +17,8 @@ metadata:
       url: https://wiki.musinsa.com/pages/viewpage.action?pageId=169800864
     - title: Source Code
       url: https://github.com/musinsa/dataplatform-api/tree/prod/harrods-web
-    # TODO 어드민 사용 가이드 추가
+    - title: 해롯 어드민 사용 가이드
+      url: https://wiki.musinsa.com/pages/viewpage.action?pageId=171789136
 
 spec:
   type: web
