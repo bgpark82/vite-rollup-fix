@@ -1,4 +1,4 @@
-### 데이터브릭스에 쿼리를 조회한다
+### 데이터브릭스에 쿼리를 조회
 POST http://localhost:8080/admin/databricks/queries
 Content-Type: application/json
 
