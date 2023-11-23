@@ -15,4 +15,3 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect # MySQL8InnoDB 기능 사용
         format_sql: true # sql 포멧
         highlight_sql: true # sql 문법 하이라이트
-        show_sql: true
