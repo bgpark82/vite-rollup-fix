@@ -1,0 +1,7 @@
+### 데이터브릭스에 쿼리를 조회한다
+POST http://localhost:8080/admin/databricks/queries
+Content-Type: application/json
+
+{
+  "query": "SELECT * FROM musinsa.bizest.order_opt_wonga LIMIT 10;"
+}
