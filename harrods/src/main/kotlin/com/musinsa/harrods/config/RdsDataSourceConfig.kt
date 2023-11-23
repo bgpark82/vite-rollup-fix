@@ -14,9 +14,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import org.springframework.transaction.PlatformTransactionManager
 import javax.sql.DataSource
 
+const val BASE_PACKAGE_TO_SCAN_ENTITY = "com.musinsa.harrods"
+const val HIBERNATE_DDL_AUTO = "hibernate.hbm2ddl.auto"
+
 @Configuration
 @EnableJpaRepositories(
-    basePackages = ["com.musinsa.harrods"],
+    basePackages = [BASE_PACKAGE_TO_SCAN_ENTITY],
     entityManagerFactoryRef = "rdsEntityManagerFactory",
     transactionManagerRef = "rdsTransactionManager"
 )
@@ -56,13 +59,13 @@ class RdsDataSourceConfig(
         val em = LocalContainerEntityManagerFactoryBean()
         em.dataSource = rdsDataSource()
         em.jpaVendorAdapter = HibernateJpaVendorAdapter()
-        em.setPackagesToScan("com.musinsa.harrods")
+        em.setPackagesToScan(BASE_PACKAGE_TO_SCAN_ENTITY)
         em.setJpaPropertyMap(createPropertyMap())
         return em
     }
 
     fun createPropertyMap(): Map<String, Any> {
-        return jpaProperties.properties + mapOf("hibernate.hbm2ddl.auto" to hibernateProperties.ddlAuto)
+        return jpaProperties.properties + mapOf(HIBERNATE_DDL_AUTO to hibernateProperties.ddlAuto)
     }
 
     /**
