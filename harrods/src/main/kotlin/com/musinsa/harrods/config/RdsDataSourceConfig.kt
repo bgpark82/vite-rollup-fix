@@ -1,6 +1,8 @@
 package com.musinsa.harrods.config
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -18,7 +20,10 @@ import javax.sql.DataSource
     entityManagerFactoryRef = "rdsEntityManagerFactory",
     transactionManagerRef = "rdsTransactionManager"
 )
-class RdsDataSourceConfig {
+class RdsDataSourceConfig(
+    val hibernateProperties: HibernateProperties,
+    val jpaProperties: JpaProperties
+) {
 
     /**
      * RDS 데이터베이스 접속 정보
@@ -44,6 +49,7 @@ class RdsDataSourceConfig {
 
     /**
      * EntityManagerFactory 생성
+     * @see https://stackoverflow.com/questions/65087283/get-appropriate-properties-for-entity-manager
      */
     @Bean
     fun rdsEntityManagerFactory(): LocalContainerEntityManagerFactoryBean {
@@ -51,7 +57,12 @@ class RdsDataSourceConfig {
         em.dataSource = rdsDataSource()
         em.jpaVendorAdapter = HibernateJpaVendorAdapter()
         em.setPackagesToScan("com.musinsa.harrods")
+        em.setJpaPropertyMap(createPropertyMap())
         return em
+    }
+
+    fun createPropertyMap(): Map<String, Any> {
+        return jpaProperties.properties + mapOf("hibernate.hbm2ddl.auto" to hibernateProperties.ddlAuto)
     }
 
     /**
