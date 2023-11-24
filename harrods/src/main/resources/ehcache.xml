@@ -1,0 +1,23 @@
+<config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.ehcache.org/v3"
+        xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
+        xsi:schemaLocation="
+            http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
+            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+
+    <cache alias="databricks"> <!-- 캐시 이름 -->
+        <key-type>com.musinsa.harrods.databricks.dto.DatabricksRequest</key-type> <!-- 캐시 키 타입 -->
+        <value-type>java.lang.Object</value-type> <!-- 캐시 값 타입 -->
+        <expiry>
+            <ttl unit="minutes">10</ttl> <!-- 캐시 만료 시간 -->
+        </expiry>
+
+        <!-- https://www.ehcache.org/documentation/3.9/tiering.html#disk-->
+        <resources>
+            <heap unit="entries">2</heap> <!-- heap에 저장될 entry 개수 -->
+            <offheap unit="MB">100</offheap> <!-- heap이 아닌 영역에 저장 가능한 용량 -->
+        </resources>
+    </cache>
+
+</config>

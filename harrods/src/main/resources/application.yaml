@@ -17,6 +17,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
 # https://www.baeldung.com/sql-logging-spring-boot
 logging:
   level:
