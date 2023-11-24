@@ -42,11 +42,6 @@ dependencies {
     // EhCache에서 JSR-107 API를 지원하는 의존성
     implementation("javax.cache:cache-api:1.1.0")
     // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-    implementation("javax.xml.bind:jaxb-api:2.3.1")
-    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-core
-    implementation("org.glassfish.jaxb:jaxb-core:2.3.0.1")
-    // https://mvnrepository.com/artifact/com.sun.xml.bind/jaxb-impl
-    implementation("com.sun.xml.bind:jaxb-impl:2.3.1")
 
     // cron 표현식 의존성 (https://github.com/jmrozanec/cron-utils)
     implementation("com.cronutils:cron-utils:9.2.0")
