@@ -1,5 +1,6 @@
 # 백스테이지 템플릿 추가 가이드
 # https://backstage.dev.musinsa.io/docs/default/template/backstage-component-bitbucket
+# main, master branch 를 폴링하여 자동 등록 된다.
 apiVersion: backstage.io/v1alpha1
 kind: Location
 metadata:
