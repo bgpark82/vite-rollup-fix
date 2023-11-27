@@ -1,5 +1,5 @@
-### [데이터 프로덕트팀] 브랜드별 통계 (gender=F, M)
-POST http://localhost:8080/admin/queries
+### 브랜드별 통계 (gender=F, M)
+POST http://localhost:8080/admin/templates
 Content-Type: application/json
 
 {
@@ -12,12 +12,3 @@ Content-Type: application/json
   "userId": "peter.park",
   "alias": ["brand"]
 }
-
-> {%
-    client.test("브랜드별 통계 (gender=F, M)", function() {
-        client.assert(response.status === 200, "200 응답");
-        client.assert(response.body.length === 2)
-        client.assert(response.body[0]["ttl"] === 86400)
-        client.assert(response.body[0]["interval"] === "* * * * *")
-    });
-%}

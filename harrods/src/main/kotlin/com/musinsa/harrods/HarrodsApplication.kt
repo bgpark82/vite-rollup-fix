@@ -1,5 +1,6 @@
 package com.musinsa.harrods
 
+import com.musinsa.common.databricks.config.HarrodsDatabricksDataSourceConfig
 import com.musinsa.common.error.RestControllerAdviceExceptionHandler
 import com.musinsa.commonmvc.aws.HealthCheckController
 import com.musinsa.commonmvc.config.CorsConfig
@@ -10,7 +11,8 @@ import org.springframework.context.annotation.Import
 @SpringBootApplication
 @Import(
     value = [
-        CorsConfig::class, HealthCheckController::class, RestControllerAdviceExceptionHandler::class
+        CorsConfig::class, HealthCheckController::class, RestControllerAdviceExceptionHandler::class,
+        HarrodsDatabricksDataSourceConfig::class
     ]
 )
 class HarrodsApplication

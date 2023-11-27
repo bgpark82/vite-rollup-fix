@@ -36,6 +36,12 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+    // EhCache 의존성
+    implementation("org.ehcache:ehcache:3.10.8")
+    // EhCache에서 JSR-107 API를 지원하는 의존성
+    implementation("javax.cache:cache-api:1.1.0")
+    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
 
     // cron 표현식 의존성 (https://github.com/jmrozanec/cron-utils)
     implementation("com.cronutils:cron-utils:9.2.0")
