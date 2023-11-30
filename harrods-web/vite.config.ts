@@ -31,7 +31,8 @@ export default (() => {
                 external: [
                     '@uiw/react-codemirror',
                     'sql-formatter',
-                    '@codemirror/lang-sql'
+                    '@codemirror/lang-sql',
+                    '@codemirror/lang-json'
                 ]
             }
         },
