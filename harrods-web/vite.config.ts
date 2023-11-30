@@ -28,7 +28,11 @@ export default (() => {
         base: './',
         build: {
             rollupOptions: {
-                external: ['@uiw/react-codemirror', 'sql-formatter']
+                external: [
+                    '@uiw/react-codemirror',
+                    'sql-formatter',
+                    '@codemirror/lang-sql'
+                ]
             }
         },
     })
