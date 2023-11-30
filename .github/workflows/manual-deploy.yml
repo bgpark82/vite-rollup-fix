@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-22.04
     defaults:
       run:
-        working-directory: ./web
+        working-directory: ./harrods-web
     env:
         CLOUD_FRONT_DEV_ID: EH3LD2XMQ5CTO
         CLOUD_FRONT_PROD_ID: E1DUIMXZZLKNBG
