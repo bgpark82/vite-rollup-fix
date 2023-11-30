@@ -2,13 +2,20 @@
   "name": "harrods-web",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "NODE_ENV=local vite",
+    "build-dev": "NODE_ENV=development vite build --mode development",
+    "build-prod": "NODE_ENV=production vite build --mode production",
     "serve": "vite preview",
     "type-check": "tsc --noEmit",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
     "format": "prettier --write src",
-    "test": "jest"
+    "test": "jest",
+    "upload-dev": "aws s3 sync ./dist s3://musinsa-data-harrods-web/dev",
+    "upload-prod": "aws s3 sync ./dist s3://musinsa-data-harrods-web/prod",
+    "invalidate-dev": "aws cloudfront create-invalidation --distribution-id EH3LD2XMQ5CTO --paths \"/*\"",
+    "invalidate-prod": "aws cloudfront create-invalidation --distribution-id E1DUIMXZZLKNBG --paths \"/*\"",
+    "deploy-dev": "npm run build-dev && npm run upload-dev && npm run invalidate-dev",
+    "deploy-prod": "npm run build-prod && npm run upload-prod && npm run invalidate-prod"
   },
   "dependencies": {
     "cron-validator": "^1.3.1",
