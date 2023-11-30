@@ -26,10 +26,10 @@ export default (() => {
             host: true,
         },
         base: './',
-        build: {
-            rollupOptions: {
-                external: '@uiw/react-codemirror'
+        resolve: {
+            alias: {
+                "@": nodepath.resolve(__dirname, "./src"),
             }
-        },
+        }
     })
 });
