@@ -61,7 +61,7 @@ jobs:
         run: npm install
 
       - name: Build
-        uses: NODE_ENV=$profile vite build --mode $profile
+        run: NODE_ENV=$profile vite build --mode $profile
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -71,10 +71,10 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload to S3
-        uses: aws s3 sync ./dist ${{ env.S3_WEB_DEPLOY_BASE_PATH }}/$env
+        run: aws s3 sync ./dist ${{ env.S3_WEB_DEPLOY_BASE_PATH }}/$env
 
       - name: Invalidate CloudFront cache
-        uses: aws cloudfront create-invalidation --distribution-id $cloud_front_id --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id $cloud_front_id --paths "/*"
 
   setup_environment:
     if: ${{ inputs.service != 'harrods-web' }}
