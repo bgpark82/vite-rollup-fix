@@ -51,7 +51,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 dist-ssr
-*.local
 
 !.vscode/extensions.json
 .DS_Store
