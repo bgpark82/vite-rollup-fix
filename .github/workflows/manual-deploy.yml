@@ -40,10 +40,10 @@ jobs:
 
           if [[ "$env" == "prod" ]]; then
             profile="production"
-            cloud_front_id = ${{ env.CLOUD_FRONT_PROD_ID }}
+            cloud_front_id = "${{ env.CLOUD_FRONT_PROD_ID }}"
           else
             profile="development"
-            cloud_front_id = ${{ env.CLOUD_FRONT_DEV_ID }}
+            cloud_front_id = "${{ env.CLOUD_FRONT_DEV_ID }}"
           fi
 
           echo "env=$env" >> "$GITHUB_ENV"
