@@ -26,10 +26,10 @@ export default (() => {
             host: true,
         },
         base: './',
-        resolve: {
-            alias: {
-                "@": nodepath.resolve(__dirname, "./src"),
+        build: {
+            rollupOptions: {
+                external: ['@uiw/react-codemirror', 'sql-formatter']
             }
-        }
+        },
     })
 });
