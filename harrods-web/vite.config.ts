@@ -26,5 +26,10 @@ export default (() => {
             host: true,
         },
         base: './',
+        build: {
+            rollupOptions: {
+                external: '@uiw/react-codemirror'
+            }
+        },
     })
 });
