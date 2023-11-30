@@ -10,6 +10,7 @@ on:
         type: choice
         options:
           - harrods
+          - harrods-web
           - harrods-client
           - stat
 
@@ -18,7 +19,65 @@ env:
   S3_DEPLOY_BASE_PATH: s3://musinsa-server-build/dataplatform
 
 jobs:
+  web:
+    if: ${{ inputs.service == 'harrods-web' }}
+    name: deploy web
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: ./web
+    env:
+        CLOUD_FRONT_DEV_ID: EH3LD2XMQ5CTO
+        CLOUD_FRONT_PROD_ID: E1DUIMXZZLKNBG
+        S3_WEB_DEPLOY_BASE_PATH: s3://musinsa-data-harrods-web
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set variables
+        run: |
+          env="${{ github.ref_name }}"
+
+          if [[ "$env" == "prod" ]]; then
+            profile="production"
+            cloud_front_id = ${{ env.CLOUD_FRONT_PROD_ID }}
+          else
+            profile="development"
+            cloud_front_id = ${{ env.CLOUD_FRONT_DEV_ID }}
+          fi
+
+          echo "env=$env" >> "$GITHUB_ENV"
+          echo "profile=$profile" >> "$GITHUB_ENV"
+          echo "cloud_front_id=$cloud_front_id" >> "$GITHUB_ENV"
+
+      - name: Install Node 18
+        uses: actions/setup-node@v4.0.0
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependency
+        run: npm install
+
+      - name: Build
+        uses: NODE_ENV=$profile vite build --mode $profile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Upload to S3
+        uses: aws s3 sync ./dist ${{ env.S3_WEB_DEPLOY_BASE_PATH }}/$env
+
+      - name: Invalidate CloudFront cache
+        uses: aws cloudfront create-invalidation --distribution-id $cloud_front_id --paths "/*"
+
   setup_environment:
+    if: ${{ inputs.service != 'harrods-web' }}
     name: setup environment
     runs-on: ubuntu-22.04
     outputs:
