@@ -26,15 +26,5 @@ export default (() => {
             host: true,
         },
         base: './',
-        build: {
-            rollupOptions: {
-                external: [
-                    '@uiw/react-codemirror',
-                    'sql-formatter',
-                    '@codemirror/lang-sql',
-                    '@codemirror/lang-json'
-                ]
-            }
-        },
     })
 });
